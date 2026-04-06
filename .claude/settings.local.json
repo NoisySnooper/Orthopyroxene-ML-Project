@@ -1,0 +1,24 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(ls -la \"c:\\\\Users\\\\NQTa\\\\Documents\\\\MLCourse\\\\Final Project\"/*.csv)",
+      "Bash(python -c ':*)",
+      "Bash(python)",
+      "Bash(python fix_nb06_nb07_nb08.py)",
+      "Bash(mv ExPetDB_download_ExPetDB-2025-07-21.xlsx data/raw/)",
+      "Bash(mv opx_clean_core.csv opx_clean_full.csv data/processed/)",
+      "Bash(mv *.joblib models/)",
+      "Bash(mv fig*.png figures/)",
+      "Bash(mv nb0*_*.csv table*.csv manuscript_key_results.csv comparison_*.csv results/)",
+      "Bash(grep -v -E '^\\(config\\\\.py|data|figures|logs|models|notebooks|results|\\\\.gitignore|README|files\\\\.zip|revised_master_prompt|execution_roadmap|nb0[0-9].*\\\\.py|\\\\.venv\\)$')",
+      "Bash(python _build_nb04.py)",
+      "Bash(rm _build_nb04.py)",
+      "Bash(jupyter nbconvert:*)",
+      "Bash(.venv/Scripts/python -m jupyter nbconvert --to notebook --execute notebooks/nb01_data_cleaning.ipynb --output nb01_data_cleaning.ipynb --ExecutePreprocessor.timeout=600)",
+      "Bash(.venv/Scripts/python -c ':*)",
+      "Bash(.venv/Scripts/python -m jupyter nbconvert --to notebook --execute notebooks/nb02_eda_pca.ipynb --output nb02_eda_pca.ipynb --ExecutePreprocessor.timeout=600)",
+      "Bash(.venv/Scripts/python -m jupyter nbconvert --to notebook --execute notebooks/nb03_baseline_models_proper.ipynb --output nb03_baseline_models_proper.ipynb --ExecutePreprocessor.timeout=3600)",
+      "Bash(.venv/Scripts/pip install:*)"
+    ]
+  }
+}

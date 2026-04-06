@@ -1,0 +1,3 @@
+Dataset,n_samples,n_experiments,n_studies,T_range_C,P_range_kbar,Mg_range
+Core (5 oxides),1148,1034,126,550-1850,0.0-100.0,0.41-1.00
+Full (9 oxides),525,493,68,599-1850,0.0-100.0,0.56-1.00

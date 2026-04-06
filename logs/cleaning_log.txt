@@ -1,0 +1,38 @@
+STEP 1: Extract and merge
+  Raw opx rows: 1796
+  After dropping missing P/T: 1796 (dropped 0)
+
+STEP 2: Extract oxides, handle iron
+  Fe2O3 reported in 4 rows; all Fe treated as FeO_total
+
+STEP 3: Oxide total filter (95.0-102.0 wt%)
+  Dropped 67 rows (below 95.0: 6, above 102.0: 18, null: 0)
+  Remaining: 1729
+
+STEP 4: Cation recalculation (6-oxygen basis)
+  Cation sum: mean=4.0007, std=0.0181, range=[3.7408, 4.2655]
+
+STEP 5: Core oxide requirement + cation sum filter (3.95-4.05)
+  After requiring SiO2+MgO+FeO: 1497 (dropped 232)
+  After cation sum filter: 1481 (dropped 16)
+
+STEP 6: Pigeonite filter (Wo <= 5.0 mol%)
+  Dropped 133 analyses with Wo > 5.0%
+  Remaining: 1348
+
+STEP 6b: Pressure ceiling filter (P <= 100 kbar)
+  Dropped 29 rows with P > 100 kbar (opx unstable)
+  Remaining: 1319
+  P range after filter: 0.0-100.0 kbar
+
+STEP 7: Feature engineering
+  Mg#:   [0.086, 1.000], median=0.884
+  Al_IV: [0.0000, 0.3602], median=0.0741
+  Al_VI: [0.0000, 0.3333], median=0.0549
+
+STEP 8: Save datasets
+  Core dataset: 1148 rows, 1034 experiments, 126 citations
+  Full dataset: 525 rows, 493 experiments, 68 citations
+  Core P range: 0.0-100.0 kbar
+  Core T range: 550-1850 C
+  Verified: P_kbar max <= 100 kbar in both datasets
