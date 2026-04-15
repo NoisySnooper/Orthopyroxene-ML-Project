@@ -1,0 +1,13 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(tasklist //FI \"IMAGENAME eq python.exe\")",
+      "Bash(.venv/Scripts/python.exe -c ':*)",
+      "Bash(.venv/Scripts/python.exe run_from.py nb04_putirka_benchmark)",
+      "Bash(.venv/Scripts/python.exe run_from.py nb10_extended_analyses)",
+      "Bash(ls -t logs/pipeline_resume_*.log)",
+      "Bash(xargs -I{} bash -c \"grep -E 'starting|OK nb|FAILED' {} && echo --- && tail -80 {}\")",
+      "Bash(.venv/Scripts/python.exe -c \"from src.evaluation import compute_metrics; help\\(compute_metrics\\)\")"
+    ]
+  }
+}

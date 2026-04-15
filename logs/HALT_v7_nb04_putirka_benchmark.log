@@ -1,0 +1,5 @@
+nb04_putirka_benchmark completed successfully but hit OPERATOR DECISION REQUIRED
+at 2026-04-15T02:10:25.283658
+Review the notebook output for the decision context.
+Full run log: C:\Users\NQTa\Documents\MLCourse\Final Project\logs\pipeline_run_v7_20260415_020237.log
+Resume command after decision: python run_all_v7.py --resume-from nb05_loso_validation

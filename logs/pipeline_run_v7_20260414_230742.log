@@ -1,0 +1,206 @@
+v7 pipeline run started at 2026-04-14T23:07:42.364132
+Run ID: 20260414_230742
+Notebooks (in order): ['nb01_data_cleaning', 'nb02_eda_pca', 'nb03_baseline_models', 'nb04b_lepr_arcpl_validation', 'nb04_putirka_benchmark', 'nb05_loso_validation', 'nb06_shap_analysis', 'nb07_bias_correction', 'nb08_natural_twopx', 'nb09_manuscript_compilation', 'nbF_figures']
+Starting from: nb05_loso_validation (index 5)
+Per-cell timeout: 10800s
+Decision halt marker: 'OPERATOR DECISION REQUIRED'
+
+
+[23:07:42] starting nb05_loso_validation
+Input Notebook:  C:\Users\NQTa\Documents\MLCourse\Final Project\notebooks\nb05_loso_validation.ipynb
+Output Notebook: C:\Users\NQTa\Documents\MLCourse\Final Project\notebooks\executed\nb05_loso_validation_executed.ipynb
+
+Executing:   0%|          | 0/7 [00:00<?, ?cell/s]Executing notebook with kernel: python3
+Executing Cell 1---------------------------------------
+Ending Cell 1------------------------------------------
+
+Executing:  14%|#4        | 1/7 [00:01<00:11,  1.94s/cell]Executing Cell 2---------------------------------------
+Ending Cell 2------------------------------------------
+
+Executing:  29%|##8       | 2/7 [00:03<00:09,  1.98s/cell]Executing Cell 3---------------------------------------
+Ending Cell 3------------------------------------------
+Executing Cell 4---------------------------------------
+Phase 3R global winning feature set: pwlr
+opx-liq rows: 600, studies: 93, clusters: 3, X.shape: (600, 72)
+Best params reconstructed for models: ['ERT', 'GB', 'RF', 'XGB']
+
+Ending Cell 4------------------------------------------
+
+Executing:  57%|#####7    | 4/7 [00:04<00:02,  1.28cell/s]Executing Cell 5---------------------------------------
+Ending Cell 5------------------------------------------
+Executing Cell 6---------------------------------------
+strategy:   0%|          | 0/3 [00:00<?, ?it/s]
+
+== LOSO (93 folds, group=Citation) ==
+
+LOSO:   0%|          | 0/4 [00:00<?, ?it/s]
+  RF   T_C      rmse=74.65  r2=+0.821  n=600
+
+  RF   P_kbar   rmse=5.93  r2=+0.599  n=600
+
+  ERT  T_C      rmse=78.40  r2=+0.802  n=600
+
+  ERT  P_kbar   rmse=6.09  r2=+0.576  n=600
+
+  XGB  T_C      rmse=84.01  r2=+0.773  n=600
+
+  XGB  P_kbar   rmse=5.36  r2=+0.673  n=600
+
+  GB   T_C      rmse=77.23  r2=+0.808  n=600
+
+  GB   P_kbar   rmse=5.93  r2=+0.599  n=600
+
+== Cluster-KFold (3 folds, group=chemical_cluster) ==
+
+Cluster-KFold:   0%|          | 0/4 [00:00<?, ?it/s]
+  RF   T_C      rmse=103.30  r2=+0.657  n=600
+
+  RF   P_kbar   rmse=6.78  r2=+0.476  n=600
+
+  ERT  T_C      rmse=115.20  r2=+0.574  n=600
+
+  ERT  P_kbar   rmse=6.80  r2=+0.472  n=600
+
+  XGB  T_C      rmse=113.91  r2=+0.583  n=600
+
+  XGB  P_kbar   rmse=6.38  r2=+0.536  n=600
+
+  GB   T_C      rmse=104.71  r2=+0.648  n=600
+
+  GB   P_kbar   rmse=6.97  r2=+0.445  n=600
+
+== TargetBinKFold (9 folds, group=pt_grid) ==
+
+TargetBinKFold:   0%|          | 0/4 [00:00<?, ?it/s]
+  RF   T_C      rmse=101.69  r2=+0.668  n=600
+
+  RF   P_kbar   rmse=8.43  r2=+0.189  n=600
+
+  ERT  T_C      rmse=106.95  r2=+0.632  n=600
+
+  ERT  P_kbar   rmse=8.43  r2=+0.189  n=600
+
+  XGB  T_C      rmse=107.72  r2=+0.627  n=600
+
+  XGB  P_kbar   rmse=7.75  r2=+0.315  n=600
+
+  GB   T_C      rmse=97.70  r2=+0.693  n=600
+
+  GB   P_kbar   rmse=7.75  r2=+0.315  n=600
+
+Wrote 24 pooled rows, 840 per-fold rows
+
+Ending Cell 6------------------------------------------
+
+Executing:  86%|########5 | 6/7 [1:29:46<21:11, 1271.85s/cell]Executing Cell 7---------------------------------------
+=== NB05 complete ===
+  24 pooled rows across 3 strategies x 4 models x 2 targets
+  840 per-fold rows
+
+Ending Cell 7------------------------------------------
+
+Executing: 100%|##########| 7/7 [1:29:46<00:00, 950.97s/cell] 
+Executing: 100%|##########| 7/7 [1:29:47<00:00, 769.64s/cell]
+[00:37:32] OK nb05_loso_validation
+
+[00:37:32] starting nb06_shap_analysis
+Input Notebook:  C:\Users\NQTa\Documents\MLCourse\Final Project\notebooks\nb06_shap_analysis.ipynb
+Output Notebook: C:\Users\NQTa\Documents\MLCourse\Final Project\notebooks\executed\nb06_shap_analysis_executed.ipynb
+
+Executing:   0%|          | 0/23 [00:00<?, ?cell/s]Executing notebook with kernel: python3
+Executing Cell 1---------------------------------------
+Ending Cell 1------------------------------------------
+
+Executing:   4%|4         | 1/23 [00:04<01:31,  4.18s/cell]Executing Cell 2---------------------------------------
+Ending Cell 2------------------------------------------
+Executing Cell 3---------------------------------------
+Ending Cell 3------------------------------------------
+
+Executing:  13%|#3        | 3/23 [00:15<01:48,  5.42s/cell]Executing Cell 4---------------------------------------
+Ending Cell 4------------------------------------------
+
+Executing:  17%|#7        | 4/23 [00:15<01:08,  3.58s/cell]Executing Cell 5---------------------------------------
+v7 primary (forest / T_C / opx_liq) feature set: alr
+
+Test set: 174 experiments
+X_test shape: (174, 23), n_features: 23
+
+Ending Cell 5------------------------------------------
+
+Executing:  22%|##1       | 5/23 [00:16<00:47,  2.64s/cell]Executing Cell 6---------------------------------------
+Ending Cell 6------------------------------------------
+
+Executing:  26%|##6       | 6/23 [00:24<01:15,  4.44s/cell]
+Executing:  26%|##6       | 6/23 [00:26<01:14,  4.37s/cell]
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "C:\Users\NQTa\Documents\MLCourse\Final Project\.venv\Lib\site-packages\papermill\__main__.py", line 4, in <module>
+    papermill()
+    ~~~~~~~~~^^
+  File "C:\Users\NQTa\Documents\MLCourse\Final Project\.venv\Lib\site-packages\click\core.py", line 1485, in __call__
+    return self.main(*args, **kwargs)
+           ~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "C:\Users\NQTa\Documents\MLCourse\Final Project\.venv\Lib\site-packages\click\core.py", line 1406, in main
+    rv = self.invoke(ctx)
+  File "C:\Users\NQTa\Documents\MLCourse\Final Project\.venv\Lib\site-packages\click\core.py", line 1269, in invoke
+    return ctx.invoke(self.callback, **ctx.params)
+           ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\NQTa\Documents\MLCourse\Final Project\.venv\Lib\site-packages\click\core.py", line 824, in invoke
+    return callback(*args, **kwargs)
+  File "C:\Users\NQTa\Documents\MLCourse\Final Project\.venv\Lib\site-packages\click\decorators.py", line 34, in new_func
+    return f(get_current_context(), *args, **kwargs)
+  File "C:\Users\NQTa\Documents\MLCourse\Final Project\.venv\Lib\site-packages\papermill\cli.py", line 235, in papermill
+    execute_notebook(
+    ~~~~~~~~~~~~~~~~^
+        input_path=input_path,
+        ^^^^^^^^^^^^^^^^^^^^^^
+    ...<15 lines>...
+        execution_timeout=execution_timeout,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\NQTa\Documents\MLCourse\Final Project\.venv\Lib\site-packages\papermill\execute.py", line 131, in execute_notebook
+    raise_for_execution_errors(nb, output_path)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "C:\Users\NQTa\Documents\MLCourse\Final Project\.venv\Lib\site-packages\papermill\execute.py", line 251, in raise_for_execution_errors
+    raise error
+papermill.exceptions.PapermillExecutionError: 
+---------------------------------------------------------------------------
+Exception encountered at "In [4]":
+---------------------------------------------------------------------------
+ExplainerError                            Traceback (most recent call last)
+Cell In[4], line 3
+      1 # SHAP TreeExplainer for the pressure model
+      2 explainer_P = shap.TreeExplainer(model_P)
+----> 3 shap_values_P = explainer_P.shap_values(X_test)
+      4 print(f'shap_values_P shape: {np.asarray(shap_values_P).shape}')
+      5 
+      6 plt.figure(figsize=(10, 6))
+
+File ~\Documents\MLCourse\Final Project\.venv\Lib\site-packages\shap\explainers\_tree.py:711, in TreeExplainer.shap_values(self, X, y, tree_limit, approximate, check_additivity, from_call)
+    709 out = self._get_shap_output(phi, flat_output)
+    710 if check_additivity and self.model.model_output == "raw":
+--> 711     self.assert_additivity(out, self.model.predict(X))  # type: ignore[arg-type]
+    713 # This statements handles the case of multiple outputs
+    714 # e.g. a multi-class classification problem, multi-target regression problem
+    715 # in this case the output shape corresponds to [num_samples, num_features, num_outputs]
+    716 if isinstance(out, list):
+
+File ~\Documents\MLCourse\Final Project\.venv\Lib\site-packages\shap\explainers\_tree.py:903, in TreeExplainer.assert_additivity(self, phi, model_output)
+    901         check_sum(self.expected_value[i] + phi[i].sum(-1), model_output[:, i])
+    902 else:
+--> 903     check_sum(self.expected_value + phi.sum(-1), model_output)
+
+File ~\Documents\MLCourse\Final Project\.venv\Lib\site-packages\shap\explainers\_tree.py:897, in TreeExplainer.assert_additivity.<locals>.check_sum(sum_val, model_output)
+    891     err_msg += " Consider retrying with the feature_perturbation='interventional' option."
+    892 err_msg += (
+    893     " This check failed because for one of the samples the sum of the SHAP values"
+    894     f" was {sum_val[ind]:f}, while the model output was {model_output[ind]:f}. If this"
+    895     " difference is acceptable you can set check_additivity=False to disable this check."
+    896 )
+--> 897 raise ExplainerError(err_msg)
+
+ExplainerError: Additivity check failed in TreeExplainer! Please ensure the data matrix you passed to the explainer is the same shape that the model was trained on. If your data shape is correct then please report this on GitHub. Consider retrying with the feature_perturbation='interventional' option. This check failed because for one of the samples the sum of the SHAP values was 22.163929, while the model output was 21.469449. If this difference is acceptable you can set check_additivity=False to disable this check.
+
+[00:38:01] FAILED nb06_shap_analysis rc=1

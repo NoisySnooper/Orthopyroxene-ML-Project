@@ -1,0 +1,3 @@
+nb05_loso_validation failed with returncode 1 at 2026-04-14T23:04:57.981365
+Full run log: C:\Users\NQTa\Documents\MLCourse\Final Project\logs\pipeline_run_v7_20260414_225107.log
+Resume command after fix: python run_all_v7.py --resume-from nb05_loso_validation

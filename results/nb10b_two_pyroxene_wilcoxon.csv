@@ -1,0 +1,5 @@
+target,ml_vs,n_pairs,wilcoxon_stat,p_value
+T,Putirka eq36 (true P),0,,
+T,Jorgenson 2022 cpx-only,0,,
+P,Putirka eq39 (true T),0,,
+P,Jorgenson 2022 cpx-only,0,,

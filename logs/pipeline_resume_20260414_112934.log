@@ -1,0 +1,132 @@
+Resume run started at 2026-04-14T11:29:34.952693
+Starting from: nbF_figures (index 10)
+
+[11:29:34] starting nbF_figures
+Input Notebook:  C:\Users\NQTa\Documents\MLCourse\Final Project\notebooks\nbF_figures.ipynb
+Output Notebook: C:\Users\NQTa\Documents\MLCourse\Final Project\notebooks\executed\nbF_figures_executed.ipynb
+
+Executing:   0%|          | 0/12 [00:00<?, ?cell/s]Executing notebook with kernel: python3
+Executing Cell 1---------------------------------------
+Ending Cell 1------------------------------------------
+
+Executing:   8%|8         | 1/12 [00:03<00:39,  3.62s/cell]Executing Cell 2---------------------------------------
+Ending Cell 2------------------------------------------
+
+Executing:  17%|#6        | 2/12 [00:10<00:56,  5.66s/cell]Executing Cell 3---------------------------------------
+Phase 3R winning feature set: pwlr
+
+Ending Cell 3------------------------------------------
+Executing Cell 4---------------------------------------
+Ending Cell 4------------------------------------------
+
+Executing:  33%|###3      | 4/12 [00:14<00:25,  3.16s/cell]Executing Cell 5---------------------------------------
+Ending Cell 5------------------------------------------
+
+Executing:  42%|####1     | 5/12 [00:16<00:20,  2.92s/cell]Executing Cell 6---------------------------------------
+Ending Cell 6------------------------------------------
+
+Executing:  50%|#####     | 6/12 [00:24<00:27,  4.53s/cell]Executing Cell 7---------------------------------------
+Ending Cell 7------------------------------------------
+
+Executing:  58%|#####8    | 7/12 [00:29<00:22,  4.57s/cell]Executing Cell 8---------------------------------------
+<Figure size 1100x500 with 2 Axes>
+Ending Cell 8------------------------------------------
+
+Executing:  67%|######6   | 8/12 [00:33<00:17,  4.36s/cell]
+Executing:  67%|######6   | 8/12 [00:34<00:17,  4.35s/cell]
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "C:\Users\NQTa\Documents\MLCourse\Final Project\.venv\Lib\site-packages\papermill\__main__.py", line 4, in <module>
+    papermill()
+    ~~~~~~~~~^^
+  File "C:\Users\NQTa\Documents\MLCourse\Final Project\.venv\Lib\site-packages\click\core.py", line 1485, in __call__
+    return self.main(*args, **kwargs)
+           ~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "C:\Users\NQTa\Documents\MLCourse\Final Project\.venv\Lib\site-packages\click\core.py", line 1406, in main
+    rv = self.invoke(ctx)
+  File "C:\Users\NQTa\Documents\MLCourse\Final Project\.venv\Lib\site-packages\click\core.py", line 1269, in invoke
+    return ctx.invoke(self.callback, **ctx.params)
+           ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\NQTa\Documents\MLCourse\Final Project\.venv\Lib\site-packages\click\core.py", line 824, in invoke
+    return callback(*args, **kwargs)
+  File "C:\Users\NQTa\Documents\MLCourse\Final Project\.venv\Lib\site-packages\click\decorators.py", line 34, in new_func
+    return f(get_current_context(), *args, **kwargs)
+  File "C:\Users\NQTa\Documents\MLCourse\Final Project\.venv\Lib\site-packages\papermill\cli.py", line 235, in papermill
+    execute_notebook(
+    ~~~~~~~~~~~~~~~~^
+        input_path=input_path,
+        ^^^^^^^^^^^^^^^^^^^^^^
+    ...<15 lines>...
+        execution_timeout=execution_timeout,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\NQTa\Documents\MLCourse\Final Project\.venv\Lib\site-packages\papermill\execute.py", line 131, in execute_notebook
+    raise_for_execution_errors(nb, output_path)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "C:\Users\NQTa\Documents\MLCourse\Final Project\.venv\Lib\site-packages\papermill\execute.py", line 251, in raise_for_execution_errors
+    raise error
+papermill.exceptions.PapermillExecutionError: 
+---------------------------------------------------------------------------
+Exception encountered at "In [7]":
+---------------------------------------------------------------------------
+KeyError                                  Traceback (most recent call last)
+File ~\Documents\MLCourse\Final Project\.venv\Lib\site-packages\pandas\core\indexes\base.py:3641, in Index.get_loc(self, key)
+   3640 try:
+-> 3641     return self._engine.get_loc(casted_key)
+   3642 except KeyError as err:
+
+File pandas/_libs/index.pyx:168, in pandas._libs.index.IndexEngine.get_loc()
+--> 168 'Could not get source, probably due dynamically evaluated source code.'
+
+File pandas/_libs/index.pyx:197, in pandas._libs.index.IndexEngine.get_loc()
+--> 197 'Could not get source, probably due dynamically evaluated source code.'
+
+File pandas/_libs/hashtable_class_helper.pxi:7668, in pandas._libs.hashtable.PyObjectHashTable.get_item()
+-> 7668 'Could not get source, probably due dynamically evaluated source code.'
+
+File pandas/_libs/hashtable_class_helper.pxi:7676, in pandas._libs.hashtable.PyObjectHashTable.get_item()
+-> 7676 'Could not get source, probably due dynamically evaluated source code.'
+
+KeyError: 'pooled_rmse'
+
+The above exception was the direct cause of the following exception:
+
+KeyError                                  Traceback (most recent call last)
+Cell In[7], line 8
+      4 fig, axes = plt.subplots(1, 2, figsize=(11, 5))
+      5 for ax, tgt, unit in zip(axes, ['T_C', 'P_kbar'], ['C', 'kbar']):
+      6     sub = loso[loso.target == tgt]
+      7     order = sub['strategy'].tolist()
+----> 8     vals = sub['pooled_rmse'].values
+      9     ax.bar(order, vals, color=[TOL_BRIGHT['blue'], TOL_BRIGHT['green'], TOL_BRIGHT['yellow']],
+     10            edgecolor='k', lw=0.6)
+     11     ax.set_ylabel(f'Pooled RMSE ({unit})')
+
+File ~\Documents\MLCourse\Final Project\.venv\Lib\site-packages\pandas\core\frame.py:4378, in DataFrame.__getitem__(self, key)
+   4374 
+   4375         if is_single_key:
+   4376             if self.columns.nlevels > 1:
+   4377                 return self._getitem_multilevel(key)
+-> 4378             indexer = self.columns.get_loc(key)
+   4379             if is_integer(indexer):
+   4380                 indexer = [indexer]
+   4381         else:
+
+File ~\Documents\MLCourse\Final Project\.venv\Lib\site-packages\pandas\core\indexes\base.py:3648, in Index.get_loc(self, key)
+   3643     if isinstance(casted_key, slice) or (
+   3644         isinstance(casted_key, abc.Iterable)
+   3645         and any(isinstance(x, slice) for x in casted_key)
+   3646     ):
+   3647         raise InvalidIndexError(key) from err
+-> 3648     raise KeyError(key) from err
+   3649 except TypeError:
+   3650     # If we have a listlike key, _check_indexing_error will raise
+   3651     #  InvalidIndexError. Otherwise we fall through and re-raise
+   3652     #  the TypeError.
+   3653     self._check_indexing_error(key)
+
+KeyError: 'pooled_rmse'
+
+[11:30:13] FAILED nbF_figures rc=1

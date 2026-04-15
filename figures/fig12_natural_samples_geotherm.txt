@@ -1,0 +1,1 @@
+Figure 12. ArcPL natural samples projected into predicted P-T space on Hasterok & Chapman (2011) layered conductive geotherms for cratonic (40), average (60), and hot (80) mW/m^2 surface heat flow. Points colored by IsolationForest in-distribution flag.

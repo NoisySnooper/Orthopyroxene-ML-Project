@@ -1,0 +1,410 @@
+================================================================================
+  PHASE 0 AUDIT — opx Streamlit app extraction inventory
+  Repo: c:\Users\NQTa\Documents\MLCourse\Final Project
+  Generated: 2026-04-15
+================================================================================
+
+This report lists every file, function, and value the app repo needs from the
+research repo. Nothing has been modified except creation of
+`examples/test_sample_for_app_validation.csv` and this report.
+
+================================================================================
+1. MODEL FILES
+================================================================================
+
+Disk usage
+----------
+  models/                    325M total (340,122,818 bytes)
+  ├── *.joblib (47 files)   216M  research + canonical + QRF + iforest + H2O
+  └── external/ (12 files)  110M  Agreda-Lopez onnx + scaler joblib + bias JSON
+
+Totals: 324 MB on disk. Well under the 500 MB Git-LFS-recommended threshold
+and the 1 GB release-artifact threshold. No distribution gymnastics needed.
+
+Canonical (track, target, family) -> file mapping
+-------------------------------------------------
+Read from: results/nb03_per_family_winners.json
+
+  forest_family (8 canonical files needed):
+    T_C    / opx_only / RF  / pwlr -> model_T_C_opx_only_forest.joblib      3.9 M
+    P_kbar / opx_only / RF  / pwlr -> model_P_kbar_opx_only_forest.joblib   2.9 M
+    T_C    / opx_liq  / RF  / alr  -> model_T_C_opx_liq_forest.joblib       13  M
+    P_kbar / opx_liq  / RF  / raw  -> model_P_kbar_opx_liq_forest.joblib    8.8 M
+  boosted_family:
+    T_C    / opx_only / XGB / pwlr -> model_T_C_opx_only_boosted.joblib     1.3 M
+    P_kbar / opx_only / XGB / pwlr -> model_P_kbar_opx_only_boosted.joblib  320 K
+    T_C    / opx_liq  / XGB / raw  -> model_T_C_opx_liq_boosted.joblib      1.6 M
+    P_kbar / opx_liq  / XGB / raw  -> model_P_kbar_opx_liq_boosted.joblib   752 K
+
+  Total canonical opx set: ~32.8 MB (8 files)
+
+OOD detector
+------------
+  models/model_IsolationForest_opx_liq.joblib                              3.7 M
+  models/isolation_forest_opx_only.joblib                                  2.4 M   (legacy v5, may be skippable)
+
+External cpx models (only needed if app offers method comparisons)
+------------------------------------------------------------------
+  models/external/agreda_cpx_T.onnx          33 M   (scaler .joblib + bias .json each 1-4 KB)
+  models/external/agreda_cpx_liq_T.onnx      31 M
+  models/external/agreda_cpx_P.onnx          25 M
+  models/external/agreda_cpx_liq_P.onnx      21 M
+  (Jorgenson, Wang, Putirka are code-only via Thermobar — no files to ship)
+
+Recommendation for app repo
+---------------------------
+  MINIMUM (ML opx-only / opx-liq inference + OOD + intervals):
+    - 8 canonical opx joblibs  (~33 MB)
+    - model_IsolationForest_opx_liq.joblib (3.7 MB)
+    - results/nb03_per_family_winners.json (used by canonical_model_spec)
+    - results/nb07_conformal_qhat.json (used for prediction intervals)
+    Total ~37 MB — trivially fits in plain git, no LFS required.
+
+  OPTIONAL (benchmark-against-external-methods feature):
+    - All 4 Agreda-Lopez .joblib + .onnx + .json triples (~110 MB)
+    Still fits comfortably under Git LFS 1 GB quota.
+
+================================================================================
+2. FEATURE ENGINEERING MIGRATION PLAN
+================================================================================
+
+File: src/features.py (300 lines)
+
+Import chain
+------------
+  src/features.py
+  ├── __future__.annotations       (stdlib)
+  ├── numpy                        (third-party)   requirements.txt
+  └── pandas                       (third-party)   requirements.txt
+                                   *** NO INTERNAL IMPORTS ***
+
+Standalone import test
+----------------------
+  $ cp src/features.py /tmp/features_standalone.py
+  $ python -c "from features_standalone import build_feature_matrix,
+                lepr_to_training_features, cation_recalc_6oxy,
+                add_engineered_features, augment_dataframe, OXIDE_MASSES"
+  OK standalone import
+
+  ==> features.py drops into the app repo UNCHANGED. Zero porting work.
+
+Public functions the app will use
+---------------------------------
+  build_feature_matrix(df, feature_set, use_liq=True) -> (np.ndarray, [str])
+    feature_set in {'raw', 'raw_aug', 'alr', 'alr_aug', 'pwlr', 'pwlr_aug'}
+    Canonical winners use 'alr' (T opx-liq forest), 'raw' (P opx-liq forest
+    + both opx-liq boosted), 'pwlr' (all four opx-only + forest opx-only).
+
+  lepr_to_training_features(df) -> df
+    LEPR suffixed schema -> training schema + engineered cols (composed
+    rename + cation_recalc_6oxy + add_engineered_features).
+
+  lepr_to_training_schema(df) -> df         (rename only, no engineered cols)
+  cation_recalc_6oxy(df, oxides=OXIDES_OPX) -> df
+  add_engineered_features(df) -> df
+  augment_dataframe(df, n_aug=5, seed=42) -> df   (only for training; app
+                                                   does not need this)
+
+Exported constants
+  OXIDES_OPX, OXIDES_LIQ, ENGINEERED, MAJOR_OXIDES, MINOR_OXIDES,
+  OXIDE_MASSES, FEATURE_FUNCS
+
+================================================================================
+3. CONFORMAL q_hat VALUES
+================================================================================
+
+Source: results/nb07_conformal_qhat.json (also results/nb07_conformal_multi_alpha.csv)
+Calibration n = 43 (ArcPL-held-out residuals, canonical forest opx-liq)
+
+  Conformal q_hat values (forest family, opx-liq):
+    T_C:    q_68 = 40.00    q_80 = 65.00    q_90 = 107.75    q_95 = 148.33
+    P_kbar: q_68 =  2.50    q_80 =  5.00    q_90 =  10.00    q_95 =  17.57
+
+  Empirical coverage at nominal 0.90 (sanity check):
+    T_C:    83.3% (under-covers; n=43 calibration is small)
+    P_kbar: 91.9%
+
+Usage pattern in app:
+  point   = model.predict(X)[0]
+  lo, hi  = point - q_hat, point + q_hat
+
+================================================================================
+4. OOD DETECTOR STATUS
+================================================================================
+
+Artifact: models/model_IsolationForest_opx_liq.joblib  (3.7 MB, written by nb09)
+
+Training:
+  IsolationForest(n_estimators=300, contamination='auto',
+                  random_state=SEED_MODEL, n_jobs=-1)
+  .fit(X_train)               where X_train is the T opx-liq training matrix
+                              (pwlr feature space per v8-fix, see nb09 cell 10)
+
+Threshold policy (v8-fix in nb09):
+  _train_score   = iso.score_samples(X_train)
+  _ood_threshold = float(np.percentile(_train_score, 10))
+  label = -1 if score < _ood_threshold else +1
+
+NB10 OOD report on ArcPL:
+  in_distribution:     n = 10     (T RMSE 69.5,  P RMSE 4.35)
+  out_of_distribution: n = 384    (T RMSE 55.1,  P RMSE 2.55)
+  (subsets have distinct RMSE => pipeline_health PASS)
+
+*** PHASE 0 OUTSTANDING ISSUE ***
+The _ood_threshold value itself is NOT persisted to disk. The joblib saves
+only the fitted IsolationForest. Two options for the app:
+  (a) RECOMPUTE AT APP STARTUP: re-fit is cheap (~1 s on 600 rows), OR
+      refit not needed — just call `iso.score_samples(X_train)` on the
+      training matrix at app load. This requires shipping a snapshot of
+      X_train (or reproducing it via features.py from the training
+      parquet). Workable.
+  (b) PATCH NB09: add `(RESULTS / 'nb10_ood_threshold.json').write_text(
+      json.dumps({'q10_train_score': _ood_threshold}))` right after the
+      percentile line. Then the app reads one scalar. Recommended.
+
+================================================================================
+5. EXTERNAL MODEL WRAPPERS
+================================================================================
+
+File: src/external_models.py (245 lines)
+
+Internal dependencies:
+  - `from config import THERMOBAR_PINNED_VERSION, THERMOBAR_T_RETURNS_KELVIN`
+    (used only inside `_check_thermobar_version` + `_extract`)
+    => For the app, inline these as module-level constants or copy
+       the relevant lines from config.py. Constants are:
+         THERMOBAR_PINNED_VERSION = '1.0.70'
+         THERMOBAR_T_RETURNS_KELVIN = True
+
+Third-party dependencies:
+  numpy, pandas, joblib         (always)
+  onnxruntime                   (Agreda only, lazy-imported inside load_agreda)
+  Thermobar                     (Jorgenson/Wang/Putirka, lazy-imported)
+
+Public functions
+----------------
+  predict_agreda_from_df(df, models_dir, phase, target, n_perturb=15) -> dict
+      phase  : 'cpx_only' | 'cpx_liq'
+      target : 'T' | 'P'
+      df columns required:
+        cpx_only: AGREDA_CPX_COLS  (SiO2_Cpx, TiO2_Cpx, Al2O3_Cpx, FeOt_Cpx,
+                                    MgO_Cpx, MnO_Cpx, CaO_Cpx, Na2O_Cpx, Cr2O3_Cpx)
+        cpx_liq : AGREDA_CPX_COLS + AGREDA_LIQ_COLS
+                  (liq: SiO2_Liq TiO2_Liq Al2O3_Liq FeOt_Liq MgO_Liq
+                         MnO_Liq CaO_Liq Na2O_Liq K2O_Liq)
+      files loaded (per target):
+        models/external/agreda_{cpx|cpx_liq}_{T|P}.joblib   (sklearn scaler)
+        models/external/agreda_{cpx|cpx_liq}_{T|P}.onnx     (onnxruntime model)
+        models/external/agreda_{cpx|cpx_liq}_{T|P}.json     (bias dict)
+      returns: {'median': ndarray, 'p16': ndarray, 'p84': ndarray,
+                'median_raw': ndarray}   (length = len(df))
+
+  predict_jorgenson(df, target, phase='cpx_only', P_kbar=None, T_K=None) -> ndarray
+      Runs Thermobar.calculate_cpx_only_{press,temp} or
+           Thermobar.calculate_cpx_liq_{press,temp}
+      Requires df columns ending in `_Cpx` (and `_Liq` for cpx_liq).
+      If target=='T' pass P_kbar; if target=='P' pass T_K (Kelvin).
+
+  predict_wang(df, target, P_kbar=None, T_K=None) -> ndarray
+      Wang 2021 cpx-liq (eq2 for T, eq1 for P). cpx-liq ONLY — for cpx-only
+      Wang, call Thermobar.calculate_cpx_only_press_temp directly
+      (see nb04 cell 32 block for reference).
+
+  predict_putirka_cpx_liq(df, target, P_kbar=None, T_K=None) -> ndarray
+      T_Put2008_eq33 (T) / P_Put2008_eq30 (P).
+
+Internal helpers (safe to re-export if the app needs them)
+  AGREDA_CPX_COLS, AGREDA_LIQ_COLS, AGREDA_CPX_STD, AGREDA_K_STD
+  load_agreda, _perturb, _bias_correct, _extract
+
+================================================================================
+6. REFERENCE PREDICTION CODE  (copy this for the app's inference module)
+================================================================================
+
+Source: notebooks/nb04_putirka_benchmark.ipynb, cell 32 (the encyclopedia cell).
+This block is the verified, working inference pattern for the four Ours
+models. Extracted verbatim with the `_scope_train` = pre-engineered dataframe
+as the only external dependency.
+
+```python
+import joblib
+import numpy as np
+import pandas as pd
+
+from src.data import canonical_model_path, canonical_model_spec
+from src.features import build_feature_matrix, lepr_to_training_features
+
+# --- Prepare input dataframe ------------------------------------------------
+# If `df` uses LEPR suffixed schema (SiO2_Opx, SiO2_Liq, FeOt_Opx, FeOt_Liq),
+# shim to training schema + engineered cols.
+# If `df` already uses training schema (SiO2, liq_SiO2, FeO_total, Mg_num, ...)
+# you can call the shim anyway — it's idempotent on unsuffixed columns.
+scope_train = lepr_to_training_features(df.copy())
+
+# --- Load canonical models for each (track, target, family) -----------------
+MODELS  = Path('models')
+RESULTS = Path('results')
+enc_preds = {}   # name -> (T_pred, P_pred)
+
+# Ours opx-liq forest / boosted (training schema + liquid features)
+for fam in ['forest', 'boosted']:
+    sT = canonical_model_spec('T_C',    'opx_liq', fam, RESULTS)
+    sP = canonical_model_spec('P_kbar', 'opx_liq', fam, RESULTS)
+    mT = joblib.load(canonical_model_path('T_C',    'opx_liq', fam, MODELS, RESULTS))
+    mP = joblib.load(canonical_model_path('P_kbar', 'opx_liq', fam, MODELS, RESULTS))
+    XT, _ = build_feature_matrix(scope_train, sT['feature_set'], use_liq=True)
+    XP, _ = build_feature_matrix(scope_train, sP['feature_set'], use_liq=True)
+    enc_preds[f'Ours opx-liq {fam}'] = (mT.predict(XT), mP.predict(XP))
+
+# Ours opx-only forest / boosted (training schema, no liquid features)
+for fam in ['forest', 'boosted']:
+    sT = canonical_model_spec('T_C',    'opx_only', fam, RESULTS)
+    sP = canonical_model_spec('P_kbar', 'opx_only', fam, RESULTS)
+    mT = joblib.load(canonical_model_path('T_C',    'opx_only', fam, MODELS, RESULTS))
+    mP = joblib.load(canonical_model_path('P_kbar', 'opx_only', fam, MODELS, RESULTS))
+    XT, _ = build_feature_matrix(scope_train, sT['feature_set'], use_liq=False)
+    XP, _ = build_feature_matrix(scope_train, sP['feature_set'], use_liq=False)
+    enc_preds[f'Ours opx-only {fam}'] = (mT.predict(XT), mP.predict(XP))
+```
+
+Migration notes for the app:
+  * `canonical_model_path`/`canonical_model_spec` live in src/data.py and read
+    results/nb03_per_family_winners.json. They depend on `from config import
+    MODELS, RESULTS`. For the app, it is cleaner to INLINE a small helper:
+
+        import json, joblib
+        from pathlib import Path
+
+        WINNERS = json.loads((Path('results') / 'nb03_per_family_winners.json').read_text())
+
+        def load_canonical(target: str, track: str, family: str):
+            spec = WINNERS[f'{family}_family'][f'{track}_{target}']
+            model = joblib.load(Path('models') / spec['filename'])
+            return model, spec['feature_set']
+
+  * `lepr_to_training_features` requires NO config — numpy/pandas only.
+  * The four canonical feature_set values that matter:
+        forest_family:  T opx_only=pwlr  P opx_only=pwlr
+                        T opx_liq =alr   P opx_liq =raw
+        boosted_family: T opx_only=pwlr  P opx_only=pwlr
+                        T opx_liq =raw   P opx_liq =raw
+
+================================================================================
+7. TEST SAMPLE WITH EXPECTED PREDICTIONS
+================================================================================
+
+File written: examples/test_sample_for_app_validation.csv  (4,275 bytes)
+
+Source: data/processed/opx_clean_opx_liq.parquet, first row with no missing
+values in the 19 required columns (9 opx majors + 8 liq oxides + T_C + P_kbar).
+
+Observed ground truth (for reference only):
+  T_C    = 1100.00 C
+  P_kbar =    5.02 kbar
+
+Canonical forest opx-liq predictions (what the app must reproduce):
+  T_C    = 1187.08 C           (model: model_T_C_opx_liq_forest.joblib,   feature_set=alr)
+  P_kbar =    9.58 kbar        (model: model_P_kbar_opx_liq_forest.joblib, feature_set=raw)
+
+  90% conformal interval T:  [1079.33, 1294.83]   (q_hat_T_C   = 107.75)
+  90% conformal interval P:  [  -0.42,   19.58]   (q_hat_P_kbar = 10.00)
+
+Acceptance tolerance: +/- 0.5 for the point estimate and +/- 0.5 for each
+interval endpoint. If the app reproduces these within tolerance, Phase 2
+inference is considered functionally equivalent to the research notebook.
+
+================================================================================
+8. GITHUB STRATEGY RECOMMENDATION
+================================================================================
+
+Constraints (GitHub Free, Streamlit Community Cloud Free):
+  - Public repo required for Streamlit Community Cloud.
+  - Git LFS: 1 GB storage + 1 GB bandwidth/month free.
+  - GitHub Releases: 2 GB/file, unlimited assets.
+
+Our model footprint:
+  - Minimum app payload:          37 MB     (8 canonical opx + iforest + JSONs)
+  - Full payload w/ Agreda:      147 MB     (adds 4 onnx + 4 joblib + 4 JSON)
+  - Everything in research repo: 324 MB
+
+Recommendation:
+  Ship the MINIMUM payload (37 MB) in the app repo directly — no LFS
+  required. That fits within GitHub's normal file-size comfort zone
+  (largest file 13 MB, well under the 100 MB hard per-file limit).
+
+  If the app offers the 'compare to Jorgenson/Wang/Agreda' feature:
+    - Jorgenson/Wang/Putirka need no files (pip install Thermobar).
+    - Agreda needs the 110 MB external/ subtree. Use Git LFS for
+      *.onnx only; .joblib/.json stay in plain git. 110 MB << 1 GB
+      quota, so the free tier holds indefinitely.
+
+  Repo visibility: PUBLIC (Streamlit CC free tier requires this).
+
+  DO NOT use Releases-as-assets pattern — adds first-run download
+  latency for zero storage benefit at this size.
+
+================================================================================
+9. PHASE 0 OUTSTANDING ISSUES
+================================================================================
+
+Blocking (fix before app development begins):
+  NONE. All required artifacts exist and the canonical ML inference path
+  (features.py + joblib + winners.json) is verified working end-to-end
+  via the Check 6 test.
+
+Recommended to fix in research repo before the app's v1 release:
+
+  [MEDIUM] OOD threshold not persisted.
+    nb09 cell 10 computes `_ood_threshold = np.percentile(train_scores, 10)`
+    but only dumps the IsolationForest itself, not the threshold.
+    Fix: add one line dumping {'q10_train_score': _ood_threshold} to
+    results/nb10_ood_threshold.json. Without this, the app must ship
+    X_train (or reproduce it) to recompute the cutoff at load time.
+
+  [LOW] config.py couples external_models.py to the research repo.
+    _check_thermobar_version + _extract both `from config import ...`. For
+    a clean app port, either inline THERMOBAR_PINNED_VERSION='1.0.70' and
+    THERMOBAR_T_RETURNS_KELVIN=True, or copy config.py wholesale (it's small).
+
+  [LOW] src/data.canonical_model_path walks 3 candidate dirs.
+    If the app flattens the layout (models/ at repo root, no canonical/
+    subdir, no results/ joblibs), the three-candidate lookup is overkill.
+    A 6-line inline helper (shown in Section 6 migration notes) is
+    simpler and has fewer failure modes.
+
+  [INFO] Legacy v5 isolation_forest_opx_only.joblib is on disk but not
+    referenced by any current notebook. Safe to exclude from the app.
+
+================================================================================
+APPENDIX: file manifest for app migration
+================================================================================
+
+Copy into the app repo:
+
+  src/features.py                                     (unchanged)
+  results/nb03_per_family_winners.json                (pin the canonical mapping)
+  results/nb07_conformal_qhat.json                    (pin the interval widths)
+  models/model_T_C_opx_liq_forest.joblib              13 M
+  models/model_P_kbar_opx_liq_forest.joblib           8.8 M
+  models/model_T_C_opx_only_forest.joblib             3.9 M
+  models/model_P_kbar_opx_only_forest.joblib          2.9 M
+  models/model_T_C_opx_liq_boosted.joblib             1.6 M
+  models/model_P_kbar_opx_liq_boosted.joblib          752 K
+  models/model_T_C_opx_only_boosted.joblib            1.3 M
+  models/model_P_kbar_opx_only_boosted.joblib         320 K
+  models/model_IsolationForest_opx_liq.joblib         3.7 M
+  examples/test_sample_for_app_validation.csv        (this report + acceptance test)
+
+Optional (for external-method comparison feature):
+  src/external_models.py                             (add inline THERMOBAR_* consts)
+  models/external/agreda_cpx_{T,P}.{joblib,onnx,json}
+  models/external/agreda_cpx_liq_{T,P}.{joblib,onnx,json}
+  requirements.txt: + onnxruntime, + thermobar==1.0.70
+
+Python deps (minimum app):
+  numpy, pandas, scikit-learn (for joblib-loaded RF/XGB unpickling),
+  xgboost (if boosted models loaded), joblib, streamlit
+
+================================================================================
+END OF REPORT
+================================================================================

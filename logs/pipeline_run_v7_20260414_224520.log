@@ -1,0 +1,178 @@
+v7 pipeline run started at 2026-04-14T22:45:20.382430
+Run ID: 20260414_224520
+Notebooks (in order): ['nb01_data_cleaning', 'nb02_eda_pca', 'nb03_baseline_models', 'nb04b_lepr_arcpl_validation', 'nb04_putirka_benchmark', 'nb05_loso_validation', 'nb06_shap_analysis', 'nb07_bias_correction', 'nb08_natural_twopx', 'nb09_manuscript_compilation', 'nbF_figures']
+Starting from: nb04b_lepr_arcpl_validation (index 3)
+Per-cell timeout: 10800s
+Decision halt marker: 'OPERATOR DECISION REQUIRED'
+
+
+[22:45:20] starting nb04b_lepr_arcpl_validation
+Input Notebook:  C:\Users\NQTa\Documents\MLCourse\Final Project\notebooks\nb04b_lepr_arcpl_validation.ipynb
+Output Notebook: C:\Users\NQTa\Documents\MLCourse\Final Project\notebooks\executed\nb04b_lepr_arcpl_validation_executed.ipynb
+
+Executing:   0%|          | 0/20 [00:00<?, ?cell/s]Executing notebook with kernel: python3
+Executing Cell 1---------------------------------------
+Ending Cell 1------------------------------------------
+
+Executing:   5%|5         | 1/20 [00:02<00:49,  2.63s/cell]Executing Cell 2---------------------------------------
+Ending Cell 2------------------------------------------
+Executing Cell 3---------------------------------------
+Ending Cell 3------------------------------------------
+
+Executing:  15%|#5        | 3/20 [00:09<00:51,  3.06s/cell]Executing Cell 4---------------------------------------
+Ending Cell 4------------------------------------------
+
+Executing:  20%|##        | 4/20 [00:09<00:34,  2.14s/cell]Executing Cell 5---------------------------------------
+Ending Cell 5------------------------------------------
+Executing Cell 6---------------------------------------
+LEPR Opx-Liq raw rows: 491
+ArcPL subset (_notinLEPR): 324 rows, 23 studies
+
+Ending Cell 6------------------------------------------
+
+Executing:  30%|###       | 6/20 [00:10<00:20,  1.45s/cell]Executing Cell 7---------------------------------------
+Dropped 2 rows with negative H2O
+is_vbd count: 128/322
+
+Ending Cell 7------------------------------------------
+Executing Cell 8---------------------------------------
+Oxide total filter (95.0-102.0): 322 -> 318
+Cation sum filter (3.95-4.05): 318 -> 317
+Core oxide presence: 317 -> 317
+Pigeonite filter (Wo <= 5.0): 317 -> 306
+P ceiling filter: 306 -> 306
+KD filter (0.23-0.35): 306 -> 204
+
+Ending Cell 8------------------------------------------
+
+Executing:  40%|####      | 8/20 [00:11<00:10,  1.14cell/s]Executing Cell 9---------------------------------------
+ExPetDB unique (author, year) keys: 89
+Potential overlaps with ExPetDB: 0
+After dropping overlaps: 204 -> 204
+
+Final ArcPL: 204 samples from 18 studies
+is_vbd: 70 / measured: 134
+
+Ending Cell 9------------------------------------------
+
+Executing:  45%|####5     | 9/20 [00:11<00:07,  1.39cell/s]Executing Cell 10--------------------------------------
+Forest-family opx-liq: T uses RF/alr, P uses RF/raw
+
+Boosted-family opx-liq: T uses XGB/raw, P uses XGB/raw
+
+Ending Cell 10-----------------------------------------
+
+Executing:  50%|#####     | 10/20 [00:12<00:08,  1.18cell/s]Executing Cell 11--------------------------------------
+ArcPL external validation (all samples):
+  T: {'RMSE': 57.69426284258284, 'MAE': 48.1486969548263, 'R2': 0.714299704755345, 'n': 204}
+  P: {'RMSE': 2.7209851952075796, 'MAE': 2.2018745829732214, 'R2': 0.5689500569351713, 'n': 204}
+
+ArcPL stratified by H2O method:
+  measured (FTIR/SIMS/Raman/Sol): n=134
+    T: {'RMSE': 54.96832051267721, 'MAE': 46.15339523247043, 'R2': 0.7557776369686572, 'n': 134}
+    P: {'RMSE': 3.0991697571194052, 'MAE': 2.5797469196020586, 'R2': 0.532361234816711, 'n': 134}
+  VBD/mass_balance: n=70
+    T: {'RMSE': 62.582166105470854, 'MAE': 51.96827453762182, 'R2': 0.5746226107696234, 'n': 70}
+    P: {'RMSE': 1.7861243024112505, 'MAE': 1.4785189671408752, 'R2': 0.5943557007778111, 'n': 70}
+
+Ending Cell 11-----------------------------------------
+Executing Cell 12--------------------------------------
+
+Metrics table:
+           dataset target   RMSE    MAE    R2   n
+         ArcPL all      T 57.694 48.149 0.714 204
+         ArcPL all      P  2.721  2.202 0.569 204
+ArcPL measured H2O      T 54.968 46.153 0.756 134
+ArcPL measured H2O      P  3.099  2.580 0.532 134
+     ArcPL VBD H2O      T 62.582 51.968 0.575  70
+     ArcPL VBD H2O      P  1.786  1.479 0.594  70
+Per-family prediction CSVs written (forest, boosted).
+
+Ending Cell 12-----------------------------------------
+
+Executing:  60%|######    | 12/20 [00:12<00:04,  1.82cell/s]Executing Cell 13--------------------------------------
+Ending Cell 13-----------------------------------------
+Executing Cell 14--------------------------------------
+ArcPL RMSE with 95% bootstrap CIs (B=2000):
+  ArcPL all              T  n= 204  RMSE=57.69 [52.91, 62.82]
+  ArcPL all              P  n= 204  RMSE=2.72 [2.47, 2.98]
+  ArcPL measured H2O     T  n= 134  RMSE=54.97 [49.86, 59.96]
+  ArcPL measured H2O     P  n= 134  RMSE=3.10 [2.79, 3.40]
+  ArcPL VBD H2O          T  n=  70  RMSE=62.58 [52.95, 72.88]
+  ArcPL VBD H2O          P  n=  70  RMSE=1.79 [1.48, 2.08]
+
+Ending Cell 14-----------------------------------------
+
+Executing:  70%|#######   | 14/20 [00:12<00:02,  2.71cell/s]Executing Cell 15--------------------------------------
+Mann-Whitney U test on |residual|, measured H2O vs VBD:
+target unit  n_meas  n_vbd  median_meas_resid  median_vbd_resid  mannwhitney_U  p_value
+     T    C     134     70            46.1961           44.2772         4308.0   0.3406
+     P kbar     134     70             2.2175            1.3521         6442.0   0.0000
+
+Ending Cell 15-----------------------------------------
+
+Executing:  75%|#######5  | 15/20 [00:13<00:01,  3.11cell/s]Executing Cell 16--------------------------------------
+<Figure size 1100x900 with 4 Axes>
+Wrote fig_nb04b_arcpl_4panel.png and fig_nb04b_arcpl_4panel.pdf
+
+Ending Cell 16-----------------------------------------
+
+Executing:  80%|########  | 16/20 [00:18<00:06,  1.60s/cell]Executing Cell 17--------------------------------------
+========================================================================
+OPERATOR DECISION REQUIRED - NB04b external-validation framing
+========================================================================
+
+Dataset: ArcPL subset of LEPR, n = 204 samples
+  ArcPL all              T  n= 204  RMSE=57.69 [52.91, 62.82] C
+  ArcPL all              P  n= 204  RMSE=2.72 [2.47, 2.98] kbar
+  ArcPL measured H2O     T  n= 134  RMSE=54.97 [49.86, 59.96] C
+  ArcPL measured H2O     P  n= 134  RMSE=3.10 [2.79, 3.40] kbar
+  ArcPL VBD H2O          T  n=  70  RMSE=62.58 [52.95, 72.88] C
+  ArcPL VBD H2O          P  n=  70  RMSE=1.79 [1.48, 2.08] kbar
+  Mann-Whitney T: p = 0.3406  (median |resid| measured 46.20 vs VBD 44.28)
+  Mann-Whitney P: p = 1.212e-05  (median |resid| measured 2.22 vs VBD 1.35)
+
+Framing options:
+  A. "Comparable performance on measured-H2O subset": headline the
+     measured-H2O bootstrap CI (apples-to-apples vs experimental training).
+  B. "VBD inflates error": headline the measured-vs-VBD gap and the
+     Mann-Whitney p, arguing measured H2O is required for valid
+     external benchmarking.
+  C. "Hybrid": report all three scopes + the figure; let the reader see
+     both the measured-subset parity and the VBD degradation.
+
+Tell Claude which framing (A / B / C) to keep in the manuscript body.
+========================================================================
+
+Ending Cell 17-----------------------------------------
+Executing Cell 18--------------------------------------
+<Figure size 1100x1000 with 4 Axes>
+Ending Cell 18-----------------------------------------
+
+Executing:  90%|######### | 18/20 [00:21<00:02,  1.40s/cell]Executing Cell 19--------------------------------------
+<Figure size 1200x400 with 2 Axes>
+=== NB04b complete ===
+
+Ending Cell 19-----------------------------------------
+
+Executing:  95%|#########5| 19/20 [00:22<00:01,  1.35s/cell]Executing Cell 20--------------------------------------
+Formatting data and calculating Putirka estimates via Thermobar...
+
+
+Putirka ArcPL T Failure Rate: 86.3%
+Putirka ArcPL P Failure Rate: 86.3%
+
+Fair Comparison (n=28 for T, n=28 for P)
+Putirka T RMSE: 118.74 °C | ML T RMSE: 45.67 °C
+Putirka P RMSE: 3.39 kbar | ML P RMSE: 2.81 kbar
+
+
+Figure successfully saved to: C:\Users\NQTa\Documents\MLCourse\reports\figures\arcpl_putirka_benchmark.png
+
+<Figure size 1400x1800 with 6 Axes>
+Ending Cell 20-----------------------------------------
+
+Executing: 100%|##########| 20/20 [00:26<00:00,  1.96s/cell]
+Executing: 100%|##########| 20/20 [00:27<00:00,  1.36s/cell]
+[22:45:49] HALT: operator decision required in nb04b_lepr_arcpl_validation
+Review C:\Users\NQTa\Documents\MLCourse\Final Project\logs\HALT_v7_nb04b_lepr_arcpl_validation.log and resume with --resume-from <next_nb>

@@ -1,0 +1,26 @@
+Pipeline health report -- 2026-04-15T02:57:57.548643
+============================================================
+[PASS] NB01 cleaned core
+[PASS] NB02 clusters fig
+[PASS] NB03 winners json
+[PASS] NB03 winner count == 8 -- found 8
+[PASS] NB04 nb04_method_benchmark_arcpl_paired.csv
+[PASS] NB04 nb04_arcpl_opx_liq_metrics.csv
+[PASS] NB04 nb04_arcpl_h2o_stratified_metrics.csv
+[PASS] NB04 nb04_opx_only_comparison_all.csv
+[PASS] NB04 fig_nb04_method_benchmark_paired.png
+[PASS] NB04 fig_nb04_diagnostic_encyclopedia_T.png
+[PASS] NB04 fig_nb04_diagnostic_encyclopedia_P.png
+[PASS] NB04 fig_nb04_arcpl_opx_liq_scatter.png
+[PASS] NB04 fig_nb04_h2o_sensitivity.png
+[PASS] NB04 fig_nb04_opx_only_comparison.png
+[PASS] NB04 benchmark includes Putirka opx methods -- methods: ['Agreda-Lopez cpx-only', 'Agreda-Lopez cpx-liq', 'Jorgenson cpx-only', 'Wang 2021 cpx-liq', 'Putirka 2008 cpx-liq', 'Ours opx-liq forest', 'Ours opx-liq boosted', 'Ours opx-only forest', 'Ours opx-only boosted', 'Putirka 2008 opx-liq', 'Putirka 2008 opx-liq [true P]', 'Putirka 2008 opx-only']
+[PASS] NB05 LOSO pooled
+[PASS] NB05 generalization fig
+[PASS] NB06 SHAP P
+[PASS] NB06 SHAP T
+[PASS] NB07 bias correction null
+[PASS] NB08 predictions
+[PASS] NB09 manifest has no NaN fields -- all populated
+[PASS] NB09 OOD subsets have distinct RMSE -- at least one target shows different all/in/out metrics
+SUMMARY: 23 PASS, 0 FAIL of 23 checks

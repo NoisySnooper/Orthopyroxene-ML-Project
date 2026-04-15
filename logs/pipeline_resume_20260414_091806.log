@@ -1,0 +1,658 @@
+Resume run started at 2026-04-14T09:18:06.124861
+Starting from: nb04_putirka_benchmark (index 3)
+
+[09:18:06] starting nb04_putirka_benchmark
+Input Notebook:  C:\Users\NQTa\Documents\MLCourse\Final Project\notebooks\nb04_putirka_benchmark.ipynb
+Output Notebook: C:\Users\NQTa\Documents\MLCourse\Final Project\notebooks\executed\nb04_putirka_benchmark_executed.ipynb
+
+Executing:   0%|          | 0/14 [00:00<?, ?cell/s]Executing notebook with kernel: python3
+Executing Cell 1---------------------------------------
+Ending Cell 1------------------------------------------
+
+Executing:   7%|7         | 1/14 [00:13<03:00, 13.92s/cell]Executing Cell 2---------------------------------------
+Ending Cell 2------------------------------------------
+
+Executing:  14%|#4        | 2/14 [00:49<05:17, 26.47s/cell]Executing Cell 3---------------------------------------
+Ending Cell 3------------------------------------------
+
+Executing:  21%|##1       | 3/14 [00:51<02:50, 15.47s/cell]Executing Cell 4---------------------------------------
+Fair-comparison RF opx-liq: T uses pwlr, P uses raw
+
+Re-trained and cached model_RF_P_kbar_opx_liq_raw.joblib
+
+Ending Cell 4------------------------------------------
+
+Executing:  29%|##8       | 4/14 [00:54<01:44, 10.44s/cell]Executing Cell 5---------------------------------------
+Test set: 174 experiments from 19 studies
+
+Ending Cell 5------------------------------------------
+Executing Cell 6---------------------------------------
+Ending Cell 6------------------------------------------
+Executing Cell 7---------------------------------------
+Ending Cell 7------------------------------------------
+
+Executing:  50%|#####     | 7/14 [00:54<00:27,  3.90s/cell]Executing Cell 8---------------------------------------
+Option 2 (true P/T as input):
+
+  28a: n_valid=159, mean=1302
+  28b: n_valid=161, mean=1294
+  29a: n_valid=126, mean=11.1
+  29c: n_valid=145, mean=10.4
+
+Ending Cell 8------------------------------------------
+Executing Cell 9---------------------------------------
+Option 1 (iterative):
+  columns: ['P_kbar_calc', 'T_K_calc', 'Delta_P_kbar_Iter', 'Delta_T_K_Iter']
+  T_iter n_valid=126, mean=1303
+  P_iter n_valid=126, mean=11.4
+
+Ending Cell 9------------------------------------------
+
+Executing:  64%|######4   | 9/14 [00:54<00:12,  2.51s/cell]Executing Cell 10--------------------------------------
+ML: T RMSE=85.05, R2=0.624
+ML: P RMSE=5.39, R2=0.687
+Option 3 (ML-P fed to Putirka T, ML-T fed to Putirka P):
+  T_put_mlP mean=1308
+  P_put_mlT mean=11.4
+
+Ending Cell 10-----------------------------------------
+Executing Cell 11--------------------------------------
+T: all-method valid on 124/174
+P: all-method valid on 107/174
+
+
+FAIR comparison:
+                        Method Target   RMSE    MAE    R2  n_test
+          Putirka 28a (true P)      T 77.050 42.718 0.631     124
+  Putirka 28b_opx_sat (true P)      T 81.432 49.497 0.587     124
+   Putirka iterative (28a+29a)      T 77.842 49.592 0.623     124
+            Putirka 28a (ML P)      T 79.854 52.676 0.603     124
+                 ML-RF opx-liq      T 85.760 56.766 0.542     124
+          Putirka 29a (true T)      P  3.834  2.950 0.780     107
+Putirka 29c (opx-only, true T)      P  4.963  3.842 0.631     107
+   Putirka iterative (28a+29a)      P  3.818  2.918 0.782     107
+            Putirka 29a (ML T)      P  3.800  2.850 0.784     107
+                 ML-RF opx-liq      P  4.510  3.520 0.695     107
+
+Ending Cell 11-----------------------------------------
+
+Executing:  79%|#######8  | 11/14 [00:55<00:05,  1.75s/cell]Executing Cell 12--------------------------------------
+PRACTICAL comparison:
+                  Method Target   RMSE    MAE    R2  n_test  failure_pct
+ML-RF opx-liq (all test)      T 85.051 57.609 0.624     174        0.000
+ML-RF opx-liq (all test)      P  5.394  3.993 0.687     174        0.000
+    Putirka failure rate      T    NaN    NaN   NaN      50       28.736
+    Putirka failure rate      P    NaN    NaN   NaN      67       38.506
+
+Ending Cell 12-----------------------------------------
+Executing Cell 13--------------------------------------
+<Figure size 1500x1000 with 6 Axes>
+<Figure size 1500x1000 with 6 Axes>
+Ending Cell 13-----------------------------------------
+
+Executing:  93%|#########2| 13/14 [00:58<00:01,  1.68s/cell]Executing Cell 14--------------------------------------
+<Figure size 1200x400 with 2 Axes>
+=== PHASE 4 COMPLETE ===
+
+Ending Cell 14-----------------------------------------
+
+Executing: 100%|##########| 14/14 [00:58<00:00,  1.45s/cell]
+Executing: 100%|##########| 14/14 [00:59<00:00,  4.27s/cell]
+[09:19:22] OK nb04_putirka_benchmark
+
+[09:19:22] starting nb04b_lepr_arcpl_validation
+Input Notebook:  C:\Users\NQTa\Documents\MLCourse\Final Project\notebooks\nb04b_lepr_arcpl_validation.ipynb
+Output Notebook: C:\Users\NQTa\Documents\MLCourse\Final Project\notebooks\executed\nb04b_lepr_arcpl_validation_executed.ipynb
+
+Executing:   0%|          | 0/14 [00:00<?, ?cell/s]Executing notebook with kernel: python3
+Executing Cell 1---------------------------------------
+Ending Cell 1------------------------------------------
+
+Executing:   7%|7         | 1/14 [00:01<00:24,  1.87s/cell]Executing Cell 2---------------------------------------
+Ending Cell 2------------------------------------------
+
+Executing:  14%|#4        | 2/14 [00:03<00:20,  1.68s/cell]Executing Cell 3---------------------------------------
+Ending Cell 3------------------------------------------
+
+Executing:  21%|##1       | 3/14 [00:03<00:10,  1.02cell/s]Executing Cell 4---------------------------------------
+Ending Cell 4------------------------------------------
+Executing Cell 5---------------------------------------
+LEPR Opx-Liq raw rows: 491
+ArcPL subset (_notinLEPR): 324 rows, 23 studies
+
+Ending Cell 5------------------------------------------
+
+Executing:  36%|###5      | 5/14 [00:07<00:13,  1.55s/cell]Executing Cell 6---------------------------------------
+Dropped 2 rows with negative H2O
+is_vbd count: 128/322
+
+Ending Cell 6------------------------------------------
+Executing Cell 7---------------------------------------
+Oxide total filter (95.0-102.0): 322 -> 318
+Cation sum filter (3.95-4.05): 318 -> 317
+Core oxide presence: 317 -> 317
+Pigeonite filter (Wo <= 5.0): 317 -> 306
+P ceiling filter: 306 -> 306
+KD filter (0.23-0.35): 306 -> 204
+
+Ending Cell 7------------------------------------------
+Executing Cell 8---------------------------------------
+ExPetDB unique (author, year) keys: 89
+Potential overlaps with ExPetDB: 0
+After dropping overlaps: 204 -> 204
+
+Final ArcPL: 204 samples from 18 studies
+is_vbd: 70 / measured: 134
+
+Ending Cell 8------------------------------------------
+
+Executing:  57%|#####7    | 8/14 [00:07<00:04,  1.38cell/s]Executing Cell 9---------------------------------------
+Using RF opx-liq: T uses pwlr, P uses raw
+
+Ending Cell 9------------------------------------------
+
+Executing:  64%|######4   | 9/14 [00:08<00:03,  1.53cell/s]Executing Cell 10--------------------------------------
+ArcPL external validation (all samples):
+  T: {'RMSE': 65.6440682062727, 'MAE': 54.19999266910922, 'R2': 0.6301408154831598, 'n': 204}
+  P: {'RMSE': 2.72098519520758, 'MAE': 2.2018745829732214, 'R2': 0.5689500569351711, 'n': 204}
+
+ArcPL stratified by H2O method:
+  measured (FTIR/SIMS/Raman/Sol): n=134
+    T: {'RMSE': 62.116754814513925, 'MAE': 51.05155719070872, 'R2': 0.6881268328470377, 'n': 134}
+    P: {'RMSE': 3.0991697571194057, 'MAE': 2.5797469196020586, 'R2': 0.532361234816711, 'n': 134}
+  VBD/mass_balance: n=70
+    T: {'RMSE': 71.9153756908228, 'MAE': 60.226997727761606, 'R2': 0.43828408779292793, 'n': 70}
+    P: {'RMSE': 1.786124302411251, 'MAE': 1.4785189671408756, 'R2': 0.5943557007778107, 'n': 70}
+
+Ending Cell 10-----------------------------------------
+Executing Cell 11--------------------------------------
+
+Metrics table:
+           dataset target   RMSE    MAE    R2   n
+         ArcPL all      T 65.644 54.200 0.630 204
+         ArcPL all      P  2.721  2.202 0.569 204
+ArcPL measured H2O      T 62.117 51.052 0.688 134
+ArcPL measured H2O      P  3.099  2.580 0.532 134
+     ArcPL VBD H2O      T 71.915 60.227 0.438  70
+     ArcPL VBD H2O      P  1.786  1.479 0.594  70
+
+Ending Cell 11-----------------------------------------
+Executing Cell 12--------------------------------------
+<Figure size 1100x1000 with 4 Axes>
+Ending Cell 12-----------------------------------------
+
+Executing:  86%|########5 | 12/14 [00:08<00:00,  2.12cell/s]Executing Cell 13--------------------------------------
+<Figure size 1200x400 with 2 Axes>
+=== PHASE 4.5 COMPLETE ===
+
+Ending Cell 13-----------------------------------------
+
+Executing:  93%|#########2| 13/14 [00:09<00:00,  2.10cell/s]Executing Cell 14--------------------------------------
+Formatting data and calculating Putirka estimates via Thermobar...
+
+Putirka ArcPL T Failure Rate: 86.3%
+Putirka ArcPL P Failure Rate: 86.3%
+
+Fair Comparison (n=28 for T, n=28 for P)
+Putirka T RMSE: 118.74 °C | ML T RMSE: 70.05 °C
+Putirka P RMSE: 3.39 kbar | ML P RMSE: 2.81 kbar
+
+
+Figure successfully saved to: C:\Users\NQTa\Documents\MLCourse\reports\figures\arcpl_putirka_benchmark.png
+
+<Figure size 1400x1800 with 6 Axes>
+Ending Cell 14-----------------------------------------
+
+Executing: 100%|##########| 14/14 [00:10<00:00,  1.44cell/s]
+Executing: 100%|##########| 14/14 [00:11<00:00,  1.22cell/s]
+[09:19:36] OK nb04b_lepr_arcpl_validation
+
+[09:19:36] starting nb05_loso_validation
+Input Notebook:  C:\Users\NQTa\Documents\MLCourse\Final Project\notebooks\nb05_loso_validation.ipynb
+Output Notebook: C:\Users\NQTa\Documents\MLCourse\Final Project\notebooks\executed\nb05_loso_validation_executed.ipynb
+
+Executing:   0%|          | 0/7 [00:00<?, ?cell/s]Executing notebook with kernel: python3
+Executing Cell 1---------------------------------------
+Ending Cell 1------------------------------------------
+
+Executing:  14%|#4        | 1/7 [00:01<00:10,  1.78s/cell]Executing Cell 2---------------------------------------
+Ending Cell 2------------------------------------------
+
+Executing:  29%|##8       | 2/7 [00:04<00:10,  2.11s/cell]Executing Cell 3---------------------------------------
+Ending Cell 3------------------------------------------
+Executing Cell 4---------------------------------------
+Phase 3R global winning feature set: pwlr
+opx-liq rows: 600, studies: 93, clusters: 3, X.shape: (600, 72)
+Best params reconstructed for models: ['ERT', 'GB', 'RF', 'XGB']
+
+Ending Cell 4------------------------------------------
+
+Executing:  57%|#####7    | 4/7 [00:04<00:02,  1.19cell/s]Executing Cell 5---------------------------------------
+Ending Cell 5------------------------------------------
+Executing Cell 6---------------------------------------
+strategy:   0%|          | 0/3 [00:00<?, ?it/s]
+
+== LOSO (93 folds, group=Citation) ==
+
+LOSO:   0%|          | 0/4 [00:00<?, ?it/s]
+  RF   T_C      rmse=74.65  r2=+0.821  n=600
+
+  RF   P_kbar   rmse=5.93  r2=+0.599  n=600
+
+  ERT  T_C      rmse=78.40  r2=+0.802  n=600
+
+  ERT  P_kbar   rmse=6.09  r2=+0.576  n=600
+
+  XGB  T_C      rmse=84.01  r2=+0.773  n=600
+
+  XGB  P_kbar   rmse=5.36  r2=+0.673  n=600
+
+  GB   T_C      rmse=77.23  r2=+0.808  n=600
+
+  GB   P_kbar   rmse=5.93  r2=+0.599  n=600
+
+== Cluster-KFold (3 folds, group=chemical_cluster) ==
+
+Cluster-KFold:   0%|          | 0/4 [00:00<?, ?it/s]
+  RF   T_C      rmse=103.30  r2=+0.657  n=600
+
+  RF   P_kbar   rmse=6.78  r2=+0.476  n=600
+
+  ERT  T_C      rmse=115.20  r2=+0.574  n=600
+
+  ERT  P_kbar   rmse=6.80  r2=+0.472  n=600
+
+  XGB  T_C      rmse=113.91  r2=+0.583  n=600
+
+  XGB  P_kbar   rmse=6.38  r2=+0.536  n=600
+
+  GB   T_C      rmse=104.71  r2=+0.648  n=600
+
+  GB   P_kbar   rmse=6.97  r2=+0.445  n=600
+
+== Gridded-PT (9 folds, group=pt_grid) ==
+
+Gridded-PT:   0%|          | 0/4 [00:00<?, ?it/s]
+  RF   T_C      rmse=101.69  r2=+0.668  n=600
+
+  RF   P_kbar   rmse=8.43  r2=+0.189  n=600
+
+  ERT  T_C      rmse=106.95  r2=+0.632  n=600
+
+  ERT  P_kbar   rmse=8.43  r2=+0.189  n=600
+
+  XGB  T_C      rmse=107.72  r2=+0.627  n=600
+
+  XGB  P_kbar   rmse=7.75  r2=+0.315  n=600
+
+  GB   T_C      rmse=97.70  r2=+0.693  n=600
+
+  GB   P_kbar   rmse=7.75  r2=+0.315  n=600
+
+Wrote 24 pooled rows, 840 per-fold rows
+
+Ending Cell 6------------------------------------------
+
+Executing:  86%|########5 | 6/7 [21:56<05:10, 310.49s/cell]Executing Cell 7---------------------------------------
+=== PHASE 5R COMPLETE ===
+  24 pooled rows across 3 strategies x 4 models x 2 targets
+  840 per-fold rows
+
+Ending Cell 7------------------------------------------
+
+Executing: 100%|##########| 7/7 [21:56<00:00, 232.18s/cell]
+Executing: 100%|##########| 7/7 [21:58<00:00, 188.32s/cell]
+[09:41:36] OK nb05_loso_validation
+
+[09:41:36] starting nb06_shap_analysis
+Input Notebook:  C:\Users\NQTa\Documents\MLCourse\Final Project\notebooks\nb06_shap_analysis.ipynb
+Output Notebook: C:\Users\NQTa\Documents\MLCourse\Final Project\notebooks\executed\nb06_shap_analysis_executed.ipynb
+
+Executing:   0%|          | 0/22 [00:00<?, ?cell/s]Executing notebook with kernel: python3
+Executing Cell 1---------------------------------------
+Ending Cell 1------------------------------------------
+
+Executing:   5%|4         | 1/22 [00:03<01:08,  3.26s/cell]Executing Cell 2---------------------------------------
+Ending Cell 2------------------------------------------
+
+Executing:   9%|9         | 2/22 [00:19<03:32, 10.60s/cell]Executing Cell 3---------------------------------------
+Ending Cell 3------------------------------------------
+
+Executing:  14%|#3        | 3/22 [00:19<01:50,  5.83s/cell]Executing Cell 4---------------------------------------
+Phase 3R global winning feature set: pwlr
+
+Test set: 174 experiments
+X_test shape: (174, 72), n_features: 72
+
+Ending Cell 4------------------------------------------
+
+Executing:  18%|#8        | 4/22 [00:20<01:11,  3.99s/cell]Executing Cell 5---------------------------------------
+shap_values_P shape: (174, 72)
+
+Ending Cell 5------------------------------------------
+
+Executing:  23%|##2       | 5/22 [00:33<02:03,  7.26s/cell]Executing Cell 6---------------------------------------
+shap_values_T shape: (174, 72)
+
+Ending Cell 6------------------------------------------
+
+Executing:  27%|##7       | 6/22 [00:58<03:33, 13.31s/cell]Executing Cell 7---------------------------------------
+Ending Cell 7------------------------------------------
+
+Executing:  32%|###1      | 7/22 [01:06<02:56, 11.74s/cell]Executing Cell 8---------------------------------------
+=== PHASE 6R COMPLETE ===
+  feature set: pwlr
+  n features: 72
+
+Ending Cell 8------------------------------------------
+Executing Cell 9---------------------------------------
+Ending Cell 9------------------------------------------
+
+Executing:  41%|####      | 9/22 [01:07<01:19,  6.10s/cell]Executing Cell 10--------------------------------------
+Baseline RMSE P = 6.809 kbar | T = 84.30 C
+
+Ending Cell 10-----------------------------------------
+
+Executing:  45%|####5     | 10/22 [01:21<01:39,  8.31s/cell]Executing Cell 11--------------------------------------
+Ending Cell 11-----------------------------------------
+Executing Cell 12--------------------------------------
+Dropping 10 features: ['pwlr_liq_SiO2_TiO2', 'pwlr_liq_SiO2_Al2O3', 'pwlr_liq_SiO2_FeO', 'pwlr_liq_SiO2_MgO', 'pwlr_liq_SiO2_CaO', 'pwlr_liq_SiO2_Na2O', 'pwlr_liq_SiO2_K2O', 'pwlr_liq_MgO_CaO', 'pwlr_liq_MgO_Na2O', 'pwlr_liq_MgO_K2O']
+
+P RMSE: 6.809 -> 7.330 kbar (delta = +0.521)
+T RMSE: 84.30 -> 95.22 C    (delta = +10.92)
+
+Ending Cell 12-----------------------------------------
+
+Executing:  55%|#####4    | 12/22 [01:34<01:15,  7.56s/cell]Executing Cell 13--------------------------------------
+Ending Cell 13-----------------------------------------
+Executing Cell 14--------------------------------------
+<Figure size 1200x500 with 2 Axes>
+Ending Cell 14-----------------------------------------
+
+Executing:  64%|######3   | 14/22 [01:37<00:41,  5.25s/cell]Executing Cell 15--------------------------------------
+Ending Cell 15-----------------------------------------
+Executing Cell 16--------------------------------------
+<Figure size 700x600 with 2 Axes>
+Ending Cell 16-----------------------------------------
+
+Executing:  73%|#######2  | 16/22 [01:40<00:23,  3.95s/cell]Executing Cell 17--------------------------------------
+Ending Cell 17-----------------------------------------
+Executing Cell 18--------------------------------------
+Baseline P RMSE:   6.809 kbar
+Shuffled P RMSE:   10.297 kbar
+Shuffled R^2:      -0.141   (expected <= 0)
+
+Ending Cell 18-----------------------------------------
+
+Executing:  82%|########1 | 18/22 [01:45<00:13,  3.48s/cell]Executing Cell 19--------------------------------------
+Ending Cell 19-----------------------------------------
+Executing Cell 20--------------------------------------
+RF P RMSE:    6.809 kbar
+Dummy P RMSE: 9.663 kbar
+
+Ending Cell 20-----------------------------------------
+
+Executing:  91%|######### | 20/22 [01:45<00:04,  2.37s/cell]Executing Cell 21--------------------------------------
+Ending Cell 21-----------------------------------------
+Executing Cell 22--------------------------------------
+Constrained perfect-signal P RMSE: 5.122 kbar (baseline 6.809)
+
+Unconstrained perfect-signal P RMSE: 0.580 kbar (expected ~0.1)
+Linear perfect-signal P RMSE: 0.115 kbar
+
+Ending Cell 22-----------------------------------------
+
+Executing: 100%|##########| 22/22 [01:50<00:00,  2.38s/cell]
+Executing: 100%|##########| 22/22 [01:52<00:00,  5.11s/cell]
+[09:43:32] OK nb06_shap_analysis
+
+[09:43:32] starting nb07_bias_correction
+Input Notebook:  C:\Users\NQTa\Documents\MLCourse\Final Project\notebooks\nb07_bias_correction.ipynb
+Output Notebook: C:\Users\NQTa\Documents\MLCourse\Final Project\notebooks\executed\nb07_bias_correction_executed.ipynb
+
+Executing:   0%|          | 0/11 [00:00<?, ?cell/s]Executing notebook with kernel: python3
+Executing Cell 1---------------------------------------
+Ending Cell 1------------------------------------------
+
+Executing:   9%|9         | 1/11 [00:02<00:23,  2.39s/cell]Executing Cell 2---------------------------------------
+Ending Cell 2------------------------------------------
+
+Executing:  18%|#8        | 2/11 [00:07<00:35,  3.90s/cell]Executing Cell 3---------------------------------------
+Ending Cell 3------------------------------------------
+
+Executing:  27%|##7       | 3/11 [00:07<00:17,  2.22s/cell]Executing Cell 4---------------------------------------
+Phase 3R global winning feature set: pwlr
+
+train n=426 test n=174 features=72
+
+Ending Cell 4------------------------------------------
+
+Executing:  36%|###6      | 4/11 [00:08<00:13,  1.87s/cell]Executing Cell 5---------------------------------------
+OOF done. OOF T RMSE = 73.37, OOF P RMSE = 5.58
+
+Ending Cell 5------------------------------------------
+
+Executing:  45%|####5     | 5/11 [00:56<01:49, 18.19s/cell]Executing Cell 6---------------------------------------
+target                  track  rmse_train  mae_train  rmse_test  mae_test  r2_test
+   T_C               1_raw_rf       0.000      0.000     84.300    57.428    0.631
+   T_C 2_linear_trainfit_leak       0.000      0.000     84.300    57.428    0.631
+   T_C        3_linear_ooffit       5.235      4.062     84.504    57.714    0.629
+   T_C     4_piecewise_ooffit      12.693     10.707     84.665    57.972    0.627
+P_kbar               1_raw_rf       1.333      0.394      6.809     4.623    0.501
+P_kbar 2_linear_trainfit_leak       1.234      0.577      6.729     4.568    0.513
+P_kbar        3_linear_ooffit       1.653      1.146      6.596     4.478    0.532
+P_kbar     4_piecewise_ooffit       1.784      1.275      6.636     4.699    0.526
+
+Ending Cell 6------------------------------------------
+
+Executing:  55%|#####4    | 6/11 [00:56<01:00, 12.09s/cell]Executing Cell 7---------------------------------------
+target           track  coverage_68  rmse_median
+   T_C A_trainfit_leak        1.000        0.000
+   T_C    B_oof_honest        0.737       73.373
+   T_C          C_test        0.707       84.300
+P_kbar A_trainfit_leak        1.000        1.584
+P_kbar    B_oof_honest        0.831        5.604
+P_kbar          C_test        0.615        6.935
+
+Ending Cell 7------------------------------------------
+
+Executing:  64%|######3   | 7/11 [02:15<02:16, 34.06s/cell]Executing Cell 8---------------------------------------
+Ending Cell 8------------------------------------------
+Executing Cell 9---------------------------------------
+Conformal coverage P: 92.0% (target 90%)
+Conformal coverage T: 79.3% (target 90%)
+q_hat P = 10.000 kbar, q_hat T = 90.00 C
+
+Ending Cell 9------------------------------------------
+
+Executing:  82%|########1 | 9/11 [02:18<00:36, 18.34s/cell]Executing Cell 10--------------------------------------
+Saved test predictions n=174 to nb07_test_predictions.csv
+
+Ending Cell 10-----------------------------------------
+Executing Cell 11--------------------------------------
+=== PHASE 7R COMPLETE ===
+  winning feature set: pwlr
+  AB test tracks: ['1_raw_rf', '2_linear_trainfit_leak', '3_linear_ooffit', '4_piecewise_ooffit']
+  QRF coverage tracks: ['A_trainfit_leak', 'B_oof_honest', 'C_test']
+
+Ending Cell 11-----------------------------------------
+
+Executing: 100%|##########| 11/11 [02:19<00:00, 12.67s/cell]
+[09:45:54] OK nb07_bias_correction
+
+[09:45:54] starting nb08_natural_samples
+Input Notebook:  C:\Users\NQTa\Documents\MLCourse\Final Project\notebooks\nb08_natural_samples.ipynb
+Output Notebook: C:\Users\NQTa\Documents\MLCourse\Final Project\notebooks\executed\nb08_natural_samples_executed.ipynb
+
+Executing:   0%|          | 0/12 [00:00<?, ?cell/s]Executing notebook with kernel: python3
+Executing Cell 1---------------------------------------
+Ending Cell 1------------------------------------------
+
+Executing:   8%|8         | 1/12 [00:02<00:29,  2.69s/cell]Executing Cell 2---------------------------------------
+Ending Cell 2------------------------------------------
+
+Executing:  17%|#6        | 2/12 [00:05<00:27,  2.77s/cell]Executing Cell 3---------------------------------------
+Ending Cell 3------------------------------------------
+Executing Cell 4---------------------------------------
+Ending Cell 4------------------------------------------
+Executing Cell 5---------------------------------------
+40 mW/m^2: T(100 km)=518 C, P(100 km)=30.5 kbar
+40 mW/m^2: T(200 km)=764 C, P(200 km)=62.8 kbar
+60 mW/m^2: T(100 km)=1240 C, P(100 km)=30.5 kbar
+Geotherm sanity check: PASS
+
+Ending Cell 5------------------------------------------
+Executing Cell 6---------------------------------------
+Natural file kind: csv
+
+Ending Cell 6------------------------------------------
+
+Executing:  50%|#####     | 6/12 [00:05<00:04,  1.45cell/s]Executing Cell 7---------------------------------------
+Loaded 53050 rows from natural_opx_cleaned.csv
+
+After core-oxide dropna: 53050/53050
+df_natural shape: (53050, 9)
+
+Ending Cell 7------------------------------------------
+
+Executing:  58%|#####8    | 7/12 [00:06<00:02,  1.70cell/s]Executing Cell 8---------------------------------------
+oxide-total filter: 53050 -> 3237
+cation-sum filter: 3208
+pigeonite filter: 3145
+After all NB01-style cleaning: 3145
+
+Ending Cell 8------------------------------------------
+
+Executing:  67%|######6   | 8/12 [00:09<00:04,  1.16s/cell]Executing Cell 9---------------------------------------
+RF opx-only: T uses raw, P uses raw
+
+X_train_T shape: (845, 16), X_train_P shape: (845, 16)
+
+Ending Cell 9------------------------------------------
+
+Executing:  75%|#######5  | 9/12 [00:09<00:02,  1.07cell/s]Executing Cell 10--------------------------------------
+Saved opx-only QRF models
+
+Saved IsolationForest
+
+Ending Cell 10-----------------------------------------
+
+Executing:  83%|########3 | 10/12 [00:11<00:02,  1.14s/cell]Executing Cell 11--------------------------------------
+IsolationForest flagged 217/3145 as outliers
+after OOD filter: 2928
+after CV<0.3 filter: 1
+  CV<0.2: 0
+  CV<0.3: 1
+  CV<0.5: 9
+
+Ending Cell 11-----------------------------------------
+
+Executing:  92%|#########1| 11/12 [00:11<00:01,  1.02s/cell]Executing Cell 12--------------------------------------
+Plausibility checks: PASS
+
+=== PHASE 8 COMPLETE ===
+
+Ending Cell 12-----------------------------------------
+
+Executing: 100%|##########| 12/12 [00:11<00:00,  1.28cell/s]
+Executing: 100%|##########| 12/12 [00:12<00:00,  1.05s/cell]
+[09:46:10] OK nb08_natural_samples
+
+[09:46:10] starting nb10_extended_analyses
+Input Notebook:  C:\Users\NQTa\Documents\MLCourse\Final Project\notebooks\nb10_extended_analyses.ipynb
+Output Notebook: C:\Users\NQTa\Documents\MLCourse\Final Project\notebooks\executed\nb10_extended_analyses_executed.ipynb
+
+Executing:   0%|          | 0/10 [00:00<?, ?cell/s]Executing notebook with kernel: python3
+Executing Cell 1---------------------------------------
+Ending Cell 1------------------------------------------
+
+Executing:  10%|#         | 1/10 [00:02<00:22,  2.46s/cell]Executing Cell 2---------------------------------------
+Ending Cell 2------------------------------------------
+
+Executing:  20%|##        | 2/10 [00:04<00:19,  2.46s/cell]Executing Cell 3---------------------------------------
+Ending Cell 3------------------------------------------
+Executing Cell 4---------------------------------------
+Phase 3R winning feature set: pwlr
+
+ArcPL n=204
+
+Ending Cell 4------------------------------------------
+
+Executing:  40%|####      | 4/10 [00:05<00:06,  1.12s/cell]Executing Cell 5---------------------------------------
+Test set has no Cpx columns; two-pyroxene benchmark skipped.
+
+Ending Cell 5------------------------------------------
+
+Executing:  50%|#####     | 5/10 [00:06<00:04,  1.09cell/s]Executing Cell 6---------------------------------------
+target   n  pearson_r  pearson_p  spearman_r  spearman_p   slope  intercept  mean_resid_dry  mean_resid_wet
+   T_C 204     0.2831     0.0000      0.2527      0.0003  5.4712     8.5271         32.1762         33.9302
+P_kbar 204    -0.2726     0.0001     -0.2991      0.0000 -0.3028     1.7141          1.5737          0.1882
+
+Ending Cell 6------------------------------------------
+
+Executing:  60%|######    | 6/10 [00:06<00:02,  1.46cell/s]Executing Cell 7---------------------------------------
+Ending Cell 7------------------------------------------
+
+Executing:  70%|#######   | 7/10 [00:06<00:02,  1.40cell/s]
+Executing:  70%|#######   | 7/10 [00:07<00:03,  1.10s/cell]
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "C:\Users\NQTa\Documents\MLCourse\Final Project\.venv\Lib\site-packages\papermill\__main__.py", line 4, in <module>
+    papermill()
+    ~~~~~~~~~^^
+  File "C:\Users\NQTa\Documents\MLCourse\Final Project\.venv\Lib\site-packages\click\core.py", line 1485, in __call__
+    return self.main(*args, **kwargs)
+           ~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "C:\Users\NQTa\Documents\MLCourse\Final Project\.venv\Lib\site-packages\click\core.py", line 1406, in main
+    rv = self.invoke(ctx)
+  File "C:\Users\NQTa\Documents\MLCourse\Final Project\.venv\Lib\site-packages\click\core.py", line 1269, in invoke
+    return ctx.invoke(self.callback, **ctx.params)
+           ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\NQTa\Documents\MLCourse\Final Project\.venv\Lib\site-packages\click\core.py", line 824, in invoke
+    return callback(*args, **kwargs)
+  File "C:\Users\NQTa\Documents\MLCourse\Final Project\.venv\Lib\site-packages\click\decorators.py", line 34, in new_func
+    return f(get_current_context(), *args, **kwargs)
+  File "C:\Users\NQTa\Documents\MLCourse\Final Project\.venv\Lib\site-packages\papermill\cli.py", line 235, in papermill
+    execute_notebook(
+    ~~~~~~~~~~~~~~~~^
+        input_path=input_path,
+        ^^^^^^^^^^^^^^^^^^^^^^
+    ...<15 lines>...
+        execution_timeout=execution_timeout,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\NQTa\Documents\MLCourse\Final Project\.venv\Lib\site-packages\papermill\execute.py", line 131, in execute_notebook
+    raise_for_execution_errors(nb, output_path)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "C:\Users\NQTa\Documents\MLCourse\Final Project\.venv\Lib\site-packages\papermill\execute.py", line 251, in raise_for_execution_errors
+    raise error
+papermill.exceptions.PapermillExecutionError: 
+---------------------------------------------------------------------------
+Exception encountered at "In [6]":
+---------------------------------------------------------------------------
+ValueError                                Traceback (most recent call last)
+Cell In[6], line 17
+     13     ('T_C',    df_test['T_C'].values, test_pred_T, iqr_T),
+     14     ('P_kbar', df_test['P_kbar'].values, test_pred_P, iqr_P),
+     15 ]:
+     16     abs_res = np.abs(pred - y_true)
+---> 17     r_p, _ = pearsonr(iqr_vals, abs_res)
+     18     r_s, _ = spearmanr(iqr_vals, abs_res)
+     19     # Calibration: fraction of samples where |residual| <= IQR/2
+     20     calib = float(np.mean(abs_res <= iqr_vals / 2.0))
+
+File ~\Documents\MLCourse\Final Project\.venv\Lib\site-packages\scipy\stats\_stats_py.py:4663, in pearsonr(x, y, alternative, method, axis)
+   4659         message = '`x` and `y` must be broadcastable.'
+   4660         raise ValueError(message) from e
+   4661 
+   4662     if x.shape[axis] != y.shape[axis]:
+-> 4663         raise ValueError('`x` and `y` must have the same length along `axis`.')
+   4664 
+   4665     if x.shape[axis] < 2:
+   4666         raise ValueError('`x` and `y` must have length at least 2.')
+
+ValueError: `x` and `y` must have the same length along `axis`.
+
+[09:46:21] FAILED nb10_extended_analyses rc=1

@@ -1,0 +1,55 @@
+{
+  "global_feature_set": "pwlr",
+  "runner_up_feature_set": "raw",
+  "feature_set_ranking": [
+    {
+      "feature_set": "pwlr",
+      "wins": 3,
+      "mean_rank": 1.5
+    },
+    {
+      "feature_set": "raw",
+      "wins": 1,
+      "mean_rank": 2.25
+    },
+    {
+      "feature_set": "alr",
+      "wins": 0,
+      "mean_rank": 2.25
+    }
+  ],
+  "per_combo_winners": {
+    "opx_liq_P_kbar": {
+      "model_name": "XGB",
+      "feature_set": "pwlr",
+      "rmse_mean": 5.8800483733814675,
+      "rmse_std": 1.3654386261253688,
+      "r2_mean": 0.6218331208117136,
+      "filename": "model_XGB_P_kbar_opx_liq_pwlr.joblib"
+    },
+    "opx_liq_T_C": {
+      "model_name": "RF",
+      "feature_set": "pwlr",
+      "rmse_mean": 78.5812521116107,
+      "rmse_std": 7.09085008353591,
+      "r2_mean": 0.7803612775989518,
+      "filename": "model_RF_T_C_opx_liq_pwlr.joblib"
+    },
+    "opx_only_P_kbar": {
+      "model_name": "RF",
+      "feature_set": "pwlr",
+      "rmse_mean": 10.985494209912492,
+      "rmse_std": 3.084955598737194,
+      "r2_mean": 0.2811225874913347,
+      "filename": "model_RF_P_kbar_opx_only_pwlr.joblib"
+    },
+    "opx_only_T_C": {
+      "model_name": "RF",
+      "feature_set": "pwlr",
+      "rmse_mean": 136.13986168203311,
+      "rmse_std": 19.443061044368324,
+      "r2_mean": 0.49562125713245564,
+      "filename": "model_RF_T_C_opx_only_pwlr.joblib"
+    }
+  }
+}

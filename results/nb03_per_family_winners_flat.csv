@@ -1,0 +1,9 @@
+family,track,target,model_name,feature_set,rmse_test_mean,rmse_test_std,r2_test_mean,filename,tiebreaker_applied
+forest,opx_only,T_C,RF,pwlr,139.04380382677826,17.448284974311726,0.5071489475366603,model_T_C_opx_only_forest.joblib,False
+forest,opx_only,P_kbar,RF,pwlr,10.660219225672913,2.948423218037583,0.27374850033497855,model_P_kbar_opx_only_forest.joblib,False
+forest,opx_liq,T_C,RF,alr,80.389607737485,12.017716012604488,0.7485514503858727,model_T_C_opx_liq_forest.joblib,False
+forest,opx_liq,P_kbar,RF,raw,5.740731131161128,1.2221458175267548,0.6315745861090953,model_P_kbar_opx_liq_forest.joblib,False
+boosted,opx_only,T_C,XGB,pwlr,140.6787952126331,18.28447278047833,0.49542885940236064,model_T_C_opx_only_boosted.joblib,False
+boosted,opx_only,P_kbar,XGB,pwlr,10.636428121938179,2.718158322053155,0.26989303846902696,model_P_kbar_opx_only_boosted.joblib,False
+boosted,opx_liq,T_C,XGB,raw,83.60773389340906,11.022256228229725,0.7319997817013661,model_T_C_opx_liq_boosted.joblib,True
+boosted,opx_liq,P_kbar,XGB,raw,5.0953855497384755,0.932488138852041,0.7096848585310667,model_P_kbar_opx_liq_boosted.joblib,False

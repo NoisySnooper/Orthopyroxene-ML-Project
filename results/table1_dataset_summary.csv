@@ -1,3 +1,5 @@
-Dataset,n_samples,n_experiments,n_studies,T_range_C,P_range_kbar,Mg_range
-Core (5 oxides),1148,1034,126,550-1850,0.0-100.0,0.41-1.00
-Full (9 oxides),525,493,68,599-1850,0.0-100.0,0.56-1.00
+Dataset,n_experiments,n_studies,T_range_C,P_range_kbar
+ExPetDB core (training),1035,123,800-1850,0.0-100.0
+ExPetDB opx-liq subset,600,93,840-1830,0.0-60.0
+ExPetDB full (9 oxides),494,70,800-1850,0.0-100.0
+ArcPL external (LEPR _notinLEPR),394,19,825-1250,1.0-16.0

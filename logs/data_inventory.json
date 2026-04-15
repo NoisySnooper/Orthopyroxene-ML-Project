@@ -1,0 +1,30 @@
+{
+  "environment": {
+    "python": "3.13.12",
+    "thermobar": "1.0.70",
+    "sklearn": "1.8.0",
+    "pandas": "3.0.2",
+    "numpy": "2.4.4",
+    "scipy": "1.17.1"
+  },
+  "expetdb_training": true,
+  "lepr_arcpl": true,
+  "thermobar_examples_count": 44,
+  "thermobar_paired_pyroxene_xlsx": [
+    "Two_Pyroxene_Thermobarometry/AllMatches.xlsx",
+    "Two_Pyroxene_Thermobarometry/HighTMatches.xlsx",
+    "Two_Pyroxene_Thermobarometry/Two_pyroxene_input.xlsx",
+    "Two_Pyroxene_Thermobarometry/FileName.xlsx",
+    "Two_Pyroxene_Thermobarometry/Cpx-Opx_outputs.xlsx"
+  ],
+  "agreda_lopez_datasets": true,
+  "agreda_lopez_models_bundled": {
+    "cpx_T": true,
+    "cpx_P": true,
+    "cpx_liq_T": true,
+    "cpx_liq_P": true
+  },
+  "jorgenson_access": "via Thermobar (T_Jorgenson2022_Cpx_only, T_Jorgenson2022_Cpx_Liq and P variants)",
+  "wang_2021_access": "via Thermobar (P_Wang2021_eq1, T_Wang2021_eq2)",
+  "onnxruntime_installed": true
+}

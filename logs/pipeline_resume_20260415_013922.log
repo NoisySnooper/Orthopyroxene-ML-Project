@@ -1,0 +1,182 @@
+Resume run started at 2026-04-15T01:39:22.731659
+Starting from: nb09_manuscript_compilation (index 10)
+
+[01:39:22] starting nb09_manuscript_compilation
+Input Notebook:  C:\Users\NQTa\Documents\MLCourse\Final Project\notebooks\nb09_manuscript_compilation.ipynb
+Output Notebook: C:\Users\NQTa\Documents\MLCourse\Final Project\notebooks\executed\nb09_manuscript_compilation_executed.ipynb
+
+Executing:   0%|          | 0/26 [00:00<?, ?cell/s]Executing notebook with kernel: python3
+Executing Cell 1---------------------------------------
+Ending Cell 1------------------------------------------
+
+Executing:   4%|3         | 1/26 [00:05<02:20,  5.63s/cell]Executing Cell 2---------------------------------------
+v7 primary (forest / T_C / opx_liq) feature set: alr
+Phase 3R winning feature set: alr
+
+Ending Cell 2------------------------------------------
+
+Executing:   8%|7         | 2/26 [00:07<01:27,  3.67s/cell]Executing Cell 3---------------------------------------
+Ending Cell 3------------------------------------------
+Executing Cell 4---------------------------------------
+Ext setup OK: train n=426 test n=174 ArcPL n=204
+  feature sets: T=alr (23)  P=raw (25)
+
+Ending Cell 4------------------------------------------
+
+Executing:  15%|#5        | 4/26 [00:13<01:07,  3.06s/cell]Executing Cell 5---------------------------------------
+Test set has no Cpx columns; two-pyroxene benchmark skipped.
+
+Ending Cell 5------------------------------------------
+
+Executing:  19%|#9        | 5/26 [00:14<00:50,  2.41s/cell]Executing Cell 6---------------------------------------
+target   n  pearson_r  pearson_p  spearman_r  spearman_p   slope  intercept  mean_resid_dry  mean_resid_wet
+   T_C 204     0.2725     0.0001      0.2725      0.0001  4.8850     1.8516         12.9873         25.5581
+P_kbar 204    -0.2093     0.0027     -0.2299      0.0009 -0.2219     1.0951          1.0590         -0.0299
+
+Ending Cell 6------------------------------------------
+
+Executing:  23%|##3       | 6/26 [00:14<00:35,  1.76s/cell]Executing Cell 7---------------------------------------
+Ending Cell 7------------------------------------------
+Executing Cell 8---------------------------------------
+Augmented feature count: T 23 -> 27 | P 25 -> 29
+
+Residual-H2O correlation after retrain with H2O features:
+target   n  pearson_r_after  pearson_p_after  rmse_after  passes_threshold
+   T_C 204           0.3136           0.0000     52.4388             False
+P_kbar 204          -0.2269           0.0011      2.7857             False
+
+Test-set RMSE (baseline vs with H2O):
+target  rmse_baseline  rmse_with_h2o  r2_baseline  r2_with_h2o
+   T_C         88.222         87.407        0.596        0.603
+P_kbar          5.768          5.763        0.642        0.642
+
+Before (Phase 10.2):
+target   n  pearson_r  pearson_p
+   T_C 204     0.2725     0.0001
+P_kbar 204    -0.2093     0.0027
+
+Ending Cell 8------------------------------------------
+
+Executing:  31%|###       | 8/26 [00:24<00:57,  3.19s/cell]Executing Cell 9---------------------------------------
+target  iqr_mean  iqr_median  pearson_iqr_vs_absres  spearman_iqr_vs_absres  frac_abs_res_le_halfiqr   n
+   T_C   136.805     132.917                  0.208                   0.278                    0.678 174
+P_kbar     8.954       9.038                  0.408                   0.388                    0.655 174
+
+Ending Cell 9------------------------------------------
+
+Executing:  35%|###4      | 9/26 [00:25<00:44,  2.59s/cell]Executing Cell 10--------------------------------------
+analytical-noise propagation:   0%|          | 0/200 [00:00<?, ?it/s]
+target  sigma_mean  sigma_median  sigma_p90  n_mc   n
+   T_C      13.425        11.390     29.869   200 174
+P_kbar       1.525         1.098      3.341   200 174
+
+Ending Cell 10-----------------------------------------
+
+Executing:  38%|###8      | 10/26 [01:17<04:13, 15.84s/cell]Executing Cell 11--------------------------------------
+target              subset   rmse    mae    r2   bias   n
+   T_C                 all 52.062 42.799 0.767 24.387 204
+   T_C out_of_distribution 52.062 42.799 0.767 24.387 204
+P_kbar                 all  2.721  2.143 0.569  0.071 204
+P_kbar out_of_distribution  2.721  2.143 0.569  0.071 204
+
+Ending Cell 11-----------------------------------------
+
+Executing:  42%|####2     | 11/26 [01:19<02:59, 11.95s/cell]Executing Cell 12--------------------------------------
+Ending Cell 12-----------------------------------------
+Executing Cell 13--------------------------------------
+OOD-method comparison on ArcPL (larger |Spearman r| = better error predictor):
+     method target  spearman_r  spearman_p  pearson_r  pearson_p   n
+  isoforest    T_C     -0.0246      0.7268    -0.0211     0.7647 204
+  isoforest P_kbar     -0.2544      0.0002    -0.2605     0.0002 204
+mahalanobis    T_C      0.0807      0.2512     0.0369     0.6000 204
+mahalanobis P_kbar     -0.1584      0.0237    -0.2597     0.0002 204
+  qrf_sigma    T_C      0.3330      0.0000     0.3511     0.0000 204
+  qrf_sigma P_kbar      0.3055      0.0000     0.3607     0.0000 204
+
+Mean |Spearman r| across T and P (higher = better):
+method
+qrf_sigma      0.3193
+isoforest      0.1395
+mahalanobis    0.1195
+
+======================================================================
+OPERATOR DECISION REQUIRED: OOD method to canonize for NB08 filtering
+======================================================================
+  Option A: IsolationForest   (feature-space anomaly, current default)
+  Option B: Mahalanobis PC5   (linear manifold distance)
+  Option C: QRF sigma         (direct epistemic uncertainty)
+
+Pick the method with the largest |Spearman r| vs |residual| - that is
+the one that actually predicts prediction error. See rank table above.
+======================================================================
+
+Ending Cell 13-----------------------------------------
+
+Executing:  50%|#####     | 13/26 [01:20<01:30,  6.95s/cell]Executing Cell 14--------------------------------------
+Ending Cell 14-----------------------------------------
+Executing Cell 15--------------------------------------
+Table 1: dataset summary
+                         Dataset  n_experiments  n_studies T_range_C P_range_kbar
+         ExPetDB core (training)           1035        123  800-1850    0.0-100.0
+          ExPetDB opx-liq subset            600         93  840-1830     0.0-60.0
+         ExPetDB full (9 oxides)            494         70  800-1850    0.0-100.0
+ArcPL external (LEPR _notinLEPR)            204         18  825-1250     1.0-16.0
+
+Ending Cell 15-----------------------------------------
+
+Executing:  58%|#####7    | 15/26 [01:20<00:47,  4.32s/cell]Executing Cell 16--------------------------------------
+Ending Cell 16-----------------------------------------
+
+Executing:  62%|######1   | 16/26 [01:22<00:36,  3.64s/cell]
+Executing:  62%|######1   | 16/26 [01:22<00:51,  5.18s/cell]
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "C:\Users\NQTa\Documents\MLCourse\Final Project\.venv\Lib\site-packages\papermill\__main__.py", line 4, in <module>
+    papermill()
+    ~~~~~~~~~^^
+  File "C:\Users\NQTa\Documents\MLCourse\Final Project\.venv\Lib\site-packages\click\core.py", line 1485, in __call__
+    return self.main(*args, **kwargs)
+           ~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "C:\Users\NQTa\Documents\MLCourse\Final Project\.venv\Lib\site-packages\click\core.py", line 1406, in main
+    rv = self.invoke(ctx)
+  File "C:\Users\NQTa\Documents\MLCourse\Final Project\.venv\Lib\site-packages\click\core.py", line 1269, in invoke
+    return ctx.invoke(self.callback, **ctx.params)
+           ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\NQTa\Documents\MLCourse\Final Project\.venv\Lib\site-packages\click\core.py", line 824, in invoke
+    return callback(*args, **kwargs)
+  File "C:\Users\NQTa\Documents\MLCourse\Final Project\.venv\Lib\site-packages\click\decorators.py", line 34, in new_func
+    return f(get_current_context(), *args, **kwargs)
+  File "C:\Users\NQTa\Documents\MLCourse\Final Project\.venv\Lib\site-packages\papermill\cli.py", line 235, in papermill
+    execute_notebook(
+    ~~~~~~~~~~~~~~~~^
+        input_path=input_path,
+        ^^^^^^^^^^^^^^^^^^^^^^
+    ...<15 lines>...
+        execution_timeout=execution_timeout,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\NQTa\Documents\MLCourse\Final Project\.venv\Lib\site-packages\papermill\execute.py", line 131, in execute_notebook
+    raise_for_execution_errors(nb, output_path)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "C:\Users\NQTa\Documents\MLCourse\Final Project\.venv\Lib\site-packages\papermill\execute.py", line 251, in raise_for_execution_errors
+    raise error
+papermill.exceptions.PapermillExecutionError: 
+---------------------------------------------------------------------------
+Exception encountered at "In [12]":
+---------------------------------------------------------------------------
+NameError                                 Traceback (most recent call last)
+Cell In[12], line 16
+     12        .reset_index())
+     13 agg['feature_set'] = WIN_FEAT
+     14 
+     15 # Also include the per-combo winner tag from Phase 3R config for convenience.
+---> 16 per_combo = config_3r.get('per_combo_winners', {})
+     17 def _tag(row):
+     18     key = f'{row.track}|{row.target}'
+     19     w = per_combo.get(key, {})
+
+NameError: name 'config_3r' is not defined
+
+[01:40:50] FAILED nb09_manuscript_compilation rc=1

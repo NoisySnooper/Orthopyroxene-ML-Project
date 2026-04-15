@@ -1,0 +1,506 @@
+v7 pipeline run started at 2026-04-15T02:02:37.135727
+Run ID: 20260415_020237
+Notebooks (in order): ['nb01_data_cleaning', 'nb02_eda_pca', 'nb03_baseline_models', 'nb04_putirka_benchmark', 'nb05_loso_validation', 'nb06_shap_analysis', 'nb07_bias_correction', 'nb08_natural_twopx', 'nb09_manuscript_compilation', 'nbF_figures']
+Starting from: nb04_putirka_benchmark (index 3)
+Per-cell timeout: 10800s
+Decision halt marker: 'OPERATOR DECISION REQUIRED'
+
+
+[02:02:37] starting nb04_putirka_benchmark
+Input Notebook:  C:\Users\NQTa\Documents\MLCourse\Final Project\notebooks\nb04_putirka_benchmark.ipynb
+Output Notebook: C:\Users\NQTa\Documents\MLCourse\Final Project\notebooks\executed\nb04_putirka_benchmark_executed.ipynb
+
+Executing:   0%|          | 0/35 [00:00<?, ?cell/s]Executing notebook with kernel: python3
+Executing Cell 1---------------------------------------
+Ending Cell 1------------------------------------------
+
+Executing:   3%|2         | 1/35 [00:10<05:41, 10.04s/cell]Executing Cell 2---------------------------------------
+Ending Cell 2------------------------------------------
+Executing Cell 3---------------------------------------
+Ending Cell 3------------------------------------------
+
+Executing:   9%|8         | 3/35 [00:17<02:49,  5.30s/cell]Executing Cell 4---------------------------------------
+Ending Cell 4------------------------------------------
+
+Executing:  11%|#1        | 4/35 [00:17<01:50,  3.56s/cell]Executing Cell 5---------------------------------------
+Forest-family opx-liq: T uses RF/alr, P uses RF/raw
+
+Ending Cell 5------------------------------------------
+
+Executing:  14%|#4        | 5/35 [00:18<01:23,  2.77s/cell]Executing Cell 6---------------------------------------
+Test set: 174 experiments from 19 studies
+
+Ending Cell 6------------------------------------------
+
+Executing:  17%|#7        | 6/35 [00:19<00:57,  1.99s/cell]Executing Cell 7---------------------------------------
+Ending Cell 7------------------------------------------
+Executing Cell 8---------------------------------------
+Ending Cell 8------------------------------------------
+Executing Cell 9---------------------------------------
+Option 2 (true P/T as input):
+
+  28a: n_valid=159, mean=1302
+  28b: n_valid=161, mean=1294
+  29a: n_valid=126, mean=11.1
+  29c: n_valid=145, mean=10.4
+
+Ending Cell 9------------------------------------------
+
+Executing:  26%|##5       | 9/35 [00:20<00:27,  1.06s/cell]Executing Cell 10--------------------------------------
+Option 1 (iterative):
+
+  columns: ['P_kbar_calc', 'T_K_calc', 'Delta_P_kbar_Iter', 'Delta_T_K_Iter']
+  T_iter n_valid=126, mean=1303
+  P_iter n_valid=126, mean=11.4
+
+Ending Cell 10-----------------------------------------
+
+Executing:  29%|##8       | 10/35 [00:20<00:24,  1.03cell/s]Executing Cell 11--------------------------------------
+ML: T RMSE=87.55, R2=0.602
+ML: P RMSE=5.39, R2=0.687
+Option 3 (ML-P fed to Putirka T, ML-T fed to Putirka P):
+  T_put_mlP mean=1308
+  P_put_mlT mean=11.2
+
+Ending Cell 11-----------------------------------------
+
+Executing:  31%|###1      | 11/35 [00:21<00:20,  1.16cell/s]Executing Cell 12--------------------------------------
+T: all-method valid on 124/174
+P: all-method valid on 107/174
+
+FAIR comparison:
+                        Method Target   RMSE    MAE    R2  n_test
+          Putirka 28a (true P)      T 77.050 42.718 0.631     124
+  Putirka 28b_opx_sat (true P)      T 81.432 49.497 0.587     124
+   Putirka iterative (28a+29a)      T 77.842 49.592 0.623     124
+            Putirka 28a (ML P)      T 79.854 52.676 0.603     124
+                 ML-RF opx-liq      T 88.289 60.174 0.515     124
+          Putirka 29a (true T)      P  3.834  2.950 0.780     107
+Putirka 29c (opx-only, true T)      P  4.963  3.842 0.631     107
+   Putirka iterative (28a+29a)      P  3.818  2.918 0.782     107
+            Putirka 29a (ML T)      P  3.668  2.739 0.799     107
+                 ML-RF opx-liq      P  4.510  3.520 0.695     107
+
+Ending Cell 12-----------------------------------------
+Executing Cell 13--------------------------------------
+PRACTICAL comparison:
+                  Method Target   RMSE    MAE    R2  n_test  failure_pct
+ML-RF opx-liq (all test)      T 87.545 60.014 0.602     174        0.000
+ML-RF opx-liq (all test)      P  5.394  3.993 0.687     174        0.000
+    Putirka failure rate      T    NaN    NaN   NaN      50       28.736
+    Putirka failure rate      P    NaN    NaN   NaN      67       38.506
+
+Ending Cell 13-----------------------------------------
+
+Executing:  37%|###7      | 13/35 [00:21<00:11,  1.87cell/s]Executing Cell 14--------------------------------------
+Wrote legacy results/nb04_putirka_vs_ml.csv (174 rows)
+
+Ending Cell 14-----------------------------------------
+Executing Cell 15--------------------------------------
+Ending Cell 15-----------------------------------------
+Executing Cell 16--------------------------------------
+N_full = 174
+T putirka_valid = 124, P putirka_valid = 107
+T intersection  = 124, P intersection  = 107
+
+Unified benchmark (RMSE with 95% bootstrap CI, B=2000):
+
+--- target = T ---
+        scope                       method   n              rmse_str  failure_pct
+         full         Putirka 28a (true P) 159  69.73 [49.79, 88.62]     8.620690
+         full Putirka 28b_opx_sat (true P) 161  77.22 [59.17, 95.01]     7.471264
+         full  Putirka iterative (28a+29a) 126  77.33 [57.07, 97.31]    27.586207
+         full           Putirka 28a (ML P) 161  74.50 [56.50, 90.77]     7.471264
+         full                ML-RF opx-liq 174 87.55 [72.60, 102.21]     0.000000
+putirka_valid         Putirka 28a (true P) 124  77.05 [54.51, 99.65]     8.620690
+putirka_valid Putirka 28b_opx_sat (true P) 124 81.43 [59.64, 102.86]     7.471264
+putirka_valid  Putirka iterative (28a+29a) 124  77.84 [57.33, 97.54]    27.586207
+putirka_valid           Putirka 28a (ML P) 124  79.85 [59.03, 98.41]     7.471264
+putirka_valid                ML-RF opx-liq 124 88.29 [70.31, 107.97]     0.000000
+ intersection         Putirka 28a (true P) 124  77.05 [52.99, 98.39]     8.620690
+ intersection Putirka 28b_opx_sat (true P) 124 81.43 [58.60, 102.72]     7.471264
+ intersection  Putirka iterative (28a+29a) 124  77.84 [57.55, 97.24]    27.586207
+ intersection           Putirka 28a (ML P) 124 79.85 [59.71, 100.69]     7.471264
+ intersection                ML-RF opx-liq 124 88.29 [69.33, 108.12]     0.000000
+
+--- target = P ---
+        scope                         method   n          rmse_str  failure_pct
+         full           Putirka 29a (true T) 126 4.75 [3.78, 5.71]    27.586207
+         full Putirka 29c (opx-only, true T) 145 4.84 [4.24, 5.41]    16.666667
+         full    Putirka iterative (28a+29a) 126 4.89 [3.86, 5.90]    27.586207
+         full             Putirka 29a (ML T) 125 5.12 [3.83, 6.33]    28.160920
+         full                  ML-RF opx-liq 174 5.39 [4.67, 6.08]     0.000000
+putirka_valid           Putirka 29a (true T) 107 3.83 [3.29, 4.38]    27.586207
+putirka_valid Putirka 29c (opx-only, true T) 107 4.96 [4.25, 5.66]    16.666667
+putirka_valid    Putirka iterative (28a+29a) 107 3.82 [3.25, 4.37]    27.586207
+putirka_valid             Putirka 29a (ML T) 107 3.67 [3.05, 4.24]    28.160920
+putirka_valid                  ML-RF opx-liq 107 4.51 [3.90, 5.13]     0.000000
+ intersection           Putirka 29a (true T) 107 3.83 [3.27, 4.42]    27.586207
+ intersection Putirka 29c (opx-only, true T) 107 4.96 [4.30, 5.69]    16.666667
+ intersection    Putirka iterative (28a+29a) 107 3.82 [3.22, 4.37]    27.586207
+ intersection             Putirka 29a (ML T) 107 3.67 [3.07, 4.25]    28.160920
+ intersection                  ML-RF opx-liq 107 4.51 [3.88, 5.10]     0.000000
+
+Ending Cell 16-----------------------------------------
+
+Executing:  46%|####5     | 16/35 [00:22<00:07,  2.70cell/s]Executing Cell 17--------------------------------------
+Paired Wilcoxon signed-rank on |residuals| (ML vs Putirka variant,
+intersection scope, B=2000 paired bootstrap for Delta-RMSE CI):
+delta_rmse > 0 => ML is better (lower error).
+
+target                          ml_vs  n_pairs  wilcoxon_stat  p_value  delta_rmse  delta_ci_lo  delta_ci_hi
+     T           Putirka 28a (true P)      124         2222.0   0.0000    -11.2396     -21.3581      -2.9284
+     T   Putirka 28b_opx_sat (true P)      124         3221.0   0.1029     -6.8576     -16.2491       0.7705
+     T    Putirka iterative (28a+29a)      124         2742.0   0.0047    -10.4473     -18.1123      -3.5680
+     T             Putirka 28a (ML P)      124         3258.0   0.1239     -8.4350     -15.8107      -2.0877
+     P           Putirka 29a (true T)      107         2070.0   0.0109     -0.6764      -1.3097      -0.0427
+     P Putirka 29c (opx-only, true T)      107         2565.0   0.3139      0.4524      -0.4359       1.3865
+     P    Putirka iterative (28a+29a)      107         2083.0   0.0122     -0.6920      -1.2727      -0.1165
+     P             Putirka 29a (ML T)      107         1889.0   0.0019     -0.8427      -1.4332      -0.2439
+
+Ending Cell 17-----------------------------------------
+
+Executing:  49%|####8     | 17/35 [00:22<00:05,  3.01cell/s]Executing Cell 18--------------------------------------
+Putirka convergence: 124 / 174 (failure rate 28.7%)
+
+Mann-Whitney U, converged vs failed samples (sorted by p):
+  feature  n_converged  n_failed  mean_converged  mean_failed  mannwhitney_U  p_value
+      T_C          124        50       1271.5776    1345.7900         2010.5   0.0003
+  liq_MgO          124        50         10.2961      12.0216         2265.5   0.0055
+FeO_total          124        50          8.9697       7.5930         3886.0   0.0090
+liq_Al2O3          124        50         15.0922      13.8792         3858.0   0.0118
+     SiO2          124        50         54.1235      55.0491         2463.0   0.0343
+      CaO          124        50          1.7037       1.5199         3665.0   0.0605
+    Al2O3          124        50          4.4089       3.7349         3587.0   0.1057
+   P_kbar          124        50         11.5793      12.0803         3385.5   0.3399
+      MgO          124        50         30.0690      31.2371         2823.5   0.3587
+  liq_CaO          124        50          9.0952       9.1309         2980.0   0.6911
+ liq_SiO2          124        50         50.6040      50.8728         2981.0   0.6935
+
+Ending Cell 18-----------------------------------------
+
+Executing:  51%|#####1    | 18/35 [00:22<00:04,  3.45cell/s]Executing Cell 19--------------------------------------
+<Figure size 1200x400 with 2 Axes>
+=== NB04 complete ===
+
+Ending Cell 19-----------------------------------------
+
+Executing:  54%|#####4    | 19/35 [00:24<00:11,  1.45cell/s]Executing Cell 20--------------------------------------
+Ending Cell 20-----------------------------------------
+Executing Cell 21--------------------------------------
+Three-way benchmark set (ArcPL scope): n=118 experiments
+  of which n_cpx_liq=204
+
+Ending Cell 21-----------------------------------------
+
+Executing:  60%|######    | 21/35 [00:27<00:13,  1.07cell/s]Executing Cell 22--------------------------------------
+Youve selected a P-independent function
+
+Youve selected a T-independent function
+
+Youve selected a P-independent function
+Youve selected a T-independent function
+
+Youve selected a T-independent function
+
+
+Ours shim: m_for_ours shape=(118, 92)
+  SiO2 present: True
+  FeO_total present: True
+  liq_SiO2 present: True
+  liq_FeO present: True
+
+
+Methods available: ['Agreda-Lopez cpx-only', 'Agreda-Lopez cpx-liq', 'Jorgenson cpx-only', 'Wang 2021 cpx-liq', 'Putirka 2008 cpx-liq', 'Ours opx-liq forest', 'Ours opx-liq boosted', 'Ours opx-only forest', 'Ours opx-only boosted']
+Putirka opx-liq iterative skipped ('Fe3Fet_Liq')
+Putirka opx-liq [true P] skipped ('Fe3Fet_Liq')
+
+Ending Cell 22-----------------------------------------
+
+Executing:  63%|######2   | 22/35 [01:42<03:43, 17.21s/cell]Executing Cell 23--------------------------------------
+               Method  T_n  T_RMSE  T_RMSE_CI_lo  T_RMSE_CI_hi   T_R2  T_coverage_pct  P_n  P_RMSE  P_RMSE_CI_lo  P_RMSE_CI_hi  P_R2  P_coverage_pct
+Agreda-Lopez cpx-only  118  82.610        72.716        92.367  0.197           100.0  118   2.080         1.840         2.318 0.731           100.0
+ Agreda-Lopez cpx-liq  118  49.643        41.208        57.745  0.710           100.0  118   1.941         1.697         2.187 0.766           100.0
+   Jorgenson cpx-only  118  76.015        64.388        88.068  0.320           100.0  118   1.540         1.309         1.759 0.853           100.0
+    Wang 2021 cpx-liq  118  85.808        75.547        95.716  0.134           100.0  118   2.067         1.826         2.310 0.734           100.0
+ Putirka 2008 cpx-liq  118  54.083        46.679        61.168  0.656           100.0  118   3.561         3.171         3.938 0.212           100.0
+  Ours opx-liq forest  118  55.227        49.541        60.977  0.641           100.0  118   2.937         2.596         3.266 0.464           100.0
+ Ours opx-liq boosted  118  58.522        51.926        64.708  0.597           100.0  118   3.191         2.780         3.617 0.368           100.0
+ Ours opx-only forest  118 108.776        97.711       119.084 -0.392           100.0  118   3.762         3.204         4.329 0.121           100.0
+Ours opx-only boosted  118 103.868        91.707       115.526 -0.269           100.0  118   3.643         3.118         4.221 0.175           100.0
+
+Ending Cell 23-----------------------------------------
+
+Executing:  66%|######5   | 23/35 [01:42<02:37, 13.14s/cell]Executing Cell 24--------------------------------------
+Scope arcpl_paired: n=118
+Scope lepr_full:    n=298  (includes training rows for Ours)
+Scope cpx_scope:    n=118
+
+[arcpl_paired] running 118 rows ...
+
+Youve selected a P-independent function
+
+Youve selected a T-independent function
+
+Youve selected a P-independent function
+Youve selected a T-independent function
+
+Youve selected a T-independent function
+
+  Putirka opx-liq iterative skipped ('Fe3Fet_Liq')
+  Putirka opx-liq [true P] skipped ('Fe3Fet_Liq')
+  Putirka opx-only iterative skipped (module 'Thermobar' has no attribute 'calculate_opx_only_press_temp')
+  Putirka opx-only [true T] skipped (module 'Thermobar' has no attribute 'calculate_opx_only_temp')
+
+<Figure size 1600x800 with 3 Axes>
+Saved fig_nb04_method_benchmark_paired: panels [A, B, C] with n_methods=9 rows. Coverage range: 100% - 100%. Methods with cov<90%: []
+
+[arcpl_paired] benchmark table:
+               Method  T_n  T_RMSE   T_R2  T_coverage_pct  P_n  P_RMSE  P_R2  P_coverage_pct
+Agreda-Lopez cpx-only  118  81.582  0.217           100.0  118   2.062 0.736           100.0
+ Agreda-Lopez cpx-liq  118  50.332  0.702           100.0  118   1.999 0.752           100.0
+   Jorgenson cpx-only  118  76.015  0.320           100.0  118   1.540 0.853           100.0
+    Wang 2021 cpx-liq  118  85.808  0.134           100.0  118   2.067 0.734           100.0
+ Putirka 2008 cpx-liq  118  54.083  0.656           100.0  118   3.561 0.212           100.0
+  Ours opx-liq forest  118  55.227  0.641           100.0  118   2.937 0.464           100.0
+ Ours opx-liq boosted  118  58.522  0.597           100.0  118   3.191 0.368           100.0
+ Ours opx-only forest  118 108.776 -0.392           100.0  118   3.762 0.121           100.0
+Ours opx-only boosted  118 103.868 -0.269           100.0  118   3.643 0.175           100.0
+
+[lepr_full] running 298 rows ...
+
+Youve selected a P-independent function
+
+Youve selected a T-independent function
+
+Youve selected a P-independent function
+Youve selected a T-independent function
+Youve selected a T-independent function
+
+  Putirka opx-liq iterative skipped ('Fe3Fet_Liq')
+  Putirka opx-liq [true P] skipped ('Fe3Fet_Liq')
+  Putirka opx-only iterative skipped (module 'Thermobar' has no attribute 'calculate_opx_only_press_temp')
+  Putirka opx-only [true T] skipped (module 'Thermobar' has no attribute 'calculate_opx_only_temp')
+
+<Figure size 1600x800 with 3 Axes>
+Saved fig_nb04_method_benchmark_lepr_full: panels [A, B, C] with n_methods=9 rows. Coverage range: 97% - 100%. Methods with cov<90%: []
+
+[lepr_full] benchmark table:
+               Method  T_n  T_RMSE  T_R2  T_coverage_pct  P_n  P_RMSE   P_R2  P_coverage_pct
+Agreda-Lopez cpx-only  298  74.845 0.566         100.000  298   2.092  0.837         100.000
+ Agreda-Lopez cpx-liq  298  54.574 0.769         100.000  298   1.971  0.855         100.000
+   Jorgenson cpx-only  298  66.334 0.659         100.000  298   1.686  0.894         100.000
+    Wang 2021 cpx-liq  298  88.068 0.400         100.000  297   2.428  0.779          99.664
+ Putirka 2008 cpx-liq  291  57.733 0.745          97.651  290   3.121  0.636          97.315
+  Ours opx-liq forest  298  61.753 0.705         100.000  298   3.602  0.516         100.000
+ Ours opx-liq boosted  298  63.942 0.683         100.000  298   3.535  0.534         100.000
+ Ours opx-only forest  298 106.390 0.124         100.000  298   6.120 -0.398         100.000
+Ours opx-only boosted  298 110.095 0.062         100.000  298   5.001  0.067         100.000
+
+[cpx_scope] running 118 rows ...
+
+Youve selected a P-independent function
+
+Youve selected a T-independent function
+
+Youve selected a P-independent function
+Youve selected a T-independent function
+
+Youve selected a T-independent function
+
+  Putirka opx-liq iterative skipped ('Fe3Fet_Liq')
+  Putirka opx-liq [true P] skipped ('Fe3Fet_Liq')
+  Putirka opx-only iterative skipped (module 'Thermobar' has no attribute 'calculate_opx_only_press_temp')
+  Putirka opx-only [true T] skipped (module 'Thermobar' has no attribute 'calculate_opx_only_temp')
+
+<Figure size 1600x800 with 3 Axes>
+Saved fig_nb04_method_benchmark_cpx_scope: panels [A, B, C] with n_methods=9 rows. Coverage range: 100% - 100%. Methods with cov<90%: []
+
+[cpx_scope] benchmark table:
+               Method  T_n  T_RMSE   T_R2  T_coverage_pct  P_n  P_RMSE  P_R2  P_coverage_pct
+Agreda-Lopez cpx-only  118  81.582  0.217           100.0  118   2.062 0.736           100.0
+ Agreda-Lopez cpx-liq  118  50.332  0.702           100.0  118   1.999 0.752           100.0
+   Jorgenson cpx-only  118  76.015  0.320           100.0  118   1.540 0.853           100.0
+    Wang 2021 cpx-liq  118  85.808  0.134           100.0  118   2.067 0.734           100.0
+ Putirka 2008 cpx-liq  118  54.083  0.656           100.0  118   3.561 0.212           100.0
+  Ours opx-liq forest  118  55.227  0.641           100.0  118   2.937 0.464           100.0
+ Ours opx-liq boosted  118  58.522  0.597           100.0  118   3.191 0.368           100.0
+ Ours opx-only forest  118 108.776 -0.392           100.0  118   3.762 0.121           100.0
+Ours opx-only boosted  118 103.868 -0.269           100.0  118   3.643 0.175           100.0
+
+Ending Cell 24-----------------------------------------
+
+Executing:  69%|######8   | 24/35 [05:45<13:06, 71.48s/cell]Executing Cell 25--------------------------------------
+Ending Cell 25-----------------------------------------
+Executing Cell 26--------------------------------------
+Ending Cell 26-----------------------------------------
+Executing Cell 27--------------------------------------
+Part 3: ArcPL subset before overlap removal: n=324
+Overlap removal: 197 -> 197
+
+ family target   n   rmse    mae    r2
+ forest    T_C 197 64.580 54.647 0.664
+ forest P_kbar 197  2.628  2.153 0.557
+boosted    T_C 197 68.041 56.461 0.627
+boosted P_kbar 197  2.693  2.070 0.535
+ family target   rmse  rmse_ci_lo  rmse_ci_hi   n
+ forest    T_C 64.580      59.407      69.766 197
+ forest P_kbar  2.628       2.384       2.868 197
+boosted    T_C 68.041      62.390      73.387 197
+boosted P_kbar  2.693       2.366       3.007 197
+
+Ending Cell 27-----------------------------------------
+
+Executing:  77%|#######7  | 27/35 [05:46<04:36, 34.53s/cell]Executing Cell 28--------------------------------------
+Ending Cell 28-----------------------------------------
+Executing Cell 29--------------------------------------
+Part 4 split: measured n=130 VBD n=67
+
+Stratified metrics:
+ family   subset target   n   rmse    mae    r2  rmse_ci_lo  rmse_ci_hi
+ forest measured    T_C 130 61.389 52.888 0.721      56.276      66.089
+ forest measured P_kbar 130  2.802  2.330 0.590       2.522       3.101
+ forest      vbd    T_C  67 70.359 58.060 0.503      59.906      81.217
+ forest      vbd P_kbar  67  2.252  1.810 0.372       1.842       2.639
+boosted measured    T_C 130 64.606 52.952 0.691      57.733      71.295
+boosted measured P_kbar 130  2.712  2.029 0.616       2.268       3.122
+boosted      vbd    T_C  67 74.254 63.269 0.447      64.783      83.809
+boosted      vbd P_kbar  67  2.655  2.150 0.128       2.257       3.039
+
+Mann-Whitney:
+ family target  n_measured  n_vbd  U_stat  p_value  median_abs_resid_measured  median_abs_resid_vbd
+ forest    T_C         130     67  4221.0   0.7247                    53.8971               49.1537
+ forest P_kbar         130     67  5238.0   0.0199                     2.0054                1.4914
+boosted    T_C         130     67  3665.0   0.0689                    42.2028               58.7383
+boosted P_kbar         130     67  3972.0   0.3130                     1.5011                1.7180
+
+Ending Cell 29-----------------------------------------
+
+Executing:  83%|########2 | 29/35 [05:51<02:22, 23.82s/cell]Executing Cell 30--------------------------------------
+Ending Cell 30-----------------------------------------
+Executing Cell 31--------------------------------------
+Part 5 Putirka opx-liq iterative skipped ('Fe3Fet_Liq')
+Part 5 Putirka opx-liq [true P] skipped ('Fe3Fet_Liq')
+Part 5 Putirka opx-only iterative skipped (module 'Thermobar' has no attribute 'calculate_opx_only_press_temp')
+Part 5 scopes: all n=197  fair n=0
+
+
+Part 5 (all scope):
+               method scope   n    rmse  rmse_ci_lo  rmse_ci_hi  coverage_pct  signed_bias target
+  Ours opx-liq forest   all 197  64.580      59.448      69.834         100.0       37.321    T_C
+ Ours opx-only forest   all 197 107.808      99.051     116.765         100.0       83.438    T_C
+ Ours opx-liq boosted   all 197  68.041      62.109      73.994         100.0       39.740    T_C
+Ours opx-only boosted   all 197 104.244      94.433     114.285         100.0       80.474    T_C
+  Ours opx-liq forest   all 197   2.628       2.379       2.881         100.0        0.693 P_kbar
+ Ours opx-only forest   all 197   4.025       3.619       4.458         100.0        2.857 P_kbar
+ Ours opx-liq boosted   all 197   2.693       2.392       3.016         100.0        0.380 P_kbar
+Ours opx-only boosted   all 197   3.587       3.173       4.007         100.0        1.544 P_kbar
+
+Part 5 (fair scope):
+               method scope  n  rmse  rmse_ci_lo  rmse_ci_hi  coverage_pct  signed_bias target
+  Ours opx-liq forest  fair  0   NaN         NaN         NaN           0.0          NaN    T_C
+ Ours opx-only forest  fair  0   NaN         NaN         NaN           0.0          NaN    T_C
+ Ours opx-liq boosted  fair  0   NaN         NaN         NaN           0.0          NaN    T_C
+Ours opx-only boosted  fair  0   NaN         NaN         NaN           0.0          NaN    T_C
+  Ours opx-liq forest  fair  0   NaN         NaN         NaN           0.0          NaN P_kbar
+ Ours opx-only forest  fair  0   NaN         NaN         NaN           0.0          NaN P_kbar
+ Ours opx-liq boosted  fair  0   NaN         NaN         NaN           0.0          NaN P_kbar
+Ours opx-only boosted  fair  0   NaN         NaN         NaN           0.0          NaN P_kbar
+
+Ending Cell 31-----------------------------------------
+
+Executing:  89%|########8 | 31/35 [05:55<01:07, 16.86s/cell]Executing Cell 32--------------------------------------
+Ending Cell 32-----------------------------------------
+Executing Cell 33--------------------------------------
+  feature check raw: use_liq=True (112, 25) (0 NaN) | use_liq=False (112, 16) (0 NaN)
+  feature check pwlr: use_liq=True (112, 72) (0 NaN) | use_liq=False (112, 43) (0 NaN)
+  feature check alr: use_liq=True (112, 23) (0 NaN) | use_liq=False (112, 15) (0 NaN)
+
+Youve selected a P-independent function
+
+Youve selected a T-independent function
+
+Youve selected a P-independent function
+Im normalizing using the Jorgenson method, e.g. 100 total, 2dp
+
+Youve selected a T-independent function
+Im normalizing using the Jorgenson method, e.g. 100 total, 2dp
+Youve selected a T-independent function
+
+Youve selected a P-independent function
+Youve selected a T-independent function
+
+Youve selected a T-independent function
+
+Youve selected a P-independent function
+Youve selected a T-independent function
+
+Methods computed (14):
+  - Ours opx-liq forest
+  - Ours opx-liq boosted
+  - Ours opx-only forest
+  - Ours opx-only boosted
+  - Agreda-Lopez cpx-only
+  - Agreda-Lopez cpx-liq
+  - Jorgenson cpx-only
+  - Jorgenson cpx-liq
+  - Wang 2021 cpx-liq
+  - Putirka 2008 cpx-liq
+  - Putirka 2008 cpx-only
+  - Wang 2021 cpx-only
+  - Putirka 2008 opx-liq
+  - Putirka 2008 opx-only
+
+<Figure size 1600x1600 with 16 Axes>
+
+Saved fig_nb04_diagnostic_encyclopedia_T.
+  Off-axis: ['none']
+  <95% coverage: ['none']
+
+<Figure size 1600x1600 with 16 Axes>
+
+Saved fig_nb04_diagnostic_encyclopedia_P.
+  Off-axis: ['Putirka 2008 opx-liq: 1/110 off-axis', 'Putirka 2008 cpx-liq: 2/112 off-axis']
+  <95% coverage: ['Putirka 2008 opx-only: 62% coverage']
+
+Ending Cell 33-----------------------------------------
+
+Executing:  94%|#########4| 33/35 [07:40<00:56, 28.03s/cell]Executing Cell 34--------------------------------------
+Ending Cell 34-----------------------------------------
+
+Executing:  97%|#########7| 34/35 [07:40<00:22, 22.91s/cell]Executing Cell 35--------------------------------------
+========================================================================
+OPERATOR DECISION REQUIRED - NB04 headline framing
+========================================================================
+
+Key numbers (opx-liq test set, N_full = 174):
+  ML RMSE (full):         T 87.5 C | P 5.39 kbar
+  Intersection scope (n_T=124, n_P=107):
+    ML:           T 88.3 C [69.3, 108.1]
+                  P 4.51 kbar [3.88, 5.10]
+    Putirka28a/29a T 77.0 C [53.0, 98.4]
+                   P 3.83 kbar [3.27, 4.42]
+  Putirka failure rate:   T 8.6% | P 27.6%
+  Paired Wilcoxon p:      T 3.755e-05 | P 0.01091
+  Paired Delta-RMSE 95% CI:
+    T [-21.36, -2.93] C   (> 0 => ML better)
+    P [-1.310, -0.043] kbar
+
+Framing options:
+  A. "ML + broader applicability": lead with ML always-works vs
+     Putirka failure rate. Intersection RMSE is secondary (comparable).
+  B. "ML reduces error": lead with the intersection-scope RMSE + Wilcoxon
+     p-value, with failure rate as a supporting point.
+  C. "Hybrid": lead with the unified table (all three scopes), then show
+     the 4-panel figure, and let the reader read RMSE + failure rate.
+
+Tell Claude which framing (A / B / C) to commit to in the manuscript body.
+No downstream cell auto-selects; the CSVs and figure are all written.
+========================================================================
+
+Ending Cell 35-----------------------------------------
+
+Executing: 100%|##########| 35/35 [07:40<00:00, 18.18s/cell]
+Executing: 100%|##########| 35/35 [07:43<00:00, 13.24s/cell]
+[02:10:25] HALT: operator decision required in nb04_putirka_benchmark
+Review C:\Users\NQTa\Documents\MLCourse\Final Project\logs\HALT_v7_nb04_putirka_benchmark.log and resume with --resume-from <next_nb>

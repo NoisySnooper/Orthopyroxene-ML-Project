@@ -1,0 +1,117 @@
+{
+  "forest_family": {
+    "opx_only_T_C": {
+      "model_name": "RF",
+      "feature_set": "pwlr",
+      "filename": "model_T_C_opx_only_forest.joblib",
+      "rmse_test_mean": 139.04380382677826,
+      "rmse_test_std": 17.448284974311726,
+      "r2_test_mean": 0.5071489475366603,
+      "r2_test_std": 0.121147879470314,
+      "tiebreaker_applied": false
+    },
+    "opx_only_P_kbar": {
+      "model_name": "RF",
+      "feature_set": "pwlr",
+      "filename": "model_P_kbar_opx_only_forest.joblib",
+      "rmse_test_mean": 10.660219225672913,
+      "rmse_test_std": 2.948423218037583,
+      "r2_test_mean": 0.27374850033497855,
+      "r2_test_std": 0.26055062787163175,
+      "tiebreaker_applied": false
+    },
+    "opx_liq_T_C": {
+      "model_name": "RF",
+      "feature_set": "alr",
+      "filename": "model_T_C_opx_liq_forest.joblib",
+      "rmse_test_mean": 80.389607737485,
+      "rmse_test_std": 12.017716012604488,
+      "r2_test_mean": 0.7485514503858727,
+      "r2_test_std": 0.10875120936357514,
+      "tiebreaker_applied": false
+    },
+    "opx_liq_P_kbar": {
+      "model_name": "RF",
+      "feature_set": "raw",
+      "filename": "model_P_kbar_opx_liq_forest.joblib",
+      "rmse_test_mean": 5.740731131161128,
+      "rmse_test_std": 1.2221458175267548,
+      "r2_test_mean": 0.6315745861090953,
+      "r2_test_std": 0.13194780926689237,
+      "tiebreaker_applied": false
+    }
+  },
+  "boosted_family": {
+    "opx_only_T_C": {
+      "model_name": "XGB",
+      "feature_set": "pwlr",
+      "filename": "model_T_C_opx_only_boosted.joblib",
+      "rmse_test_mean": 140.6787952126331,
+      "rmse_test_std": 18.28447278047833,
+      "r2_test_mean": 0.49542885940236064,
+      "r2_test_std": 0.12498814970829741,
+      "tiebreaker_applied": false
+    },
+    "opx_only_P_kbar": {
+      "model_name": "XGB",
+      "feature_set": "pwlr",
+      "filename": "model_P_kbar_opx_only_boosted.joblib",
+      "rmse_test_mean": 10.636428121938179,
+      "rmse_test_std": 2.718158322053155,
+      "r2_test_mean": 0.26989303846902696,
+      "r2_test_std": 0.25623138856375743,
+      "tiebreaker_applied": false
+    },
+    "opx_liq_T_C": {
+      "model_name": "XGB",
+      "feature_set": "raw",
+      "filename": "model_T_C_opx_liq_boosted.joblib",
+      "rmse_test_mean": 83.60773389340906,
+      "rmse_test_std": 11.022256228229725,
+      "r2_test_mean": 0.7319997817013661,
+      "r2_test_std": 0.10036656110782242,
+      "tiebreaker_applied": true
+    },
+    "opx_liq_P_kbar": {
+      "model_name": "XGB",
+      "feature_set": "raw",
+      "filename": "model_P_kbar_opx_liq_boosted.joblib",
+      "rmse_test_mean": 5.0953855497384755,
+      "rmse_test_std": 0.932488138852041,
+      "r2_test_mean": 0.7096848585310667,
+      "r2_test_std": 0.08914607712622927,
+      "tiebreaker_applied": false
+    }
+  },
+  "tiebreaker_rule": "when means within 1 std, prefer RF over ERT (forest), prefer XGB over GB (boosted)",
+  "selection_metadata": {
+    "n_seeds": 20,
+    "split_seeds": [
+      42,
+      43,
+      44,
+      45,
+      46,
+      47,
+      48,
+      49,
+      50,
+      51,
+      52,
+      53,
+      54,
+      55,
+      56,
+      57,
+      58,
+      59,
+      60,
+      61
+    ],
+    "feature_methods": [
+      "raw",
+      "alr",
+      "pwlr"
+    ]
+  }
+}

@@ -1,0 +1,9 @@
+v7 pipeline run started at 2026-04-14T23:04:58.733798
+Run ID: 20260414_230458
+Notebooks (in order): ['nb01_data_cleaning', 'nb02_eda_pca', 'nb03_baseline_models', 'nb04b_lepr_arcpl_validation', 'nb04_putirka_benchmark', 'nb05_loso_validation', 'nb06_shap_analysis', 'nb07_bias_correction', 'nb08_natural_twopx', 'nb09_manuscript_compilation', 'nbF_figures']
+Starting from: nb03_baseline_models (index 2)
+Per-cell timeout: 10800s
+Decision halt marker: 'OPERATOR DECISION REQUIRED'
+
+
+[23:04:58] starting nb03_baseline_models

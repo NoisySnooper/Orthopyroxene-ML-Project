@@ -1,0 +1,13 @@
+target,scope,method,n,rmse,rmse_ci_lo,rmse_ci_hi
+T,full,Putirka eq36 (true P),322,315.4324157295686,307.66079553803394,323.6385242358218
+T,full,Jorgenson 2022 cpx-only,0,,,
+T,full,ML opx-only (this work),327,113.25128443060358,104.23206444301539,122.5299940890761
+T,intersection,Putirka eq36 (true P),0,,,
+T,intersection,Jorgenson 2022 cpx-only,0,,,
+T,intersection,ML opx-only (this work),0,,,
+P,full,Putirka eq39 (true T),300,3.691928180334392,3.340317157801,4.070436683784037
+P,full,Jorgenson 2022 cpx-only,0,,,
+P,full,ML opx-only (this work),327,5.55419795486793,4.6081382812473715,6.48852376919044
+P,intersection,Putirka eq39 (true T),0,,,
+P,intersection,Jorgenson 2022 cpx-only,0,,,
+P,intersection,ML opx-only (this work),0,,,

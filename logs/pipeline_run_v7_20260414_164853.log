@@ -1,0 +1,380 @@
+v7 pipeline run started at 2026-04-14T16:48:53.528258
+Run ID: 20260414_164853
+Notebooks (in order): ['nb01_data_cleaning', 'nb02_eda_pca', 'nb03_baseline_models', 'nb04_putirka_benchmark', 'nb04b_lepr_arcpl_validation', 'nb05_loso_validation', 'nb06_shap_analysis', 'nb07_bias_correction', 'nb08_natural_twopx', 'nb09_manuscript_compilation', 'nbF_figures']
+Starting from: nb01_data_cleaning (index 0)
+Per-cell timeout: 10800s
+Decision halt marker: 'OPERATOR DECISION REQUIRED'
+
+
+[16:48:53] starting nb01_data_cleaning
+Input Notebook:  C:\Users\NQTa\Documents\MLCourse\Final Project\notebooks\nb01_data_cleaning.ipynb
+Output Notebook: C:\Users\NQTa\Documents\MLCourse\Final Project\notebooks\executed\nb01_data_cleaning_executed.ipynb
+
+Executing:   0%|          | 0/17 [00:00<?, ?cell/s]Executing notebook with kernel: python3
+Executing Cell 1---------------------------------------
+Ending Cell 1------------------------------------------
+
+Executing:   6%|5         | 1/17 [00:06<01:37,  6.12s/cell]Executing Cell 2---------------------------------------
+Ending Cell 2------------------------------------------
+
+Executing:  12%|#1        | 2/17 [00:06<00:43,  2.88s/cell]Executing Cell 3---------------------------------------
+NB01 start: 2026-04-14 16:49:02.953838
+ExPetDB source: C:\Users\NQTa\Documents\MLCourse\Final Project\data\raw\ExPetDB_download_ExPetDB-2025-07-21.xlsx
+
+Ending Cell 3------------------------------------------
+Executing Cell 4---------------------------------------
+
+STEP 1: Load sheets
+  Experiment: 16082 rows
+  Orthopyroxene: 1796 rows
+  Merged opx+experiment: 7466 rows
+
+Ending Cell 4------------------------------------------
+
+Executing:  24%|##3       | 4/17 [00:13<00:43,  3.33s/cell]Executing Cell 5---------------------------------------
+
+STEP 2: Extract oxides
+  Iron combined: FeO_total = FeO + 0.8998*Fe2O3
+  Mean FeO_total: 10.26 wt%
+
+Ending Cell 5------------------------------------------
+Executing Cell 6---------------------------------------
+
+STEP 2b: Fe3+ protocol
+  Fe3+/FeT = 0.15 applied to 7466 rows
+
+Ending Cell 6------------------------------------------
+
+Executing:  35%|###5      | 6/17 [00:14<00:19,  1.78s/cell]Executing Cell 7---------------------------------------
+
+STEP 2c: Volume-by-difference (VBD) flag
+  Opx spots: is_vbd = False (VBD is a liquid-level concept in ExPetDB)
+
+Ending Cell 7------------------------------------------
+Executing Cell 8---------------------------------------
+
+STEP 3: Oxide total filter (95.0-102.0 wt%)
+  Dropped 177 rows outside 95.0-102.0
+  Remaining: 7289
+
+Ending Cell 8------------------------------------------
+
+Executing:  47%|####7     | 8/17 [00:14<00:09,  1.09s/cell]Executing Cell 9---------------------------------------
+
+STEP 4: Cation recalculation (6-oxygen basis)
+
+  Cation recalc done. Mean cation sum: 4.000
+
+Ending Cell 9------------------------------------------
+Executing Cell 10--------------------------------------
+
+STEP 5: Core oxide requirement + cation sum filter
+  Dropped 2737 rows missing core oxides
+  Dropped 26 rows outside cation sum 3.95-4.05
+  Remaining: 4526
+
+Ending Cell 10-----------------------------------------
+
+Executing:  59%|#####8    | 10/17 [00:16<00:07,  1.04s/cell]Executing Cell 11--------------------------------------
+
+STEP 6: Pigeonite filter (Wo <= 5.0 mol%)
+  Dropped 374 pigeonite/aug (Wo > 5.0)
+  Remaining: 4152
+
+Ending Cell 11-----------------------------------------
+Executing Cell 12--------------------------------------
+
+STEP 6b: Pressure ceiling filter (P <= 100.0 kbar)
+
+  Dropped 71 rows with P > 100.0 kbar (opx unstable)
+  Remaining: 4081
+
+Ending Cell 12-----------------------------------------
+
+Executing:  71%|#######   | 12/17 [00:16<00:03,  1.41cell/s]Executing Cell 13--------------------------------------
+
+STEP 6c: KD(Fe-Mg) opx-liq equilibrium filter (0.23-0.35)
+
+  Rows with liquid data: 3745
+  Rows passing KD filter (opx_liq_pair=True): 1036
+  is_vbd (liquid H2O by difference): 64
+  Opx-only rows (total): 4081
+
+Ending Cell 13-----------------------------------------
+
+Executing:  76%|#######6  | 13/17 [00:25<00:09,  2.36s/cell]Executing Cell 14--------------------------------------
+
+STEP 6d: Experiment-level deduplication
+  Before dedup: 4081 spot-level rows
+  After dedup: 1035 experiment-level rows
+  Collapsed 3046 duplicate spots
+
+Ending Cell 14-----------------------------------------
+
+Executing:  82%|########2 | 14/17 [00:25<00:05,  1.88s/cell]Executing Cell 15--------------------------------------
+
+STEP 7: Feature engineering
+  Features added: Mg_num, Al_IV, Al_VI, MgTs, liq_Mg_num
+
+Ending Cell 15-----------------------------------------
+Executing Cell 16--------------------------------------
+
+STEP 8: Save datasets
+
+  Core: 1035 experiments, 123 studies
+  Core opx_liq_pair=True: 600
+  Full: 494 experiments, 70 studies
+  Full opx_liq_pair=True: 321
+
+Log written to C:\Users\NQTa\Documents\MLCourse\Final Project\logs\cleaning_log.txt
+
+Ending Cell 16-----------------------------------------
+
+Executing:  94%|#########4| 16/17 [00:26<00:01,  1.34s/cell]Executing Cell 17--------------------------------------
+Core: 1035 experiments, 123 studies
+  opx_liq_pair = True: 600
+Full: 494 experiments, 70 studies
+
+=== NB01 complete ===
+
+Ending Cell 17-----------------------------------------
+Assertion failed: Interrupted system call [10004] (C:\Users\runneradmin\AppData\Local\Temp\tmpm74nglni\build\_deps\bundled_libzmq-src\src\signaler.cpp:345)
+
+Executing: 100%|##########| 17/17 [00:27<00:00,  1.61s/cell]
+[16:49:24] OK nb01_data_cleaning
+
+[16:49:24] starting nb02_eda_pca
+Input Notebook:  C:\Users\NQTa\Documents\MLCourse\Final Project\notebooks\nb02_eda_pca.ipynb
+Output Notebook: C:\Users\NQTa\Documents\MLCourse\Final Project\notebooks\executed\nb02_eda_pca_executed.ipynb
+
+Executing:   0%|          | 0/17 [00:00<?, ?cell/s]Executing notebook with kernel: python3
+Executing Cell 1---------------------------------------
+Ending Cell 1------------------------------------------
+
+Executing:   6%|5         | 1/17 [00:07<01:57,  7.36s/cell]Executing Cell 2---------------------------------------
+Ending Cell 2------------------------------------------
+Executing Cell 3---------------------------------------
+Ending Cell 3------------------------------------------
+
+Executing:  18%|#7        | 3/17 [00:13<00:58,  4.20s/cell]Executing Cell 4---------------------------------------
+Loaded 1035 experiments, 123 studies
+
+Ending Cell 4------------------------------------------
+
+Executing:  24%|##3       | 4/17 [00:13<00:36,  2.81s/cell]Executing Cell 5---------------------------------------
+<Figure size 800x800 with 4 Axes>
+Ending Cell 5------------------------------------------
+
+Executing:  29%|##9       | 5/17 [00:15<00:30,  2.51s/cell]Executing Cell 6---------------------------------------
+Ending Cell 6------------------------------------------
+Executing Cell 7---------------------------------------
+PCA: 3 components explain 98.7% variance
+
+Ending Cell 7------------------------------------------
+Executing Cell 8---------------------------------------
+<Figure size 1400x600 with 4 Axes>
+Ending Cell 8------------------------------------------
+
+Executing:  47%|####7     | 8/17 [00:20<00:18,  2.00s/cell]Executing Cell 9---------------------------------------
+Ending Cell 9------------------------------------------
+Executing Cell 10--------------------------------------
+<Figure size 600x800 with 2 Axes>
+Ending Cell 10-----------------------------------------
+
+Executing:  59%|#####8    | 10/17 [00:24<00:13,  1.91s/cell]Executing Cell 11--------------------------------------
+<Figure size 1300x800 with 6 Axes>
+Ending Cell 11-----------------------------------------
+
+Executing:  65%|######4   | 11/17 [00:28<00:14,  2.44s/cell]Executing Cell 12--------------------------------------
+  k=3: silhouette = 0.357
+
+  k=4: silhouette = 0.326
+
+  k=5: silhouette = 0.319
+
+  k=6: silhouette = 0.326
+
+  k=7: silhouette = 0.303
+
+  k=8: silhouette = 0.326
+
+  k=9: silhouette = 0.305
+
+  k=10: silhouette = 0.311
+
+Best k (silhouette): 3
+
+
+Final cluster sizes:
+chemical_cluster
+0    402
+1    434
+2    199
+Name: count, dtype: int64
+
+Ending Cell 12-----------------------------------------
+
+Executing:  71%|#######   | 12/17 [00:45<00:28,  5.79s/cell]Executing Cell 13--------------------------------------
+<Figure size 800x700 with 1 Axes>
+Ending Cell 13-----------------------------------------
+
+Executing:  76%|#######6  | 13/17 [00:48<00:20,  5.03s/cell]Executing Cell 14--------------------------------------
+Ending Cell 14-----------------------------------------
+Executing Cell 15--------------------------------------
+                    n   T_mean   T_std  P_mean  P_std  SiO2_mean  Mg_num_mean
+chemical_cluster                                                             
+0                 402  1263.95  186.36   16.43  18.20      55.99        88.94
+1                 434  1302.35  146.58   16.08   8.97      53.78        87.93
+2                 199  1034.83  150.96    7.26   6.09      51.89        66.33
+
+Ending Cell 15-----------------------------------------
+
+Executing:  88%|########8 | 15/17 [00:48<00:06,  3.02s/cell]Executing Cell 16--------------------------------------
+Cluster labels assigned:
+ chemical_cluster          cluster_name   n
+                0 decompression residue 402
+                1    primitive basaltic 434
+                2      evolved/depleted 199
+
+Ending Cell 16-----------------------------------------
+
+Executing:  94%|#########4| 16/17 [00:48<00:02,  2.37s/cell]Executing Cell 17--------------------------------------
+Saved opx_clean_core_with_clusters.parquet with chemical_cluster + cluster_name columns
+  cluster_name unique: ['decompression residue', 'evolved/depleted', 'primitive basaltic']
+
+=== NB02 complete ===
+
+Ending Cell 17-----------------------------------------
+
+Executing: 100%|##########| 17/17 [00:50<00:00,  2.24s/cell]
+Executing: 100%|##########| 17/17 [00:53<00:00,  3.16s/cell]
+[16:50:26] OK nb02_eda_pca
+
+[16:50:26] starting nb03_baseline_models
+Input Notebook:  C:\Users\NQTa\Documents\MLCourse\Final Project\notebooks\nb03_baseline_models.ipynb
+Output Notebook: C:\Users\NQTa\Documents\MLCourse\Final Project\notebooks\executed\nb03_baseline_models_executed.ipynb
+
+Executing:   0%|          | 0/32 [00:00<?, ?cell/s]Executing notebook with kernel: python3
+Executing Cell 1---------------------------------------
+Ending Cell 1------------------------------------------
+
+Executing:   3%|3         | 1/32 [00:05<02:59,  5.79s/cell]Executing Cell 2---------------------------------------
+Ending Cell 2------------------------------------------
+Executing Cell 3---------------------------------------
+Ending Cell 3------------------------------------------
+
+Executing:   9%|9         | 3/32 [00:16<02:33,  5.28s/cell]Executing Cell 4---------------------------------------
+Loaded: 1035 experiments, 123 studies
+Opx-only: 1035 rows / 123 studies
+Opx-liq:  600 rows / 93 studies
+
+Ending Cell 4------------------------------------------
+
+Executing:  12%|#2        | 4/32 [00:16<01:39,  3.56s/cell]Executing Cell 5---------------------------------------
+Track parquet files written.
+
+Ending Cell 5------------------------------------------
+
+Executing:  16%|#5        | 5/32 [00:16<01:09,  2.56s/cell]Executing Cell 6---------------------------------------
+Ending Cell 6------------------------------------------
+
+Executing:  19%|#8        | 6/32 [00:17<00:47,  1.82s/cell]Executing Cell 7---------------------------------------
+Ending Cell 7------------------------------------------
+
+Executing:  22%|##1       | 7/32 [00:17<00:32,  1.31s/cell]Executing Cell 8---------------------------------------
+Ending Cell 8------------------------------------------
+Executing Cell 9---------------------------------------
+N_AUG sensitivity:   0%|          | 0/2400 [00:00<?, ?it/s]
+Timeout waiting for execute reply (10800s).
+Ending Cell 9------------------------------------------
+
+Executing:  28%|##8       | 9/32 [3:00:17<16:19:42, 2555.78s/cell]
+Executing:  28%|##8       | 9/32 [3:00:20<7:40:51, 1202.22s/cell] 
+Traceback (most recent call last):
+  File "C:\Users\NQTa\Documents\MLCourse\Final Project\.venv\Lib\site-packages\nbclient\client.py", line 782, in _async_poll_for_reply
+    msg = await ensure_async(self.kc.shell_channel.get_msg(timeout=new_timeout))
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\NQTa\Documents\MLCourse\Final Project\.venv\Lib\site-packages\jupyter_core\utils\__init__.py", line 214, in ensure_async
+    result = await obj
+             ^^^^^^^^^
+  File "C:\Users\NQTa\Documents\MLCourse\Final Project\.venv\Lib\site-packages\jupyter_client\channels.py", line 316, in get_msg
+    raise Empty
+_queue.Empty
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "C:\Users\NQTa\Documents\MLCourse\Final Project\.venv\Lib\site-packages\papermill\__main__.py", line 4, in <module>
+    papermill()
+    ~~~~~~~~~^^
+  File "C:\Users\NQTa\Documents\MLCourse\Final Project\.venv\Lib\site-packages\click\core.py", line 1485, in __call__
+    return self.main(*args, **kwargs)
+           ~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "C:\Users\NQTa\Documents\MLCourse\Final Project\.venv\Lib\site-packages\click\core.py", line 1406, in main
+    rv = self.invoke(ctx)
+  File "C:\Users\NQTa\Documents\MLCourse\Final Project\.venv\Lib\site-packages\click\core.py", line 1269, in invoke
+    return ctx.invoke(self.callback, **ctx.params)
+           ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\NQTa\Documents\MLCourse\Final Project\.venv\Lib\site-packages\click\core.py", line 824, in invoke
+    return callback(*args, **kwargs)
+  File "C:\Users\NQTa\Documents\MLCourse\Final Project\.venv\Lib\site-packages\click\decorators.py", line 34, in new_func
+    return f(get_current_context(), *args, **kwargs)
+  File "C:\Users\NQTa\Documents\MLCourse\Final Project\.venv\Lib\site-packages\papermill\cli.py", line 235, in papermill
+    execute_notebook(
+    ~~~~~~~~~~~~~~~~^
+        input_path=input_path,
+        ^^^^^^^^^^^^^^^^^^^^^^
+    ...<15 lines>...
+        execution_timeout=execution_timeout,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\NQTa\Documents\MLCourse\Final Project\.venv\Lib\site-packages\papermill\execute.py", line 116, in execute_notebook
+    nb = papermill_engines.execute_notebook_with_engine(
+        engine_name,
+    ...<9 lines>...
+        **engine_kwargs,
+    )
+  File "C:\Users\NQTa\Documents\MLCourse\Final Project\.venv\Lib\site-packages\papermill\engines.py", line 49, in execute_notebook_with_engine
+    return self.get_engine(engine_name).execute_notebook(nb, kernel_name, **kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\NQTa\Documents\MLCourse\Final Project\.venv\Lib\site-packages\papermill\engines.py", line 371, in execute_notebook
+    cls.execute_managed_notebook(nb_man, kernel_name, log_output=log_output, **kwargs)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\NQTa\Documents\MLCourse\Final Project\.venv\Lib\site-packages\papermill\engines.py", line 443, in execute_managed_notebook
+    return PapermillNotebookClient(nb_man, **final_kwargs).execute()
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\NQTa\Documents\MLCourse\Final Project\.venv\Lib\site-packages\papermill\clientwrap.py", line 45, in execute
+    self.papermill_execute_cells()
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\NQTa\Documents\MLCourse\Final Project\.venv\Lib\site-packages\papermill\clientwrap.py", line 72, in papermill_execute_cells
+    self.execute_cell(cell, index)
+    ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "C:\Users\NQTa\Documents\MLCourse\Final Project\.venv\Lib\site-packages\jupyter_core\utils\__init__.py", line 165, in wrapped
+    return loop.run_until_complete(inner)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.13_3.13.3312.0_x64__qbz5n2kfra8p0\Lib\asyncio\base_events.py", line 725, in run_until_complete
+    return future.result()
+           ~~~~~~~~~~~~~^^
+  File "C:\Users\NQTa\Documents\MLCourse\Final Project\.venv\Lib\site-packages\nbclient\client.py", line 1005, in async_execute_cell
+    exec_reply = await self.task_poll_for_reply
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\NQTa\Documents\MLCourse\Final Project\.venv\Lib\site-packages\nbclient\client.py", line 806, in _async_poll_for_reply
+    error_on_timeout_execute_reply = await self._async_handle_timeout(timeout, cell)
+                                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\NQTa\Documents\MLCourse\Final Project\.venv\Lib\site-packages\nbclient\client.py", line 856, in _async_handle_timeout
+    raise CellTimeoutError.error_from_timeout_and_cell(
+        "Cell execution timed out", timeout, cell
+    )
+nbclient.exceptions.CellTimeoutError: A cell timed out while it was being executed, after 10800 seconds.
+The message was: Cell execution timed out.
+Here is a preview of the cell contents:
+-------------------
+['# Phase 3.3b: N_AUG sensitivity test', 'import time', 'import numpy as np', 'import pandas as pd', 'from scipy import stats']
+...
+["            print(f'{model:4s} {track:10s} {repr_name:5s} {target:7s} '", "                  f'1 vs {n:2d}: delta={mean_d:+.2f}  p={p:.4f} {sig} {direction}')", '            if cand.mean() < best_rmse:', '                best_rmse, best_n = cand.mean(), n', "    print(f'  -> Best n_aug for {model}/{repr_name}/{target}: {best_n}')"]
+-------------------
+
+[19:50:52] FAILED nb03_baseline_models rc=1

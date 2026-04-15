@@ -1,0 +1,3 @@
+nb06_shap_analysis failed with returncode 1 at 2026-04-15T00:38:01.656924
+Full run log: C:\Users\NQTa\Documents\MLCourse\Final Project\logs\pipeline_run_v7_20260414_230742.log
+Resume command after fix: python run_all_v7.py --resume-from nb06_shap_analysis

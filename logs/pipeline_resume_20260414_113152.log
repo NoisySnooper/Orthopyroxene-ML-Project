@@ -1,0 +1,530 @@
+Resume run started at 2026-04-14T11:31:52.670162
+Starting from: nbF_figures (index 10)
+
+[11:31:52] starting nbF_figures
+Input Notebook:  C:\Users\NQTa\Documents\MLCourse\Final Project\notebooks\nbF_figures.ipynb
+Output Notebook: C:\Users\NQTa\Documents\MLCourse\Final Project\notebooks\executed\nbF_figures_executed.ipynb
+
+Executing:   0%|          | 0/12 [00:00<?, ?cell/s]Executing notebook with kernel: python3
+Executing Cell 1---------------------------------------
+Ending Cell 1------------------------------------------
+
+Executing:   8%|8         | 1/12 [00:02<00:27,  2.47s/cell]Executing Cell 2---------------------------------------
+Ending Cell 2------------------------------------------
+
+Executing:  17%|#6        | 2/12 [00:05<00:27,  2.71s/cell]Executing Cell 3---------------------------------------
+Phase 3R winning feature set: pwlr
+
+Ending Cell 3------------------------------------------
+Executing Cell 4---------------------------------------
+Ending Cell 4------------------------------------------
+
+Executing:  33%|###3      | 4/12 [00:06<00:10,  1.27s/cell]Executing Cell 5---------------------------------------
+Ending Cell 5------------------------------------------
+
+Executing:  42%|####1     | 5/12 [00:06<00:07,  1.09s/cell]Executing Cell 6---------------------------------------
+Ending Cell 6------------------------------------------
+
+Executing:  50%|#####     | 6/12 [00:09<00:08,  1.44s/cell]Executing Cell 7---------------------------------------
+Ending Cell 7------------------------------------------
+
+Executing:  58%|#####8    | 7/12 [00:10<00:06,  1.35s/cell]Executing Cell 8---------------------------------------
+Ending Cell 8------------------------------------------
+
+Executing:  67%|######6   | 8/12 [00:10<00:04,  1.14s/cell]Executing Cell 9---------------------------------------
+Ending Cell 9------------------------------------------
+Executing Cell 10--------------------------------------
+skipping Fig 10: nb04_putirka_vs_ml.csv not found
+
+Ending Cell 10-----------------------------------------
+Executing Cell 11--------------------------------------
+Ending Cell 11-----------------------------------------
+
+Executing:  92%|#########1| 11/12 [00:12<00:00,  1.17cell/s]Executing Cell 12--------------------------------------
+=== PHASE F1 COMPLETE ===
+
+Ending Cell 12-----------------------------------------
+
+Executing: 100%|##########| 12/12 [00:15<00:00,  1.24s/cell]
+Executing: 100%|##########| 12/12 [00:16<00:00,  1.35s/cell]
+[11:32:11] OK nbF_figures
+
+[11:32:11] starting nb09_manuscript_compilation
+Input Notebook:  C:\Users\NQTa\Documents\MLCourse\Final Project\notebooks\nb09_manuscript_compilation.ipynb
+Output Notebook: C:\Users\NQTa\Documents\MLCourse\Final Project\notebooks\executed\nb09_manuscript_compilation_executed.ipynb
+
+Executing:   0%|          | 0/14 [00:00<?, ?cell/s]Executing notebook with kernel: python3
+Executing Cell 1---------------------------------------
+Ending Cell 1------------------------------------------
+
+Executing:   7%|7         | 1/14 [00:03<00:41,  3.19s/cell]Executing Cell 2---------------------------------------
+Phase 3R winning feature set: pwlr
+
+Ending Cell 2------------------------------------------
+
+Executing:  14%|#4        | 2/14 [00:04<00:21,  1.81s/cell]Executing Cell 3---------------------------------------
+Table 1: dataset summary
+                         Dataset  n_experiments  n_studies T_range_C P_range_kbar
+         ExPetDB core (training)           1035        123  800-1850    0.0-100.0
+          ExPetDB opx-liq subset            600         93  840-1830     0.0-60.0
+         ExPetDB full (9 oxides)            494         70  800-1850    0.0-100.0
+ArcPL external (LEPR _notinLEPR)            204         18  825-1250     1.0-16.0
+
+Ending Cell 3------------------------------------------
+
+Executing:  21%|##1       | 3/14 [00:04<00:12,  1.11s/cell]Executing Cell 4---------------------------------------
+Table 2: Phase 3R multi-seed performance (winning feature set only)
+   track target model_name  rmse_test_mean  rmse_test_std  mae_test_mean  r2_test_mean  n_seeds feature_set phase3r_tag
+ opx_liq P_kbar        ERT           7.099          1.429          4.612         0.457       10        pwlr            
+ opx_liq P_kbar         GB           6.126          1.242          4.411         0.591       10        pwlr            
+ opx_liq P_kbar         RF           6.953          1.257          4.594         0.482       10        pwlr            
+ opx_liq P_kbar        XGB           5.880          1.365          4.243         0.622       10        pwlr            
+ opx_liq    T_C        ERT          80.820          6.222         59.098         0.770       10        pwlr            
+ opx_liq    T_C         GB          89.286          8.080         67.472         0.714       10        pwlr            
+ opx_liq    T_C         RF          78.581          7.091         57.605         0.780       10        pwlr            
+ opx_liq    T_C        XGB          87.229          8.393         64.166         0.741       10        pwlr            
+opx_only P_kbar        ERT          11.282          3.184          7.244         0.241       10        pwlr            
+opx_only P_kbar         GB          11.868          3.131          7.824         0.167       10        pwlr            
+opx_only P_kbar         RF          10.985          3.085          6.915         0.281       10        pwlr            
+opx_only P_kbar        XGB          11.336          3.063          7.537         0.235       10        pwlr            
+opx_only    T_C        ERT         139.861         21.383        104.311         0.465       10        pwlr            
+opx_only    T_C         GB         140.139         21.435        103.936         0.465       10        pwlr            
+opx_only    T_C         RF         136.140         19.443        100.189         0.496       10        pwlr            
+opx_only    T_C        XGB         138.658         21.972        103.494         0.479       10        pwlr            
+
+Ending Cell 4------------------------------------------
+Executing Cell 5---------------------------------------
+Table 3: Putirka vs ML
+                        Method Target   RMSE    MAE    R2  n_test             Comparison  failure_pct
+          Putirka 28a (true P)      T 77.050 42.718 0.631     124          fair (same n)          NaN
+  Putirka 28b_opx_sat (true P)      T 81.432 49.497 0.587     124          fair (same n)          NaN
+   Putirka iterative (28a+29a)      T 77.842 49.592 0.623     124          fair (same n)          NaN
+            Putirka 28a (ML P)      T 79.854 52.676 0.603     124          fair (same n)          NaN
+                 ML-RF opx-liq      T 85.760 56.766 0.542     124          fair (same n)          NaN
+          Putirka 29a (true T)      P  3.834  2.950 0.780     107          fair (same n)          NaN
+Putirka 29c (opx-only, true T)      P  4.963  3.842 0.631     107          fair (same n)          NaN
+   Putirka iterative (28a+29a)      P  3.818  2.918 0.782     107          fair (same n)          NaN
+            Putirka 29a (ML T)      P  3.800  2.850 0.784     107          fair (same n)          NaN
+                 ML-RF opx-liq      P  4.510  3.520 0.695     107          fair (same n)          NaN
+      ML-RF opx-liq (all test)      T 85.051 57.609 0.624     174 practical (all test n)        0.000
+      ML-RF opx-liq (all test)      P  5.394  3.993 0.687     174 practical (all test n)        0.000
+          Putirka failure rate      T    NaN    NaN   NaN      50 practical (all test n)       28.736
+          Putirka failure rate      P    NaN    NaN   NaN      67 practical (all test n)       38.506
+
+Ending Cell 5------------------------------------------
+
+Executing:  36%|###5      | 5/14 [00:04<00:04,  1.94cell/s]Executing Cell 6---------------------------------------
+Table 4: validation strategies (pooled + per-fold), canonical RF only
+     strategy model_name target feature_set  n_folds_x    rmse    mae    r2   bias   n  fold_median_rmse  fold_mean_rmse  fold_q25  fold_q75  n_folds_y
+         LOSO         RF    T_C        pwlr         93  74.650 52.804 0.821  3.048 600            58.582          70.628    31.059    81.457         93
+         LOSO         RF P_kbar        pwlr         93   5.928  3.810 0.599 -0.149 600             3.220           4.721     2.000     5.631         93
+Cluster-KFold         RF    T_C        pwlr          3 103.299 79.388 0.657  3.966 600           103.255         108.455    99.016   115.293          3
+Cluster-KFold         RF P_kbar        pwlr          3   6.778  4.609 0.476 -0.413 600             6.123           6.132     4.945     7.315          3
+   Gridded-PT         RF    T_C        pwlr          9 101.691 79.363 0.668 -6.623 600            84.861          93.583    69.668   101.556          9
+   Gridded-PT         RF P_kbar        pwlr          9   8.432  6.054 0.189  0.146 600             6.251           6.379     3.377     8.228          9
+
+Ending Cell 6------------------------------------------
+
+Executing:  43%|####2     | 6/14 [00:04<00:03,  2.48cell/s]Executing Cell 7---------------------------------------
+Table 5: top-10 SHAP features (read from NB06 output)
+             feature  importance_P_pwlr  importance_T_pwlr feature_set
+   pwlr_liq_SiO2_MgO             0.8189            37.5401        pwlr
+ pwlr_FeO_total_Na2O             0.6251             7.0792        pwlr
+pwlr_Al2O3_FeO_total             0.5948             1.1302        pwlr
+       pwlr_MnO_Na2O             0.5725             1.8923        pwlr
+    pwlr_liq_MgO_CaO             0.4358            13.0852        pwlr
+       pwlr_CaO_Na2O             0.4059             2.5577        pwlr
+  pwlr_liq_Al2O3_MgO             0.3794            21.8218        pwlr
+      pwlr_TiO2_Na2O             0.3685             4.7385        pwlr
+               Al_VI             0.3492             0.4023        pwlr
+   pwlr_liq_SiO2_FeO             0.3339             1.4530        pwlr
+
+Ending Cell 7------------------------------------------
+Executing Cell 8---------------------------------------
+Table 6: ArcPL external metrics
+           dataset target   RMSE    MAE    R2   n
+         ArcPL all      T 65.644 54.200 0.630 204
+         ArcPL all      P  2.721  2.202 0.569 204
+ArcPL measured H2O      T 62.117 51.052 0.688 134
+ArcPL measured H2O      P  3.099  2.580 0.532 134
+     ArcPL VBD H2O      T 71.915 60.227 0.438  70
+     ArcPL VBD H2O      P  1.786  1.479 0.594  70
+
+Ending Cell 8------------------------------------------
+
+Executing:  57%|#####7    | 8/14 [00:04<00:01,  3.97cell/s]Executing Cell 9---------------------------------------
+Table 7: 4-track bias correction A/B
+
+target                  track  rmse_train  mae_train  rmse_test  mae_test  r2_test
+   T_C               1_raw_rf       0.000      0.000     84.300    57.428    0.631
+   T_C 2_linear_trainfit_leak       0.000      0.000     84.300    57.428    0.631
+   T_C        3_linear_ooffit       5.235      4.062     84.504    57.714    0.629
+   T_C     4_piecewise_ooffit      12.693     10.707     84.665    57.972    0.627
+P_kbar               1_raw_rf       1.333      0.394      6.809     4.623    0.501
+P_kbar 2_linear_trainfit_leak       1.234      0.577      6.729     4.568    0.513
+P_kbar        3_linear_ooffit       1.653      1.146      6.596     4.478    0.532
+P_kbar     4_piecewise_ooffit       1.784      1.275      6.636     4.699    0.526
+Table 7b: QRF leakage A/B coverage
+target           track  coverage_68  rmse_median
+   T_C A_trainfit_leak        1.000        0.000
+   T_C    B_oof_honest        0.737       73.373
+   T_C          C_test        0.707       84.300
+P_kbar A_trainfit_leak        1.000        1.584
+P_kbar    B_oof_honest        0.831        5.604
+P_kbar          C_test        0.615        6.935
+
+Ending Cell 9------------------------------------------
+Executing Cell 10--------------------------------------
+INFO: two-pyroxene benchmark empty (no Cpx in test set); Table 8 skipped
+Table 9: ArcPL H2O dependence
+target   n  pearson_r  pearson_p  spearman_r  spearman_p   slope  intercept  mean_resid_dry  mean_resid_wet
+   T_C 204     0.2831     0.0000      0.2527      0.0003  5.4712     8.5271         32.1762         33.9302
+P_kbar 204    -0.2726     0.0001     -0.2991      0.0000 -0.3028     1.7141          1.5737          0.1882
+
+Table 10: per-sample uncertainty (tree IQR and analytical noise)
+target  iqr_mean  iqr_median  pearson_iqr_vs_absres  spearman_iqr_vs_absres  frac_abs_res_le_halfiqr   n           source  sigma_mean  sigma_median  sigma_p90  n_mc
+   T_C   140.173     140.000                  0.006                   0.076                    0.701 174         tree_IQR         NaN           NaN        NaN   NaN
+P_kbar    10.448      10.124                  0.662                   0.526                    0.615 174         tree_IQR         NaN           NaN        NaN   NaN
+   T_C       NaN         NaN                    NaN                     NaN                      NaN 174 analytical_noise      10.621        10.332     18.695 200.0
+P_kbar       NaN         NaN                    NaN                     NaN                      NaN 174 analytical_noise       0.358         0.300      0.782 200.0
+Table 11: ArcPL IsolationForest OOD filter
+target              subset   rmse    mae    r2   bias   n
+   T_C                 all 59.993 46.146 0.691 33.767 204
+   T_C     in_distribution 60.839 45.666 0.478 36.680 124
+   T_C out_of_distribution 58.659 46.890 0.351 29.252  80
+P_kbar                 all  2.868  2.260 0.521  0.317 204
+P_kbar     in_distribution  3.251  2.748 0.161  0.650 124
+P_kbar out_of_distribution  2.143  1.503 0.754 -0.199  80
+
+Ending Cell 10-----------------------------------------
+
+Executing:  71%|#######1  | 10/14 [00:04<00:00,  4.83cell/s]Executing Cell 11--------------------------------------
+Found 14/15 expected figures
+
+  MISSING: fig10_putirka_vs_ml.png
+
+KEY RESULTS:
+  winning_feature_set: pwlr
+  runner_up_feature_set: raw
+  best_opx_liq_T_RMSE_mean: 78.5812521116107
+  best_opx_liq_P_RMSE_mean: 5.8800483733814675
+  best_opx_only_T_RMSE_mean: 136.13986168203311
+  best_opx_only_P_RMSE_mean: 10.985494209912492
+  loso_pooled_T_RMSE: 74.65005093542757
+  loso_pooled_P_RMSE: 5.927868419160324
+  cluster_pooled_T_RMSE: 103.2987619227008
+  cluster_pooled_P_RMSE: 6.778360389238183
+  gridded_pooled_T_RMSE: 101.69073955363692
+  gridded_pooled_P_RMSE: 8.432043528302012
+  1_raw_rf_T_C_rmse_test: 84.29988981967148
+  3_linear_ooffit_T_C_rmse_test: 84.50432550437631
+  4_piecewise_ooffit_T_C_rmse_test: 84.66489104062094
+  1_raw_rf_P_kbar_rmse_test: 6.80886053151564
+  3_linear_ooffit_P_kbar_rmse_test: 6.595548707430575
+  4_piecewise_ooffit_P_kbar_rmse_test: 6.635518724897183
+  qrf_A_trainfit_leak_T_C_cov68: 1.0
+  qrf_B_oof_honest_T_C_cov68: 0.7370892018779343
+  qrf_C_test_T_C_cov68: 0.7068965517241379
+  qrf_A_trainfit_leak_P_kbar_cov68: 1.0
+  qrf_B_oof_honest_P_kbar_cov68: 0.8309859154929577
+  qrf_C_test_P_kbar_cov68: 0.6149425287356322
+  arcpl_T_RMSE: 65.6440682062727
+  arcpl_P_RMSE: 2.72098519520758
+
+=== PHASE 9R COMPLETE ===
+
+Ending Cell 11-----------------------------------------
+
+Executing:  79%|#######8  | 11/14 [00:05<00:00,  4.10cell/s]Executing Cell 12--------------------------------------
+Ending Cell 12-----------------------------------------
+Executing Cell 13--------------------------------------
+<IPython.core.display.Markdown object>
+                            Dataset  n_experiments  n_studies T_range_C  \
+0           ExPetDB core (training)           1035        123  800-1850   
+1            ExPetDB opx-liq subset            600         93  840-1830   
+2           ExPetDB full (9 oxides)            494         70  800-1850   
+3  ArcPL external (LEPR _notinLEPR)            204         18  825-1250   
+
+  P_range_kbar  
+0    0.0-100.0  
+1     0.0-60.0  
+2    0.0-100.0  
+3     1.0-16.0  
+<IPython.core.display.Markdown object>
+       track  target model_name  rmse_test_mean  rmse_test_std  mae_test_mean  \
+0    opx_liq  P_kbar        ERT          7.0988         1.4288         4.6116   
+1    opx_liq  P_kbar         GB          6.1256         1.2422         4.4114   
+2    opx_liq  P_kbar         RF          6.9534         1.2572         4.5939   
+3    opx_liq  P_kbar        XGB          5.8800         1.3654         4.2430   
+4    opx_liq     T_C        ERT         80.8205         6.2224        59.0981   
+5    opx_liq     T_C         GB         89.2860         8.0799        67.4716   
+6    opx_liq     T_C         RF         78.5813         7.0909        57.6052   
+7    opx_liq     T_C        XGB         87.2292         8.3928        64.1656   
+8   opx_only  P_kbar        ERT         11.2816         3.1837         7.2436   
+9   opx_only  P_kbar         GB         11.8683         3.1313         7.8239   
+10  opx_only  P_kbar         RF         10.9855         3.0850         6.9152   
+11  opx_only  P_kbar        XGB         11.3359         3.0633         7.5373   
+12  opx_only     T_C        ERT        139.8615        21.3830       104.3107   
+13  opx_only     T_C         GB        140.1389        21.4346       103.9358   
+14  opx_only     T_C         RF        136.1399        19.4431       100.1889   
+15  opx_only     T_C        XGB        138.6579        21.9719       103.4939   
+
+    r2_test_mean  n_seeds feature_set  phase3r_tag  
+0         0.4565       10        pwlr          NaN  
+1         0.5905       10        pwlr          NaN  
+2         0.4818       10        pwlr          NaN  
+3         0.6218       10        pwlr          NaN  
+4         0.7695       10        pwlr          NaN  
+5         0.7139       10        pwlr          NaN  
+6         0.7804       10        pwlr          NaN  
+7         0.7410       10        pwlr          NaN  
+8         0.2407       10        pwlr          NaN  
+9         0.1668       10        pwlr          NaN  
+10        0.2811       10        pwlr          NaN  
+11        0.2346       10        pwlr          NaN  
+12        0.4654       10        pwlr          NaN  
+13        0.4650       10        pwlr          NaN  
+14        0.4956       10        pwlr          NaN  
+15        0.4795       10        pwlr          NaN  
+<IPython.core.display.Markdown object>
+                            Method Target     RMSE      MAE      R2  n_test  \
+0             Putirka 28a (true P)      T  77.0499  42.7181  0.6307     124   
+1     Putirka 28b_opx_sat (true P)      T  81.4319  49.4974  0.5875     124   
+2      Putirka iterative (28a+29a)      T  77.8422  49.5924  0.6230     124   
+3               Putirka 28a (ML P)      T  79.8545  52.6762  0.6033     124   
+4                    ML-RF opx-liq      T  85.7599  56.7658  0.5424     124   
+5             Putirka 29a (true T)      P   3.8340   2.9496  0.7799     107   
+6   Putirka 29c (opx-only, true T)      P   4.9629   3.8417  0.6311     107   
+7      Putirka iterative (28a+29a)      P   3.8185   2.9176  0.7816     107   
+8               Putirka 29a (ML T)      P   3.7998   2.8502  0.7838     107   
+9                    ML-RF opx-liq      P   4.5104   3.5202  0.6953     107   
+10        ML-RF opx-liq (all test)      T  85.0510  57.6091  0.6241     174   
+11        ML-RF opx-liq (all test)      P   5.3938   3.9933  0.6868     174   
+12            Putirka failure rate      T      NaN      NaN     NaN      50   
+13            Putirka failure rate      P      NaN      NaN     NaN      67   
+
+                Comparison  failure_pct  
+0            fair (same n)          NaN  
+1            fair (same n)          NaN  
+2            fair (same n)          NaN  
+3            fair (same n)          NaN  
+4            fair (same n)          NaN  
+5            fair (same n)          NaN  
+6            fair (same n)          NaN  
+7            fair (same n)          NaN  
+8            fair (same n)          NaN  
+9            fair (same n)          NaN  
+10  practical (all test n)       0.0000  
+11  practical (all test n)       0.0000  
+12  practical (all test n)      28.7356  
+13  practical (all test n)      38.5057  
+<IPython.core.display.Markdown object>
+        strategy model_name  target feature_set  n_folds_x      rmse      mae  \
+0           LOSO         RF     T_C        pwlr         93   74.6501  52.8042   
+1           LOSO         RF  P_kbar        pwlr         93    5.9279   3.8103   
+2  Cluster-KFold         RF     T_C        pwlr          3  103.2988  79.3880   
+3  Cluster-KFold         RF  P_kbar        pwlr          3    6.7784   4.6086   
+4     Gridded-PT         RF     T_C        pwlr          9  101.6907  79.3629   
+5     Gridded-PT         RF  P_kbar        pwlr          9    8.4320   6.0542   
+
+       r2    bias    n  fold_median_rmse  fold_mean_rmse  fold_q25  fold_q75  \
+0  0.8209  3.0484  600           58.5824         70.6283   31.0589   81.4569   
+1  0.5990 -0.1489  600            3.2203          4.7207    2.0000    5.6306   
+2  0.6571  3.9664  600          103.2551        108.4545   99.0163  115.2931   
+3  0.4757 -0.4127  600            6.1233          6.1321    4.9453    7.3145   
+4  0.6677 -6.6230  600           84.8605         93.5832   69.6677  101.5557   
+5  0.1887  0.1458  600            6.2512          6.3789    3.3771    8.2285   
+
+   n_folds_y  
+0         93  
+1         93  
+2          3  
+3          3  
+4          9  
+5          9  
+<IPython.core.display.Markdown object>
+                feature  importance_P_pwlr  importance_T_pwlr feature_set
+0     pwlr_liq_SiO2_MgO             0.8189            37.5401        pwlr
+1   pwlr_FeO_total_Na2O             0.6251             7.0792        pwlr
+2  pwlr_Al2O3_FeO_total             0.5948             1.1302        pwlr
+3         pwlr_MnO_Na2O             0.5725             1.8923        pwlr
+4      pwlr_liq_MgO_CaO             0.4358            13.0852        pwlr
+5         pwlr_CaO_Na2O             0.4059             2.5577        pwlr
+6    pwlr_liq_Al2O3_MgO             0.3794            21.8218        pwlr
+7        pwlr_TiO2_Na2O             0.3685             4.7385        pwlr
+8                 Al_VI             0.3492             0.4023        pwlr
+9     pwlr_liq_SiO2_FeO             0.3339             1.4530        pwlr
+<IPython.core.display.Markdown object>
+              dataset target     RMSE      MAE      R2    n
+0           ArcPL all      T  65.6441  54.2000  0.6301  204
+1           ArcPL all      P   2.7210   2.2019  0.5690  204
+2  ArcPL measured H2O      T  62.1168  51.0516  0.6881  134
+3  ArcPL measured H2O      P   3.0992   2.5797  0.5324  134
+4       ArcPL VBD H2O      T  71.9154  60.2270  0.4383   70
+5       ArcPL VBD H2O      P   1.7861   1.4785  0.5944   70
+<IPython.core.display.Markdown object>
+   target                   track  rmse_train  mae_train  rmse_test  mae_test  \
+0     T_C                1_raw_rf      0.0000     0.0000    84.2999   57.4277   
+1     T_C  2_linear_trainfit_leak      0.0000     0.0000    84.2999   57.4277   
+2     T_C         3_linear_ooffit      5.2347     4.0623    84.5043   57.7138   
+3     T_C      4_piecewise_ooffit     12.6933    10.7075    84.6649   57.9718   
+4  P_kbar                1_raw_rf      1.3330     0.3939     6.8089    4.6227   
+5  P_kbar  2_linear_trainfit_leak      1.2341     0.5769     6.7292    4.5684   
+6  P_kbar         3_linear_ooffit      1.6526     1.1462     6.5955    4.4781   
+7  P_kbar      4_piecewise_ooffit      1.7844     1.2746     6.6355    4.6988   
+
+   r2_test  
+0   0.6307  
+1   0.6307  
+2   0.6289  
+3   0.6275  
+4   0.5010  
+5   0.5126  
+6   0.5317  
+7   0.5261  
+<IPython.core.display.Markdown object>
+   target            track  coverage_68  rmse_median
+0     T_C  A_trainfit_leak       1.0000       0.0000
+1     T_C     B_oof_honest       0.7371      73.3732
+2     T_C           C_test       0.7069      84.2999
+3  P_kbar  A_trainfit_leak       1.0000       1.5843
+4  P_kbar     B_oof_honest       0.8310       5.6045
+5  P_kbar           C_test       0.6149       6.9352
+<IPython.core.display.Markdown object>
+<IPython.core.display.Markdown object>
+   target    n  pearson_r  pearson_p  spearman_r  spearman_p   slope  \
+0     T_C  204     0.2831     0.0000      0.2527      0.0003  5.4712   
+1  P_kbar  204    -0.2726     0.0001     -0.2991      0.0000 -0.3028   
+
+   intercept  mean_resid_dry  mean_resid_wet  
+0     8.5271         32.1762         33.9302  
+1     1.7141          1.5737          0.1882  
+<IPython.core.display.Markdown object>
+   target  iqr_mean  iqr_median  pearson_iqr_vs_absres  \
+0     T_C  140.1734    140.0000                 0.0059   
+1  P_kbar   10.4485     10.1245                 0.6615   
+2     T_C       NaN         NaN                    NaN   
+3  P_kbar       NaN         NaN                    NaN   
+
+   spearman_iqr_vs_absres  frac_abs_res_le_halfiqr    n            source  \
+0                  0.0763                   0.7011  174          tree_IQR   
+1                  0.5255                   0.6149  174          tree_IQR   
+2                     NaN                      NaN  174  analytical_noise   
+3                     NaN                      NaN  174  analytical_noise   
+
+   sigma_mean  sigma_median  sigma_p90   n_mc  
+0         NaN           NaN        NaN    NaN  
+1         NaN           NaN        NaN    NaN  
+2     10.6212       10.3320    18.6954  200.0  
+3      0.3582        0.2997     0.7815  200.0  
+<IPython.core.display.Markdown object>
+   target               subset     rmse      mae      r2     bias    n
+0     T_C                  all  59.9934  46.1461  0.6911  33.7668  204
+1     T_C      in_distribution  60.8390  45.6664  0.4781  36.6796  124
+2     T_C  out_of_distribution  58.6586  46.8896  0.3508  29.2521   80
+3  P_kbar                  all   2.8677   2.2598  0.5212   0.3172  204
+4  P_kbar      in_distribution   3.2507   2.7481  0.1614   0.6504  124
+5  P_kbar  out_of_distribution   2.1430   1.5029  0.7539  -0.1992   80
+<IPython.core.display.Markdown object>
+  winning_feature_set runner_up_feature_set  best_opx_liq_T_RMSE_mean  \
+0                pwlr                   raw                   78.5813   
+
+   best_opx_liq_P_RMSE_mean  best_opx_only_T_RMSE_mean  \
+0                      5.88                   136.1399   
+
+   best_opx_only_P_RMSE_mean  loso_pooled_T_RMSE  loso_pooled_P_RMSE  \
+0                    10.9855             74.6501              5.9279   
+
+   cluster_pooled_T_RMSE  cluster_pooled_P_RMSE  ...  \
+0               103.2988                 6.7784  ...   
+
+   3_linear_ooffit_P_kbar_rmse_test  4_piecewise_ooffit_P_kbar_rmse_test  \
+0                            6.5955                               6.6355   
+
+   qrf_A_trainfit_leak_T_C_cov68  qrf_B_oof_honest_T_C_cov68  \
+0                            1.0                      0.7371   
+
+   qrf_C_test_T_C_cov68  qrf_A_trainfit_leak_P_kbar_cov68  \
+0                0.7069                               1.0   
+
+   qrf_B_oof_honest_P_kbar_cov68  qrf_C_test_P_kbar_cov68  arcpl_T_RMSE  \
+0                          0.831                   0.6149       65.6441   
+
+   arcpl_P_RMSE  
+0         2.721  
+
+[1 rows x 26 columns]
+Ending Cell 13-----------------------------------------
+
+Executing:  93%|#########2| 13/14 [00:06<00:00,  2.98cell/s]Executing Cell 14--------------------------------------
+<IPython.core.display.Markdown object>
+<IPython.core.display.Image object>
+<IPython.core.display.Markdown object>
+<IPython.core.display.Image object>
+<IPython.core.display.Markdown object>
+<IPython.core.display.Image object>
+<IPython.core.display.Markdown object>
+<IPython.core.display.Image object>
+<IPython.core.display.Markdown object>
+<IPython.core.display.Image object>
+<IPython.core.display.Markdown object>
+<IPython.core.display.Image object>
+<IPython.core.display.Markdown object>
+<IPython.core.display.Image object>
+<IPython.core.display.Markdown object>
+<IPython.core.display.Image object>
+<IPython.core.display.Markdown object>
+<IPython.core.display.Image object>
+<IPython.core.display.Markdown object>
+<IPython.core.display.Image object>
+<IPython.core.display.Markdown object>
+<IPython.core.display.Markdown object>
+<IPython.core.display.Image object>
+<IPython.core.display.Markdown object>
+<IPython.core.display.Image object>
+<IPython.core.display.Markdown object>
+<IPython.core.display.Image object>
+<IPython.core.display.Markdown object>
+<IPython.core.display.Image object>
+<IPython.core.display.Markdown object>
+<IPython.core.display.Markdown object>
+<IPython.core.display.Image object>
+<IPython.core.display.Markdown object>
+<IPython.core.display.Image object>
+<IPython.core.display.Markdown object>
+<IPython.core.display.Image object>
+<IPython.core.display.Markdown object>
+<IPython.core.display.Image object>
+<IPython.core.display.Markdown object>
+<IPython.core.display.Image object>
+<IPython.core.display.Markdown object>
+<IPython.core.display.Image object>
+<IPython.core.display.Markdown object>
+<IPython.core.display.Image object>
+<IPython.core.display.Markdown object>
+<IPython.core.display.Image object>
+<IPython.core.display.Markdown object>
+<IPython.core.display.Image object>
+<IPython.core.display.Markdown object>
+<IPython.core.display.Image object>
+<IPython.core.display.Markdown object>
+<IPython.core.display.Image object>
+<IPython.core.display.Markdown object>
+<IPython.core.display.Image object>
+<IPython.core.display.Markdown object>
+<IPython.core.display.Image object>
+<IPython.core.display.Markdown object>
+<IPython.core.display.Image object>
+<IPython.core.display.Markdown object>
+<IPython.core.display.Image object>
+<IPython.core.display.Markdown object>
+<IPython.core.display.Image object>
+<IPython.core.display.Markdown object>
+<IPython.core.display.Image object>
+Ending Cell 14-----------------------------------------
+
+Executing: 100%|##########| 14/14 [00:07<00:00,  1.66cell/s]
+Executing: 100%|##########| 14/14 [00:09<00:00,  1.55cell/s]
+[11:32:24] OK nb09_manuscript_compilation
+
+[11:32:24] resume run complete

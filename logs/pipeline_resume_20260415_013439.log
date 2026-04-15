@@ -1,0 +1,208 @@
+Resume run started at 2026-04-15T01:34:39.314071
+Starting from: nbF_figures (index 9)
+
+[01:34:39] starting nbF_figures
+Input Notebook:  C:\Users\NQTa\Documents\MLCourse\Final Project\notebooks\nbF_figures.ipynb
+Output Notebook: C:\Users\NQTa\Documents\MLCourse\Final Project\notebooks\executed\nbF_figures_executed.ipynb
+
+Executing:   0%|          | 0/13 [00:00<?, ?cell/s]Executing notebook with kernel: python3
+Executing Cell 1---------------------------------------
+Ending Cell 1------------------------------------------
+
+Executing:   8%|7         | 1/13 [00:02<00:35,  2.94s/cell]Executing Cell 2---------------------------------------
+Ending Cell 2------------------------------------------
+
+Executing:  15%|#5        | 2/13 [00:05<00:29,  2.65s/cell]Executing Cell 3---------------------------------------
+v7 primary (forest / T_C / opx_liq) feature set: alr
+Phase 3R winning feature set: alr
+
+Ending Cell 3------------------------------------------
+Executing Cell 4---------------------------------------
+NBF input audit:
+                                     path owner           used_by  exists  bytes status
+ data/processed/opx_clean_opx_liq.parquet  nb01 fig01,fig02,fig14    True 374877     OK
+data/processed/opx_clean_opx_only.parquet  nb01       fig03,fig04    True 528558     OK
+     data/splits/test_indices_opx_liq.npy  nb01 fig03,fig04,fig14    True   1520     OK
+         data/splits/test_indices_opx.npy  nb01       fig03,fig04    True   1648     OK
+     results/nb03_per_family_winners.json  nb03               all    True   3377     OK
+      results/nb03_multi_seed_results.csv  nb03             fig05    True 232126     OK
+           results/nb04_putirka_vs_ml.csv  nb04    fig10 (legacy)    True  14969     OK
+      results/nb04b_arcpl_predictions.csv nb04b             fig13    True 169313     OK
+             results/nb05_loso_pooled.csv  nb05             fig06    True   2630     OK
+        results/nb07_test_predictions.csv  nb07             fig11    True  23783     OK
+        results/nb10_arcpl_ood_scores.csv  nb10       fig12,fig13    True   9959     OK
+           results/nb10_mc_per_sample.csv  nb10             fig14    True  12336     OK
+
+All inputs present.
+
+Ending Cell 4------------------------------------------
+Executing Cell 5---------------------------------------
+Ending Cell 5------------------------------------------
+
+Executing:  38%|###8      | 5/13 [00:06<00:07,  1.01cell/s]Executing Cell 6---------------------------------------
+Ending Cell 6------------------------------------------
+
+Executing:  46%|####6     | 6/13 [00:06<00:06,  1.12cell/s]Executing Cell 7---------------------------------------
+Ending Cell 7------------------------------------------
+
+Executing:  54%|#####3    | 7/13 [00:09<00:07,  1.25s/cell]Executing Cell 8---------------------------------------
+Ending Cell 8------------------------------------------
+
+Executing:  62%|######1   | 8/13 [00:10<00:05,  1.19s/cell]Executing Cell 9---------------------------------------
+Ending Cell 9------------------------------------------
+
+Executing:  69%|######9   | 9/13 [00:10<00:04,  1.06s/cell]Executing Cell 10--------------------------------------
+Ending Cell 10-----------------------------------------
+Executing Cell 11--------------------------------------
+Ending Cell 11-----------------------------------------
+
+Executing:  85%|########4 | 11/13 [00:12<00:01,  1.16cell/s]Executing Cell 12--------------------------------------
+Ending Cell 12-----------------------------------------
+
+Executing:  92%|#########2| 12/13 [00:14<00:01,  1.17s/cell]Executing Cell 13--------------------------------------
+Ending Cell 13-----------------------------------------
+
+Executing: 100%|##########| 13/13 [00:16<00:00,  1.53s/cell]
+Executing: 100%|##########| 13/13 [00:17<00:00,  1.36s/cell]
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "C:\Users\NQTa\Documents\MLCourse\Final Project\.venv\Lib\site-packages\papermill\__main__.py", line 4, in <module>
+    papermill()
+    ~~~~~~~~~^^
+  File "C:\Users\NQTa\Documents\MLCourse\Final Project\.venv\Lib\site-packages\click\core.py", line 1485, in __call__
+    return self.main(*args, **kwargs)
+           ~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "C:\Users\NQTa\Documents\MLCourse\Final Project\.venv\Lib\site-packages\click\core.py", line 1406, in main
+    rv = self.invoke(ctx)
+  File "C:\Users\NQTa\Documents\MLCourse\Final Project\.venv\Lib\site-packages\click\core.py", line 1269, in invoke
+    return ctx.invoke(self.callback, **ctx.params)
+           ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\NQTa\Documents\MLCourse\Final Project\.venv\Lib\site-packages\click\core.py", line 824, in invoke
+    return callback(*args, **kwargs)
+  File "C:\Users\NQTa\Documents\MLCourse\Final Project\.venv\Lib\site-packages\click\decorators.py", line 34, in new_func
+    return f(get_current_context(), *args, **kwargs)
+  File "C:\Users\NQTa\Documents\MLCourse\Final Project\.venv\Lib\site-packages\papermill\cli.py", line 235, in papermill
+    execute_notebook(
+    ~~~~~~~~~~~~~~~~^
+        input_path=input_path,
+        ^^^^^^^^^^^^^^^^^^^^^^
+    ...<15 lines>...
+        execution_timeout=execution_timeout,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\NQTa\Documents\MLCourse\Final Project\.venv\Lib\site-packages\papermill\execute.py", line 131, in execute_notebook
+    raise_for_execution_errors(nb, output_path)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "C:\Users\NQTa\Documents\MLCourse\Final Project\.venv\Lib\site-packages\papermill\execute.py", line 251, in raise_for_execution_errors
+    raise error
+papermill.exceptions.PapermillExecutionError: 
+---------------------------------------------------------------------------
+Exception encountered at "In [12]":
+---------------------------------------------------------------------------
+ValueError                                Traceback (most recent call last)
+File ~\Documents\MLCourse\Final Project\src\models.py:140, in predict_iqr(model, X)
+    139 try:
+--> 140     per_tree = np.stack([tree.predict(X) for tree in model.estimators_], axis=0)
+    141     return (
+    142         np.median(per_tree, axis=0),
+    143         np.percentile(per_tree, 16, axis=0),
+    144         np.percentile(per_tree, 84, axis=0),
+    145     )
+
+File ~\Documents\MLCourse\Final Project\.venv\Lib\site-packages\sklearn\tree\_classes.py:533, in BaseDecisionTree.predict(self, X, check_input)
+    532 check_is_fitted(self)
+--> 533 X = self._validate_X_predict(X, check_input)
+    534 proba = self.tree_.predict(X)
+
+File ~\Documents\MLCourse\Final Project\.venv\Lib\site-packages\sklearn\tree\_classes.py:492, in BaseDecisionTree._validate_X_predict(self, X, check_input)
+    491     ensure_all_finite = True
+--> 492 X = validate_data(
+    493     self,
+    494     X,
+    495     dtype=DTYPE,
+    496     accept_sparse="csr",
+    497     reset=False,
+    498     ensure_all_finite=ensure_all_finite,
+    499 )
+    500 if issparse(X) and (
+    501     X.indices.dtype != np.intc or X.indptr.dtype != np.intc
+    502 ):
+
+File ~\Documents\MLCourse\Final Project\.venv\Lib\site-packages\sklearn\utils\validation.py:2923, in validate_data(_estimator, X, y, reset, validate_separately, skip_check_array, **check_params)
+   2922 if not no_val_X and check_params.get("ensure_2d", True):
+-> 2923     _check_n_features(_estimator, X, reset=reset)
+   2925 return out
+
+File ~\Documents\MLCourse\Final Project\.venv\Lib\site-packages\sklearn\utils\validation.py:2787, in _check_n_features(estimator, X, reset)
+   2786 if n_features != estimator.n_features_in_:
+-> 2787     raise ValueError(
+   2788         f"X has {n_features} features, but {estimator.__class__.__name__} "
+   2789         f"is expecting {estimator.n_features_in_} features as input."
+   2790     )
+
+ValueError: X has 23 features, but DecisionTreeRegressor is expecting 25 features as input.
+
+During handling of the above exception, another exception occurred:
+
+ValueError                                Traceback (most recent call last)
+Cell In[12], line 77
+     73 m_T = joblib.load(MODELS / canonical_model_filename('T_C', 'opx_liq', 'forest', RESULTS))
+     74 m_P = joblib.load(MODELS / canonical_model_filename('P_kbar', 'opx_liq', 'forest', RESULTS))
+     75 
+     76 iqr_T = predict_iqr(m_T, X_liq_t)[2] - predict_iqr(m_T, X_liq_t)[0]
+---> 77 iqr_P = predict_iqr(m_P, X_liq_t)[2] - predict_iqr(m_P, X_liq_t)[0]
+     78 
+     79 fig, axes = plt.subplots(1, 2, figsize=(11, 5))
+     80 axes[0].scatter(mc['T_sigma'], iqr_T, s=16, alpha=0.6, c=TOL_BRIGHT['purple'],
+
+File ~\Documents\MLCourse\Final Project\src\models.py:147, in predict_iqr(model, X)
+    141         return (
+    142             np.median(per_tree, axis=0),
+    143             np.percentile(per_tree, 16, axis=0),
+    144             np.percentile(per_tree, 84, axis=0),
+    145         )
+    146     except Exception:
+--> 147         p = model.predict(X)
+    148         return p, p, p
+    149 p = model.predict(X)
+
+File ~\Documents\MLCourse\Final Project\.venv\Lib\site-packages\sklearn\ensemble\_forest.py:1065, in ForestRegressor.predict(self, X)
+   1063 check_is_fitted(self)
+   1064 # Check data
+-> 1065 X = self._validate_X_predict(X)
+   1067 # Assign chunk of trees to jobs
+   1068 n_jobs, _, _ = _partition_estimators(self.n_estimators, self.n_jobs)
+
+File ~\Documents\MLCourse\Final Project\.venv\Lib\site-packages\sklearn\ensemble\_forest.py:637, in BaseForest._validate_X_predict(self, X)
+    634 else:
+    635     ensure_all_finite = True
+--> 637 X = validate_data(
+    638     self,
+    639     X,
+    640     dtype=DTYPE,
+    641     accept_sparse="csr",
+    642     reset=False,
+    643     ensure_all_finite=ensure_all_finite,
+    644 )
+    645 if issparse(X) and (X.indices.dtype != np.intc or X.indptr.dtype != np.intc):
+    646     raise ValueError("No support for np.int64 index based sparse matrices")
+
+File ~\Documents\MLCourse\Final Project\.venv\Lib\site-packages\sklearn\utils\validation.py:2923, in validate_data(_estimator, X, y, reset, validate_separately, skip_check_array, **check_params)
+   2920     out = X, y
+   2922 if not no_val_X and check_params.get("ensure_2d", True):
+-> 2923     _check_n_features(_estimator, X, reset=reset)
+   2925 return out
+
+File ~\Documents\MLCourse\Final Project\.venv\Lib\site-packages\sklearn\utils\validation.py:2787, in _check_n_features(estimator, X, reset)
+   2784     return
+   2786 if n_features != estimator.n_features_in_:
+-> 2787     raise ValueError(
+   2788         f"X has {n_features} features, but {estimator.__class__.__name__} "
+   2789         f"is expecting {estimator.n_features_in_} features as input."
+   2790     )
+
+ValueError: X has 23 features, but RandomForestRegressor is expecting 25 features as input.
+
+[01:35:01] FAILED nbF_figures rc=1

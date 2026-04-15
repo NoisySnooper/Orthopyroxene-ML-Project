@@ -1,0 +1,13 @@
+path,owner,used_by,exists,bytes,status
+data/processed/opx_clean_opx_liq.parquet,nb01,"fig01,fig02,fig14",True,374877,OK
+data/processed/opx_clean_opx_only.parquet,nb01,"fig03,fig04",True,528558,OK
+data/splits/test_indices_opx_liq.npy,nb01,"fig03,fig04,fig14",True,1520,OK
+data/splits/test_indices_opx.npy,nb01,"fig03,fig04",True,1648,OK
+results/nb03_per_family_winners.json,nb03,all,True,3377,OK
+results/nb03_multi_seed_results.csv,nb03,fig05,True,232126,OK
+results/nb04_putirka_vs_ml.csv,nb04,fig10 (legacy),True,14969,OK
+results/nb04b_arcpl_predictions.csv,nb04b,fig13,True,169313,OK
+results/nb05_loso_pooled.csv,nb05,fig06,True,2630,OK
+results/nb07_test_predictions.csv,nb07,fig11,True,23783,OK
+results/nb10_arcpl_ood_scores.csv,nb10,"fig12,fig13",True,9959,OK
+results/nb10_mc_per_sample.csv,nb10,fig14,True,12336,OK

@@ -1,0 +1,2175 @@
+Pipeline run started at 2026-04-14T02:45:10.946401
+
+[02:45:10] starting nb01_data_cleaning
+Input Notebook:  C:\Users\NQTa\Documents\MLCourse\Final Project\notebooks\nb01_data_cleaning.ipynb
+Output Notebook: C:\Users\NQTa\Documents\MLCourse\Final Project\notebooks\executed\nb01_data_cleaning_executed.ipynb
+
+Executing:   0%|          | 0/17 [00:00<?, ?cell/s]Executing notebook with kernel: python3
+Executing Cell 1---------------------------------------
+Ending Cell 1------------------------------------------
+
+Executing:   6%|5         | 1/17 [00:04<01:12,  4.56s/cell]Executing Cell 2---------------------------------------
+Ending Cell 2------------------------------------------
+
+Executing:  12%|#1        | 2/17 [00:04<00:30,  2.06s/cell]Executing Cell 3---------------------------------------
+NB01 start: 2026-04-14 02:45:20.989137
+ExPetDB source: C:\Users\NQTa\Documents\MLCourse\Final Project\data\raw\ExPetDB_download_ExPetDB-2025-07-21.xlsx
+
+Ending Cell 3------------------------------------------
+Executing Cell 4---------------------------------------
+
+STEP 1: Load sheets
+  Experiment: 16082 rows
+  Orthopyroxene: 1796 rows
+  Merged opx+experiment: 7466 rows
+
+Ending Cell 4------------------------------------------
+
+Executing:  24%|##3       | 4/17 [00:10<00:31,  2.42s/cell]Executing Cell 5---------------------------------------
+
+STEP 2: Extract oxides
+  Iron combined: FeO_total = FeO + 0.8998*Fe2O3
+  Mean FeO_total: 10.26 wt%
+
+Ending Cell 5------------------------------------------
+Executing Cell 6---------------------------------------
+
+STEP 2b: Fe3+ protocol
+  Fe3+/FeT = 0.15 applied to 7466 rows
+
+Ending Cell 6------------------------------------------
+Executing Cell 7---------------------------------------
+
+STEP 2c: Volume-by-difference (VBD) flag
+  Opx spots: is_vbd = False (VBD is a liquid-level concept in ExPetDB)
+
+Ending Cell 7------------------------------------------
+Executing Cell 8---------------------------------------
+
+STEP 3: Oxide total filter (95.0-102.0 wt%)
+  Dropped 177 rows outside 95.0-102.0
+  Remaining: 7289
+
+Ending Cell 8------------------------------------------
+Executing Cell 9---------------------------------------
+
+STEP 4: Cation recalculation (6-oxygen basis)
+
+  Cation recalc done. Mean cation sum: 4.000
+
+Ending Cell 9------------------------------------------
+
+Executing:  53%|#####2    | 9/17 [00:10<00:06,  1.24cell/s]Executing Cell 10--------------------------------------
+
+STEP 5: Core oxide requirement + cation sum filter
+  Dropped 2737 rows missing core oxides
+  Dropped 26 rows outside cation sum 3.95-4.05
+  Remaining: 4526
+
+Ending Cell 10-----------------------------------------
+Executing Cell 11--------------------------------------
+
+STEP 6: Pigeonite filter (Wo <= 5.0 mol%)
+  Dropped 374 pigeonite/aug (Wo > 5.0)
+  Remaining: 4152
+
+Ending Cell 11-----------------------------------------
+Executing Cell 12--------------------------------------
+
+STEP 6b: Pressure ceiling filter (P <= 100.0 kbar)
+  Dropped 71 rows with P > 100.0 kbar (opx unstable)
+  Remaining: 4081
+
+Ending Cell 12-----------------------------------------
+Executing Cell 13--------------------------------------
+
+STEP 6c: KD(Fe-Mg) opx-liq equilibrium filter (0.23-0.35)
+
+  Rows with liquid data: 3745
+  Rows passing KD filter (opx_liq_pair=True): 1036
+  is_vbd (liquid H2O by difference): 64
+  Opx-only rows (total): 4081
+
+Ending Cell 13-----------------------------------------
+
+Executing:  76%|#######6  | 13/17 [00:14<00:03,  1.13cell/s]Executing Cell 14--------------------------------------
+
+STEP 6d: Experiment-level deduplication
+  Before dedup: 4081 spot-level rows
+  After dedup: 1035 experiment-level rows
+  Collapsed 3046 duplicate spots
+
+Ending Cell 14-----------------------------------------
+
+Executing:  82%|########2 | 14/17 [00:14<00:02,  1.28cell/s]Executing Cell 15--------------------------------------
+
+STEP 7: Feature engineering
+  Features added: Mg_num, Al_IV, Al_VI, MgTs, liq_Mg_num
+
+Ending Cell 15-----------------------------------------
+Executing Cell 16--------------------------------------
+
+STEP 8: Save datasets
+
+  Core: 1035 experiments, 123 studies
+  Core opx_liq_pair=True: 600
+  Full: 494 experiments, 70 studies
+  Full opx_liq_pair=True: 321
+
+Log written to C:\Users\NQTa\Documents\MLCourse\Final Project\logs\cleaning_log.txt
+
+Ending Cell 16-----------------------------------------
+
+Executing:  94%|#########4| 16/17 [00:15<00:00,  1.61cell/s]Executing Cell 17--------------------------------------
+Core: 1035 experiments, 123 studies
+  opx_liq_pair = True: 600
+Full: 494 experiments, 70 studies
+
+=== PHASE 1 COMPLETE ===
+
+Ending Cell 17-----------------------------------------
+
+Executing: 100%|##########| 17/17 [00:15<00:00,  1.10cell/s]
+[02:45:31] OK nb01_data_cleaning
+
+[02:45:31] starting nb02_eda_pca
+Input Notebook:  C:\Users\NQTa\Documents\MLCourse\Final Project\notebooks\nb02_eda_pca.ipynb
+Output Notebook: C:\Users\NQTa\Documents\MLCourse\Final Project\notebooks\executed\nb02_eda_pca_executed.ipynb
+
+Executing:   0%|          | 0/12 [00:00<?, ?cell/s]Executing notebook with kernel: python3
+Executing Cell 1---------------------------------------
+Ending Cell 1------------------------------------------
+
+Executing:   8%|8         | 1/12 [00:02<00:23,  2.12s/cell]Executing Cell 2---------------------------------------
+Ending Cell 2------------------------------------------
+
+Executing:  17%|#6        | 2/12 [00:03<00:18,  1.90s/cell]Executing Cell 3---------------------------------------
+Loaded 1035 experiments, 123 studies
+
+Ending Cell 3------------------------------------------
+
+Executing:  25%|##5       | 3/12 [00:04<00:13,  1.50s/cell]Executing Cell 4---------------------------------------
+<Figure size 800x800 with 4 Axes>
+Ending Cell 4------------------------------------------
+
+Executing:  33%|###3      | 4/12 [00:05<00:09,  1.13s/cell]Executing Cell 5---------------------------------------
+PCA: 3 components explain 98.7% variance
+
+Ending Cell 5------------------------------------------
+Executing Cell 6---------------------------------------
+<Figure size 1400x600 with 4 Axes>
+Ending Cell 6------------------------------------------
+
+Executing:  50%|#####     | 6/12 [00:06<00:04,  1.25cell/s]Executing Cell 7---------------------------------------
+<Figure size 600x800 with 2 Axes>
+Ending Cell 7------------------------------------------
+
+Executing:  58%|#####8    | 7/12 [00:07<00:03,  1.32cell/s]Executing Cell 8---------------------------------------
+<Figure size 1300x800 with 6 Axes>
+Ending Cell 8------------------------------------------
+
+Executing:  67%|######6   | 8/12 [00:08<00:04,  1.01s/cell]Executing Cell 9---------------------------------------
+  k=3: silhouette = 0.357
+
+  k=4: silhouette = 0.326
+
+  k=5: silhouette = 0.319
+
+  k=6: silhouette = 0.326
+  k=7: silhouette = 0.303
+
+  k=8: silhouette = 0.326
+  k=9: silhouette = 0.305
+
+  k=10: silhouette = 0.311
+
+Best k (silhouette): 3
+
+Final cluster sizes:
+chemical_cluster
+0    402
+1    434
+2    199
+Name: count, dtype: int64
+
+Ending Cell 9------------------------------------------
+
+Executing:  75%|#######5  | 9/12 [00:13<00:06,  2.08s/cell]Executing Cell 10--------------------------------------
+<Figure size 800x700 with 1 Axes>
+Ending Cell 10-----------------------------------------
+
+Executing:  83%|########3 | 10/12 [00:13<00:03,  1.61s/cell]Executing Cell 11--------------------------------------
+                    n   T_mean   T_std  P_mean  P_std  SiO2_mean  Mg_num_mean
+chemical_cluster                                                             
+0                 402  1263.95  186.36   16.43  18.20      55.99        88.94
+1                 434  1302.35  146.58   16.08   8.97      53.78        87.93
+2                 199  1034.83  150.96    7.26   6.09      51.89        66.33
+
+Ending Cell 11-----------------------------------------
+Executing Cell 12--------------------------------------
+Saved opx_clean_core_with_clusters.parquet with chemical_cluster column
+
+=== PHASE 2 COMPLETE ===
+
+Ending Cell 12-----------------------------------------
+
+Executing: 100%|##########| 12/12 [00:14<00:00,  1.09cell/s]
+Executing: 100%|##########| 12/12 [00:14<00:00,  1.22s/cell]
+[02:45:48] OK nb02_eda_pca
+
+[02:45:48] starting nb03_baseline_models
+Input Notebook:  C:\Users\NQTa\Documents\MLCourse\Final Project\notebooks\nb03_baseline_models.ipynb
+Output Notebook: C:\Users\NQTa\Documents\MLCourse\Final Project\notebooks\executed\nb03_baseline_models_executed.ipynb
+
+Executing:   0%|          | 0/24 [00:00<?, ?cell/s]Executing notebook with kernel: python3
+Executing Cell 1---------------------------------------
+Ending Cell 1------------------------------------------
+
+Executing:   4%|4         | 1/24 [00:01<00:43,  1.88s/cell]Executing Cell 2---------------------------------------
+Ending Cell 2------------------------------------------
+
+Executing:   8%|8         | 2/24 [00:03<00:40,  1.84s/cell]Executing Cell 3---------------------------------------
+Loaded: 1035 experiments, 123 studies
+Opx-only: 1035 rows / 123 studies
+Opx-liq:  600 rows / 93 studies
+
+Ending Cell 3------------------------------------------
+
+Executing:  12%|#2        | 3/24 [00:03<00:21,  1.05s/cell]Executing Cell 4---------------------------------------
+Track parquet files written.
+
+Ending Cell 4------------------------------------------
+Executing Cell 5---------------------------------------
+Ending Cell 5------------------------------------------
+Executing Cell 6---------------------------------------
+Ending Cell 6------------------------------------------
+
+Executing:  25%|##5       | 6/24 [00:03<00:06,  2.63cell/s]Executing Cell 7---------------------------------------
+Ending Cell 7------------------------------------------
+Executing Cell 8---------------------------------------
+Checkpoint state reset. Ready for fresh run.
+
+Ending Cell 8------------------------------------------
+Executing Cell 9---------------------------------------
+02:45:54 | ======================================================================
+
+02:45:54 | Phase 3R.4: 3-method benchmark | N_AUG=1 | features=['raw', 'alr', 'pwlr']
+
+Training:   0%|          | 0/480 [00:00<?, ?it/s]
+
+Executing:  33%|###3      | 8/24 [00:20<00:06,  2.63cell/s]02:47:00 | [TUNE] opx_liq s=42 raw   RF   T_C     rmse=89.53 r2=0.583 (67s)
+
+02:47:55 | [TUNE] opx_liq s=42 raw   RF   P_kbar  rmse=5.77 r2=0.642 (54s)
+
+02:48:53 | [TUNE] opx_liq s=42 raw   ERT  T_C     rmse=89.98 r2=0.579 (59s)
+
+02:49:33 | [TUNE] opx_liq s=42 raw   ERT  P_kbar  rmse=7.34 r2=0.420 (40s)
+
+02:49:46 | [TUNE] opx_liq s=42 raw   XGB  T_C     rmse=90.05 r2=0.579 (13s)
+
+02:50:02 | [TUNE] opx_liq s=42 raw   XGB  P_kbar  rmse=5.12 r2=0.718 (16s)
+
+02:50:10 | [TUNE] opx_liq s=42 raw   GB   T_C     rmse=89.20 r2=0.587 (8s)
+
+02:50:14 | [TUNE] opx_liq s=42 raw   GB   P_kbar  rmse=5.04 r2=0.726 (4s)
+
+02:51:32 | [TUNE] opx_liq s=42 alr   RF   T_C     rmse=88.22 r2=0.596 (78s)
+
+02:52:50 | [TUNE] opx_liq s=42 alr   RF   P_kbar  rmse=5.56 r2=0.667 (78s)
+
+02:53:23 | [TUNE] opx_liq s=42 alr   ERT  T_C     rmse=92.41 r2=0.556 (32s)
+
+02:53:49 | [TUNE] opx_liq s=42 alr   ERT  P_kbar  rmse=7.54 r2=0.388 (26s)
+
+02:53:57 | [TUNE] opx_liq s=42 alr   XGB  T_C     rmse=98.92 r2=0.491 (8s)
+
+02:54:02 | [TUNE] opx_liq s=42 alr   XGB  P_kbar  rmse=5.07 r2=0.723 (5s)
+
+02:54:03 | [TUNE] opx_liq s=42 alr   GB   T_C     rmse=92.16 r2=0.559 (1s)
+
+02:54:05 | [TUNE] opx_liq s=42 alr   GB   P_kbar  rmse=4.96 r2=0.735 (2s)
+
+02:54:56 | [TUNE] opx_liq s=42 pwlr  RF   T_C     rmse=84.30 r2=0.631 (51s)
+
+02:56:56 | [TUNE] opx_liq s=42 pwlr  RF   P_kbar  rmse=6.81 r2=0.501 (120s)
+
+02:57:45 | [TUNE] opx_liq s=42 pwlr  ERT  T_C     rmse=89.71 r2=0.582 (49s)
+
+02:58:02 | [TUNE] opx_liq s=42 pwlr  ERT  P_kbar  rmse=7.27 r2=0.430 (17s)
+
+02:58:23 | [TUNE] opx_liq s=42 pwlr  XGB  T_C     rmse=93.41 r2=0.547 (21s)
+
+02:58:29 | [TUNE] opx_liq s=42 pwlr  XGB  P_kbar  rmse=5.41 r2=0.685 (6s)
+
+02:58:32 | [TUNE] opx_liq s=42 pwlr  GB   T_C     rmse=90.13 r2=0.578 (3s)
+
+02:58:34 | [TUNE] opx_liq s=42 pwlr  GB   P_kbar  rmse=5.42 r2=0.684 (2s)
+
+02:58:34 | CHECKPOINT opx_liq seed=42 | 24 rows | 0.21h
+
+02:58:39 | [FROZEN] opx_liq s=43 raw   RF   T_C     rmse=89.46 r2=0.794 (5s)
+
+02:58:45 | [FROZEN] opx_liq s=43 raw   RF   P_kbar  rmse=5.07 r2=0.757 (6s)
+
+02:58:47 | [FROZEN] opx_liq s=43 raw   ERT  T_C     rmse=86.77 r2=0.807 (2s)
+
+02:58:48 | [FROZEN] opx_liq s=43 raw   ERT  P_kbar  rmse=7.12 r2=0.520 (1s)
+
+02:58:50 | [FROZEN] opx_liq s=43 raw   XGB  T_C     rmse=89.06 r2=0.796 (2s)
+
+02:58:51 | [FROZEN] opx_liq s=43 raw   XGB  P_kbar  rmse=4.55 r2=0.804 (1s)
+
+02:58:52 | [FROZEN] opx_liq s=43 raw   GB   T_C     rmse=84.27 r2=0.818 (1s)
+
+02:58:52 | [FROZEN] opx_liq s=43 raw   GB   P_kbar  rmse=5.20 r2=0.744 (0s)
+
+02:58:57 | [FROZEN] opx_liq s=43 alr   RF   T_C     rmse=88.17 r2=0.800 (5s)
+
+02:59:00 | [FROZEN] opx_liq s=43 alr   RF   P_kbar  rmse=6.44 r2=0.607 (2s)
+
+02:59:01 | [FROZEN] opx_liq s=43 alr   ERT  T_C     rmse=87.86 r2=0.802 (1s)
+
+02:59:02 | [FROZEN] opx_liq s=43 alr   ERT  P_kbar  rmse=7.92 r2=0.406 (1s)
+
+02:59:05 | [FROZEN] opx_liq s=43 alr   XGB  T_C     rmse=93.31 r2=0.776 (3s)
+
+02:59:06 | [FROZEN] opx_liq s=43 alr   XGB  P_kbar  rmse=5.09 r2=0.755 (1s)
+
+02:59:06 | [FROZEN] opx_liq s=43 alr   GB   T_C     rmse=89.08 r2=0.796 (1s)
+
+02:59:07 | [FROZEN] opx_liq s=43 alr   GB   P_kbar  rmse=5.29 r2=0.735 (0s)
+
+02:59:11 | [FROZEN] opx_liq s=43 pwlr  RF   T_C     rmse=89.52 r2=0.794 (5s)
+
+02:59:13 | [FROZEN] opx_liq s=43 pwlr  RF   P_kbar  rmse=6.98 r2=0.539 (2s)
+
+02:59:16 | [FROZEN] opx_liq s=43 pwlr  ERT  T_C     rmse=89.02 r2=0.797 (3s)
+
+02:59:17 | [FROZEN] opx_liq s=43 pwlr  ERT  P_kbar  rmse=7.20 r2=0.509 (1s)
+
+02:59:25 | [FROZEN] opx_liq s=43 pwlr  XGB  T_C     rmse=98.21 r2=0.752 (8s)
+
+02:59:25 | [FROZEN] opx_liq s=43 pwlr  XGB  P_kbar  rmse=5.33 r2=0.731 (1s)
+
+02:59:26 | [FROZEN] opx_liq s=43 pwlr  GB   T_C     rmse=88.79 r2=0.798 (1s)
+
+02:59:27 | [FROZEN] opx_liq s=43 pwlr  GB   P_kbar  rmse=5.57 r2=0.706 (1s)
+
+02:59:27 | CHECKPOINT opx_liq seed=43 | 48 rows | 0.23h
+
+02:59:30 | [FROZEN] opx_liq s=44 raw   RF   T_C     rmse=68.47 r2=0.903 (4s)
+
+02:59:35 | [FROZEN] opx_liq s=44 raw   RF   P_kbar  rmse=4.38 r2=0.735 (5s)
+
+02:59:37 | [FROZEN] opx_liq s=44 raw   ERT  T_C     rmse=71.74 r2=0.894 (2s)
+
+02:59:38 | [FROZEN] opx_liq s=44 raw   ERT  P_kbar  rmse=4.42 r2=0.730 (0s)
+
+02:59:40 | [FROZEN] opx_liq s=44 raw   XGB  T_C     rmse=82.18 r2=0.861 (2s)
+
+02:59:40 | [FROZEN] opx_liq s=44 raw   XGB  P_kbar  rmse=3.90 r2=0.790 (1s)
+
+02:59:41 | [FROZEN] opx_liq s=44 raw   GB   T_C     rmse=72.87 r2=0.891 (1s)
+
+02:59:42 | [FROZEN] opx_liq s=44 raw   GB   P_kbar  rmse=3.94 r2=0.785 (0s)
+
+02:59:47 | [FROZEN] opx_liq s=44 alr   RF   T_C     rmse=70.52 r2=0.898 (5s)
+
+02:59:49 | [FROZEN] opx_liq s=44 alr   RF   P_kbar  rmse=5.21 r2=0.625 (3s)
+
+02:59:51 | [FROZEN] opx_liq s=44 alr   ERT  T_C     rmse=76.50 r2=0.879 (1s)
+
+02:59:52 | [FROZEN] opx_liq s=44 alr   ERT  P_kbar  rmse=4.55 r2=0.713 (1s)
+
+02:59:55 | [FROZEN] opx_liq s=44 alr   XGB  T_C     rmse=84.41 r2=0.853 (3s)
+
+02:59:56 | [FROZEN] opx_liq s=44 alr   XGB  P_kbar  rmse=3.95 r2=0.784 (2s)
+
+02:59:57 | [FROZEN] opx_liq s=44 alr   GB   T_C     rmse=73.07 r2=0.890 (1s)
+
+02:59:57 | [FROZEN] opx_liq s=44 alr   GB   P_kbar  rmse=4.63 r2=0.703 (0s)
+
+03:00:02 | [FROZEN] opx_liq s=44 pwlr  RF   T_C     rmse=74.70 r2=0.885 (5s)
+
+03:00:04 | [FROZEN] opx_liq s=44 pwlr  RF   P_kbar  rmse=4.67 r2=0.699 (2s)
+
+03:00:08 | [FROZEN] opx_liq s=44 pwlr  ERT  T_C     rmse=75.98 r2=0.881 (4s)
+
+03:00:08 | [FROZEN] opx_liq s=44 pwlr  ERT  P_kbar  rmse=4.30 r2=0.744 (1s)
+
+03:00:16 | [FROZEN] opx_liq s=44 pwlr  XGB  T_C     rmse=86.96 r2=0.844 (8s)
+
+03:00:17 | [FROZEN] opx_liq s=44 pwlr  XGB  P_kbar  rmse=4.03 r2=0.775 (1s)
+
+03:00:18 | [FROZEN] opx_liq s=44 pwlr  GB   T_C     rmse=90.88 r2=0.830 (1s)
+
+03:00:18 | [FROZEN] opx_liq s=44 pwlr  GB   P_kbar  rmse=4.83 r2=0.678 (0s)
+
+03:00:18 | CHECKPOINT opx_liq seed=44 | 72 rows | 0.24h
+
+03:00:20 | [FROZEN] opx_liq s=45 raw   RF   T_C     rmse=78.09 r2=0.833 (2s)
+
+03:00:23 | [FROZEN] opx_liq s=45 raw   RF   P_kbar  rmse=5.69 r2=0.688 (3s)
+
+03:00:26 | [FROZEN] opx_liq s=45 raw   ERT  T_C     rmse=81.57 r2=0.818 (2s)
+
+03:00:26 | [FROZEN] opx_liq s=45 raw   ERT  P_kbar  rmse=7.85 r2=0.407 (0s)
+
+03:00:28 | [FROZEN] opx_liq s=45 raw   XGB  T_C     rmse=99.73 r2=0.727 (2s)
+
+03:00:28 | [FROZEN] opx_liq s=45 raw   XGB  P_kbar  rmse=5.72 r2=0.685 (1s)
+
+03:00:29 | [FROZEN] opx_liq s=45 raw   GB   T_C     rmse=81.48 r2=0.818 (1s)
+
+03:00:29 | [FROZEN] opx_liq s=45 raw   GB   P_kbar  rmse=5.81 r2=0.675 (0s)
+
+03:00:33 | [FROZEN] opx_liq s=45 alr   RF   T_C     rmse=76.63 r2=0.839 (3s)
+
+03:00:35 | [FROZEN] opx_liq s=45 alr   RF   P_kbar  rmse=7.10 r2=0.515 (2s)
+
+03:00:36 | [FROZEN] opx_liq s=45 alr   ERT  T_C     rmse=82.43 r2=0.814 (1s)
+
+03:00:37 | [FROZEN] opx_liq s=45 alr   ERT  P_kbar  rmse=9.07 r2=0.208 (1s)
+
+03:00:40 | [FROZEN] opx_liq s=45 alr   XGB  T_C     rmse=91.37 r2=0.771 (3s)
+
+03:00:41 | [FROZEN] opx_liq s=45 alr   XGB  P_kbar  rmse=6.20 r2=0.629 (1s)
+
+03:00:42 | [FROZEN] opx_liq s=45 alr   GB   T_C     rmse=78.99 r2=0.829 (0s)
+
+03:00:42 | [FROZEN] opx_liq s=45 alr   GB   P_kbar  rmse=6.42 r2=0.603 (0s)
+
+03:00:46 | [FROZEN] opx_liq s=45 pwlr  RF   T_C     rmse=79.43 r2=0.827 (4s)
+
+03:00:48 | [FROZEN] opx_liq s=45 pwlr  RF   P_kbar  rmse=7.82 r2=0.411 (2s)
+
+03:00:51 | [FROZEN] opx_liq s=45 pwlr  ERT  T_C     rmse=81.20 r2=0.819 (3s)
+
+03:00:52 | [FROZEN] opx_liq s=45 pwlr  ERT  P_kbar  rmse=8.29 r2=0.338 (1s)
+
+03:01:00 | [FROZEN] opx_liq s=45 pwlr  XGB  T_C     rmse=101.44 r2=0.718 (9s)
+
+03:01:01 | [FROZEN] opx_liq s=45 pwlr  XGB  P_kbar  rmse=7.01 r2=0.526 (1s)
+
+03:01:02 | [FROZEN] opx_liq s=45 pwlr  GB   T_C     rmse=85.15 r2=0.801 (0s)
+
+03:01:02 | [FROZEN] opx_liq s=45 pwlr  GB   P_kbar  rmse=6.07 r2=0.646 (0s)
+
+03:01:02 | CHECKPOINT opx_liq seed=45 | 96 rows | 0.25h
+
+03:01:05 | [FROZEN] opx_liq s=46 raw   RF   T_C     rmse=74.40 r2=0.849 (3s)
+
+03:01:09 | [FROZEN] opx_liq s=46 raw   RF   P_kbar  rmse=6.16 r2=0.665 (4s)
+
+03:01:12 | [FROZEN] opx_liq s=46 raw   ERT  T_C     rmse=71.26 r2=0.862 (3s)
+
+03:01:12 | [FROZEN] opx_liq s=46 raw   ERT  P_kbar  rmse=7.25 r2=0.535 (0s)
+
+03:01:14 | [FROZEN] opx_liq s=46 raw   XGB  T_C     rmse=79.86 r2=0.826 (2s)
+
+03:01:15 | [FROZEN] opx_liq s=46 raw   XGB  P_kbar  rmse=5.20 r2=0.761 (1s)
+
+03:01:15 | [FROZEN] opx_liq s=46 raw   GB   T_C     rmse=75.94 r2=0.843 (1s)
+
+03:01:16 | [FROZEN] opx_liq s=46 raw   GB   P_kbar  rmse=5.92 r2=0.690 (0s)
+
+03:01:19 | [FROZEN] opx_liq s=46 alr   RF   T_C     rmse=75.34 r2=0.845 (3s)
+
+03:01:21 | [FROZEN] opx_liq s=46 alr   RF   P_kbar  rmse=6.70 r2=0.604 (2s)
+
+03:01:22 | [FROZEN] opx_liq s=46 alr   ERT  T_C     rmse=76.44 r2=0.841 (1s)
+
+03:01:23 | [FROZEN] opx_liq s=46 alr   ERT  P_kbar  rmse=6.85 r2=0.585 (1s)
+
+03:01:26 | [FROZEN] opx_liq s=46 alr   XGB  T_C     rmse=99.97 r2=0.727 (3s)
+
+03:01:27 | [FROZEN] opx_liq s=46 alr   XGB  P_kbar  rmse=5.73 r2=0.709 (1s)
+
+03:01:28 | [FROZEN] opx_liq s=46 alr   GB   T_C     rmse=86.52 r2=0.796 (1s)
+
+03:01:28 | [FROZEN] opx_liq s=46 alr   GB   P_kbar  rmse=6.37 r2=0.641 (0s)
+
+03:01:33 | [FROZEN] opx_liq s=46 pwlr  RF   T_C     rmse=73.23 r2=0.854 (5s)
+
+03:01:34 | [FROZEN] opx_liq s=46 pwlr  RF   P_kbar  rmse=6.84 r2=0.586 (2s)
+
+03:01:38 | [FROZEN] opx_liq s=46 pwlr  ERT  T_C     rmse=75.63 r2=0.844 (3s)
+
+03:01:38 | [FROZEN] opx_liq s=46 pwlr  ERT  P_kbar  rmse=6.36 r2=0.642 (1s)
+
+03:01:46 | [FROZEN] opx_liq s=46 pwlr  XGB  T_C     rmse=79.86 r2=0.826 (8s)
+
+03:01:47 | [FROZEN] opx_liq s=46 pwlr  XGB  P_kbar  rmse=6.32 r2=0.647 (1s)
+
+03:01:48 | [FROZEN] opx_liq s=46 pwlr  GB   T_C     rmse=86.25 r2=0.797 (1s)
+
+03:01:49 | [FROZEN] opx_liq s=46 pwlr  GB   P_kbar  rmse=7.32 r2=0.527 (1s)
+
+03:01:49 | CHECKPOINT opx_liq seed=46 | 120 rows | 0.27h
+
+03:01:51 | [FROZEN] opx_liq s=47 raw   RF   T_C     rmse=81.47 r2=0.795 (2s)
+
+03:01:55 | [FROZEN] opx_liq s=47 raw   RF   P_kbar  rmse=5.33 r2=0.678 (4s)
+
+03:01:57 | [FROZEN] opx_liq s=47 raw   ERT  T_C     rmse=88.87 r2=0.756 (2s)
+
+03:01:57 | [FROZEN] opx_liq s=47 raw   ERT  P_kbar  rmse=6.78 r2=0.478 (0s)
+
+03:01:59 | [FROZEN] opx_liq s=47 raw   XGB  T_C     rmse=82.02 r2=0.792 (2s)
+
+03:02:00 | [FROZEN] opx_liq s=47 raw   XGB  P_kbar  rmse=4.11 r2=0.809 (1s)
+
+03:02:01 | [FROZEN] opx_liq s=47 raw   GB   T_C     rmse=74.25 r2=0.830 (1s)
+
+03:02:01 | [FROZEN] opx_liq s=47 raw   GB   P_kbar  rmse=4.65 r2=0.755 (0s)
+
+03:02:05 | [FROZEN] opx_liq s=47 alr   RF   T_C     rmse=88.29 r2=0.759 (4s)
+
+03:02:07 | [FROZEN] opx_liq s=47 alr   RF   P_kbar  rmse=5.85 r2=0.612 (2s)
+
+03:02:08 | [FROZEN] opx_liq s=47 alr   ERT  T_C     rmse=92.49 r2=0.736 (1s)
+
+03:02:09 | [FROZEN] opx_liq s=47 alr   ERT  P_kbar  rmse=7.62 r2=0.342 (1s)
+
+03:02:12 | [FROZEN] opx_liq s=47 alr   XGB  T_C     rmse=82.20 r2=0.791 (3s)
+
+03:02:13 | [FROZEN] opx_liq s=47 alr   XGB  P_kbar  rmse=4.45 r2=0.775 (1s)
+
+03:02:14 | [FROZEN] opx_liq s=47 alr   GB   T_C     rmse=72.38 r2=0.838 (0s)
+
+03:02:14 | [FROZEN] opx_liq s=47 alr   GB   P_kbar  rmse=5.12 r2=0.703 (0s)
+
+03:02:19 | [FROZEN] opx_liq s=47 pwlr  RF   T_C     rmse=78.87 r2=0.808 (5s)
+
+03:02:20 | [FROZEN] opx_liq s=47 pwlr  RF   P_kbar  rmse=6.08 r2=0.581 (1s)
+
+03:02:24 | [FROZEN] opx_liq s=47 pwlr  ERT  T_C     rmse=86.96 r2=0.766 (3s)
+
+03:02:24 | [FROZEN] opx_liq s=47 pwlr  ERT  P_kbar  rmse=6.55 r2=0.514 (1s)
+
+03:02:32 | [FROZEN] opx_liq s=47 pwlr  XGB  T_C     rmse=91.27 r2=0.743 (7s)
+
+03:02:32 | [FROZEN] opx_liq s=47 pwlr  XGB  P_kbar  rmse=4.95 r2=0.723 (0s)
+
+03:02:32 | [FROZEN] opx_liq s=47 pwlr  GB   T_C     rmse=83.66 r2=0.784 (0s)
+
+03:02:33 | [FROZEN] opx_liq s=47 pwlr  GB   P_kbar  rmse=5.52 r2=0.655 (0s)
+
+03:02:33 | CHECKPOINT opx_liq seed=47 | 144 rows | 0.28h
+
+03:02:34 | [FROZEN] opx_liq s=48 raw   RF   T_C     rmse=80.93 r2=0.592 (1s)
+
+03:02:36 | [FROZEN] opx_liq s=48 raw   RF   P_kbar  rmse=6.81 r2=0.502 (2s)
+
+03:02:38 | [FROZEN] opx_liq s=48 raw   ERT  T_C     rmse=76.03 r2=0.640 (1s)
+
+03:02:38 | [FROZEN] opx_liq s=48 raw   ERT  P_kbar  rmse=7.44 r2=0.407 (0s)
+
+03:02:39 | [FROZEN] opx_liq s=48 raw   XGB  T_C     rmse=73.16 r2=0.666 (1s)
+
+03:02:40 | [FROZEN] opx_liq s=48 raw   XGB  P_kbar  rmse=6.63 r2=0.528 (1s)
+
+03:02:40 | [FROZEN] opx_liq s=48 raw   GB   T_C     rmse=88.89 r2=0.508 (1s)
+
+03:02:40 | [FROZEN] opx_liq s=48 raw   GB   P_kbar  rmse=6.05 r2=0.608 (0s)
+
+03:02:43 | [FROZEN] opx_liq s=48 alr   RF   T_C     rmse=69.07 r2=0.703 (3s)
+
+03:02:45 | [FROZEN] opx_liq s=48 alr   RF   P_kbar  rmse=7.07 r2=0.464 (1s)
+
+03:02:45 | [FROZEN] opx_liq s=48 alr   ERT  T_C     rmse=75.55 r2=0.644 (1s)
+
+03:02:46 | [FROZEN] opx_liq s=48 alr   ERT  P_kbar  rmse=7.99 r2=0.316 (0s)
+
+03:02:47 | [FROZEN] opx_liq s=48 alr   XGB  T_C     rmse=75.14 r2=0.648 (2s)
+
+03:02:48 | [FROZEN] opx_liq s=48 alr   XGB  P_kbar  rmse=7.04 r2=0.468 (1s)
+
+03:02:48 | [FROZEN] opx_liq s=48 alr   GB   T_C     rmse=76.80 r2=0.633 (0s)
+
+03:02:48 | [FROZEN] opx_liq s=48 alr   GB   P_kbar  rmse=7.07 r2=0.465 (0s)
+
+03:02:51 | [FROZEN] opx_liq s=48 pwlr  RF   T_C     rmse=86.51 r2=0.534 (3s)
+
+03:02:52 | [FROZEN] opx_liq s=48 pwlr  RF   P_kbar  rmse=9.36 r2=0.060 (1s)
+
+03:02:54 | [FROZEN] opx_liq s=48 pwlr  ERT  T_C     rmse=83.61 r2=0.564 (2s)
+
+03:02:54 | [FROZEN] opx_liq s=48 pwlr  ERT  P_kbar  rmse=9.62 r2=0.007 (0s)
+
+03:02:58 | [FROZEN] opx_liq s=48 pwlr  XGB  T_C     rmse=78.10 r2=0.620 (4s)
+
+03:02:59 | [FROZEN] opx_liq s=48 pwlr  XGB  P_kbar  rmse=8.93 r2=0.144 (0s)
+
+03:02:59 | [FROZEN] opx_liq s=48 pwlr  GB   T_C     rmse=107.79 r2=0.276 (0s)
+
+03:02:59 | [FROZEN] opx_liq s=48 pwlr  GB   P_kbar  rmse=9.17 r2=0.098 (0s)
+
+03:02:59 | CHECKPOINT opx_liq seed=48 | 168 rows | 0.28h
+
+03:03:01 | [FROZEN] opx_liq s=49 raw   RF   T_C     rmse=88.27 r2=0.780 (1s)
+
+03:03:03 | [FROZEN] opx_liq s=49 raw   RF   P_kbar  rmse=8.71 r2=0.184 (2s)
+
+03:03:04 | [FROZEN] opx_liq s=49 raw   ERT  T_C     rmse=87.78 r2=0.783 (1s)
+
+03:03:04 | [FROZEN] opx_liq s=49 raw   ERT  P_kbar  rmse=6.91 r2=0.486 (0s)
+
+03:03:05 | [FROZEN] opx_liq s=49 raw   XGB  T_C     rmse=85.80 r2=0.792 (1s)
+
+03:03:05 | [FROZEN] opx_liq s=49 raw   XGB  P_kbar  rmse=4.74 r2=0.758 (0s)
+
+03:03:05 | [FROZEN] opx_liq s=49 raw   GB   T_C     rmse=90.30 r2=0.770 (0s)
+
+03:03:06 | [FROZEN] opx_liq s=49 raw   GB   P_kbar  rmse=4.94 r2=0.737 (0s)
+
+03:03:08 | [FROZEN] opx_liq s=49 alr   RF   T_C     rmse=83.89 r2=0.801 (2s)
+
+03:03:09 | [FROZEN] opx_liq s=49 alr   RF   P_kbar  rmse=6.31 r2=0.571 (1s)
+
+03:03:09 | [FROZEN] opx_liq s=49 alr   ERT  T_C     rmse=91.09 r2=0.766 (1s)
+
+03:03:10 | [FROZEN] opx_liq s=49 alr   ERT  P_kbar  rmse=7.45 r2=0.402 (0s)
+
+03:03:12 | [FROZEN] opx_liq s=49 alr   XGB  T_C     rmse=87.78 r2=0.783 (2s)
+
+03:03:12 | [FROZEN] opx_liq s=49 alr   XGB  P_kbar  rmse=4.76 r2=0.756 (1s)
+
+03:03:13 | [FROZEN] opx_liq s=49 alr   GB   T_C     rmse=83.06 r2=0.805 (0s)
+
+03:03:13 | [FROZEN] opx_liq s=49 alr   GB   P_kbar  rmse=5.43 r2=0.683 (0s)
+
+03:03:15 | [FROZEN] opx_liq s=49 pwlr  RF   T_C     rmse=77.53 r2=0.830 (3s)
+
+03:03:16 | [FROZEN] opx_liq s=49 pwlr  RF   P_kbar  rmse=6.80 r2=0.502 (1s)
+
+03:03:18 | [FROZEN] opx_liq s=49 pwlr  ERT  T_C     rmse=76.04 r2=0.837 (2s)
+
+03:03:19 | [FROZEN] opx_liq s=49 pwlr  ERT  P_kbar  rmse=7.13 r2=0.453 (0s)
+
+03:03:23 | [FROZEN] opx_liq s=49 pwlr  XGB  T_C     rmse=82.43 r2=0.808 (4s)
+
+03:03:23 | [FROZEN] opx_liq s=49 pwlr  XGB  P_kbar  rmse=4.96 r2=0.735 (0s)
+
+03:03:23 | [FROZEN] opx_liq s=49 pwlr  GB   T_C     rmse=86.66 r2=0.788 (0s)
+
+03:03:24 | [FROZEN] opx_liq s=49 pwlr  GB   P_kbar  rmse=5.75 r2=0.644 (0s)
+
+03:03:24 | CHECKPOINT opx_liq seed=49 | 192 rows | 0.29h
+
+03:03:25 | [FROZEN] opx_liq s=50 raw   RF   T_C     rmse=84.42 r2=0.718 (1s)
+
+03:03:27 | [FROZEN] opx_liq s=50 raw   RF   P_kbar  rmse=3.70 r2=0.827 (2s)
+
+03:03:28 | [FROZEN] opx_liq s=50 raw   ERT  T_C     rmse=78.55 r2=0.756 (1s)
+
+03:03:28 | [FROZEN] opx_liq s=50 raw   ERT  P_kbar  rmse=5.09 r2=0.673 (0s)
+
+03:03:29 | [FROZEN] opx_liq s=50 raw   XGB  T_C     rmse=81.07 r2=0.740 (1s)
+
+03:03:29 | [FROZEN] opx_liq s=50 raw   XGB  P_kbar  rmse=4.15 r2=0.782 (0s)
+
+03:03:30 | [FROZEN] opx_liq s=50 raw   GB   T_C     rmse=82.59 r2=0.730 (0s)
+
+03:03:30 | [FROZEN] opx_liq s=50 raw   GB   P_kbar  rmse=3.68 r2=0.829 (0s)
+
+03:03:32 | [FROZEN] opx_liq s=50 alr   RF   T_C     rmse=77.61 r2=0.762 (2s)
+
+03:03:33 | [FROZEN] opx_liq s=50 alr   RF   P_kbar  rmse=4.62 r2=0.731 (1s)
+
+03:03:34 | [FROZEN] opx_liq s=50 alr   ERT  T_C     rmse=76.42 r2=0.769 (1s)
+
+03:03:34 | [FROZEN] opx_liq s=50 alr   ERT  P_kbar  rmse=5.66 r2=0.596 (0s)
+
+03:03:36 | [FROZEN] opx_liq s=50 alr   XGB  T_C     rmse=80.99 r2=0.741 (2s)
+
+03:03:36 | [FROZEN] opx_liq s=50 alr   XGB  P_kbar  rmse=4.73 r2=0.717 (1s)
+
+03:03:36 | [FROZEN] opx_liq s=50 alr   GB   T_C     rmse=75.08 r2=0.777 (0s)
+
+03:03:37 | [FROZEN] opx_liq s=50 alr   GB   P_kbar  rmse=4.81 r2=0.708 (0s)
+
+03:03:39 | [FROZEN] opx_liq s=50 pwlr  RF   T_C     rmse=76.88 r2=0.766 (3s)
+
+03:03:40 | [FROZEN] opx_liq s=50 pwlr  RF   P_kbar  rmse=6.21 r2=0.514 (1s)
+
+03:03:43 | [FROZEN] opx_liq s=50 pwlr  ERT  T_C     rmse=77.88 r2=0.760 (2s)
+
+03:03:43 | [FROZEN] opx_liq s=50 pwlr  ERT  P_kbar  rmse=6.15 r2=0.522 (0s)
+
+03:03:47 | [FROZEN] opx_liq s=50 pwlr  XGB  T_C     rmse=80.69 r2=0.743 (5s)
+
+03:03:48 | [FROZEN] opx_liq s=50 pwlr  XGB  P_kbar  rmse=5.52 r2=0.615 (0s)
+
+03:03:48 | [FROZEN] opx_liq s=50 pwlr  GB   T_C     rmse=77.72 r2=0.761 (0s)
+
+03:03:48 | [FROZEN] opx_liq s=50 pwlr  GB   P_kbar  rmse=5.82 r2=0.572 (0s)
+
+03:03:48 | CHECKPOINT opx_liq seed=50 | 216 rows | 0.30h
+
+03:03:50 | [FROZEN] opx_liq s=51 raw   RF   T_C     rmse=69.69 r2=0.855 (1s)
+
+03:03:52 | [FROZEN] opx_liq s=51 raw   RF   P_kbar  rmse=6.56 r2=0.611 (2s)
+
+03:03:53 | [FROZEN] opx_liq s=51 raw   ERT  T_C     rmse=72.11 r2=0.845 (1s)
+
+03:03:53 | [FROZEN] opx_liq s=51 raw   ERT  P_kbar  rmse=8.11 r2=0.404 (0s)
+
+03:03:54 | [FROZEN] opx_liq s=51 raw   XGB  T_C     rmse=79.79 r2=0.810 (1s)
+
+03:03:54 | [FROZEN] opx_liq s=51 raw   XGB  P_kbar  rmse=5.99 r2=0.675 (0s)
+
+03:03:54 | [FROZEN] opx_liq s=51 raw   GB   T_C     rmse=80.55 r2=0.807 (0s)
+
+03:03:54 | [FROZEN] opx_liq s=51 raw   GB   P_kbar  rmse=5.89 r2=0.686 (0s)
+
+03:03:56 | [FROZEN] opx_liq s=51 alr   RF   T_C     rmse=72.41 r2=0.844 (2s)
+
+03:03:57 | [FROZEN] opx_liq s=51 alr   RF   P_kbar  rmse=6.74 r2=0.589 (1s)
+
+03:03:58 | [FROZEN] opx_liq s=51 alr   ERT  T_C     rmse=74.95 r2=0.832 (1s)
+
+03:03:59 | [FROZEN] opx_liq s=51 alr   ERT  P_kbar  rmse=8.29 r2=0.378 (1s)
+
+03:04:00 | [FROZEN] opx_liq s=51 alr   XGB  T_C     rmse=71.70 r2=0.847 (2s)
+
+03:04:01 | [FROZEN] opx_liq s=51 alr   XGB  P_kbar  rmse=6.12 r2=0.661 (1s)
+
+03:04:02 | [FROZEN] opx_liq s=51 alr   GB   T_C     rmse=80.92 r2=0.805 (0s)
+
+03:04:02 | [FROZEN] opx_liq s=51 alr   GB   P_kbar  rmse=5.81 r2=0.694 (0s)
+
+03:04:04 | [FROZEN] opx_liq s=51 pwlr  RF   T_C     rmse=64.84 r2=0.875 (2s)
+
+03:04:05 | [FROZEN] opx_liq s=51 pwlr  RF   P_kbar  rmse=7.97 r2=0.425 (1s)
+
+03:04:07 | [FROZEN] opx_liq s=51 pwlr  ERT  T_C     rmse=72.18 r2=0.845 (2s)
+
+03:04:07 | [FROZEN] opx_liq s=51 pwlr  ERT  P_kbar  rmse=8.10 r2=0.406 (0s)
+
+03:04:12 | [FROZEN] opx_liq s=51 pwlr  XGB  T_C     rmse=79.92 r2=0.810 (5s)
+
+03:04:12 | [FROZEN] opx_liq s=51 pwlr  XGB  P_kbar  rmse=6.33 r2=0.637 (0s)
+
+03:04:13 | [FROZEN] opx_liq s=51 pwlr  GB   T_C     rmse=95.84 r2=0.726 (0s)
+
+03:04:13 | [FROZEN] opx_liq s=51 pwlr  GB   P_kbar  rmse=5.80 r2=0.696 (0s)
+
+03:04:13 | CHECKPOINT opx_liq seed=51 | 240 rows | 0.31h
+
+03:05:12 | [TUNE] opx_only s=42 raw   RF   T_C     rmse=154.96 r2=0.222 (59s)
+
+03:06:28 | [TUNE] opx_only s=42 raw   RF   P_kbar  rmse=12.85 r2=0.148 (76s)
+
+03:07:28 | [TUNE] opx_only s=42 raw   ERT  T_C     rmse=162.30 r2=0.147 (60s)
+
+03:08:49 | [TUNE] opx_only s=42 raw   ERT  P_kbar  rmse=12.86 r2=0.147 (81s)
+
+03:09:00 | [TUNE] opx_only s=42 raw   XGB  T_C     rmse=148.37 r2=0.287 (10s)
+
+03:09:11 | [TUNE] opx_only s=42 raw   XGB  P_kbar  rmse=11.75 r2=0.289 (11s)
+
+03:09:13 | [TUNE] opx_only s=42 raw   GB   T_C     rmse=153.66 r2=0.235 (3s)
+
+03:09:16 | [TUNE] opx_only s=42 raw   GB   P_kbar  rmse=12.73 r2=0.165 (3s)
+
+03:10:41 | [TUNE] opx_only s=42 alr   RF   T_C     rmse=153.77 r2=0.234 (85s)
+
+03:12:07 | [TUNE] opx_only s=42 alr   RF   P_kbar  rmse=12.03 r2=0.254 (87s)
+
+03:13:24 | [TUNE] opx_only s=42 alr   ERT  T_C     rmse=167.91 r2=0.087 (76s)
+
+03:14:46 | [TUNE] opx_only s=42 alr   ERT  P_kbar  rmse=11.17 r2=0.356 (83s)
+
+03:15:01 | [TUNE] opx_only s=42 alr   XGB  T_C     rmse=146.95 r2=0.301 (15s)
+
+03:15:11 | [TUNE] opx_only s=42 alr   XGB  P_kbar  rmse=10.39 r2=0.444 (10s)
+
+03:15:16 | [TUNE] opx_only s=42 alr   GB   T_C     rmse=147.39 r2=0.297 (5s)
+
+03:15:19 | [TUNE] opx_only s=42 alr   GB   P_kbar  rmse=11.84 r2=0.277 (4s)
+
+03:16:45 | [TUNE] opx_only s=42 pwlr  RF   T_C     rmse=151.68 r2=0.255 (86s)
+
+03:18:15 | [TUNE] opx_only s=42 pwlr  RF   P_kbar  rmse=10.40 r2=0.442 (90s)
+
+03:19:34 | [TUNE] opx_only s=42 pwlr  ERT  T_C     rmse=161.23 r2=0.158 (79s)
+
+03:21:05 | [TUNE] opx_only s=42 pwlr  ERT  P_kbar  rmse=11.60 r2=0.306 (91s)
+
+03:21:32 | [TUNE] opx_only s=42 pwlr  XGB  T_C     rmse=149.17 r2=0.280 (27s)
+
+03:21:49 | [TUNE] opx_only s=42 pwlr  XGB  P_kbar  rmse=10.17 r2=0.467 (17s)
+
+03:21:54 | [TUNE] opx_only s=42 pwlr  GB   T_C     rmse=153.17 r2=0.240 (5s)
+
+03:21:59 | [TUNE] opx_only s=42 pwlr  GB   P_kbar  rmse=11.40 r2=0.330 (4s)
+
+03:21:59 | CHECKPOINT opx_only seed=42 | 264 rows | 0.60h
+
+03:22:00 | [FROZEN] opx_only s=43 raw   RF   T_C     rmse=153.20 r2=0.303 (1s)
+
+03:22:00 | [FROZEN] opx_only s=43 raw   RF   P_kbar  rmse=12.89 r2=0.103 (1s)
+
+03:22:01 | [FROZEN] opx_only s=43 raw   ERT  T_C     rmse=145.53 r2=0.371 (1s)
+
+03:22:02 | [FROZEN] opx_only s=43 raw   ERT  P_kbar  rmse=14.36 r2=-0.113 (1s)
+
+03:22:02 | [FROZEN] opx_only s=43 raw   XGB  T_C     rmse=151.19 r2=0.321 (0s)
+
+03:22:03 | [FROZEN] opx_only s=43 raw   XGB  P_kbar  rmse=11.95 r2=0.229 (0s)
+
+03:22:03 | [FROZEN] opx_only s=43 raw   GB   T_C     rmse=148.96 r2=0.341 (0s)
+
+03:22:03 | [FROZEN] opx_only s=43 raw   GB   P_kbar  rmse=12.64 r2=0.138 (0s)
+
+03:22:03 | [FROZEN] opx_only s=43 alr   RF   T_C     rmse=149.97 r2=0.332 (0s)
+
+03:22:04 | [FROZEN] opx_only s=43 alr   RF   P_kbar  rmse=12.10 r2=0.210 (0s)
+
+03:22:04 | [FROZEN] opx_only s=43 alr   ERT  T_C     rmse=153.25 r2=0.302 (0s)
+
+03:22:05 | [FROZEN] opx_only s=43 alr   ERT  P_kbar  rmse=11.80 r2=0.248 (1s)
+
+03:22:06 | [FROZEN] opx_only s=43 alr   XGB  T_C     rmse=149.26 r2=0.338 (1s)
+
+03:22:06 | [FROZEN] opx_only s=43 alr   XGB  P_kbar  rmse=11.82 r2=0.246 (0s)
+
+03:22:07 | [FROZEN] opx_only s=43 alr   GB   T_C     rmse=154.50 r2=0.291 (1s)
+
+03:22:08 | [FROZEN] opx_only s=43 alr   GB   P_kbar  rmse=12.10 r2=0.210 (1s)
+
+03:22:08 | [FROZEN] opx_only s=43 pwlr  RF   T_C     rmse=146.62 r2=0.361 (1s)
+
+03:22:10 | [FROZEN] opx_only s=43 pwlr  RF   P_kbar  rmse=11.79 r2=0.250 (1s)
+
+03:22:10 | [FROZEN] opx_only s=43 pwlr  ERT  T_C     rmse=151.03 r2=0.322 (1s)
+
+03:22:12 | [FROZEN] opx_only s=43 pwlr  ERT  P_kbar  rmse=11.45 r2=0.292 (2s)
+
+03:22:13 | [FROZEN] opx_only s=43 pwlr  XGB  T_C     rmse=146.99 r2=0.358 (1s)
+
+03:22:13 | [FROZEN] opx_only s=43 pwlr  XGB  P_kbar  rmse=12.36 r2=0.175 (0s)
+
+03:22:14 | [FROZEN] opx_only s=43 pwlr  GB   T_C     rmse=149.53 r2=0.336 (0s)
+
+03:22:14 | [FROZEN] opx_only s=43 pwlr  GB   P_kbar  rmse=13.60 r2=0.002 (0s)
+
+03:22:14 | CHECKPOINT opx_only seed=43 | 288 rows | 0.61h
+
+03:22:15 | [FROZEN] opx_only s=44 raw   RF   T_C     rmse=131.07 r2=0.462 (1s)
+
+03:22:16 | [FROZEN] opx_only s=44 raw   RF   P_kbar  rmse=14.64 r2=0.161 (1s)
+
+03:22:16 | [FROZEN] opx_only s=44 raw   ERT  T_C     rmse=131.67 r2=0.457 (1s)
+
+03:22:17 | [FROZEN] opx_only s=44 raw   ERT  P_kbar  rmse=13.58 r2=0.278 (1s)
+
+03:22:17 | [FROZEN] opx_only s=44 raw   XGB  T_C     rmse=129.60 r2=0.474 (0s)
+
+03:22:18 | [FROZEN] opx_only s=44 raw   XGB  P_kbar  rmse=14.71 r2=0.153 (1s)
+
+03:22:18 | [FROZEN] opx_only s=44 raw   GB   T_C     rmse=135.61 r2=0.424 (0s)
+
+03:22:19 | [FROZEN] opx_only s=44 raw   GB   P_kbar  rmse=14.64 r2=0.161 (0s)
+
+03:22:19 | [FROZEN] opx_only s=44 alr   RF   T_C     rmse=135.47 r2=0.425 (0s)
+
+03:22:20 | [FROZEN] opx_only s=44 alr   RF   P_kbar  rmse=14.72 r2=0.151 (1s)
+
+03:22:20 | [FROZEN] opx_only s=44 alr   ERT  T_C     rmse=134.26 r2=0.435 (1s)
+
+03:22:21 | [FROZEN] opx_only s=44 alr   ERT  P_kbar  rmse=14.90 r2=0.130 (1s)
+
+03:22:22 | [FROZEN] opx_only s=44 alr   XGB  T_C     rmse=130.53 r2=0.466 (1s)
+
+03:22:22 | [FROZEN] opx_only s=44 alr   XGB  P_kbar  rmse=13.99 r2=0.233 (0s)
+
+03:22:25 | [FROZEN] opx_only s=44 alr   GB   T_C     rmse=133.65 r2=0.440 (2s)
+
+03:22:25 | [FROZEN] opx_only s=44 alr   GB   P_kbar  rmse=15.49 r2=0.060 (0s)
+
+03:22:26 | [FROZEN] opx_only s=44 pwlr  RF   T_C     rmse=116.62 r2=0.574 (1s)
+
+03:22:27 | [FROZEN] opx_only s=44 pwlr  RF   P_kbar  rmse=12.29 r2=0.408 (2s)
+
+03:22:28 | [FROZEN] opx_only s=44 pwlr  ERT  T_C     rmse=119.22 r2=0.555 (1s)
+
+03:22:31 | [FROZEN] opx_only s=44 pwlr  ERT  P_kbar  rmse=14.04 r2=0.228 (2s)
+
+03:22:32 | [FROZEN] opx_only s=44 pwlr  XGB  T_C     rmse=113.27 r2=0.598 (2s)
+
+03:22:33 | [FROZEN] opx_only s=44 pwlr  XGB  P_kbar  rmse=14.51 r2=0.175 (0s)
+
+03:22:33 | [FROZEN] opx_only s=44 pwlr  GB   T_C     rmse=127.50 r2=0.491 (0s)
+
+03:22:34 | [FROZEN] opx_only s=44 pwlr  GB   P_kbar  rmse=15.97 r2=0.001 (1s)
+
+03:22:34 | CHECKPOINT opx_only seed=44 | 312 rows | 0.61h
+
+03:22:35 | [FROZEN] opx_only s=45 raw   RF   T_C     rmse=170.79 r2=0.331 (1s)
+
+03:22:36 | [FROZEN] opx_only s=45 raw   RF   P_kbar  rmse=10.15 r2=0.260 (1s)
+
+03:22:36 | [FROZEN] opx_only s=45 raw   ERT  T_C     rmse=173.68 r2=0.309 (1s)
+
+03:22:38 | [FROZEN] opx_only s=45 raw   ERT  P_kbar  rmse=9.48 r2=0.355 (1s)
+
+03:22:38 | [FROZEN] opx_only s=45 raw   XGB  T_C     rmse=163.97 r2=0.384 (0s)
+
+03:22:38 | [FROZEN] opx_only s=45 raw   XGB  P_kbar  rmse=9.94 r2=0.291 (1s)
+
+03:22:39 | [FROZEN] opx_only s=45 raw   GB   T_C     rmse=162.00 r2=0.398 (0s)
+
+03:22:39 | [FROZEN] opx_only s=45 raw   GB   P_kbar  rmse=8.92 r2=0.429 (0s)
+
+03:22:39 | [FROZEN] opx_only s=45 alr   RF   T_C     rmse=163.88 r2=0.384 (0s)
+
+03:22:40 | [FROZEN] opx_only s=45 alr   RF   P_kbar  rmse=9.82 r2=0.308 (1s)
+
+03:22:41 | [FROZEN] opx_only s=45 alr   ERT  T_C     rmse=175.36 r2=0.295 (1s)
+
+03:22:41 | [FROZEN] opx_only s=45 alr   ERT  P_kbar  rmse=9.47 r2=0.357 (1s)
+
+03:22:42 | [FROZEN] opx_only s=45 alr   XGB  T_C     rmse=166.61 r2=0.364 (1s)
+
+03:22:42 | [FROZEN] opx_only s=45 alr   XGB  P_kbar  rmse=9.07 r2=0.410 (0s)
+
+03:22:44 | [FROZEN] opx_only s=45 alr   GB   T_C     rmse=166.55 r2=0.364 (1s)
+
+03:22:44 | [FROZEN] opx_only s=45 alr   GB   P_kbar  rmse=8.96 r2=0.424 (0s)
+
+03:22:44 | [FROZEN] opx_only s=45 pwlr  RF   T_C     rmse=160.33 r2=0.411 (1s)
+
+03:22:45 | [FROZEN] opx_only s=45 pwlr  RF   P_kbar  rmse=8.94 r2=0.427 (1s)
+
+03:22:46 | [FROZEN] opx_only s=45 pwlr  ERT  T_C     rmse=162.18 r2=0.397 (1s)
+
+03:22:48 | [FROZEN] opx_only s=45 pwlr  ERT  P_kbar  rmse=9.04 r2=0.413 (2s)
+
+03:22:49 | [FROZEN] opx_only s=45 pwlr  XGB  T_C     rmse=167.15 r2=0.360 (1s)
+
+03:22:50 | [FROZEN] opx_only s=45 pwlr  XGB  P_kbar  rmse=10.02 r2=0.280 (0s)
+
+03:22:50 | [FROZEN] opx_only s=45 pwlr  GB   T_C     rmse=170.55 r2=0.333 (1s)
+
+03:22:51 | [FROZEN] opx_only s=45 pwlr  GB   P_kbar  rmse=10.53 r2=0.205 (1s)
+
+03:22:51 | CHECKPOINT opx_only seed=45 | 336 rows | 0.62h
+
+03:22:52 | [FROZEN] opx_only s=46 raw   RF   T_C     rmse=162.67 r2=0.354 (1s)
+
+03:22:53 | [FROZEN] opx_only s=46 raw   RF   P_kbar  rmse=19.08 r2=0.011 (1s)
+
+03:22:53 | [FROZEN] opx_only s=46 raw   ERT  T_C     rmse=156.98 r2=0.398 (1s)
+
+03:22:54 | [FROZEN] opx_only s=46 raw   ERT  P_kbar  rmse=17.69 r2=0.150 (1s)
+
+03:22:54 | [FROZEN] opx_only s=46 raw   XGB  T_C     rmse=157.30 r2=0.396 (0s)
+
+03:22:55 | [FROZEN] opx_only s=46 raw   XGB  P_kbar  rmse=18.94 r2=0.026 (1s)
+
+03:22:55 | [FROZEN] opx_only s=46 raw   GB   T_C     rmse=157.05 r2=0.398 (0s)
+
+03:22:55 | [FROZEN] opx_only s=46 raw   GB   P_kbar  rmse=18.37 r2=0.084 (0s)
+
+03:22:56 | [FROZEN] opx_only s=46 alr   RF   T_C     rmse=156.40 r2=0.403 (0s)
+
+03:22:56 | [FROZEN] opx_only s=46 alr   RF   P_kbar  rmse=19.90 r2=-0.075 (0s)
+
+03:22:57 | [FROZEN] opx_only s=46 alr   ERT  T_C     rmse=155.03 r2=0.413 (1s)
+
+03:22:57 | [FROZEN] opx_only s=46 alr   ERT  P_kbar  rmse=19.01 r2=0.018 (1s)
+
+03:22:58 | [FROZEN] opx_only s=46 alr   XGB  T_C     rmse=162.67 r2=0.354 (1s)
+
+03:22:58 | [FROZEN] opx_only s=46 alr   XGB  P_kbar  rmse=18.19 r2=0.102 (0s)
+
+03:23:00 | [FROZEN] opx_only s=46 alr   GB   T_C     rmse=169.38 r2=0.299 (1s)
+
+03:23:00 | [FROZEN] opx_only s=46 alr   GB   P_kbar  rmse=18.14 r2=0.106 (0s)
+
+03:23:00 | [FROZEN] opx_only s=46 pwlr  RF   T_C     rmse=154.38 r2=0.418 (1s)
+
+03:23:02 | [FROZEN] opx_only s=46 pwlr  RF   P_kbar  rmse=18.22 r2=0.098 (1s)
+
+03:23:02 | [FROZEN] opx_only s=46 pwlr  ERT  T_C     rmse=155.06 r2=0.413 (1s)
+
+03:23:04 | [FROZEN] opx_only s=46 pwlr  ERT  P_kbar  rmse=18.56 r2=0.064 (2s)
+
+03:23:05 | [FROZEN] opx_only s=46 pwlr  XGB  T_C     rmse=162.12 r2=0.358 (1s)
+
+03:23:06 | [FROZEN] opx_only s=46 pwlr  XGB  P_kbar  rmse=17.95 r2=0.125 (0s)
+
+03:23:06 | [FROZEN] opx_only s=46 pwlr  GB   T_C     rmse=162.74 r2=0.353 (0s)
+
+03:23:06 | [FROZEN] opx_only s=46 pwlr  GB   P_kbar  rmse=17.94 r2=0.126 (0s)
+
+03:23:06 | CHECKPOINT opx_only seed=46 | 360 rows | 0.62h
+
+03:23:07 | [FROZEN] opx_only s=47 raw   RF   T_C     rmse=141.53 r2=0.403 (1s)
+
+03:23:08 | [FROZEN] opx_only s=47 raw   RF   P_kbar  rmse=11.52 r2=0.231 (1s)
+
+03:23:08 | [FROZEN] opx_only s=47 raw   ERT  T_C     rmse=149.21 r2=0.336 (1s)
+
+03:23:09 | [FROZEN] opx_only s=47 raw   ERT  P_kbar  rmse=11.79 r2=0.194 (1s)
+
+03:23:09 | [FROZEN] opx_only s=47 raw   XGB  T_C     rmse=139.16 r2=0.422 (0s)
+
+03:23:10 | [FROZEN] opx_only s=47 raw   XGB  P_kbar  rmse=11.01 r2=0.297 (1s)
+
+03:23:10 | [FROZEN] opx_only s=47 raw   GB   T_C     rmse=146.01 r2=0.364 (0s)
+
+03:23:11 | [FROZEN] opx_only s=47 raw   GB   P_kbar  rmse=10.94 r2=0.306 (0s)
+
+03:23:11 | [FROZEN] opx_only s=47 alr   RF   T_C     rmse=143.42 r2=0.387 (0s)
+
+03:23:12 | [FROZEN] opx_only s=47 alr   RF   P_kbar  rmse=11.37 r2=0.251 (0s)
+
+03:23:12 | [FROZEN] opx_only s=47 alr   ERT  T_C     rmse=153.16 r2=0.300 (1s)
+
+03:23:13 | [FROZEN] opx_only s=47 alr   ERT  P_kbar  rmse=10.42 r2=0.371 (1s)
+
+03:23:13 | [FROZEN] opx_only s=47 alr   XGB  T_C     rmse=136.14 r2=0.447 (1s)
+
+03:23:14 | [FROZEN] opx_only s=47 alr   XGB  P_kbar  rmse=9.91 r2=0.431 (0s)
+
+03:23:15 | [FROZEN] opx_only s=47 alr   GB   T_C     rmse=143.46 r2=0.386 (1s)
+
+03:23:15 | [FROZEN] opx_only s=47 alr   GB   P_kbar  rmse=10.48 r2=0.363 (0s)
+
+03:23:16 | [FROZEN] opx_only s=47 pwlr  RF   T_C     rmse=137.37 r2=0.437 (1s)
+
+03:23:17 | [FROZEN] opx_only s=47 pwlr  RF   P_kbar  rmse=9.26 r2=0.503 (1s)
+
+03:23:18 | [FROZEN] opx_only s=47 pwlr  ERT  T_C     rmse=145.44 r2=0.369 (1s)
+
+03:23:19 | [FROZEN] opx_only s=47 pwlr  ERT  P_kbar  rmse=10.28 r2=0.388 (2s)
+
+03:23:21 | [FROZEN] opx_only s=47 pwlr  XGB  T_C     rmse=136.20 r2=0.447 (1s)
+
+03:23:21 | [FROZEN] opx_only s=47 pwlr  XGB  P_kbar  rmse=9.75 r2=0.449 (0s)
+
+03:23:21 | [FROZEN] opx_only s=47 pwlr  GB   T_C     rmse=139.16 r2=0.423 (0s)
+
+03:23:21 | [FROZEN] opx_only s=47 pwlr  GB   P_kbar  rmse=10.16 r2=0.401 (0s)
+
+03:23:21 | CHECKPOINT opx_only seed=47 | 384 rows | 0.62h
+
+03:23:22 | [FROZEN] opx_only s=48 raw   RF   T_C     rmse=151.91 r2=0.508 (1s)
+
+03:23:23 | [FROZEN] opx_only s=48 raw   RF   P_kbar  rmse=8.49 r2=0.481 (1s)
+
+03:23:24 | [FROZEN] opx_only s=48 raw   ERT  T_C     rmse=151.70 r2=0.510 (1s)
+
+03:23:25 | [FROZEN] opx_only s=48 raw   ERT  P_kbar  rmse=7.56 r2=0.587 (1s)
+
+03:23:25 | [FROZEN] opx_only s=48 raw   XGB  T_C     rmse=156.52 r2=0.478 (0s)
+
+03:23:25 | [FROZEN] opx_only s=48 raw   XGB  P_kbar  rmse=8.03 r2=0.535 (1s)
+
+03:23:25 | [FROZEN] opx_only s=48 raw   GB   T_C     rmse=147.86 r2=0.534 (0s)
+
+03:23:26 | [FROZEN] opx_only s=48 raw   GB   P_kbar  rmse=8.11 r2=0.526 (0s)
+
+03:23:26 | [FROZEN] opx_only s=48 alr   RF   T_C     rmse=154.09 r2=0.494 (0s)
+
+03:23:27 | [FROZEN] opx_only s=48 alr   RF   P_kbar  rmse=8.18 r2=0.517 (0s)
+
+03:23:27 | [FROZEN] opx_only s=48 alr   ERT  T_C     rmse=158.03 r2=0.468 (1s)
+
+03:23:28 | [FROZEN] opx_only s=48 alr   ERT  P_kbar  rmse=7.64 r2=0.580 (1s)
+
+03:23:29 | [FROZEN] opx_only s=48 alr   XGB  T_C     rmse=158.14 r2=0.467 (1s)
+
+03:23:29 | [FROZEN] opx_only s=48 alr   XGB  P_kbar  rmse=7.77 r2=0.565 (0s)
+
+03:23:31 | [FROZEN] opx_only s=48 alr   GB   T_C     rmse=158.59 r2=0.464 (2s)
+
+03:23:32 | [FROZEN] opx_only s=48 alr   GB   P_kbar  rmse=7.94 r2=0.545 (1s)
+
+03:23:33 | [FROZEN] opx_only s=48 pwlr  RF   T_C     rmse=144.07 r2=0.558 (1s)
+
+03:23:34 | [FROZEN] opx_only s=48 pwlr  RF   P_kbar  rmse=7.82 r2=0.559 (1s)
+
+03:23:35 | [FROZEN] opx_only s=48 pwlr  ERT  T_C     rmse=152.97 r2=0.502 (1s)
+
+03:23:37 | [FROZEN] opx_only s=48 pwlr  ERT  P_kbar  rmse=7.37 r2=0.609 (2s)
+
+03:23:39 | [FROZEN] opx_only s=48 pwlr  XGB  T_C     rmse=152.85 r2=0.502 (2s)
+
+03:23:39 | [FROZEN] opx_only s=48 pwlr  XGB  P_kbar  rmse=7.02 r2=0.645 (0s)
+
+03:23:41 | [FROZEN] opx_only s=48 pwlr  GB   T_C     rmse=142.16 r2=0.569 (2s)
+
+03:23:42 | [FROZEN] opx_only s=48 pwlr  GB   P_kbar  rmse=7.97 r2=0.542 (1s)
+
+03:23:42 | CHECKPOINT opx_only seed=48 | 408 rows | 0.63h
+
+03:23:42 | [FROZEN] opx_only s=49 raw   RF   T_C     rmse=154.51 r2=0.448 (1s)
+
+03:23:43 | [FROZEN] opx_only s=49 raw   RF   P_kbar  rmse=13.45 r2=-0.359 (1s)
+
+03:23:44 | [FROZEN] opx_only s=49 raw   ERT  T_C     rmse=143.11 r2=0.526 (1s)
+
+03:23:45 | [FROZEN] opx_only s=49 raw   ERT  P_kbar  rmse=11.53 r2=0.001 (1s)
+
+03:23:45 | [FROZEN] opx_only s=49 raw   XGB  T_C     rmse=150.47 r2=0.476 (0s)
+
+03:23:45 | [FROZEN] opx_only s=49 raw   XGB  P_kbar  rmse=10.74 r2=0.134 (1s)
+
+03:23:46 | [FROZEN] opx_only s=49 raw   GB   T_C     rmse=154.33 r2=0.449 (0s)
+
+03:23:46 | [FROZEN] opx_only s=49 raw   GB   P_kbar  rmse=12.04 r2=-0.089 (1s)
+
+03:23:47 | [FROZEN] opx_only s=49 alr   RF   T_C     rmse=150.33 r2=0.477 (0s)
+
+03:23:47 | [FROZEN] opx_only s=49 alr   RF   P_kbar  rmse=12.90 r2=-0.251 (1s)
+
+03:23:48 | [FROZEN] opx_only s=49 alr   ERT  T_C     rmse=142.84 r2=0.528 (1s)
+
+03:23:48 | [FROZEN] opx_only s=49 alr   ERT  P_kbar  rmse=10.69 r2=0.142 (1s)
+
+03:23:49 | [FROZEN] opx_only s=49 alr   XGB  T_C     rmse=153.68 r2=0.454 (1s)
+
+03:23:50 | [FROZEN] opx_only s=49 alr   XGB  P_kbar  rmse=10.99 r2=0.093 (0s)
+
+03:23:50 | [FROZEN] opx_only s=49 alr   GB   T_C     rmse=155.27 r2=0.443 (1s)
+
+03:23:51 | [FROZEN] opx_only s=49 alr   GB   P_kbar  rmse=13.51 r2=-0.372 (0s)
+
+03:23:52 | [FROZEN] opx_only s=49 pwlr  RF   T_C     rmse=134.71 r2=0.580 (1s)
+
+03:23:53 | [FROZEN] opx_only s=49 pwlr  RF   P_kbar  rmse=13.19 r2=-0.306 (1s)
+
+03:23:53 | [FROZEN] opx_only s=49 pwlr  ERT  T_C     rmse=134.73 r2=0.580 (1s)
+
+03:23:55 | [FROZEN] opx_only s=49 pwlr  ERT  P_kbar  rmse=10.46 r2=0.179 (2s)
+
+03:23:57 | [FROZEN] opx_only s=49 pwlr  XGB  T_C     rmse=140.48 r2=0.544 (1s)
+
+03:23:57 | [FROZEN] opx_only s=49 pwlr  XGB  P_kbar  rmse=11.79 r2=-0.043 (0s)
+
+03:23:57 | [FROZEN] opx_only s=49 pwlr  GB   T_C     rmse=141.27 r2=0.538 (0s)
+
+03:23:58 | [FROZEN] opx_only s=49 pwlr  GB   P_kbar  rmse=11.48 r2=0.011 (0s)
+
+03:23:58 | CHECKPOINT opx_only seed=49 | 432 rows | 0.63h
+
+03:23:58 | [FROZEN] opx_only s=50 raw   RF   T_C     rmse=104.26 r2=0.652 (1s)
+
+03:23:59 | [FROZEN] opx_only s=50 raw   RF   P_kbar  rmse=11.10 r2=-0.385 (1s)
+
+03:23:59 | [FROZEN] opx_only s=50 raw   ERT  T_C     rmse=108.62 r2=0.622 (1s)
+
+03:24:00 | [FROZEN] opx_only s=50 raw   ERT  P_kbar  rmse=10.76 r2=-0.301 (1s)
+
+03:24:01 | [FROZEN] opx_only s=50 raw   XGB  T_C     rmse=108.55 r2=0.623 (0s)
+
+03:24:01 | [FROZEN] opx_only s=50 raw   XGB  P_kbar  rmse=10.46 r2=-0.230 (1s)
+
+03:24:02 | [FROZEN] opx_only s=50 raw   GB   T_C     rmse=111.99 r2=0.599 (1s)
+
+03:24:02 | [FROZEN] opx_only s=50 raw   GB   P_kbar  rmse=12.04 r2=-0.629 (0s)
+
+03:24:03 | [FROZEN] opx_only s=50 alr   RF   T_C     rmse=108.85 r2=0.621 (0s)
+
+03:24:03 | [FROZEN] opx_only s=50 alr   RF   P_kbar  rmse=9.26 r2=0.036 (0s)
+
+03:24:03 | [FROZEN] opx_only s=50 alr   ERT  T_C     rmse=112.98 r2=0.591 (0s)
+
+03:24:04 | [FROZEN] opx_only s=50 alr   ERT  P_kbar  rmse=11.29 r2=-0.432 (1s)
+
+03:24:05 | [FROZEN] opx_only s=50 alr   XGB  T_C     rmse=112.98 r2=0.591 (1s)
+
+03:24:05 | [FROZEN] opx_only s=50 alr   XGB  P_kbar  rmse=9.23 r2=0.042 (0s)
+
+03:24:06 | [FROZEN] opx_only s=50 alr   GB   T_C     rmse=111.99 r2=0.599 (1s)
+
+03:24:07 | [FROZEN] opx_only s=50 alr   GB   P_kbar  rmse=9.38 r2=0.010 (1s)
+
+03:24:07 | [FROZEN] opx_only s=50 pwlr  RF   T_C     rmse=101.49 r2=0.670 (1s)
+
+03:24:08 | [FROZEN] opx_only s=50 pwlr  RF   P_kbar  rmse=9.42 r2=0.002 (1s)
+
+03:24:09 | [FROZEN] opx_only s=50 pwlr  ERT  T_C     rmse=99.23 r2=0.685 (1s)
+
+03:24:11 | [FROZEN] opx_only s=50 pwlr  ERT  P_kbar  rmse=11.61 r2=-0.515 (2s)
+
+03:24:12 | [FROZEN] opx_only s=50 pwlr  XGB  T_C     rmse=98.95 r2=0.687 (1s)
+
+03:24:12 | [FROZEN] opx_only s=50 pwlr  XGB  P_kbar  rmse=10.58 r2=-0.258 (0s)
+
+03:24:13 | [FROZEN] opx_only s=50 pwlr  GB   T_C     rmse=98.56 r2=0.689 (0s)
+
+03:24:13 | [FROZEN] opx_only s=50 pwlr  GB   P_kbar  rmse=11.02 r2=-0.365 (1s)
+
+03:24:13 | CHECKPOINT opx_only seed=50 | 456 rows | 0.64h
+
+03:24:14 | [FROZEN] opx_only s=51 raw   RF   T_C     rmse=114.59 r2=0.689 (1s)
+
+03:24:15 | [FROZEN] opx_only s=51 raw   RF   P_kbar  rmse=10.20 r2=0.181 (1s)
+
+03:24:15 | [FROZEN] opx_only s=51 raw   ERT  T_C     rmse=121.96 r2=0.647 (1s)
+
+03:24:16 | [FROZEN] opx_only s=51 raw   ERT  P_kbar  rmse=9.91 r2=0.227 (1s)
+
+03:24:16 | [FROZEN] opx_only s=51 raw   XGB  T_C     rmse=124.27 r2=0.634 (0s)
+
+03:24:17 | [FROZEN] opx_only s=51 raw   XGB  P_kbar  rmse=9.61 r2=0.273 (1s)
+
+03:24:18 | [FROZEN] opx_only s=51 raw   GB   T_C     rmse=130.57 r2=0.596 (0s)
+
+03:24:18 | [FROZEN] opx_only s=51 raw   GB   P_kbar  rmse=10.34 r2=0.158 (0s)
+
+03:24:18 | [FROZEN] opx_only s=51 alr   RF   T_C     rmse=115.48 r2=0.684 (0s)
+
+03:24:19 | [FROZEN] opx_only s=51 alr   RF   P_kbar  rmse=9.50 r2=0.289 (1s)
+
+03:24:19 | [FROZEN] opx_only s=51 alr   ERT  T_C     rmse=125.06 r2=0.629 (1s)
+
+03:24:20 | [FROZEN] opx_only s=51 alr   ERT  P_kbar  rmse=7.46 r2=0.561 (1s)
+
+03:24:21 | [FROZEN] opx_only s=51 alr   XGB  T_C     rmse=123.96 r2=0.636 (1s)
+
+03:24:21 | [FROZEN] opx_only s=51 alr   XGB  P_kbar  rmse=9.03 r2=0.357 (0s)
+
+03:24:22 | [FROZEN] opx_only s=51 alr   GB   T_C     rmse=123.67 r2=0.638 (1s)
+
+03:24:23 | [FROZEN] opx_only s=51 alr   GB   P_kbar  rmse=9.24 r2=0.328 (1s)
+
+03:24:24 | [FROZEN] opx_only s=51 pwlr  RF   T_C     rmse=114.12 r2=0.691 (1s)
+
+03:24:25 | [FROZEN] opx_only s=51 pwlr  RF   P_kbar  rmse=8.52 r2=0.428 (1s)
+
+03:24:26 | [FROZEN] opx_only s=51 pwlr  ERT  T_C     rmse=117.54 r2=0.673 (1s)
+
+03:24:27 | [FROZEN] opx_only s=51 pwlr  ERT  P_kbar  rmse=8.40 r2=0.444 (2s)
+
+03:24:29 | [FROZEN] opx_only s=51 pwlr  XGB  T_C     rmse=119.40 r2=0.662 (1s)
+
+03:24:29 | [FROZEN] opx_only s=51 pwlr  XGB  P_kbar  rmse=9.21 r2=0.332 (0s)
+
+03:24:30 | [FROZEN] opx_only s=51 pwlr  GB   T_C     rmse=116.75 r2=0.677 (1s)
+
+03:24:30 | [FROZEN] opx_only s=51 pwlr  GB   P_kbar  rmse=8.62 r2=0.415 (1s)
+
+03:24:30 | CHECKPOINT opx_only seed=51 | 480 rows | 0.64h
+
+03:24:30 | COMPLETE: 480 rows in 0.64h
+
+
+Complete: 480 rows in 0.64h
+NaN rows: 0
+
+Ending Cell 9------------------------------------------
+
+Executing:  38%|###7      | 9/24 [38:40<1:33:52, 375.53s/cell]Executing Cell 10--------------------------------------
+Ending Cell 10-----------------------------------------
+Executing Cell 11--------------------------------------
+======================================================================
+MULTI-SEED RESULTS: mean +/- std test RMSE across 10 splits
+======================================================================
+
+--- opx_liq / P_kbar ---
+model_name              RF            ERT            XGB             GB
+feature_set                                                            
+raw          5.82 +/- 1.39  6.83 +/- 1.17  5.01 +/- 0.89  5.11 +/- 0.84
+alr          6.16 +/- 0.83  7.29 +/- 1.32  5.32 +/- 0.94  5.59 +/- 0.80
+pwlr         6.95 +/- 1.26  7.10 +/- 1.43  5.88 +/- 1.37  6.13 +/- 1.24
+
+--- opx_liq / T_C ---
+model_name               RF             ERT             XGB              GB
+feature_set                                                                
+raw          80.47 +/- 7.77  80.46 +/- 7.53  84.27 +/- 7.31  82.03 +/- 6.29
+alr          79.02 +/- 7.56  82.61 +/- 7.57  86.58 +/- 9.48  80.80 +/- 6.81
+pwlr         78.58 +/- 7.09  80.82 +/- 6.22  87.23 +/- 8.39  89.29 +/- 8.08
+
+--- opx_only / P_kbar ---
+model_name               RF             ERT             XGB              GB
+feature_set                                                                
+raw          12.44 +/- 2.96  11.95 +/- 2.86  11.71 +/- 3.08  12.08 +/- 2.92
+alr          11.98 +/- 3.40  11.38 +/- 3.42  11.04 +/- 3.05  11.71 +/- 3.23
+pwlr         10.99 +/- 3.08  11.28 +/- 3.18  11.34 +/- 3.06  11.87 +/- 3.13
+
+--- opx_only / T_C ---
+model_name                 RF               ERT               XGB                GB
+feature_set                                                                        
+raw          143.95 +/- 21.24  144.48 +/- 19.32  142.94 +/- 17.35  144.80 +/- 14.93
+alr          143.17 +/- 18.07  147.79 +/- 19.20  144.09 +/- 17.63  146.44 +/- 18.56
+pwlr         136.14 +/- 19.44  139.86 +/- 21.38  138.66 +/- 21.97  140.14 +/- 21.43
+
+Ending Cell 11-----------------------------------------
+
+Executing:  46%|####5     | 11/24 [38:41<55:37, 256.74s/cell] Executing Cell 12--------------------------------------
+<Figure size 1300x1000 with 8 Axes>
+Ending Cell 12-----------------------------------------
+Executing Cell 13--------------------------------------
+<Figure size 1300x1000 with 8 Axes>
+Ending Cell 13-----------------------------------------
+
+Executing:  54%|#####4    | 13/24 [38:45<32:33, 177.58s/cell]Executing Cell 14--------------------------------------
+<Figure size 1400x1000 with 4 Axes>
+Ending Cell 14-----------------------------------------
+
+Executing:  58%|#####8    | 14/24 [38:49<24:19, 145.99s/cell]Executing Cell 15--------------------------------------
+03:24:40 | Diagnostic plots and statistical analysis complete.
+
+======================================================================
+FEATURE SET COMPARISON: Wilcoxon signed-rank vs raw baseline
+======================================================================
+
+--- opx_liq / P_kbar ---
+  [RF  ] raw vs alr  : delta=-0.342  p=0.1309     alr is WORSE
+  [RF  ] raw vs pwlr : delta=-1.136  p=0.0371 *   pwlr is WORSE
+  [ERT ] raw vs alr  : delta=-0.462  p=0.0137 *   alr is WORSE
+  [ERT ] raw vs pwlr : delta=-0.267  p=0.5566     pwlr is WORSE
+  [XGB ] raw vs alr  : delta=-0.305  p=0.0059 **  alr is WORSE
+  [XGB ] raw vs pwlr : delta=-0.870  p=0.0020 **  pwlr is WORSE
+  [GB  ] raw vs alr  : delta=-0.480  p=0.0098 **  alr is WORSE
+  [GB  ] raw vs pwlr : delta=-1.015  p=0.0039 **  pwlr is WORSE
+
+--- opx_liq / T_C ---
+  [RF  ] raw vs alr  : delta=+1.457  p=0.5566     alr is BETTER
+  [RF  ] raw vs pwlr : delta=+1.891  p=0.4316     pwlr is BETTER
+  [ERT ] raw vs alr  : delta=-2.149  p=0.0195 *   alr is WORSE
+  [ERT ] raw vs pwlr : delta=-0.356  p=0.7695     pwlr is WORSE
+  [XGB ] raw vs alr  : delta=-2.307  p=0.2754     alr is WORSE
+  [XGB ] raw vs pwlr : delta=-2.957  p=0.0645     pwlr is WORSE
+  [GB  ] raw vs alr  : delta=+1.229  p=0.6953     alr is BETTER
+  [GB  ] raw vs pwlr : delta=-7.252  p=0.0371 *   pwlr is WORSE
+
+--- opx_only / P_kbar ---
+  [RF  ] raw vs alr  : delta=+0.460  p=0.0645     alr is BETTER
+  [RF  ] raw vs pwlr : delta=+1.452  p=0.0020 **  pwlr is BETTER
+  [ERT ] raw vs alr  : delta=+0.568  p=0.2754     alr is BETTER
+  [ERT ] raw vs pwlr : delta=+0.671  p=0.1309     pwlr is BETTER
+  [XGB ] raw vs alr  : delta=+0.676  p=0.0059 **  alr is BETTER
+  [XGB ] raw vs pwlr : delta=+0.378  p=0.2754     pwlr is BETTER
+  [GB  ] raw vs alr  : delta=+0.366  p=0.2754     alr is BETTER
+  [GB  ] raw vs pwlr : delta=+0.208  p=0.6250     pwlr is BETTER
+
+--- opx_only / T_C ---
+  [RF  ] raw vs alr  : delta=+0.784  p=0.6953     alr is BETTER
+  [RF  ] raw vs pwlr : delta=+7.810  p=0.0020 **  pwlr is BETTER
+  [ERT ] raw vs alr  : delta=-3.312  p=0.0137 *   alr is WORSE
+  [ERT ] raw vs pwlr : delta=+4.614  p=0.0488 *   pwlr is BETTER
+  [XGB ] raw vs alr  : delta=-1.154  p=0.2754     alr is WORSE
+  [XGB ] raw vs pwlr : delta=+4.282  p=0.0840     pwlr is BETTER
+  [GB  ] raw vs alr  : delta=-1.640  p=0.6953     alr is WORSE
+  [GB  ] raw vs pwlr : delta=+4.666  p=0.1309     pwlr is BETTER
+
+* = p<0.05, ** = p<0.01, *** = p<0.001
+
+Ending Cell 15-----------------------------------------
+
+Executing:  62%|######2   | 15/24 [38:49<17:23, 115.90s/cell]Executing Cell 16--------------------------------------
+Ending Cell 16-----------------------------------------
+
+Executing:  67%|######6   | 16/24 [38:50<11:56, 89.55s/cell] Executing Cell 17--------------------------------------
+Global winner: pwlr
+Runner up: raw
+Canonical files saved: 20
+
+Feature set ranking:
+feature_set  wins  mean_rank
+       pwlr     3       1.50
+        raw     1       2.25
+        alr     0       2.25
+
+Ending Cell 17-----------------------------------------
+
+Executing:  71%|#######   | 17/24 [38:52<07:57, 68.26s/cell]Executing Cell 18--------------------------------------
+Ending Cell 18-----------------------------------------
+
+Executing:  75%|#######5  | 18/24 [38:53<05:03, 50.58s/cell]Executing Cell 19--------------------------------------
+Saved canonical test predictions: 174 rows
+
+Ending Cell 19-----------------------------------------
+
+Executing:  79%|#######9  | 19/24 [38:54<03:06, 37.36s/cell]Executing Cell 20--------------------------------------
+Ending Cell 20-----------------------------------------
+Executing Cell 21--------------------------------------
+N_AUG sensitivity:   0%|          | 0/1200 [00:00<?, ?it/s]
+======================================================================
+N_AUG SENSITIVITY RESULTS (mean +/- std test RMSE)
+======================================================================
+
+--- RF | opx_liq / P_kbar ---
+repr           alr         pwlr          raw
+n_aug                                       
+1      6.1 +/- 0.8  6.5 +/- 1.2  5.7 +/- 1.3
+3      6.6 +/- 1.0  6.6 +/- 1.3  6.0 +/- 0.9
+5      6.9 +/- 1.3  6.8 +/- 1.3  5.9 +/- 1.0
+10     7.3 +/- 1.1  7.1 +/- 1.3  6.6 +/- 1.6
+15     7.4 +/- 1.1  7.2 +/- 1.3  6.7 +/- 1.5
+
+--- RF | opx_liq / T_C ---
+repr             alr          pwlr           raw
+n_aug                                           
+1       80.4 +/- 6.9  80.7 +/- 7.7  80.4 +/- 8.5
+3      83.3 +/- 11.8  88.1 +/- 9.4  85.9 +/- 8.0
+5      86.1 +/- 12.1  88.7 +/- 8.3  90.5 +/- 8.6
+10     90.8 +/- 12.6  88.5 +/- 8.3  92.9 +/- 9.6
+15     93.1 +/- 13.4  89.2 +/- 9.8  95.2 +/- 9.8
+
+--- RF | opx_only / P_kbar ---
+repr            alr          pwlr           raw
+n_aug                                          
+1      11.9 +/- 3.4  11.5 +/- 3.1  12.7 +/- 2.8
+3      13.5 +/- 2.8  11.9 +/- 3.1  13.6 +/- 2.5
+5      13.5 +/- 2.6  12.6 +/- 3.2  13.8 +/- 2.5
+10     13.4 +/- 2.5  12.4 +/- 3.2  13.8 +/- 2.5
+15     13.7 +/- 2.7  12.9 +/- 3.3  13.8 +/- 2.5
+
+--- RF | opx_only / T_C ---
+repr              alr            pwlr             raw
+n_aug                                                
+1      144.0 +/- 21.0  139.0 +/- 21.1  145.9 +/- 20.1
+3      155.7 +/- 20.1  145.7 +/- 24.1  155.6 +/- 19.4
+5      160.6 +/- 22.5  149.0 +/- 23.8  158.7 +/- 22.8
+10     163.6 +/- 20.8  154.8 +/- 24.0  164.3 +/- 20.9
+15     168.8 +/- 20.1  155.0 +/- 25.1  166.5 +/- 19.7
+
+--- XGB | opx_liq / P_kbar ---
+repr           alr         pwlr          raw
+n_aug                                       
+1      6.3 +/- 1.0  6.4 +/- 1.3  5.6 +/- 1.0
+3      6.7 +/- 2.2  6.6 +/- 1.4  5.9 +/- 1.7
+5      6.3 +/- 1.7  6.7 +/- 1.4  5.9 +/- 1.4
+10     6.2 +/- 1.3  6.7 +/- 1.2  6.1 +/- 1.7
+15     6.5 +/- 1.5  6.7 +/- 1.4  6.1 +/- 1.6
+
+--- XGB | opx_liq / T_C ---
+repr            alr          pwlr           raw
+n_aug                                          
+1      88.1 +/- 6.8  90.9 +/- 7.3  87.3 +/- 5.5
+3      86.7 +/- 7.8  92.0 +/- 8.9  90.6 +/- 5.4
+5      84.3 +/- 8.2  95.2 +/- 9.5  90.0 +/- 6.9
+10     84.7 +/- 4.9  88.9 +/- 8.6  92.5 +/- 8.1
+15     86.5 +/- 6.7  88.8 +/- 6.7  91.9 +/- 9.3
+
+--- XGB | opx_only / P_kbar ---
+repr            alr          pwlr           raw
+n_aug                                          
+1      12.5 +/- 3.1  12.4 +/- 2.9  13.0 +/- 3.2
+3      12.7 +/- 3.0  12.2 +/- 3.0  12.7 +/- 2.6
+5      12.2 +/- 3.1  12.7 +/- 3.1  12.7 +/- 2.9
+10     12.6 +/- 3.1  13.0 +/- 4.0  12.9 +/- 2.9
+15     12.2 +/- 3.0  12.8 +/- 3.5  12.9 +/- 3.0
+
+--- XGB | opx_only / T_C ---
+repr              alr            pwlr             raw
+n_aug                                                
+1      151.7 +/- 14.8  150.3 +/- 26.9  152.2 +/- 16.8
+3      156.6 +/- 18.3  149.7 +/- 21.0  154.7 +/- 14.6
+5      159.2 +/- 20.6  151.0 +/- 25.6  157.4 +/- 19.9
+10     157.8 +/- 22.2  154.6 +/- 22.6  159.7 +/- 21.1
+15     159.8 +/- 21.9  151.8 +/- 21.9  160.5 +/- 19.9
+
+======================================================================
+WILCOXON SIGNED-RANK TESTS (n_aug=1 vs n_aug=N)
+======================================================================
+RF   opx_liq    alr   P_kbar  1 vs  3: delta=-0.49  p=0.0488  HURTS
+RF   opx_liq    alr   P_kbar  1 vs  5: delta=-0.78  p=0.0371  HURTS
+RF   opx_liq    alr   P_kbar  1 vs 10: delta=-1.11  p=0.0039 * HURTS
+RF   opx_liq    alr   P_kbar  1 vs 15: delta=-1.22  p=0.0059 * HURTS
+  -> Best n_aug for RF/alr/P_kbar: 1
+RF   opx_liq    alr   T_C     1 vs  3: delta=-2.96  p=0.3750  HURTS
+RF   opx_liq    alr   T_C     1 vs  5: delta=-5.69  p=0.0371  HURTS
+RF   opx_liq    alr   T_C     1 vs 10: delta=-10.42  p=0.0039 * HURTS
+RF   opx_liq    alr   T_C     1 vs 15: delta=-12.69  p=0.0039 * HURTS
+  -> Best n_aug for RF/alr/T_C: 1
+RF   opx_liq    pwlr  P_kbar  1 vs  3: delta=-0.13  p=0.3750  HURTS
+RF   opx_liq    pwlr  P_kbar  1 vs  5: delta=-0.34  p=0.0273  HURTS
+RF   opx_liq    pwlr  P_kbar  1 vs 10: delta=-0.59  p=0.0273  HURTS
+RF   opx_liq    pwlr  P_kbar  1 vs 15: delta=-0.71  p=0.0195  HURTS
+  -> Best n_aug for RF/pwlr/P_kbar: 1
+RF   opx_liq    pwlr  T_C     1 vs  3: delta=-7.45  p=0.0273  HURTS
+RF   opx_liq    pwlr  T_C     1 vs  5: delta=-8.00  p=0.0273  HURTS
+RF   opx_liq    pwlr  T_C     1 vs 10: delta=-7.83  p=0.0371  HURTS
+RF   opx_liq    pwlr  T_C     1 vs 15: delta=-8.49  p=0.0195  HURTS
+  -> Best n_aug for RF/pwlr/T_C: 1
+RF   opx_liq    raw   P_kbar  1 vs  3: delta=-0.29  p=0.1602  HURTS
+RF   opx_liq    raw   P_kbar  1 vs  5: delta=-0.20  p=0.3223  HURTS
+RF   opx_liq    raw   P_kbar  1 vs 10: delta=-0.86  p=0.0645  HURTS
+RF   opx_liq    raw   P_kbar  1 vs 15: delta=-0.98  p=0.0645  HURTS
+  -> Best n_aug for RF/raw/P_kbar: 1
+RF   opx_liq    raw   T_C     1 vs  3: delta=-5.50  p=0.0371  HURTS
+RF   opx_liq    raw   T_C     1 vs  5: delta=-10.15  p=0.0059 * HURTS
+RF   opx_liq    raw   T_C     1 vs 10: delta=-12.48  p=0.0020 * HURTS
+RF   opx_liq    raw   T_C     1 vs 15: delta=-14.81  p=0.0020 * HURTS
+  -> Best n_aug for RF/raw/T_C: 1
+RF   opx_only   alr   P_kbar  1 vs  3: delta=-1.60  p=0.0371  HURTS
+RF   opx_only   alr   P_kbar  1 vs  5: delta=-1.61  p=0.0273  HURTS
+RF   opx_only   alr   P_kbar  1 vs 10: delta=-1.59  p=0.0195  HURTS
+RF   opx_only   alr   P_kbar  1 vs 15: delta=-1.87  p=0.0098 * HURTS
+  -> Best n_aug for RF/alr/P_kbar: 1
+RF   opx_only   alr   T_C     1 vs  3: delta=-11.63  p=0.0020 * HURTS
+RF   opx_only   alr   T_C     1 vs  5: delta=-16.58  p=0.0020 * HURTS
+RF   opx_only   alr   T_C     1 vs 10: delta=-19.59  p=0.0020 * HURTS
+RF   opx_only   alr   T_C     1 vs 15: delta=-24.71  p=0.0020 * HURTS
+  -> Best n_aug for RF/alr/T_C: 1
+RF   opx_only   pwlr  P_kbar  1 vs  3: delta=-0.47  p=0.0840  HURTS
+RF   opx_only   pwlr  P_kbar  1 vs  5: delta=-1.19  p=0.0488  HURTS
+RF   opx_only   pwlr  P_kbar  1 vs 10: delta=-0.95  p=0.0488  HURTS
+RF   opx_only   pwlr  P_kbar  1 vs 15: delta=-1.40  p=0.0195  HURTS
+  -> Best n_aug for RF/pwlr/P_kbar: 1
+RF   opx_only   pwlr  T_C     1 vs  3: delta=-6.66  p=0.0195  HURTS
+RF   opx_only   pwlr  T_C     1 vs  5: delta=-10.02  p=0.0039 * HURTS
+RF   opx_only   pwlr  T_C     1 vs 10: delta=-15.78  p=0.0020 * HURTS
+RF   opx_only   pwlr  T_C     1 vs 15: delta=-16.02  p=0.0020 * HURTS
+  -> Best n_aug for RF/pwlr/T_C: 1
+RF   opx_only   raw   P_kbar  1 vs  3: delta=-0.83  p=0.0273  HURTS
+RF   opx_only   raw   P_kbar  1 vs  5: delta=-1.04  p=0.0195  HURTS
+RF   opx_only   raw   P_kbar  1 vs 10: delta=-1.07  p=0.0137  HURTS
+RF   opx_only   raw   P_kbar  1 vs 15: delta=-1.06  p=0.0371  HURTS
+  -> Best n_aug for RF/raw/P_kbar: 1
+RF   opx_only   raw   T_C     1 vs  3: delta=-9.64  p=0.0020 * HURTS
+RF   opx_only   raw   T_C     1 vs  5: delta=-12.77  p=0.0020 * HURTS
+RF   opx_only   raw   T_C     1 vs 10: delta=-18.40  p=0.0020 * HURTS
+RF   opx_only   raw   T_C     1 vs 15: delta=-20.58  p=0.0020 * HURTS
+  -> Best n_aug for RF/raw/T_C: 1
+XGB  opx_liq    alr   P_kbar  1 vs  3: delta=-0.42  p=0.6953  HURTS
+XGB  opx_liq    alr   P_kbar  1 vs  5: delta=-0.03  p=0.9219  HURTS
+XGB  opx_liq    alr   P_kbar  1 vs 10: delta=+0.10  p=0.6250  HELPS
+XGB  opx_liq    alr   P_kbar  1 vs 15: delta=-0.17  p=0.6250  HURTS
+  -> Best n_aug for XGB/alr/P_kbar: 10
+XGB  opx_liq    alr   T_C     1 vs  3: delta=+1.40  p=0.2754  HELPS
+XGB  opx_liq    alr   T_C     1 vs  5: delta=+3.84  p=0.0195  HELPS
+XGB  opx_liq    alr   T_C     1 vs 10: delta=+3.42  p=0.1602  HELPS
+XGB  opx_liq    alr   T_C     1 vs 15: delta=+1.58  p=0.7695  HELPS
+  -> Best n_aug for XGB/alr/T_C: 5
+XGB  opx_liq    pwlr  P_kbar  1 vs  3: delta=-0.22  p=0.1934  HURTS
+XGB  opx_liq    pwlr  P_kbar  1 vs  5: delta=-0.28  p=0.3223  HURTS
+XGB  opx_liq    pwlr  P_kbar  1 vs 10: delta=-0.24  p=0.6250  HURTS
+XGB  opx_liq    pwlr  P_kbar  1 vs 15: delta=-0.30  p=0.7695  HURTS
+  -> Best n_aug for XGB/pwlr/P_kbar: 1
+XGB  opx_liq    pwlr  T_C     1 vs  3: delta=-1.11  p=0.1934  HURTS
+XGB  opx_liq    pwlr  T_C     1 vs  5: delta=-4.34  p=0.0840  HURTS
+XGB  opx_liq    pwlr  T_C     1 vs 10: delta=+1.96  p=0.5566  HELPS
+XGB  opx_liq    pwlr  T_C     1 vs 15: delta=+2.06  p=0.7695  HELPS
+  -> Best n_aug for XGB/pwlr/T_C: 15
+XGB  opx_liq    raw   P_kbar  1 vs  3: delta=-0.22  p=0.9219  HURTS
+XGB  opx_liq    raw   P_kbar  1 vs  5: delta=-0.28  p=0.3750  HURTS
+XGB  opx_liq    raw   P_kbar  1 vs 10: delta=-0.42  p=0.1934  HURTS
+XGB  opx_liq    raw   P_kbar  1 vs 15: delta=-0.47  p=0.1934  HURTS
+  -> Best n_aug for XGB/raw/P_kbar: 1
+XGB  opx_liq    raw   T_C     1 vs  3: delta=-3.36  p=0.1309  HURTS
+XGB  opx_liq    raw   T_C     1 vs  5: delta=-2.71  p=0.2324  HURTS
+XGB  opx_liq    raw   T_C     1 vs 10: delta=-5.22  p=0.0840  HURTS
+XGB  opx_liq    raw   T_C     1 vs 15: delta=-4.62  p=0.0840  HURTS
+  -> Best n_aug for XGB/raw/T_C: 1
+XGB  opx_only   alr   P_kbar  1 vs  3: delta=-0.19  p=0.5566  HURTS
+XGB  opx_only   alr   P_kbar  1 vs  5: delta=+0.23  p=0.3223  HELPS
+XGB  opx_only   alr   P_kbar  1 vs 10: delta=-0.14  p=0.6953  HURTS
+XGB  opx_only   alr   P_kbar  1 vs 15: delta=+0.28  p=0.5566  HELPS
+  -> Best n_aug for XGB/alr/P_kbar: 15
+XGB  opx_only   alr   T_C     1 vs  3: delta=-4.95  p=0.1602  HURTS
+XGB  opx_only   alr   T_C     1 vs  5: delta=-7.52  p=0.0840  HURTS
+XGB  opx_only   alr   T_C     1 vs 10: delta=-6.05  p=0.4316  HURTS
+XGB  opx_only   alr   T_C     1 vs 15: delta=-8.06  p=0.0488  HURTS
+  -> Best n_aug for XGB/alr/T_C: 1
+XGB  opx_only   pwlr  P_kbar  1 vs  3: delta=+0.21  p=0.4922  HELPS
+XGB  opx_only   pwlr  P_kbar  1 vs  5: delta=-0.34  p=0.5566  HURTS
+XGB  opx_only   pwlr  P_kbar  1 vs 10: delta=-0.59  p=0.6250  HURTS
+XGB  opx_only   pwlr  P_kbar  1 vs 15: delta=-0.36  p=0.4922  HURTS
+  -> Best n_aug for XGB/pwlr/P_kbar: 3
+XGB  opx_only   pwlr  T_C     1 vs  3: delta=+0.53  p=0.4922  HELPS
+XGB  opx_only   pwlr  T_C     1 vs  5: delta=-0.75  p=0.6953  HURTS
+XGB  opx_only   pwlr  T_C     1 vs 10: delta=-4.31  p=0.4316  HURTS
+XGB  opx_only   pwlr  T_C     1 vs 15: delta=-1.55  p=0.8457  HURTS
+  -> Best n_aug for XGB/pwlr/T_C: 3
+XGB  opx_only   raw   P_kbar  1 vs  3: delta=+0.24  p=0.5566  HELPS
+XGB  opx_only   raw   P_kbar  1 vs  5: delta=+0.26  p=0.6953  HELPS
+XGB  opx_only   raw   P_kbar  1 vs 10: delta=+0.09  p=1.0000  HELPS
+XGB  opx_only   raw   P_kbar  1 vs 15: delta=+0.11  p=0.9219  HELPS
+  -> Best n_aug for XGB/raw/P_kbar: 5
+XGB  opx_only   raw   T_C     1 vs  3: delta=-2.48  p=0.1055  HURTS
+XGB  opx_only   raw   T_C     1 vs  5: delta=-5.20  p=0.0840  HURTS
+
+XGB  opx_only   raw   T_C     1 vs 10: delta=-7.55  p=0.0645  HURTS
+XGB  opx_only   raw   T_C     1 vs 15: delta=-8.33  p=0.0371  HURTS
+  -> Best n_aug for XGB/raw/T_C: 1
+
+Ending Cell 21-----------------------------------------
+
+Executing:  88%|########7 | 21/24 [1:42:43<42:46, 855.52s/cell]Executing Cell 22--------------------------------------
+<Figure size 1400x1000 with 4 Axes>
+<Figure size 1400x1000 with 4 Axes>
+
+>>> SET N_AUG in the next cell based on these results <<<
+
+Ending Cell 22-----------------------------------------
+
+Executing:  92%|#########1| 22/24 [1:42:46<21:46, 653.15s/cell]Executing Cell 23--------------------------------------
+Ending Cell 23-----------------------------------------
+Executing Cell 24--------------------------------------
+=== PHASE 3R COMPLETE (NB03c) ===
+  480 multi-seed rows (expected 480)
+  global feature winner: pwlr
+  per_combo_winners: 4 entries
+  canonical files written: 20
+
+Ending Cell 24-----------------------------------------
+Traceback (most recent call last):
+  File [35m"C:\Users\NQTa\Documents\MLCourse\Final Project\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py"[0m, line [35m319[0m, in [35mmain[0m
+    del [31mregistry[rtype][0m[1;31m[name][0m
+        [31m~~~~~~~~~~~~~~~[0m[1;31m^^^^^^[0m
+[1;35mKeyError[0m: [35m'C:\\Users\\NQTa\\AppData\\Local\\Temp\\joblib_memmapping_folder_13504_3ee254493d684fc09e2e06f35d166aab_13e0336fc21f4c19af2e0988abbf17c6'[0m
+Traceback (most recent call last):
+  File [35m"C:\Users\NQTa\Documents\MLCourse\Final Project\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py"[0m, line [35m319[0m, in [35mmain[0m
+    del [31mregistry[rtype][0m[1;31m[name][0m
+        [31m~~~~~~~~~~~~~~~[0m[1;31m^^^^^^[0m
+[1;35mKeyError[0m: [35m'C:\\Users\\NQTa\\AppData\\Local\\Temp\\joblib_memmapping_folder_13504_a2f47c27c19b4a679dee7bc0499c700c_f6ab23021b7f41308fd9aeffce5883f3'[0m
+Traceback (most recent call last):
+  File [35m"C:\Users\NQTa\Documents\MLCourse\Final Project\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py"[0m, line [35m319[0m, in [35mmain[0m
+    del [31mregistry[rtype][0m[1;31m[name][0m
+        [31m~~~~~~~~~~~~~~~[0m[1;31m^^^^^^[0m
+[1;35mKeyError[0m: [35m'C:\\Users\\NQTa\\AppData\\Local\\Temp\\joblib_memmapping_folder_13504_a6200da2b7df4e05814fc03cd43222fa_604a34309b6645f893a62951b6be5cb0'[0m
+Traceback (most recent call last):
+  File [35m"C:\Users\NQTa\Documents\MLCourse\Final Project\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py"[0m, line [35m319[0m, in [35mmain[0m
+    del [31mregistry[rtype][0m[1;31m[name][0m
+        [31m~~~~~~~~~~~~~~~[0m[1;31m^^^^^^[0m
+[1;35mKeyError[0m: [35m'C:\\Users\\NQTa\\AppData\\Local\\Temp\\joblib_memmapping_folder_13504_a2f47c27c19b4a679dee7bc0499c700c_420ddb499cc74cc6b90719e1a836e14a'[0m
+Traceback (most recent call last):
+  File [35m"C:\Users\NQTa\Documents\MLCourse\Final Project\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py"[0m, line [35m319[0m, in [35mmain[0m
+    del [31mregistry[rtype][0m[1;31m[name][0m
+        [31m~~~~~~~~~~~~~~~[0m[1;31m^^^^^^[0m
+[1;35mKeyError[0m: [35m'C:\\Users\\NQTa\\AppData\\Local\\Temp\\joblib_memmapping_folder_13504_4f991c0605f243e19252324be90a6138_a27a4c237b7540939bb4f3be0b234f17'[0m
+Traceback (most recent call last):
+  File [35m"C:\Users\NQTa\Documents\MLCourse\Final Project\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py"[0m, line [35m319[0m, in [35mmain[0m
+    del [31mregistry[rtype][0m[1;31m[name][0m
+        [31m~~~~~~~~~~~~~~~[0m[1;31m^^^^^^[0m
+[1;35mKeyError[0m: [35m'C:\\Users\\NQTa\\AppData\\Local\\Temp\\joblib_memmapping_folder_13504_a2f47c27c19b4a679dee7bc0499c700c_cef6eba8290f4949a58721c36165d42c'[0m
+Traceback (most recent call last):
+  File [35m"C:\Users\NQTa\Documents\MLCourse\Final Project\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py"[0m, line [35m319[0m, in [35mmain[0m
+    del [31mregistry[rtype][0m[1;31m[name][0m
+        [31m~~~~~~~~~~~~~~~[0m[1;31m^^^^^^[0m
+[1;35mKeyError[0m: [35m'C:\\Users\\NQTa\\AppData\\Local\\Temp\\joblib_memmapping_folder_13504_fc1453c60e4842ca8416069e38361cb3_f4be74968e2a400cab57265cd2988293'[0m
+Traceback (most recent call last):
+  File [35m"C:\Users\NQTa\Documents\MLCourse\Final Project\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py"[0m, line [35m319[0m, in [35mmain[0m
+    del [31mregistry[rtype][0m[1;31m[name][0m
+        [31m~~~~~~~~~~~~~~~[0m[1;31m^^^^^^[0m
+[1;35mKeyError[0m: [35m'C:\\Users\\NQTa\\AppData\\Local\\Temp\\joblib_memmapping_folder_13504_a2f47c27c19b4a679dee7bc0499c700c_8e16c3bb7aa74da4a2f0d49c07fe2008'[0m
+Traceback (most recent call last):
+  File [35m"C:\Users\NQTa\Documents\MLCourse\Final Project\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py"[0m, line [35m319[0m, in [35mmain[0m
+    del [31mregistry[rtype][0m[1;31m[name][0m
+        [31m~~~~~~~~~~~~~~~[0m[1;31m^^^^^^[0m
+[1;35mKeyError[0m: [35m'C:\\Users\\NQTa\\AppData\\Local\\Temp\\joblib_memmapping_folder_13504_660d11a9864d420d986cdc28efaed821_0f5b0e90da134e40b4fc1e5b461120f7'[0m
+Traceback (most recent call last):
+  File [35m"C:\Users\NQTa\Documents\MLCourse\Final Project\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py"[0m, line [35m319[0m, in [35mmain[0m
+    del [31mregistry[rtype][0m[1;31m[name][0m
+        [31m~~~~~~~~~~~~~~~[0m[1;31m^^^^^^[0m
+[1;35mKeyError[0m: [35m'C:\\Users\\NQTa\\AppData\\Local\\Temp\\joblib_memmapping_folder_13504_a2f47c27c19b4a679dee7bc0499c700c_9ec8fcde0b3b4a5f9ee0d09a42cde004'[0m
+Traceback (most recent call last):
+  File [35m"C:\Users\NQTa\Documents\MLCourse\Final Project\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py"[0m, line [35m319[0m, in [35mmain[0m
+    del [31mregistry[rtype][0m[1;31m[name][0m
+        [31m~~~~~~~~~~~~~~~[0m[1;31m^^^^^^[0m
+[1;35mKeyError[0m: [35m'C:\\Users\\NQTa\\AppData\\Local\\Temp\\joblib_memmapping_folder_13504_9fe4ccefe81843918e0a04f8d9b62214_e0c024dfcf9b4873a46d996b1cecdca4'[0m
+Traceback (most recent call last):
+  File [35m"C:\Users\NQTa\Documents\MLCourse\Final Project\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py"[0m, line [35m319[0m, in [35mmain[0m
+    del [31mregistry[rtype][0m[1;31m[name][0m
+        [31m~~~~~~~~~~~~~~~[0m[1;31m^^^^^^[0m
+[1;35mKeyError[0m: [35m'C:\\Users\\NQTa\\AppData\\Local\\Temp\\joblib_memmapping_folder_13504_a2f47c27c19b4a679dee7bc0499c700c_26dc0a0c88bf4455ab603dc091ae8f3f'[0m
+Traceback (most recent call last):
+  File [35m"C:\Users\NQTa\Documents\MLCourse\Final Project\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py"[0m, line [35m319[0m, in [35mmain[0m
+    del [31mregistry[rtype][0m[1;31m[name][0m
+        [31m~~~~~~~~~~~~~~~[0m[1;31m^^^^^^[0m
+[1;35mKeyError[0m: [35m'C:\\Users\\NQTa\\AppData\\Local\\Temp\\joblib_memmapping_folder_13504_1297e025146d4644b0c11110b2394bcd_fe624362839f490f964c4bf2840e3ed3'[0m
+Traceback (most recent call last):
+  File [35m"C:\Users\NQTa\Documents\MLCourse\Final Project\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py"[0m, line [35m319[0m, in [35mmain[0m
+    del [31mregistry[rtype][0m[1;31m[name][0m
+        [31m~~~~~~~~~~~~~~~[0m[1;31m^^^^^^[0m
+[1;35mKeyError[0m: [35m'C:\\Users\\NQTa\\AppData\\Local\\Temp\\joblib_memmapping_folder_13504_a2f47c27c19b4a679dee7bc0499c700c_a31a40440018407c9fb93b7382629dbd'[0m
+Traceback (most recent call last):
+  File [35m"C:\Users\NQTa\Documents\MLCourse\Final Project\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py"[0m, line [35m319[0m, in [35mmain[0m
+    del [31mregistry[rtype][0m[1;31m[name][0m
+        [31m~~~~~~~~~~~~~~~[0m[1;31m^^^^^^[0m
+[1;35mKeyError[0m: [35m'C:\\Users\\NQTa\\AppData\\Local\\Temp\\joblib_memmapping_folder_13504_0d90b03dfa2b48a086344272c2537a24_20100531bd324efd93b0484898494fba'[0m
+Traceback (most recent call last):
+  File [35m"C:\Users\NQTa\Documents\MLCourse\Final Project\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py"[0m, line [35m319[0m, in [35mmain[0m
+    del [31mregistry[rtype][0m[1;31m[name][0m
+        [31m~~~~~~~~~~~~~~~[0m[1;31m^^^^^^[0m
+[1;35mKeyError[0m: [35m'C:\\Users\\NQTa\\AppData\\Local\\Temp\\joblib_memmapping_folder_13504_a2f47c27c19b4a679dee7bc0499c700c_120e79c3aa68447c8da08fd3418b026d'[0m
+Traceback (most recent call last):
+  File [35m"C:\Users\NQTa\Documents\MLCourse\Final Project\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py"[0m, line [35m319[0m, in [35mmain[0m
+    del [31mregistry[rtype][0m[1;31m[name][0m
+        [31m~~~~~~~~~~~~~~~[0m[1;31m^^^^^^[0m
+[1;35mKeyError[0m: [35m'C:\\Users\\NQTa\\AppData\\Local\\Temp\\joblib_memmapping_folder_13504_c732f44a3e8341fb8b99f22c12f1cdd5_a25431006f3e4bb6a654d7f5bd83231c'[0m
+Traceback (most recent call last):
+  File [35m"C:\Users\NQTa\Documents\MLCourse\Final Project\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py"[0m, line [35m319[0m, in [35mmain[0m
+    del [31mregistry[rtype][0m[1;31m[name][0m
+        [31m~~~~~~~~~~~~~~~[0m[1;31m^^^^^^[0m
+[1;35mKeyError[0m: [35m'C:\\Users\\NQTa\\AppData\\Local\\Temp\\joblib_memmapping_folder_13504_a2f47c27c19b4a679dee7bc0499c700c_7a4c4b047002485f935e8663b3c5e23f'[0m
+Traceback (most recent call last):
+  File [35m"C:\Users\NQTa\Documents\MLCourse\Final Project\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py"[0m, line [35m319[0m, in [35mmain[0m
+    del [31mregistry[rtype][0m[1;31m[name][0m
+        [31m~~~~~~~~~~~~~~~[0m[1;31m^^^^^^[0m
+[1;35mKeyError[0m: [35m'C:\\Users\\NQTa\\AppData\\Local\\Temp\\joblib_memmapping_folder_13504_46fe373378124fa6a7ea927279c42728_7e179c5c4c694495993860be1602d88f'[0m
+Traceback (most recent call last):
+  File [35m"C:\Users\NQTa\Documents\MLCourse\Final Project\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py"[0m, line [35m319[0m, in [35mmain[0m
+    del [31mregistry[rtype][0m[1;31m[name][0m
+        [31m~~~~~~~~~~~~~~~[0m[1;31m^^^^^^[0m
+[1;35mKeyError[0m: [35m'C:\\Users\\NQTa\\AppData\\Local\\Temp\\joblib_memmapping_folder_13504_a2f47c27c19b4a679dee7bc0499c700c_7c9f74f5fd4f43ba9a87f9b9114ab220'[0m
+Traceback (most recent call last):
+  File [35m"C:\Users\NQTa\Documents\MLCourse\Final Project\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py"[0m, line [35m319[0m, in [35mmain[0m
+    del [31mregistry[rtype][0m[1;31m[name][0m
+        [31m~~~~~~~~~~~~~~~[0m[1;31m^^^^^^[0m
+[1;35mKeyError[0m: [35m'C:\\Users\\NQTa\\AppData\\Local\\Temp\\joblib_memmapping_folder_13504_1247636e2b404ce09b96141c4dbf8f18_026b308c0afb481d819cfedc02ff0680'[0m
+Traceback (most recent call last):
+  File [35m"C:\Users\NQTa\Documents\MLCourse\Final Project\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py"[0m, line [35m319[0m, in [35mmain[0m
+    del [31mregistry[rtype][0m[1;31m[name][0m
+        [31m~~~~~~~~~~~~~~~[0m[1;31m^^^^^^[0m
+[1;35mKeyError[0m: [35m'C:\\Users\\NQTa\\AppData\\Local\\Temp\\joblib_memmapping_folder_13504_a2f47c27c19b4a679dee7bc0499c700c_c8c393b9eae647b2a928dd78011423ea'[0m
+Traceback (most recent call last):
+  File [35m"C:\Users\NQTa\Documents\MLCourse\Final Project\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py"[0m, line [35m319[0m, in [35mmain[0m
+    del [31mregistry[rtype][0m[1;31m[name][0m
+        [31m~~~~~~~~~~~~~~~[0m[1;31m^^^^^^[0m
+[1;35mKeyError[0m: [35m'C:\\Users\\NQTa\\AppData\\Local\\Temp\\joblib_memmapping_folder_13504_85b8d90cb25e4d2a854e935e8cfe094e_0369dac62f0843a59a57236352db2a34'[0m
+Traceback (most recent call last):
+  File [35m"C:\Users\NQTa\Documents\MLCourse\Final Project\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py"[0m, line [35m319[0m, in [35mmain[0m
+    del [31mregistry[rtype][0m[1;31m[name][0m
+        [31m~~~~~~~~~~~~~~~[0m[1;31m^^^^^^[0m
+[1;35mKeyError[0m: [35m'C:\\Users\\NQTa\\AppData\\Local\\Temp\\joblib_memmapping_folder_13504_a2f47c27c19b4a679dee7bc0499c700c_ead5488e91454118ae723ee691fbca5c'[0m
+Traceback (most recent call last):
+  File [35m"C:\Users\NQTa\Documents\MLCourse\Final Project\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py"[0m, line [35m319[0m, in [35mmain[0m
+    del [31mregistry[rtype][0m[1;31m[name][0m
+        [31m~~~~~~~~~~~~~~~[0m[1;31m^^^^^^[0m
+[1;35mKeyError[0m: [35m'C:\\Users\\NQTa\\AppData\\Local\\Temp\\joblib_memmapping_folder_13504_7c08a5796afc42da8411e7865d6f63bd_9ddb562168ed43828d8b8984fa341a8b'[0m
+Traceback (most recent call last):
+  File [35m"C:\Users\NQTa\Documents\MLCourse\Final Project\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py"[0m, line [35m319[0m, in [35mmain[0m
+    del [31mregistry[rtype][0m[1;31m[name][0m
+        [31m~~~~~~~~~~~~~~~[0m[1;31m^^^^^^[0m
+[1;35mKeyError[0m: [35m'C:\\Users\\NQTa\\AppData\\Local\\Temp\\joblib_memmapping_folder_13504_a2f47c27c19b4a679dee7bc0499c700c_fbc4550189e34aa195ef4bcabde3e6fc'[0m
+Traceback (most recent call last):
+  File [35m"C:\Users\NQTa\Documents\MLCourse\Final Project\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py"[0m, line [35m319[0m, in [35mmain[0m
+    del [31mregistry[rtype][0m[1;31m[name][0m
+        [31m~~~~~~~~~~~~~~~[0m[1;31m^^^^^^[0m
+[1;35mKeyError[0m: [35m'C:\\Users\\NQTa\\AppData\\Local\\Temp\\joblib_memmapping_folder_13504_c3001312e97f4aef9110405eac861bc2_04e24392b754490983f96a506af3e4a0'[0m
+Traceback (most recent call last):
+  File [35m"C:\Users\NQTa\Documents\MLCourse\Final Project\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py"[0m, line [35m319[0m, in [35mmain[0m
+    del [31mregistry[rtype][0m[1;31m[name][0m
+        [31m~~~~~~~~~~~~~~~[0m[1;31m^^^^^^[0m
+[1;35mKeyError[0m: [35m'C:\\Users\\NQTa\\AppData\\Local\\Temp\\joblib_memmapping_folder_13504_a2f47c27c19b4a679dee7bc0499c700c_4ec6b5f8e3844c0895c41ba8d2264546'[0m
+Traceback (most recent call last):
+  File [35m"C:\Users\NQTa\Documents\MLCourse\Final Project\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py"[0m, line [35m319[0m, in [35mmain[0m
+    del [31mregistry[rtype][0m[1;31m[name][0m
+        [31m~~~~~~~~~~~~~~~[0m[1;31m^^^^^^[0m
+[1;35mKeyError[0m: [35m'C:\\Users\\NQTa\\AppData\\Local\\Temp\\joblib_memmapping_folder_13504_42e60f19ad0b4542819554997ccb94df_297f0ad9574b4e2081ace335cd215eb0'[0m
+Traceback (most recent call last):
+  File [35m"C:\Users\NQTa\Documents\MLCourse\Final Project\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py"[0m, line [35m319[0m, in [35mmain[0m
+    del [31mregistry[rtype][0m[1;31m[name][0m
+        [31m~~~~~~~~~~~~~~~[0m[1;31m^^^^^^[0m
+[1;35mKeyError[0m: [35m'C:\\Users\\NQTa\\AppData\\Local\\Temp\\joblib_memmapping_folder_13504_a2f47c27c19b4a679dee7bc0499c700c_c12050837ceb41d6a2844516c8d89d7a'[0m
+Traceback (most recent call last):
+  File [35m"C:\Users\NQTa\Documents\MLCourse\Final Project\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py"[0m, line [35m319[0m, in [35mmain[0m
+    del [31mregistry[rtype][0m[1;31m[name][0m
+        [31m~~~~~~~~~~~~~~~[0m[1;31m^^^^^^[0m
+[1;35mKeyError[0m: [35m'C:\\Users\\NQTa\\AppData\\Local\\Temp\\joblib_memmapping_folder_13504_e5a539cf5fe44e8c8894363b745428ff_cb544380480f4864855d2317d3fbcaf5'[0m
+Traceback (most recent call last):
+  File [35m"C:\Users\NQTa\Documents\MLCourse\Final Project\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py"[0m, line [35m319[0m, in [35mmain[0m
+    del [31mregistry[rtype][0m[1;31m[name][0m
+        [31m~~~~~~~~~~~~~~~[0m[1;31m^^^^^^[0m
+[1;35mKeyError[0m: [35m'C:\\Users\\NQTa\\AppData\\Local\\Temp\\joblib_memmapping_folder_13504_a2f47c27c19b4a679dee7bc0499c700c_f2b5ae11ca8b49de90df91002fb91c94'[0m
+Traceback (most recent call last):
+  File [35m"C:\Users\NQTa\Documents\MLCourse\Final Project\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py"[0m, line [35m319[0m, in [35mmain[0m
+    del [31mregistry[rtype][0m[1;31m[name][0m
+        [31m~~~~~~~~~~~~~~~[0m[1;31m^^^^^^[0m
+[1;35mKeyError[0m: [35m'C:\\Users\\NQTa\\AppData\\Local\\Temp\\joblib_memmapping_folder_13504_021363a07de7455f9673fbb8d8dc908b_53d92359649948dc8c40f38cf0fb8e8f'[0m
+Traceback (most recent call last):
+  File [35m"C:\Users\NQTa\Documents\MLCourse\Final Project\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py"[0m, line [35m319[0m, in [35mmain[0m
+    del [31mregistry[rtype][0m[1;31m[name][0m
+        [31m~~~~~~~~~~~~~~~[0m[1;31m^^^^^^[0m
+[1;35mKeyError[0m: [35m'C:\\Users\\NQTa\\AppData\\Local\\Temp\\joblib_memmapping_folder_13504_a2f47c27c19b4a679dee7bc0499c700c_54c3833c30804d4eab58b7747fb776ee'[0m
+Traceback (most recent call last):
+  File [35m"C:\Users\NQTa\Documents\MLCourse\Final Project\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py"[0m, line [35m319[0m, in [35mmain[0m
+    del [31mregistry[rtype][0m[1;31m[name][0m
+        [31m~~~~~~~~~~~~~~~[0m[1;31m^^^^^^[0m
+[1;35mKeyError[0m: [35m'C:\\Users\\NQTa\\AppData\\Local\\Temp\\joblib_memmapping_folder_13504_f9a926464c094de287f82397a1b5a2ef_649565db718743c18f5cc20723bb850f'[0m
+Traceback (most recent call last):
+  File [35m"C:\Users\NQTa\Documents\MLCourse\Final Project\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py"[0m, line [35m319[0m, in [35mmain[0m
+    del [31mregistry[rtype][0m[1;31m[name][0m
+        [31m~~~~~~~~~~~~~~~[0m[1;31m^^^^^^[0m
+[1;35mKeyError[0m: [35m'C:\\Users\\NQTa\\AppData\\Local\\Temp\\joblib_memmapping_folder_13504_a2f47c27c19b4a679dee7bc0499c700c_2ad7aecd490c49f49a7d8567d9449789'[0m
+Traceback (most recent call last):
+  File [35m"C:\Users\NQTa\Documents\MLCourse\Final Project\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py"[0m, line [35m319[0m, in [35mmain[0m
+    del [31mregistry[rtype][0m[1;31m[name][0m
+        [31m~~~~~~~~~~~~~~~[0m[1;31m^^^^^^[0m
+[1;35mKeyError[0m: [35m'C:\\Users\\NQTa\\AppData\\Local\\Temp\\joblib_memmapping_folder_13504_6cc62e97d4ce4225a361fe67df53c41c_984781a30f5f4789961a6858746435eb'[0m
+Traceback (most recent call last):
+  File [35m"C:\Users\NQTa\Documents\MLCourse\Final Project\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py"[0m, line [35m319[0m, in [35mmain[0m
+    del [31mregistry[rtype][0m[1;31m[name][0m
+        [31m~~~~~~~~~~~~~~~[0m[1;31m^^^^^^[0m
+[1;35mKeyError[0m: [35m'C:\\Users\\NQTa\\AppData\\Local\\Temp\\joblib_memmapping_folder_13504_a2f47c27c19b4a679dee7bc0499c700c_feb2b7ca766b447fa9099966ae566cf2'[0m
+Traceback (most recent call last):
+  File [35m"C:\Users\NQTa\Documents\MLCourse\Final Project\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py"[0m, line [35m319[0m, in [35mmain[0m
+    del [31mregistry[rtype][0m[1;31m[name][0m
+        [31m~~~~~~~~~~~~~~~[0m[1;31m^^^^^^[0m
+[1;35mKeyError[0m: [35m'C:\\Users\\NQTa\\AppData\\Local\\Temp\\joblib_memmapping_folder_13504_dc7ca25780d445e4965612b9ac937040_6315fcef28404bd9b9fe57f8bb784f3d'[0m
+Traceback (most recent call last):
+  File [35m"C:\Users\NQTa\Documents\MLCourse\Final Project\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py"[0m, line [35m319[0m, in [35mmain[0m
+    del [31mregistry[rtype][0m[1;31m[name][0m
+        [31m~~~~~~~~~~~~~~~[0m[1;31m^^^^^^[0m
+[1;35mKeyError[0m: [35m'C:\\Users\\NQTa\\AppData\\Local\\Temp\\joblib_memmapping_folder_13504_a2f47c27c19b4a679dee7bc0499c700c_d4196a5e62a54f2490b3cec5cd5d8a93'[0m
+Traceback (most recent call last):
+  File [35m"C:\Users\NQTa\Documents\MLCourse\Final Project\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py"[0m, line [35m319[0m, in [35mmain[0m
+    del [31mregistry[rtype][0m[1;31m[name][0m
+        [31m~~~~~~~~~~~~~~~[0m[1;31m^^^^^^[0m
+[1;35mKeyError[0m: [35m'C:\\Users\\NQTa\\AppData\\Local\\Temp\\joblib_memmapping_folder_13504_6ab86046be12457fa05470a4cc9885be_cb7b4b0c58c542c28b69b531e820dd7a'[0m
+Traceback (most recent call last):
+  File [35m"C:\Users\NQTa\Documents\MLCourse\Final Project\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py"[0m, line [35m319[0m, in [35mmain[0m
+    del [31mregistry[rtype][0m[1;31m[name][0m
+        [31m~~~~~~~~~~~~~~~[0m[1;31m^^^^^^[0m
+[1;35mKeyError[0m: [35m'C:\\Users\\NQTa\\AppData\\Local\\Temp\\joblib_memmapping_folder_13504_a2f47c27c19b4a679dee7bc0499c700c_570f7c9ce1fe408a9e6cea086907d7b4'[0m
+Traceback (most recent call last):
+  File [35m"C:\Users\NQTa\Documents\MLCourse\Final Project\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py"[0m, line [35m319[0m, in [35mmain[0m
+    del [31mregistry[rtype][0m[1;31m[name][0m
+        [31m~~~~~~~~~~~~~~~[0m[1;31m^^^^^^[0m
+[1;35mKeyError[0m: [35m'C:\\Users\\NQTa\\AppData\\Local\\Temp\\joblib_memmapping_folder_13504_e0810451ecbb46b0a72d2e6561b8699d_ab901be8fb124b46aa4f9bd25ac79cb0'[0m
+Traceback (most recent call last):
+  File [35m"C:\Users\NQTa\Documents\MLCourse\Final Project\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py"[0m, line [35m319[0m, in [35mmain[0m
+    del [31mregistry[rtype][0m[1;31m[name][0m
+        [31m~~~~~~~~~~~~~~~[0m[1;31m^^^^^^[0m
+[1;35mKeyError[0m: [35m'C:\\Users\\NQTa\\AppData\\Local\\Temp\\joblib_memmapping_folder_13504_a2f47c27c19b4a679dee7bc0499c700c_dd226700d0dc432584ad7e03834d2654'[0m
+Traceback (most recent call last):
+  File [35m"C:\Users\NQTa\Documents\MLCourse\Final Project\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py"[0m, line [35m319[0m, in [35mmain[0m
+    del [31mregistry[rtype][0m[1;31m[name][0m
+        [31m~~~~~~~~~~~~~~~[0m[1;31m^^^^^^[0m
+[1;35mKeyError[0m: [35m'C:\\Users\\NQTa\\AppData\\Local\\Temp\\joblib_memmapping_folder_13504_34a42d571d454c09ae7c7b6421f3fb69_21ce1deaa9e841ba9bf17d600a768713'[0m
+Traceback (most recent call last):
+  File [35m"C:\Users\NQTa\Documents\MLCourse\Final Project\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py"[0m, line [35m319[0m, in [35mmain[0m
+    del [31mregistry[rtype][0m[1;31m[name][0m
+        [31m~~~~~~~~~~~~~~~[0m[1;31m^^^^^^[0m
+[1;35mKeyError[0m: [35m'C:\\Users\\NQTa\\AppData\\Local\\Temp\\joblib_memmapping_folder_13504_a2f47c27c19b4a679dee7bc0499c700c_3668fd550c9c4cd48e0c109ea0ee0307'[0m
+Traceback (most recent call last):
+  File [35m"C:\Users\NQTa\Documents\MLCourse\Final Project\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py"[0m, line [35m319[0m, in [35mmain[0m
+    del [31mregistry[rtype][0m[1;31m[name][0m
+        [31m~~~~~~~~~~~~~~~[0m[1;31m^^^^^^[0m
+[1;35mKeyError[0m: [35m'C:\\Users\\NQTa\\AppData\\Local\\Temp\\joblib_memmapping_folder_13504_c6b53c8f053d4c51a16708c1f2960ade_4a541e060be848f5ad2bb039627d45ba'[0m
+Traceback (most recent call last):
+  File [35m"C:\Users\NQTa\Documents\MLCourse\Final Project\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py"[0m, line [35m319[0m, in [35mmain[0m
+    del [31mregistry[rtype][0m[1;31m[name][0m
+        [31m~~~~~~~~~~~~~~~[0m[1;31m^^^^^^[0m
+[1;35mKeyError[0m: [35m'C:\\Users\\NQTa\\AppData\\Local\\Temp\\joblib_memmapping_folder_13504_a2f47c27c19b4a679dee7bc0499c700c_7adb11af1f884634bc3f6a5ea19ad960'[0m
+Traceback (most recent call last):
+  File [35m"C:\Users\NQTa\Documents\MLCourse\Final Project\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py"[0m, line [35m319[0m, in [35mmain[0m
+    del [31mregistry[rtype][0m[1;31m[name][0m
+        [31m~~~~~~~~~~~~~~~[0m[1;31m^^^^^^[0m
+[1;35mKeyError[0m: [35m'C:\\Users\\NQTa\\AppData\\Local\\Temp\\joblib_memmapping_folder_13504_d1d579e16b5f4c92a23a6d0822da8033_f5182d7191e74d16b30bc4b1f5a44cf0'[0m
+Traceback (most recent call last):
+  File [35m"C:\Users\NQTa\Documents\MLCourse\Final Project\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py"[0m, line [35m319[0m, in [35mmain[0m
+    del [31mregistry[rtype][0m[1;31m[name][0m
+        [31m~~~~~~~~~~~~~~~[0m[1;31m^^^^^^[0m
+[1;35mKeyError[0m: [35m'C:\\Users\\NQTa\\AppData\\Local\\Temp\\joblib_memmapping_folder_13504_a2f47c27c19b4a679dee7bc0499c700c_2dde186fdd474071bd0506de09085799'[0m
+Traceback (most recent call last):
+  File [35m"C:\Users\NQTa\Documents\MLCourse\Final Project\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py"[0m, line [35m319[0m, in [35mmain[0m
+    del [31mregistry[rtype][0m[1;31m[name][0m
+        [31m~~~~~~~~~~~~~~~[0m[1;31m^^^^^^[0m
+[1;35mKeyError[0m: [35m'C:\\Users\\NQTa\\AppData\\Local\\Temp\\joblib_memmapping_folder_13504_8abcf511f78443389e828c2fcc212694_05220cd3ee5e43d582efc36318ac9f9b'[0m
+Traceback (most recent call last):
+  File [35m"C:\Users\NQTa\Documents\MLCourse\Final Project\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py"[0m, line [35m319[0m, in [35mmain[0m
+    del [31mregistry[rtype][0m[1;31m[name][0m
+        [31m~~~~~~~~~~~~~~~[0m[1;31m^^^^^^[0m
+[1;35mKeyError[0m: [35m'C:\\Users\\NQTa\\AppData\\Local\\Temp\\joblib_memmapping_folder_13504_a2f47c27c19b4a679dee7bc0499c700c_d06e582ede46499b88de422fbea8bcf1'[0m
+Traceback (most recent call last):
+  File [35m"C:\Users\NQTa\Documents\MLCourse\Final Project\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py"[0m, line [35m319[0m, in [35mmain[0m
+    del [31mregistry[rtype][0m[1;31m[name][0m
+        [31m~~~~~~~~~~~~~~~[0m[1;31m^^^^^^[0m
+[1;35mKeyError[0m: [35m'C:\\Users\\NQTa\\AppData\\Local\\Temp\\joblib_memmapping_folder_13504_96b54b5f42da40b4a7f84c7f9761e632_f4b4f5f8b4284dbe8a94b52f8677f01d'[0m
+Traceback (most recent call last):
+  File [35m"C:\Users\NQTa\Documents\MLCourse\Final Project\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py"[0m, line [35m319[0m, in [35mmain[0m
+    del [31mregistry[rtype][0m[1;31m[name][0m
+        [31m~~~~~~~~~~~~~~~[0m[1;31m^^^^^^[0m
+[1;35mKeyError[0m: [35m'C:\\Users\\NQTa\\AppData\\Local\\Temp\\joblib_memmapping_folder_13504_a2f47c27c19b4a679dee7bc0499c700c_250f088d16d94eaf9306dc0d9e2435e2'[0m
+Traceback (most recent call last):
+  File [35m"C:\Users\NQTa\Documents\MLCourse\Final Project\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py"[0m, line [35m319[0m, in [35mmain[0m
+    del [31mregistry[rtype][0m[1;31m[name][0m
+        [31m~~~~~~~~~~~~~~~[0m[1;31m^^^^^^[0m
+[1;35mKeyError[0m: [35m'C:\\Users\\NQTa\\AppData\\Local\\Temp\\joblib_memmapping_folder_13504_4b233217807541af804bcc9de0f29d82_db814c8c6a9f4f7aadbc05094f938d9c'[0m
+Traceback (most recent call last):
+  File [35m"C:\Users\NQTa\Documents\MLCourse\Final Project\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py"[0m, line [35m319[0m, in [35mmain[0m
+    del [31mregistry[rtype][0m[1;31m[name][0m
+        [31m~~~~~~~~~~~~~~~[0m[1;31m^^^^^^[0m
+[1;35mKeyError[0m: [35m'C:\\Users\\NQTa\\AppData\\Local\\Temp\\joblib_memmapping_folder_13504_a2f47c27c19b4a679dee7bc0499c700c_8d6ade5f51f0482b9d35dae1b98cf9c5'[0m
+Traceback (most recent call last):
+  File [35m"C:\Users\NQTa\Documents\MLCourse\Final Project\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py"[0m, line [35m319[0m, in [35mmain[0m
+    del [31mregistry[rtype][0m[1;31m[name][0m
+        [31m~~~~~~~~~~~~~~~[0m[1;31m^^^^^^[0m
+[1;35mKeyError[0m: [35m'C:\\Users\\NQTa\\AppData\\Local\\Temp\\joblib_memmapping_folder_13504_b7f4bdeb3b3c4c1591cf675d777bccb5_2602adb23bd44e6ead2ccf54a9dada67'[0m
+Traceback (most recent call last):
+  File [35m"C:\Users\NQTa\Documents\MLCourse\Final Project\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py"[0m, line [35m319[0m, in [35mmain[0m
+    del [31mregistry[rtype][0m[1;31m[name][0m
+        [31m~~~~~~~~~~~~~~~[0m[1;31m^^^^^^[0m
+[1;35mKeyError[0m: [35m'C:\\Users\\NQTa\\AppData\\Local\\Temp\\joblib_memmapping_folder_13504_a2f47c27c19b4a679dee7bc0499c700c_da6177a8fb544cba9801ce968882cb11'[0m
+Traceback (most recent call last):
+  File [35m"C:\Users\NQTa\Documents\MLCourse\Final Project\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py"[0m, line [35m319[0m, in [35mmain[0m
+    del [31mregistry[rtype][0m[1;31m[name][0m
+        [31m~~~~~~~~~~~~~~~[0m[1;31m^^^^^^[0m
+[1;35mKeyError[0m: [35m'C:\\Users\\NQTa\\AppData\\Local\\Temp\\joblib_memmapping_folder_13504_581d9be1942e4843b3605b41791bacfb_63701d8456b24367b15e8719c5a9607d'[0m
+Traceback (most recent call last):
+  File [35m"C:\Users\NQTa\Documents\MLCourse\Final Project\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py"[0m, line [35m319[0m, in [35mmain[0m
+    del [31mregistry[rtype][0m[1;31m[name][0m
+        [31m~~~~~~~~~~~~~~~[0m[1;31m^^^^^^[0m
+[1;35mKeyError[0m: [35m'C:\\Users\\NQTa\\AppData\\Local\\Temp\\joblib_memmapping_folder_13504_a2f47c27c19b4a679dee7bc0499c700c_29e9fea3fe264364b96b9d6c504548dd'[0m
+Traceback (most recent call last):
+  File [35m"C:\Users\NQTa\Documents\MLCourse\Final Project\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py"[0m, line [35m319[0m, in [35mmain[0m
+    del [31mregistry[rtype][0m[1;31m[name][0m
+        [31m~~~~~~~~~~~~~~~[0m[1;31m^^^^^^[0m
+[1;35mKeyError[0m: [35m'C:\\Users\\NQTa\\AppData\\Local\\Temp\\joblib_memmapping_folder_13504_9e86823686944c799ad10a1ae744b661_9301303788d744df90c8854acbede34d'[0m
+Traceback (most recent call last):
+  File [35m"C:\Users\NQTa\Documents\MLCourse\Final Project\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py"[0m, line [35m319[0m, in [35mmain[0m
+    del [31mregistry[rtype][0m[1;31m[name][0m
+        [31m~~~~~~~~~~~~~~~[0m[1;31m^^^^^^[0m
+[1;35mKeyError[0m: [35m'C:\\Users\\NQTa\\AppData\\Local\\Temp\\joblib_memmapping_folder_13504_a2f47c27c19b4a679dee7bc0499c700c_37204a0d65aa4060a91c4b3185ff4bab'[0m
+Traceback (most recent call last):
+  File [35m"C:\Users\NQTa\Documents\MLCourse\Final Project\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py"[0m, line [35m319[0m, in [35mmain[0m
+    del [31mregistry[rtype][0m[1;31m[name][0m
+        [31m~~~~~~~~~~~~~~~[0m[1;31m^^^^^^[0m
+[1;35mKeyError[0m: [35m'C:\\Users\\NQTa\\AppData\\Local\\Temp\\joblib_memmapping_folder_13504_6eeb9950baa84eb2b2e750256cd537c2_385b4b5dd80f46879526bfaaef4b1058'[0m
+Traceback (most recent call last):
+  File [35m"C:\Users\NQTa\Documents\MLCourse\Final Project\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py"[0m, line [35m319[0m, in [35mmain[0m
+    del [31mregistry[rtype][0m[1;31m[name][0m
+        [31m~~~~~~~~~~~~~~~[0m[1;31m^^^^^^[0m
+[1;35mKeyError[0m: [35m'C:\\Users\\NQTa\\AppData\\Local\\Temp\\joblib_memmapping_folder_13504_a2f47c27c19b4a679dee7bc0499c700c_bf8383eea5744c04898311095beff69c'[0m
+Traceback (most recent call last):
+  File [35m"C:\Users\NQTa\Documents\MLCourse\Final Project\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py"[0m, line [35m319[0m, in [35mmain[0m
+    del [31mregistry[rtype][0m[1;31m[name][0m
+        [31m~~~~~~~~~~~~~~~[0m[1;31m^^^^^^[0m
+[1;35mKeyError[0m: [35m'C:\\Users\\NQTa\\AppData\\Local\\Temp\\joblib_memmapping_folder_13504_ac9ae9d8d21f4da09a8662c95dea3edd_1a20a55bcc77489f8a319f5d7431aeb9'[0m
+Traceback (most recent call last):
+  File [35m"C:\Users\NQTa\Documents\MLCourse\Final Project\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py"[0m, line [35m319[0m, in [35mmain[0m
+    del [31mregistry[rtype][0m[1;31m[name][0m
+        [31m~~~~~~~~~~~~~~~[0m[1;31m^^^^^^[0m
+[1;35mKeyError[0m: [35m'C:\\Users\\NQTa\\AppData\\Local\\Temp\\joblib_memmapping_folder_13504_a2f47c27c19b4a679dee7bc0499c700c_860c627a6dc9405184abfe42628c6835'[0m
+Traceback (most recent call last):
+  File [35m"C:\Users\NQTa\Documents\MLCourse\Final Project\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py"[0m, line [35m319[0m, in [35mmain[0m
+    del [31mregistry[rtype][0m[1;31m[name][0m
+        [31m~~~~~~~~~~~~~~~[0m[1;31m^^^^^^[0m
+[1;35mKeyError[0m: [35m'C:\\Users\\NQTa\\AppData\\Local\\Temp\\joblib_memmapping_folder_13504_8bc8e64b77664b429b42765f1045b925_f4af699490b44af7b88c6f808b1569fd'[0m
+Traceback (most recent call last):
+  File [35m"C:\Users\NQTa\Documents\MLCourse\Final Project\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py"[0m, line [35m319[0m, in [35mmain[0m
+    del [31mregistry[rtype][0m[1;31m[name][0m
+        [31m~~~~~~~~~~~~~~~[0m[1;31m^^^^^^[0m
+[1;35mKeyError[0m: [35m'C:\\Users\\NQTa\\AppData\\Local\\Temp\\joblib_memmapping_folder_13504_a2f47c27c19b4a679dee7bc0499c700c_a2235566406e42a4bca452b48c567d33'[0m
+Traceback (most recent call last):
+  File [35m"C:\Users\NQTa\Documents\MLCourse\Final Project\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py"[0m, line [35m319[0m, in [35mmain[0m
+    del [31mregistry[rtype][0m[1;31m[name][0m
+        [31m~~~~~~~~~~~~~~~[0m[1;31m^^^^^^[0m
+[1;35mKeyError[0m: [35m'C:\\Users\\NQTa\\AppData\\Local\\Temp\\joblib_memmapping_folder_13504_8fa8457a5e8f4fe19cc42c8f592f7118_33885b0f4b61457ebd41e4fc74804835'[0m
+Traceback (most recent call last):
+  File [35m"C:\Users\NQTa\Documents\MLCourse\Final Project\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py"[0m, line [35m319[0m, in [35mmain[0m
+    del [31mregistry[rtype][0m[1;31m[name][0m
+        [31m~~~~~~~~~~~~~~~[0m[1;31m^^^^^^[0m
+[1;35mKeyError[0m: [35m'C:\\Users\\NQTa\\AppData\\Local\\Temp\\joblib_memmapping_folder_13504_a2f47c27c19b4a679dee7bc0499c700c_f11c01eeba1f4be4bcc0f24d8eec3654'[0m
+Traceback (most recent call last):
+  File [35m"C:\Users\NQTa\Documents\MLCourse\Final Project\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py"[0m, line [35m319[0m, in [35mmain[0m
+    del [31mregistry[rtype][0m[1;31m[name][0m
+        [31m~~~~~~~~~~~~~~~[0m[1;31m^^^^^^[0m
+[1;35mKeyError[0m: [35m'C:\\Users\\NQTa\\AppData\\Local\\Temp\\joblib_memmapping_folder_13504_a71cf5bbd3694571b9b3f69e2f2f5f2e_31866c13d29c45e48ff03d867426b2da'[0m
+Traceback (most recent call last):
+  File [35m"C:\Users\NQTa\Documents\MLCourse\Final Project\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py"[0m, line [35m319[0m, in [35mmain[0m
+    del [31mregistry[rtype][0m[1;31m[name][0m
+        [31m~~~~~~~~~~~~~~~[0m[1;31m^^^^^^[0m
+[1;35mKeyError[0m: [35m'C:\\Users\\NQTa\\AppData\\Local\\Temp\\joblib_memmapping_folder_13504_a2f47c27c19b4a679dee7bc0499c700c_63d0c05695e44056a84395edb0bf99f6'[0m
+Traceback (most recent call last):
+  File [35m"C:\Users\NQTa\Documents\MLCourse\Final Project\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py"[0m, line [35m319[0m, in [35mmain[0m
+    del [31mregistry[rtype][0m[1;31m[name][0m
+        [31m~~~~~~~~~~~~~~~[0m[1;31m^^^^^^[0m
+[1;35mKeyError[0m: [35m'C:\\Users\\NQTa\\AppData\\Local\\Temp\\joblib_memmapping_folder_13504_bffbd56d16d645d5b64fee641da061ac_86b198758de34d3685c6bcb40b3a9eb5'[0m
+Traceback (most recent call last):
+  File [35m"C:\Users\NQTa\Documents\MLCourse\Final Project\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py"[0m, line [35m319[0m, in [35mmain[0m
+    del [31mregistry[rtype][0m[1;31m[name][0m
+        [31m~~~~~~~~~~~~~~~[0m[1;31m^^^^^^[0m
+[1;35mKeyError[0m: [35m'C:\\Users\\NQTa\\AppData\\Local\\Temp\\joblib_memmapping_folder_13504_a2f47c27c19b4a679dee7bc0499c700c_7ea99416f01f47f1ba2b2acff8d35023'[0m
+Traceback (most recent call last):
+  File [35m"C:\Users\NQTa\Documents\MLCourse\Final Project\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py"[0m, line [35m319[0m, in [35mmain[0m
+    del [31mregistry[rtype][0m[1;31m[name][0m
+        [31m~~~~~~~~~~~~~~~[0m[1;31m^^^^^^[0m
+[1;35mKeyError[0m: [35m'C:\\Users\\NQTa\\AppData\\Local\\Temp\\joblib_memmapping_folder_13504_b772698525fc434aa93ed8152ee8b23f_42979c10569248c49c4864337be4b4de'[0m
+Traceback (most recent call last):
+  File [35m"C:\Users\NQTa\Documents\MLCourse\Final Project\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py"[0m, line [35m319[0m, in [35mmain[0m
+    del [31mregistry[rtype][0m[1;31m[name][0m
+        [31m~~~~~~~~~~~~~~~[0m[1;31m^^^^^^[0m
+[1;35mKeyError[0m: [35m'C:\\Users\\NQTa\\AppData\\Local\\Temp\\joblib_memmapping_folder_13504_a2f47c27c19b4a679dee7bc0499c700c_6785543f85704b4db588d0466d086ee9'[0m
+Traceback (most recent call last):
+  File [35m"C:\Users\NQTa\Documents\MLCourse\Final Project\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py"[0m, line [35m319[0m, in [35mmain[0m
+    del [31mregistry[rtype][0m[1;31m[name][0m
+        [31m~~~~~~~~~~~~~~~[0m[1;31m^^^^^^[0m
+[1;35mKeyError[0m: [35m'C:\\Users\\NQTa\\AppData\\Local\\Temp\\joblib_memmapping_folder_13504_2101e92b9ff54ae6ad88daee2b867d04_5321f350d96f4cb88ec866c1fcdf33d4'[0m
+Traceback (most recent call last):
+  File [35m"C:\Users\NQTa\Documents\MLCourse\Final Project\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py"[0m, line [35m319[0m, in [35mmain[0m
+    del [31mregistry[rtype][0m[1;31m[name][0m
+        [31m~~~~~~~~~~~~~~~[0m[1;31m^^^^^^[0m
+[1;35mKeyError[0m: [35m'C:\\Users\\NQTa\\AppData\\Local\\Temp\\joblib_memmapping_folder_13504_a2f47c27c19b4a679dee7bc0499c700c_7a653f4872584bba83d9439aea76fd96'[0m
+Traceback (most recent call last):
+  File [35m"C:\Users\NQTa\Documents\MLCourse\Final Project\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py"[0m, line [35m319[0m, in [35mmain[0m
+    del [31mregistry[rtype][0m[1;31m[name][0m
+        [31m~~~~~~~~~~~~~~~[0m[1;31m^^^^^^[0m
+[1;35mKeyError[0m: [35m'C:\\Users\\NQTa\\AppData\\Local\\Temp\\joblib_memmapping_folder_13504_fe1c49d7de9e40e6ba2ccf3fc1cb6e1a_d609f71bdb4e4e098be41e81c0430f89'[0m
+Traceback (most recent call last):
+  File [35m"C:\Users\NQTa\Documents\MLCourse\Final Project\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py"[0m, line [35m319[0m, in [35mmain[0m
+    del [31mregistry[rtype][0m[1;31m[name][0m
+        [31m~~~~~~~~~~~~~~~[0m[1;31m^^^^^^[0m
+[1;35mKeyError[0m: [35m'C:\\Users\\NQTa\\AppData\\Local\\Temp\\joblib_memmapping_folder_13504_a2f47c27c19b4a679dee7bc0499c700c_948f469a57bd4b7097d451d9d2a0c222'[0m
+Traceback (most recent call last):
+  File [35m"C:\Users\NQTa\Documents\MLCourse\Final Project\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py"[0m, line [35m319[0m, in [35mmain[0m
+    del [31mregistry[rtype][0m[1;31m[name][0m
+        [31m~~~~~~~~~~~~~~~[0m[1;31m^^^^^^[0m
+[1;35mKeyError[0m: [35m'C:\\Users\\NQTa\\AppData\\Local\\Temp\\joblib_memmapping_folder_13504_853bb22323ad4b4b897dc1a7321edfbb_e4ec66031ade48419150463f5e3d45d0'[0m
+Traceback (most recent call last):
+  File [35m"C:\Users\NQTa\Documents\MLCourse\Final Project\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py"[0m, line [35m319[0m, in [35mmain[0m
+    del [31mregistry[rtype][0m[1;31m[name][0m
+        [31m~~~~~~~~~~~~~~~[0m[1;31m^^^^^^[0m
+[1;35mKeyError[0m: [35m'C:\\Users\\NQTa\\AppData\\Local\\Temp\\joblib_memmapping_folder_13504_a2f47c27c19b4a679dee7bc0499c700c_7e9dfc01716546d0863c40bcd924c36e'[0m
+Traceback (most recent call last):
+  File [35m"C:\Users\NQTa\Documents\MLCourse\Final Project\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py"[0m, line [35m319[0m, in [35mmain[0m
+    del [31mregistry[rtype][0m[1;31m[name][0m
+        [31m~~~~~~~~~~~~~~~[0m[1;31m^^^^^^[0m
+[1;35mKeyError[0m: [35m'C:\\Users\\NQTa\\AppData\\Local\\Temp\\joblib_memmapping_folder_13504_2462f26f9f0d41e99c58d2e32a2b0a92_3492452e819b48c2911bcbb2a2e89359'[0m
+Traceback (most recent call last):
+  File [35m"C:\Users\NQTa\Documents\MLCourse\Final Project\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py"[0m, line [35m319[0m, in [35mmain[0m
+    del [31mregistry[rtype][0m[1;31m[name][0m
+        [31m~~~~~~~~~~~~~~~[0m[1;31m^^^^^^[0m
+[1;35mKeyError[0m: [35m'C:\\Users\\NQTa\\AppData\\Local\\Temp\\joblib_memmapping_folder_13504_a2f47c27c19b4a679dee7bc0499c700c_061d9409e49e49298f07ec7adece8aad'[0m
+Traceback (most recent call last):
+  File [35m"C:\Users\NQTa\Documents\MLCourse\Final Project\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py"[0m, line [35m319[0m, in [35mmain[0m
+    del [31mregistry[rtype][0m[1;31m[name][0m
+        [31m~~~~~~~~~~~~~~~[0m[1;31m^^^^^^[0m
+[1;35mKeyError[0m: [35m'C:\\Users\\NQTa\\AppData\\Local\\Temp\\joblib_memmapping_folder_13504_0966a7eadc1943ef8a81fee463886073_f9f6cae9b722495ba50963ebe548e998'[0m
+Traceback (most recent call last):
+  File [35m"C:\Users\NQTa\Documents\MLCourse\Final Project\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py"[0m, line [35m319[0m, in [35mmain[0m
+    del [31mregistry[rtype][0m[1;31m[name][0m
+        [31m~~~~~~~~~~~~~~~[0m[1;31m^^^^^^[0m
+[1;35mKeyError[0m: [35m'C:\\Users\\NQTa\\AppData\\Local\\Temp\\joblib_memmapping_folder_13504_a2f47c27c19b4a679dee7bc0499c700c_c3408654950e4ee69eb06e453218426e'[0m
+Traceback (most recent call last):
+  File [35m"C:\Users\NQTa\Documents\MLCourse\Final Project\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py"[0m, line [35m319[0m, in [35mmain[0m
+    del [31mregistry[rtype][0m[1;31m[name][0m
+        [31m~~~~~~~~~~~~~~~[0m[1;31m^^^^^^[0m
+[1;35mKeyError[0m: [35m'C:\\Users\\NQTa\\AppData\\Local\\Temp\\joblib_memmapping_folder_13504_9e0db150e106488ea3f2831e54f0edb8_4c64cde22a9c4f43bae5970192d5f387'[0m
+Traceback (most recent call last):
+  File [35m"C:\Users\NQTa\Documents\MLCourse\Final Project\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py"[0m, line [35m319[0m, in [35mmain[0m
+    del [31mregistry[rtype][0m[1;31m[name][0m
+        [31m~~~~~~~~~~~~~~~[0m[1;31m^^^^^^[0m
+[1;35mKeyError[0m: [35m'C:\\Users\\NQTa\\AppData\\Local\\Temp\\joblib_memmapping_folder_13504_a2f47c27c19b4a679dee7bc0499c700c_d632d6a916cc45b0be39686776df8e26'[0m
+Traceback (most recent call last):
+  File [35m"C:\Users\NQTa\Documents\MLCourse\Final Project\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py"[0m, line [35m319[0m, in [35mmain[0m
+    del [31mregistry[rtype][0m[1;31m[name][0m
+        [31m~~~~~~~~~~~~~~~[0m[1;31m^^^^^^[0m
+[1;35mKeyError[0m: [35m'C:\\Users\\NQTa\\AppData\\Local\\Temp\\joblib_memmapping_folder_13504_44f7cb27584e4a6196d8c42c05f9a91f_59bbca739095486ba3f137b19ecc557e'[0m
+Traceback (most recent call last):
+  File [35m"C:\Users\NQTa\Documents\MLCourse\Final Project\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py"[0m, line [35m319[0m, in [35mmain[0m
+    del [31mregistry[rtype][0m[1;31m[name][0m
+        [31m~~~~~~~~~~~~~~~[0m[1;31m^^^^^^[0m
+[1;35mKeyError[0m: [35m'C:\\Users\\NQTa\\AppData\\Local\\Temp\\joblib_memmapping_folder_13504_a2f47c27c19b4a679dee7bc0499c700c_c846dae9abcb418888c1cdca7d6cc8da'[0m
+Traceback (most recent call last):
+  File [35m"C:\Users\NQTa\Documents\MLCourse\Final Project\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py"[0m, line [35m319[0m, in [35mmain[0m
+    del [31mregistry[rtype][0m[1;31m[name][0m
+        [31m~~~~~~~~~~~~~~~[0m[1;31m^^^^^^[0m
+[1;35mKeyError[0m: [35m'C:\\Users\\NQTa\\AppData\\Local\\Temp\\joblib_memmapping_folder_13504_101a440662244a2282fd122fc4cd20b2_b88c9284736d405187f772b0694f5963'[0m
+Traceback (most recent call last):
+  File [35m"C:\Users\NQTa\Documents\MLCourse\Final Project\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py"[0m, line [35m319[0m, in [35mmain[0m
+    del [31mregistry[rtype][0m[1;31m[name][0m
+        [31m~~~~~~~~~~~~~~~[0m[1;31m^^^^^^[0m
+[1;35mKeyError[0m: [35m'C:\\Users\\NQTa\\AppData\\Local\\Temp\\joblib_memmapping_folder_13504_a2f47c27c19b4a679dee7bc0499c700c_8b50ac6383184530b8a0bad9416dfffd'[0m
+Traceback (most recent call last):
+  File [35m"C:\Users\NQTa\Documents\MLCourse\Final Project\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py"[0m, line [35m319[0m, in [35mmain[0m
+    del [31mregistry[rtype][0m[1;31m[name][0m
+        [31m~~~~~~~~~~~~~~~[0m[1;31m^^^^^^[0m
+[1;35mKeyError[0m: [35m'C:\\Users\\NQTa\\AppData\\Local\\Temp\\joblib_memmapping_folder_13504_7a8ae4e90cf14d83811e8037b322027d_df092fc4afe045578850fa42de425183'[0m
+Traceback (most recent call last):
+  File [35m"C:\Users\NQTa\Documents\MLCourse\Final Project\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py"[0m, line [35m319[0m, in [35mmain[0m
+    del [31mregistry[rtype][0m[1;31m[name][0m
+        [31m~~~~~~~~~~~~~~~[0m[1;31m^^^^^^[0m
+[1;35mKeyError[0m: [35m'C:\\Users\\NQTa\\AppData\\Local\\Temp\\joblib_memmapping_folder_13504_a2f47c27c19b4a679dee7bc0499c700c_9d1d7a816c41439bb1a1e6539bb4247e'[0m
+Traceback (most recent call last):
+  File [35m"C:\Users\NQTa\Documents\MLCourse\Final Project\.venv\Lib\site-packages\joblib\externals\loky\backend\resource_tracker.py"[0m, line [35m319[0m, in [35mmain[0m
+    del [31mregistry[rtype][0m[1;31m[name][0m
+        [31m~~~~~~~~~~~~~~~[0m[1;31m^^^^^^[0m
+[1;35mKeyError[0m: [35m'C:\\Users\\NQTa\\AppData\\Local\\Temp\\joblib_memmapping_folder_13504_a2f47c27c19b4a679dee7bc0499c700c_d10902e35877482b85654c3ee717dea5'[0m
+
+Executing: 100%|##########| 24/24 [1:42:48<00:00, 257.01s/cell]
+[04:28:38] OK nb03_baseline_models
+
+[04:28:38] starting nb04_putirka_benchmark
+Input Notebook:  C:\Users\NQTa\Documents\MLCourse\Final Project\notebooks\nb04_putirka_benchmark.ipynb
+Output Notebook: C:\Users\NQTa\Documents\MLCourse\Final Project\notebooks\executed\nb04_putirka_benchmark_executed.ipynb
+
+Executing:   0%|          | 0/14 [00:00<?, ?cell/s]Executing notebook with kernel: python3
+Executing Cell 1---------------------------------------
+Ending Cell 1------------------------------------------
+
+Executing:   7%|7         | 1/14 [00:01<00:24,  1.92s/cell]Executing Cell 2---------------------------------------
+Ending Cell 2------------------------------------------
+
+Executing:  14%|#4        | 2/14 [00:03<00:21,  1.78s/cell]Executing Cell 3---------------------------------------
+Ending Cell 3------------------------------------------
+Executing Cell 4---------------------------------------
+Fair-comparison RF opx-liq: T uses pwlr, P uses raw
+
+Ending Cell 4------------------------------------------
+
+Executing:  29%|##8       | 4/14 [00:04<00:08,  1.21cell/s]
+Executing:  29%|##8       | 4/14 [00:07<00:19,  1.94s/cell]
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "C:\Users\NQTa\Documents\MLCourse\Final Project\.venv\Lib\site-packages\papermill\__main__.py", line 4, in <module>
+    papermill()
+    ~~~~~~~~~^^
+  File "C:\Users\NQTa\Documents\MLCourse\Final Project\.venv\Lib\site-packages\click\core.py", line 1485, in __call__
+    return self.main(*args, **kwargs)
+           ~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "C:\Users\NQTa\Documents\MLCourse\Final Project\.venv\Lib\site-packages\click\core.py", line 1406, in main
+    rv = self.invoke(ctx)
+  File "C:\Users\NQTa\Documents\MLCourse\Final Project\.venv\Lib\site-packages\click\core.py", line 1269, in invoke
+    return ctx.invoke(self.callback, **ctx.params)
+           ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\NQTa\Documents\MLCourse\Final Project\.venv\Lib\site-packages\click\core.py", line 824, in invoke
+    return callback(*args, **kwargs)
+  File "C:\Users\NQTa\Documents\MLCourse\Final Project\.venv\Lib\site-packages\click\decorators.py", line 34, in new_func
+    return f(get_current_context(), *args, **kwargs)
+  File "C:\Users\NQTa\Documents\MLCourse\Final Project\.venv\Lib\site-packages\papermill\cli.py", line 235, in papermill
+    execute_notebook(
+    ~~~~~~~~~~~~~~~~^
+        input_path=input_path,
+        ^^^^^^^^^^^^^^^^^^^^^^
+    ...<15 lines>...
+        execution_timeout=execution_timeout,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\NQTa\Documents\MLCourse\Final Project\.venv\Lib\site-packages\papermill\execute.py", line 131, in execute_notebook
+    raise_for_execution_errors(nb, output_path)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "C:\Users\NQTa\Documents\MLCourse\Final Project\.venv\Lib\site-packages\papermill\execute.py", line 251, in raise_for_execution_errors
+    raise error
+papermill.exceptions.PapermillExecutionError: 
+---------------------------------------------------------------------------
+Exception encountered at "In [3]":
+---------------------------------------------------------------------------
+FileNotFoundError                         Traceback (most recent call last)
+Cell In[3], line 14
+     10 fs_P = rf_P['feature_set']
+     11 print(f'Fair-comparison RF opx-liq: T uses {fs_T}, P uses {fs_P}')
+     12 
+     13 model_T_ml = joblib.load(MODELS / f'model_RF_T_C_opx_liq_{fs_T}.joblib')
+---> 14 model_P_ml = joblib.load(MODELS / f'model_RF_P_kbar_opx_liq_{fs_P}.joblib')
+
+File ~\Documents\MLCourse\Final Project\.venv\Lib\site-packages\joblib\numpy_pickle.py:735, in load(filename, mmap_mode, ensure_native_byte_order)
+    733         obj = _unpickle(fobj, ensure_native_byte_order=ensure_native_byte_order)
+    734 else:
+--> 735     with open(filename, "rb") as f:
+    736         with _validate_fileobject_and_memmap(f, filename, mmap_mode) as (
+    737             fobj,
+    738             validated_mmap_mode,
+    739         ):
+    740             if isinstance(fobj, str):
+    741                 # if the returned file object is a string, this means we
+    742                 # try to load a pickle file generated with an version of
+    743                 # Joblib so we load it with joblib compatibility function.
+
+FileNotFoundError: [Errno 2] No such file or directory: 'C:\\Users\\NQTa\\Documents\\MLCourse\\Final Project\\models\\model_RF_P_kbar_opx_liq_raw.joblib'
+
+[04:28:49] FAILED nb04_putirka_benchmark rc=1

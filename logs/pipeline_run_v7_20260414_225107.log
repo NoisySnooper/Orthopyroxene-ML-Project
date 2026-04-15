@@ -1,0 +1,45 @@
+v7 pipeline run started at 2026-04-14T22:51:07.100841
+Run ID: 20260414_225107
+Notebooks (in order): ['nb01_data_cleaning', 'nb02_eda_pca', 'nb03_baseline_models', 'nb04b_lepr_arcpl_validation', 'nb04_putirka_benchmark', 'nb05_loso_validation', 'nb06_shap_analysis', 'nb07_bias_correction', 'nb08_natural_twopx', 'nb09_manuscript_compilation', 'nbF_figures']
+Starting from: nb05_loso_validation (index 5)
+Per-cell timeout: 10800s
+Decision halt marker: 'OPERATOR DECISION REQUIRED'
+
+
+[22:51:07] starting nb05_loso_validation
+Input Notebook:  C:\Users\NQTa\Documents\MLCourse\Final Project\notebooks\nb05_loso_validation.ipynb
+Output Notebook: C:\Users\NQTa\Documents\MLCourse\Final Project\notebooks\executed\nb05_loso_validation_executed.ipynb
+
+Executing:   0%|          | 0/7 [00:00<?, ?cell/s]Executing notebook with kernel: python3
+Executing Cell 1---------------------------------------
+Ending Cell 1------------------------------------------
+
+Executing:  14%|#4        | 1/7 [00:02<00:12,  2.11s/cell]Executing Cell 2---------------------------------------
+Ending Cell 2------------------------------------------
+
+Executing:  29%|##8       | 2/7 [00:06<00:16,  3.34s/cell]Executing Cell 3---------------------------------------
+Ending Cell 3------------------------------------------
+Executing Cell 4---------------------------------------
+Phase 3R global winning feature set: pwlr
+opx-liq rows: 600, studies: 93, clusters: 3, X.shape: (600, 72)
+Best params reconstructed for models: ['ERT', 'GB', 'RF', 'XGB']
+
+Ending Cell 4------------------------------------------
+
+Executing:  57%|#####7    | 4/7 [00:06<00:03,  1.30s/cell]Executing Cell 5---------------------------------------
+Ending Cell 5------------------------------------------
+Executing Cell 6---------------------------------------
+strategy:   0%|          | 0/3 [00:00<?, ?it/s]
+
+== LOSO (93 folds, group=Citation) ==
+
+LOSO:   0%|          | 0/4 [00:00<?, ?it/s]
+  RF   T_C      rmse=74.65  r2=+0.821  n=600
+
+  RF   P_kbar   rmse=5.93  r2=+0.599  n=600
+
+  ERT  T_C      rmse=78.40  r2=+0.802  n=600
+
+  ERT  P_kbar   rmse=6.09  r2=+0.576  n=600
+
+[23:04:57] FAILED nb05_loso_validation rc=1

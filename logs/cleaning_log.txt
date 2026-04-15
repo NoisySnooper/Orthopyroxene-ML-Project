@@ -1,38 +1,57 @@
-STEP 1: Extract and merge
-  Raw opx rows: 1796
-  After dropping missing P/T: 1796 (dropped 0)
+NB01 start: 2026-04-14 16:49:02.953838
+ExPetDB source: C:\Users\NQTa\Documents\MLCourse\Final Project\data\raw\ExPetDB_download_ExPetDB-2025-07-21.xlsx
 
-STEP 2: Extract oxides, handle iron
-  Fe2O3 reported in 4 rows; all Fe treated as FeO_total
+STEP 1: Load sheets
+  Experiment: 16082 rows
+  Orthopyroxene: 1796 rows
+  Merged opx+experiment: 7466 rows
+
+STEP 2: Extract oxides
+  Iron combined: FeO_total = FeO + 0.8998*Fe2O3
+  Mean FeO_total: 10.26 wt%
+
+STEP 2b: Fe3+ protocol
+  Fe3+/FeT = 0.15 applied to 7466 rows
+
+STEP 2c: Volume-by-difference (VBD) flag
+  Opx spots: is_vbd = False (VBD is a liquid-level concept in ExPetDB)
 
 STEP 3: Oxide total filter (95.0-102.0 wt%)
-  Dropped 67 rows (below 95.0: 6, above 102.0: 18, null: 0)
-  Remaining: 1729
+  Dropped 177 rows outside 95.0-102.0
+  Remaining: 7289
 
 STEP 4: Cation recalculation (6-oxygen basis)
-  Cation sum: mean=4.0007, std=0.0181, range=[3.7408, 4.2655]
+  Cation recalc done. Mean cation sum: 4.000
 
-STEP 5: Core oxide requirement + cation sum filter (3.95-4.05)
-  After requiring SiO2+MgO+FeO: 1497 (dropped 232)
-  After cation sum filter: 1481 (dropped 16)
+STEP 5: Core oxide requirement + cation sum filter
+  Dropped 2737 rows missing core oxides
+  Dropped 26 rows outside cation sum 3.95-4.05
+  Remaining: 4526
 
 STEP 6: Pigeonite filter (Wo <= 5.0 mol%)
-  Dropped 133 analyses with Wo > 5.0%
-  Remaining: 1348
+  Dropped 374 pigeonite/aug (Wo > 5.0)
+  Remaining: 4152
 
-STEP 6b: Pressure ceiling filter (P <= 100 kbar)
-  Dropped 29 rows with P > 100 kbar (opx unstable)
-  Remaining: 1319
-  P range after filter: 0.0-100.0 kbar
+STEP 6b: Pressure ceiling filter (P <= 100.0 kbar)
+  Dropped 71 rows with P > 100.0 kbar (opx unstable)
+  Remaining: 4081
+
+STEP 6c: KD(Fe-Mg) opx-liq equilibrium filter (0.23-0.35)
+  Rows with liquid data: 3745
+  Rows passing KD filter (opx_liq_pair=True): 1036
+  is_vbd (liquid H2O by difference): 64
+  Opx-only rows (total): 4081
+
+STEP 6d: Experiment-level deduplication
+  Before dedup: 4081 spot-level rows
+  After dedup: 1035 experiment-level rows
+  Collapsed 3046 duplicate spots
 
 STEP 7: Feature engineering
-  Mg#:   [0.086, 1.000], median=0.884
-  Al_IV: [0.0000, 0.3602], median=0.0741
-  Al_VI: [0.0000, 0.3333], median=0.0549
+  Features added: Mg_num, Al_IV, Al_VI, MgTs, liq_Mg_num
 
 STEP 8: Save datasets
-  Core dataset: 1148 rows, 1034 experiments, 126 citations
-  Full dataset: 525 rows, 493 experiments, 68 citations
-  Core P range: 0.0-100.0 kbar
-  Core T range: 550-1850 C
-  Verified: P_kbar max <= 100 kbar in both datasets
+  Core: 1035 experiments, 123 studies
+  Core opx_liq_pair=True: 600
+  Full: 494 experiments, 70 studies
+  Full opx_liq_pair=True: 321

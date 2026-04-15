@@ -1,0 +1,264 @@
+Resume run started at 2026-04-15T01:20:04.534652
+Starting from: nb06_shap_analysis (index 6)
+
+[01:20:04] starting nb06_shap_analysis
+Input Notebook:  C:\Users\NQTa\Documents\MLCourse\Final Project\notebooks\nb06_shap_analysis.ipynb
+Output Notebook: C:\Users\NQTa\Documents\MLCourse\Final Project\notebooks\executed\nb06_shap_analysis_executed.ipynb
+
+Executing:   0%|          | 0/23 [00:00<?, ?cell/s]Executing notebook with kernel: python3
+Executing Cell 1---------------------------------------
+Ending Cell 1------------------------------------------
+
+Executing:   4%|4         | 1/23 [00:03<01:24,  3.84s/cell]Executing Cell 2---------------------------------------
+Ending Cell 2------------------------------------------
+Executing Cell 3---------------------------------------
+Ending Cell 3------------------------------------------
+
+Executing:  13%|#3        | 3/23 [00:15<01:45,  5.27s/cell]Executing Cell 4---------------------------------------
+Ending Cell 4------------------------------------------
+Executing Cell 5---------------------------------------
+v7 primary (forest / T_C / opx_liq) feature set: alr
+
+Test set: 174 experiments
+X_test shape: (174, 23), n_features: 23
+
+Ending Cell 5------------------------------------------
+
+Executing:  22%|##1       | 5/23 [00:15<00:47,  2.65s/cell]Executing Cell 6---------------------------------------
+shap_values_P shape: (174, 23)
+
+Ending Cell 6------------------------------------------
+
+Executing:  26%|##6       | 6/23 [00:24<01:12,  4.27s/cell]Executing Cell 7---------------------------------------
+shap_values_T shape: (174, 23)
+
+Ending Cell 7------------------------------------------
+
+Executing:  30%|###       | 7/23 [00:32<01:25,  5.33s/cell]Executing Cell 8---------------------------------------
+Ending Cell 8------------------------------------------
+
+Executing:  35%|###4      | 8/23 [00:38<01:22,  5.53s/cell]Executing Cell 9---------------------------------------
+=== NB06 complete ===
+  feature set: alr
+  n features: 23
+
+Ending Cell 9------------------------------------------
+Executing Cell 10--------------------------------------
+Ending Cell 10-----------------------------------------
+Executing Cell 11--------------------------------------
+Baseline RMSE P = 5.607 kbar | T = 88.22 C
+
+Ending Cell 11-----------------------------------------
+
+Executing:  48%|####7     | 11/23 [00:48<00:51,  4.33s/cell]Executing Cell 12--------------------------------------
+Ending Cell 12-----------------------------------------
+Executing Cell 13--------------------------------------
+Dropping 1 features: ['alr_liq_MgO']
+
+P RMSE: 5.607 -> 7.683 kbar (delta = +2.077)
+T RMSE: 88.22 -> 105.12 C    (delta = +16.90)
+
+Ending Cell 13-----------------------------------------
+
+Executing:  57%|#####6    | 13/23 [00:56<00:41,  4.14s/cell]Executing Cell 14--------------------------------------
+Ending Cell 14-----------------------------------------
+Executing Cell 15--------------------------------------
+<Figure size 1200x500 with 2 Axes>
+Ending Cell 15-----------------------------------------
+
+Executing:  65%|######5   | 15/23 [00:57<00:24,  3.05s/cell]Executing Cell 16--------------------------------------
+Ending Cell 16-----------------------------------------
+Executing Cell 17--------------------------------------
+<Figure size 700x600 with 2 Axes>
+Ending Cell 17-----------------------------------------
+
+Executing:  74%|#######3  | 17/23 [00:59<00:14,  2.36s/cell]Executing Cell 18--------------------------------------
+Ending Cell 18-----------------------------------------
+Executing Cell 19--------------------------------------
+Baseline P RMSE:   5.607 kbar
+Shuffled P RMSE:   10.350 kbar
+Shuffled R^2:      -0.153   (expected <= 0)
+
+Ending Cell 19-----------------------------------------
+
+Executing:  83%|########2 | 19/23 [01:03<00:08,  2.18s/cell]Executing Cell 20--------------------------------------
+Ending Cell 20-----------------------------------------
+Executing Cell 21--------------------------------------
+RF P RMSE:    5.607 kbar
+Dummy P RMSE: 9.663 kbar
+
+Ending Cell 21-----------------------------------------
+Executing Cell 22--------------------------------------
+Ending Cell 22-----------------------------------------
+Executing Cell 23--------------------------------------
+Constrained perfect-signal P RMSE: 0.857 kbar (baseline 5.607)
+
+Unconstrained perfect-signal P RMSE: 0.439 kbar (expected ~0.1)
+Linear perfect-signal P RMSE: 0.115 kbar
+
+Ending Cell 23-----------------------------------------
+
+Executing: 100%|##########| 23/23 [01:08<00:00,  1.79s/cell]
+Executing: 100%|##########| 23/23 [01:10<00:00,  3.05s/cell]
+[01:21:17] OK nb06_shap_analysis
+
+[01:21:17] starting nb07_bias_correction
+Input Notebook:  C:\Users\NQTa\Documents\MLCourse\Final Project\notebooks\nb07_bias_correction.ipynb
+Output Notebook: C:\Users\NQTa\Documents\MLCourse\Final Project\notebooks\executed\nb07_bias_correction_executed.ipynb
+
+Executing:   0%|          | 0/14 [00:00<?, ?cell/s]Executing notebook with kernel: python3
+Executing Cell 1---------------------------------------
+Ending Cell 1------------------------------------------
+
+Executing:   7%|7         | 1/14 [00:03<00:43,  3.37s/cell]Executing Cell 2---------------------------------------
+Ending Cell 2------------------------------------------
+Executing Cell 3---------------------------------------
+Ending Cell 3------------------------------------------
+
+Executing:  21%|##1       | 3/14 [00:09<00:32,  2.97s/cell]Executing Cell 4---------------------------------------
+Ending Cell 4------------------------------------------
+Executing Cell 5---------------------------------------
+v7 primary (forest / T_C / opx_liq) feature set: alr
+
+train n=426 test n=174 features=23
+
+Ending Cell 5------------------------------------------
+
+Executing:  36%|###5      | 5/14 [00:09<00:14,  1.62s/cell]Executing Cell 6---------------------------------------
+Ending Cell 6------------------------------------------
+
+Executing:  43%|####2     | 6/14 [00:50<01:36, 12.10s/cell]
+Executing:  43%|####2     | 6/14 [00:53<01:11,  8.93s/cell]
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "C:\Users\NQTa\Documents\MLCourse\Final Project\.venv\Lib\site-packages\papermill\__main__.py", line 4, in <module>
+    papermill()
+    ~~~~~~~~~^^
+  File "C:\Users\NQTa\Documents\MLCourse\Final Project\.venv\Lib\site-packages\click\core.py", line 1485, in __call__
+    return self.main(*args, **kwargs)
+           ~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "C:\Users\NQTa\Documents\MLCourse\Final Project\.venv\Lib\site-packages\click\core.py", line 1406, in main
+    rv = self.invoke(ctx)
+  File "C:\Users\NQTa\Documents\MLCourse\Final Project\.venv\Lib\site-packages\click\core.py", line 1269, in invoke
+    return ctx.invoke(self.callback, **ctx.params)
+           ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\NQTa\Documents\MLCourse\Final Project\.venv\Lib\site-packages\click\core.py", line 824, in invoke
+    return callback(*args, **kwargs)
+  File "C:\Users\NQTa\Documents\MLCourse\Final Project\.venv\Lib\site-packages\click\decorators.py", line 34, in new_func
+    return f(get_current_context(), *args, **kwargs)
+  File "C:\Users\NQTa\Documents\MLCourse\Final Project\.venv\Lib\site-packages\papermill\cli.py", line 235, in papermill
+    execute_notebook(
+    ~~~~~~~~~~~~~~~~^
+        input_path=input_path,
+        ^^^^^^^^^^^^^^^^^^^^^^
+    ...<15 lines>...
+        execution_timeout=execution_timeout,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\NQTa\Documents\MLCourse\Final Project\.venv\Lib\site-packages\papermill\execute.py", line 131, in execute_notebook
+    raise_for_execution_errors(nb, output_path)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "C:\Users\NQTa\Documents\MLCourse\Final Project\.venv\Lib\site-packages\papermill\execute.py", line 251, in raise_for_execution_errors
+    raise error
+papermill.exceptions.PapermillExecutionError: 
+---------------------------------------------------------------------------
+Exception encountered at "In [4]":
+---------------------------------------------------------------------------
+ValueError                                Traceback (most recent call last)
+File ~\Documents\MLCourse\Final Project\src\models.py:127, in predict_median(model, X)
+    126 try:
+--> 127     per_tree = np.stack([tree.predict(X) for tree in model.estimators_], axis=0)
+    128     return np.median(per_tree, axis=0)
+
+File ~\Documents\MLCourse\Final Project\.venv\Lib\site-packages\sklearn\tree\_classes.py:533, in BaseDecisionTree.predict(self, X, check_input)
+    532 check_is_fitted(self)
+--> 533 X = self._validate_X_predict(X, check_input)
+    534 proba = self.tree_.predict(X)
+
+File ~\Documents\MLCourse\Final Project\.venv\Lib\site-packages\sklearn\tree\_classes.py:492, in BaseDecisionTree._validate_X_predict(self, X, check_input)
+    491     ensure_all_finite = True
+--> 492 X = validate_data(
+    493     self,
+    494     X,
+    495     dtype=DTYPE,
+    496     accept_sparse="csr",
+    497     reset=False,
+    498     ensure_all_finite=ensure_all_finite,
+    499 )
+    500 if issparse(X) and (
+    501     X.indices.dtype != np.intc or X.indptr.dtype != np.intc
+    502 ):
+
+File ~\Documents\MLCourse\Final Project\.venv\Lib\site-packages\sklearn\utils\validation.py:2923, in validate_data(_estimator, X, y, reset, validate_separately, skip_check_array, **check_params)
+   2922 if not no_val_X and check_params.get("ensure_2d", True):
+-> 2923     _check_n_features(_estimator, X, reset=reset)
+   2925 return out
+
+File ~\Documents\MLCourse\Final Project\.venv\Lib\site-packages\sklearn\utils\validation.py:2787, in _check_n_features(estimator, X, reset)
+   2786 if n_features != estimator.n_features_in_:
+-> 2787     raise ValueError(
+   2788         f"X has {n_features} features, but {estimator.__class__.__name__} "
+   2789         f"is expecting {estimator.n_features_in_} features as input."
+   2790     )
+
+ValueError: X has 23 features, but DecisionTreeRegressor is expecting 25 features as input.
+
+During handling of the above exception, another exception occurred:
+
+ValueError                                Traceback (most recent call last)
+Cell In[4], line 44
+     40 
+     41 # Canonical-model predictions on train and test (used for Track 1 and as the
+     42 # "leak" comparison point in Track 2).
+     43 train_pred_T_raw = predict_median(model_T, X_train)
+---> 44 train_pred_P_raw = predict_median(model_P, X_train)
+     45 test_pred_T_raw = predict_median(model_T, X_test)
+     46 test_pred_P_raw = predict_median(model_P, X_test)
+     47 print(f'OOF done. OOF T RMSE = {np.sqrt(mean_squared_error(y_train_T, oof_T)):.2f}, '
+
+File ~\Documents\MLCourse\Final Project\src\models.py:130, in predict_median(model, X)
+    128         return np.median(per_tree, axis=0)
+    129     except Exception:
+--> 130         return model.predict(X)
+    131 return model.predict(X)
+
+File ~\Documents\MLCourse\Final Project\.venv\Lib\site-packages\sklearn\ensemble\_forest.py:1065, in ForestRegressor.predict(self, X)
+   1063 check_is_fitted(self)
+   1064 # Check data
+-> 1065 X = self._validate_X_predict(X)
+   1067 # Assign chunk of trees to jobs
+   1068 n_jobs, _, _ = _partition_estimators(self.n_estimators, self.n_jobs)
+
+File ~\Documents\MLCourse\Final Project\.venv\Lib\site-packages\sklearn\ensemble\_forest.py:637, in BaseForest._validate_X_predict(self, X)
+    634 else:
+    635     ensure_all_finite = True
+--> 637 X = validate_data(
+    638     self,
+    639     X,
+    640     dtype=DTYPE,
+    641     accept_sparse="csr",
+    642     reset=False,
+    643     ensure_all_finite=ensure_all_finite,
+    644 )
+    645 if issparse(X) and (X.indices.dtype != np.intc or X.indptr.dtype != np.intc):
+    646     raise ValueError("No support for np.int64 index based sparse matrices")
+
+File ~\Documents\MLCourse\Final Project\.venv\Lib\site-packages\sklearn\utils\validation.py:2923, in validate_data(_estimator, X, y, reset, validate_separately, skip_check_array, **check_params)
+   2920     out = X, y
+   2922 if not no_val_X and check_params.get("ensure_2d", True):
+-> 2923     _check_n_features(_estimator, X, reset=reset)
+   2925 return out
+
+File ~\Documents\MLCourse\Final Project\.venv\Lib\site-packages\sklearn\utils\validation.py:2787, in _check_n_features(estimator, X, reset)
+   2784     return
+   2786 if n_features != estimator.n_features_in_:
+-> 2787     raise ValueError(
+   2788         f"X has {n_features} features, but {estimator.__class__.__name__} "
+   2789         f"is expecting {estimator.n_features_in_} features as input."
+   2790     )
+
+ValueError: X has 23 features, but RandomForestRegressor is expecting 25 features as input.
+
+[01:22:13] FAILED nb07_bias_correction rc=1

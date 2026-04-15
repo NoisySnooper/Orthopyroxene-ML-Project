@@ -1,0 +1,106 @@
+Resume run started at 2026-04-14T10:56:46.078121
+Starting from: nb10_extended_analyses (index 9)
+
+[10:56:46] starting nb10_extended_analyses
+Input Notebook:  C:\Users\NQTa\Documents\MLCourse\Final Project\notebooks\nb10_extended_analyses.ipynb
+Output Notebook: C:\Users\NQTa\Documents\MLCourse\Final Project\notebooks\executed\nb10_extended_analyses_executed.ipynb
+
+Executing:   0%|          | 0/10 [00:00<?, ?cell/s]Executing notebook with kernel: python3
+Executing Cell 1---------------------------------------
+Ending Cell 1------------------------------------------
+
+Executing:  10%|#         | 1/10 [00:03<00:27,  3.11s/cell]Executing Cell 2---------------------------------------
+Ending Cell 2------------------------------------------
+
+Executing:  20%|##        | 2/10 [00:05<00:23,  2.93s/cell]Executing Cell 3---------------------------------------
+Ending Cell 3------------------------------------------
+Executing Cell 4---------------------------------------
+Phase 3R winning feature set: pwlr
+
+ArcPL n=204
+
+Ending Cell 4------------------------------------------
+
+Executing:  40%|####      | 4/10 [00:06<00:08,  1.37s/cell]Executing Cell 5---------------------------------------
+Test set has no Cpx columns; two-pyroxene benchmark skipped.
+
+Ending Cell 5------------------------------------------
+
+Executing:  50%|#####     | 5/10 [00:07<00:05,  1.16s/cell]Executing Cell 6---------------------------------------
+target   n  pearson_r  pearson_p  spearman_r  spearman_p   slope  intercept  mean_resid_dry  mean_resid_wet
+   T_C 204     0.2831     0.0000      0.2527      0.0003  5.4712     8.5271         32.1762         33.9302
+P_kbar 204    -0.2726     0.0001     -0.2991      0.0000 -0.3028     1.7141          1.5737          0.1882
+
+Ending Cell 6------------------------------------------
+
+Executing:  60%|######    | 6/10 [00:07<00:03,  1.16cell/s]Executing Cell 7---------------------------------------
+target  iqr_mean  iqr_median  pearson_iqr_vs_absres  spearman_iqr_vs_absres  frac_abs_res_le_halfiqr   n
+   T_C   140.173     140.000                  0.006                   0.076                    0.701 174
+P_kbar    10.448      10.124                  0.662                   0.526                    0.615 174
+
+Ending Cell 7------------------------------------------
+
+Executing:  70%|#######   | 7/10 [00:07<00:02,  1.47cell/s]Executing Cell 8---------------------------------------
+analytical-noise propagation:   0%|          | 0/200 [00:00<?, ?it/s]
+target  sigma_mean  sigma_median  sigma_p90  n_mc   n
+   T_C      10.621        10.332     18.695   200 174
+P_kbar       0.358         0.300      0.782   200 174
+
+Ending Cell 8------------------------------------------
+
+Executing:  80%|########  | 8/10 [00:38<00:19,  9.84s/cell]Executing Cell 9---------------------------------------
+Ending Cell 9------------------------------------------
+
+Executing:  90%|######### | 9/10 [00:40<00:07,  7.36s/cell]
+Executing:  90%|######### | 9/10 [00:41<00:04,  4.60s/cell]
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "C:\Users\NQTa\Documents\MLCourse\Final Project\.venv\Lib\site-packages\papermill\__main__.py", line 4, in <module>
+    papermill()
+    ~~~~~~~~~^^
+  File "C:\Users\NQTa\Documents\MLCourse\Final Project\.venv\Lib\site-packages\click\core.py", line 1485, in __call__
+    return self.main(*args, **kwargs)
+           ~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "C:\Users\NQTa\Documents\MLCourse\Final Project\.venv\Lib\site-packages\click\core.py", line 1406, in main
+    rv = self.invoke(ctx)
+  File "C:\Users\NQTa\Documents\MLCourse\Final Project\.venv\Lib\site-packages\click\core.py", line 1269, in invoke
+    return ctx.invoke(self.callback, **ctx.params)
+           ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\NQTa\Documents\MLCourse\Final Project\.venv\Lib\site-packages\click\core.py", line 824, in invoke
+    return callback(*args, **kwargs)
+  File "C:\Users\NQTa\Documents\MLCourse\Final Project\.venv\Lib\site-packages\click\decorators.py", line 34, in new_func
+    return f(get_current_context(), *args, **kwargs)
+  File "C:\Users\NQTa\Documents\MLCourse\Final Project\.venv\Lib\site-packages\papermill\cli.py", line 235, in papermill
+    execute_notebook(
+    ~~~~~~~~~~~~~~~~^
+        input_path=input_path,
+        ^^^^^^^^^^^^^^^^^^^^^^
+    ...<15 lines>...
+        execution_timeout=execution_timeout,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\NQTa\Documents\MLCourse\Final Project\.venv\Lib\site-packages\papermill\execute.py", line 131, in execute_notebook
+    raise_for_execution_errors(nb, output_path)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "C:\Users\NQTa\Documents\MLCourse\Final Project\.venv\Lib\site-packages\papermill\execute.py", line 251, in raise_for_execution_errors
+    raise error
+papermill.exceptions.PapermillExecutionError: 
+---------------------------------------------------------------------------
+Exception encountered at "In [8]":
+---------------------------------------------------------------------------
+NameError                                 Traceback (most recent call last)
+Cell In[8], line 26
+     22     mask_all = np.isfinite(obs)
+     23     mask_in = mask_all & (arcpl_label == 1)
+     24     mask_out = mask_all & (arcpl_label == -1)
+     25     ood_rows.append({'target': tgt, 'subset': 'all',
+---> 26                      **metrics(obs[mask_all], pred[mask_all])})
+     27     if mask_in.sum() > 0:
+     28         ood_rows.append({'target': tgt, 'subset': 'in_distribution',
+     29                          **metrics(obs[mask_in], pred[mask_in])})
+
+NameError: name 'metrics' is not defined
+
+[10:57:30] FAILED nb10_extended_analyses rc=1

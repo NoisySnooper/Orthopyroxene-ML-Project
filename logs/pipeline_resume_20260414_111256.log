@@ -1,0 +1,312 @@
+Resume run started at 2026-04-14T11:12:56.552179
+Starting from: nb10_extended_analyses (index 9)
+
+[11:12:56] starting nb10_extended_analyses
+Input Notebook:  C:\Users\NQTa\Documents\MLCourse\Final Project\notebooks\nb10_extended_analyses.ipynb
+Output Notebook: C:\Users\NQTa\Documents\MLCourse\Final Project\notebooks\executed\nb10_extended_analyses_executed.ipynb
+
+Executing:   0%|          | 0/10 [00:00<?, ?cell/s]Executing notebook with kernel: python3
+Executing Cell 1---------------------------------------
+Ending Cell 1------------------------------------------
+
+Executing:  10%|#         | 1/10 [00:03<00:27,  3.02s/cell]Executing Cell 2---------------------------------------
+Ending Cell 2------------------------------------------
+
+Executing:  20%|##        | 2/10 [00:06<00:26,  3.26s/cell]Executing Cell 3---------------------------------------
+Ending Cell 3------------------------------------------
+Executing Cell 4---------------------------------------
+Phase 3R winning feature set: pwlr
+
+ArcPL n=204
+
+Ending Cell 4------------------------------------------
+
+Executing:  40%|####      | 4/10 [00:07<00:08,  1.47s/cell]Executing Cell 5---------------------------------------
+Test set has no Cpx columns; two-pyroxene benchmark skipped.
+
+Ending Cell 5------------------------------------------
+
+Executing:  50%|#####     | 5/10 [00:07<00:06,  1.24s/cell]Executing Cell 6---------------------------------------
+target   n  pearson_r  pearson_p  spearman_r  spearman_p   slope  intercept  mean_resid_dry  mean_resid_wet
+   T_C 204     0.2831     0.0000      0.2527      0.0003  5.4712     8.5271         32.1762         33.9302
+P_kbar 204    -0.2726     0.0001     -0.2991      0.0000 -0.3028     1.7141          1.5737          0.1882
+
+Ending Cell 6------------------------------------------
+
+Executing:  60%|######    | 6/10 [00:08<00:03,  1.05cell/s]Executing Cell 7---------------------------------------
+target  iqr_mean  iqr_median  pearson_iqr_vs_absres  spearman_iqr_vs_absres  frac_abs_res_le_halfiqr   n
+   T_C   140.173     140.000                  0.006                   0.076                    0.701 174
+P_kbar    10.448      10.124                  0.662                   0.526                    0.615 174
+
+Ending Cell 7------------------------------------------
+
+Executing:  70%|#######   | 7/10 [00:08<00:02,  1.15cell/s]Executing Cell 8---------------------------------------
+analytical-noise propagation:   0%|          | 0/200 [00:00<?, ?it/s]
+target  sigma_mean  sigma_median  sigma_p90  n_mc   n
+   T_C      10.621        10.332     18.695   200 174
+P_kbar       0.358         0.300      0.782   200 174
+
+Ending Cell 8------------------------------------------
+
+Executing:  80%|########  | 8/10 [00:40<00:20, 10.14s/cell]Executing Cell 9---------------------------------------
+target              subset   rmse    mae    r2   bias   n
+   T_C                 all 59.993 46.146 0.691 33.767 204
+   T_C     in_distribution 60.839 45.666 0.478 36.680 124
+   T_C out_of_distribution 58.659 46.890 0.351 29.252  80
+P_kbar                 all  2.868  2.260 0.521  0.317 204
+P_kbar     in_distribution  3.251  2.748 0.161  0.650 124
+P_kbar out_of_distribution  2.143  1.503 0.754 -0.199  80
+
+Ending Cell 9------------------------------------------
+
+Executing:  90%|######### | 9/10 [00:41<00:07,  7.40s/cell]Executing Cell 10--------------------------------------
+=== PHASE 11 COMPLETE ===
+  winning feature set: pwlr
+  wrote nb10_two_pyroxene_benchmark.csv
+  wrote nb10_h2o_dependence.csv
+  wrote nb10_iqr_uncertainty.csv
+  wrote nb10_analytical_uncertainty.csv
+  wrote nb10_mc_per_sample.csv
+  wrote nb10_ood_isoforest.csv
+  wrote nb10_arcpl_ood_scores.csv
+
+Ending Cell 10-----------------------------------------
+
+Executing: 100%|##########| 10/10 [00:42<00:00,  4.23s/cell]
+[11:13:42] OK nb10_extended_analyses
+
+[11:13:42] starting nb09_manuscript_compilation
+Input Notebook:  C:\Users\NQTa\Documents\MLCourse\Final Project\notebooks\nb09_manuscript_compilation.ipynb
+Output Notebook: C:\Users\NQTa\Documents\MLCourse\Final Project\notebooks\executed\nb09_manuscript_compilation_executed.ipynb
+
+Executing:   0%|          | 0/11 [00:00<?, ?cell/s]Executing notebook with kernel: python3
+Executing Cell 1---------------------------------------
+Ending Cell 1------------------------------------------
+
+Executing:   9%|9         | 1/11 [00:02<00:24,  2.47s/cell]Executing Cell 2---------------------------------------
+Phase 3R winning feature set: pwlr
+
+Ending Cell 2------------------------------------------
+
+Executing:  18%|#8        | 2/11 [00:03<00:13,  1.55s/cell]Executing Cell 3---------------------------------------
+Table 1: dataset summary
+                         Dataset  n_experiments  n_studies T_range_C P_range_kbar
+         ExPetDB core (training)           1035        123  800-1850    0.0-100.0
+          ExPetDB opx-liq subset            600         93  840-1830     0.0-60.0
+         ExPetDB full (9 oxides)            494         70  800-1850    0.0-100.0
+ArcPL external (LEPR _notinLEPR)            204         18  825-1250     1.0-16.0
+
+Ending Cell 3------------------------------------------
+
+Executing:  27%|##7       | 3/11 [00:03<00:07,  1.05cell/s]Executing Cell 4---------------------------------------
+Table 2: Phase 3R multi-seed performance (winning feature set only)
+   track target model_name  rmse_test_mean  rmse_test_std  mae_test_mean  r2_test_mean  n_seeds feature_set phase3r_tag
+ opx_liq P_kbar        ERT           7.099          1.429          4.612         0.457       10        pwlr            
+ opx_liq P_kbar         GB           6.126          1.242          4.411         0.591       10        pwlr            
+ opx_liq P_kbar         RF           6.953          1.257          4.594         0.482       10        pwlr            
+ opx_liq P_kbar        XGB           5.880          1.365          4.243         0.622       10        pwlr            
+ opx_liq    T_C        ERT          80.820          6.222         59.098         0.770       10        pwlr            
+ opx_liq    T_C         GB          89.286          8.080         67.472         0.714       10        pwlr            
+ opx_liq    T_C         RF          78.581          7.091         57.605         0.780       10        pwlr            
+ opx_liq    T_C        XGB          87.229          8.393         64.166         0.741       10        pwlr            
+opx_only P_kbar        ERT          11.282          3.184          7.244         0.241       10        pwlr            
+opx_only P_kbar         GB          11.868          3.131          7.824         0.167       10        pwlr            
+opx_only P_kbar         RF          10.985          3.085          6.915         0.281       10        pwlr            
+opx_only P_kbar        XGB          11.336          3.063          7.537         0.235       10        pwlr            
+opx_only    T_C        ERT         139.861         21.383        104.311         0.465       10        pwlr            
+opx_only    T_C         GB         140.139         21.435        103.936         0.465       10        pwlr            
+opx_only    T_C         RF         136.140         19.443        100.189         0.496       10        pwlr            
+opx_only    T_C        XGB         138.658         21.972        103.494         0.479       10        pwlr            
+
+Ending Cell 4------------------------------------------
+Executing Cell 5---------------------------------------
+Table 3: Putirka vs ML
+                        Method Target   RMSE    MAE    R2  n_test             Comparison  failure_pct
+          Putirka 28a (true P)      T 77.050 42.718 0.631     124          fair (same n)          NaN
+  Putirka 28b_opx_sat (true P)      T 81.432 49.497 0.587     124          fair (same n)          NaN
+   Putirka iterative (28a+29a)      T 77.842 49.592 0.623     124          fair (same n)          NaN
+            Putirka 28a (ML P)      T 79.854 52.676 0.603     124          fair (same n)          NaN
+                 ML-RF opx-liq      T 85.760 56.766 0.542     124          fair (same n)          NaN
+          Putirka 29a (true T)      P  3.834  2.950 0.780     107          fair (same n)          NaN
+Putirka 29c (opx-only, true T)      P  4.963  3.842 0.631     107          fair (same n)          NaN
+   Putirka iterative (28a+29a)      P  3.818  2.918 0.782     107          fair (same n)          NaN
+            Putirka 29a (ML T)      P  3.800  2.850 0.784     107          fair (same n)          NaN
+                 ML-RF opx-liq      P  4.510  3.520 0.695     107          fair (same n)          NaN
+      ML-RF opx-liq (all test)      T 85.051 57.609 0.624     174 practical (all test n)        0.000
+      ML-RF opx-liq (all test)      P  5.394  3.993 0.687     174 practical (all test n)        0.000
+          Putirka failure rate      T    NaN    NaN   NaN      50 practical (all test n)       28.736
+          Putirka failure rate      P    NaN    NaN   NaN      67 practical (all test n)       38.506
+
+Ending Cell 5------------------------------------------
+Executing Cell 6---------------------------------------
+Table 4: validation strategies (pooled + per-fold)
+     strategy model_name target feature_set  n_folds_x    rmse    mae    r2   bias   n  fold_median_rmse  fold_mean_rmse  fold_q25  fold_q75  n_folds_y
+         LOSO         RF    T_C        pwlr         93  74.650 52.804 0.821  3.048 600            58.962          75.086    35.064    88.426         93
+         LOSO         RF P_kbar        pwlr         93   5.928  3.810 0.599 -0.149 600             3.485           4.687     2.000     5.622         93
+         LOSO        ERT    T_C        pwlr         93  78.398 55.525 0.802  6.045 600            58.962          75.086    35.064    88.426         93
+         LOSO        ERT P_kbar        pwlr         93   6.093  3.829 0.576 -0.046 600             3.485           4.687     2.000     5.622         93
+         LOSO        XGB    T_C        pwlr         93  84.015 59.856 0.773  5.586 600            58.962          75.086    35.064    88.426         93
+         LOSO        XGB P_kbar        pwlr         93   5.355  3.770 0.673  0.610 600             3.485           4.687     2.000     5.622         93
+         LOSO         GB    T_C        pwlr         93  77.227 56.136 0.808  2.238 600            58.962          75.086    35.064    88.426         93
+         LOSO         GB P_kbar        pwlr         93   5.931  3.935 0.599  0.846 600             3.485           4.687     2.000     5.622         93
+Cluster-KFold         RF    T_C        pwlr          3 103.299 79.388 0.657  3.966 600           100.245         118.863    93.908   135.241          3
+Cluster-KFold         RF P_kbar        pwlr          3   6.778  4.609 0.476 -0.413 600             5.505           6.136     4.216     8.520          3
+Cluster-KFold        ERT    T_C        pwlr          3 115.196 81.121 0.574 14.706 600           100.245         118.863    93.908   135.241          3
+Cluster-KFold        ERT P_kbar        pwlr          3   6.804  4.522 0.472 -0.475 600             5.505           6.136     4.216     8.520          3
+Cluster-KFold        XGB    T_C        pwlr          3 113.910 86.356 0.583  1.230 600           100.245         118.863    93.908   135.241          3
+Cluster-KFold        XGB P_kbar        pwlr          3   6.377  4.507 0.536  0.615 600             5.505           6.136     4.216     8.520          3
+Cluster-KFold         GB    T_C        pwlr          3 104.714 78.618 0.648  8.525 600           100.245         118.863    93.908   135.241          3
+Cluster-KFold         GB P_kbar        pwlr          3   6.971  4.575 0.445  1.492 600             5.505           6.136     4.216     8.520          3
+   Gridded-PT         RF    T_C        pwlr          9 101.691 79.363 0.668 -6.623 600            84.813          94.448    71.248   111.523          9
+   Gridded-PT         RF P_kbar        pwlr          9   8.432  6.054 0.189  0.146 600             6.277           6.405     3.366     8.174          9
+   Gridded-PT        ERT    T_C        pwlr          9 106.951 81.853 0.632 -7.314 600            84.813          94.448    71.248   111.523          9
+   Gridded-PT        ERT P_kbar        pwlr          9   8.431  5.878 0.189 -0.105 600             6.277           6.405     3.366     8.174          9
+   Gridded-PT        XGB    T_C        pwlr          9 107.718 81.873 0.627 -7.825 600            84.813          94.448    71.248   111.523          9
+   Gridded-PT        XGB P_kbar        pwlr          9   7.751  5.588 0.315  0.438 600             6.277           6.405     3.366     8.174          9
+   Gridded-PT         GB    T_C        pwlr          9  97.704 74.976 0.693 -8.625 600            84.813          94.448    71.248   111.523          9
+   Gridded-PT         GB P_kbar        pwlr          9   7.749  5.584 0.315  0.610 600             6.277           6.405     3.366     8.174          9
+
+Ending Cell 6------------------------------------------
+
+Executing:  55%|#####4    | 6/11 [00:03<00:01,  2.79cell/s]Executing Cell 7---------------------------------------
+Table 5: top-10 SHAP features (read from NB06 output)
+             feature  importance_P_pwlr  importance_T_pwlr feature_set
+   pwlr_liq_SiO2_MgO             0.8189            37.5401        pwlr
+ pwlr_FeO_total_Na2O             0.6251             7.0792        pwlr
+pwlr_Al2O3_FeO_total             0.5948             1.1302        pwlr
+       pwlr_MnO_Na2O             0.5725             1.8923        pwlr
+    pwlr_liq_MgO_CaO             0.4358            13.0852        pwlr
+       pwlr_CaO_Na2O             0.4059             2.5577        pwlr
+  pwlr_liq_Al2O3_MgO             0.3794            21.8218        pwlr
+      pwlr_TiO2_Na2O             0.3685             4.7385        pwlr
+               Al_VI             0.3492             0.4023        pwlr
+   pwlr_liq_SiO2_FeO             0.3339             1.4530        pwlr
+
+Ending Cell 7------------------------------------------
+Executing Cell 8---------------------------------------
+Table 6: ArcPL external metrics
+           dataset target   RMSE    MAE    R2   n
+         ArcPL all      T 65.644 54.200 0.630 204
+         ArcPL all      P  2.721  2.202 0.569 204
+ArcPL measured H2O      T 62.117 51.052 0.688 134
+ArcPL measured H2O      P  3.099  2.580 0.532 134
+     ArcPL VBD H2O      T 71.915 60.227 0.438  70
+     ArcPL VBD H2O      P  1.786  1.479 0.594  70
+
+Ending Cell 8------------------------------------------
+Executing Cell 9---------------------------------------
+Table 7: 4-track bias correction A/B
+target                  track  rmse_train  mae_train  rmse_test  mae_test  r2_test
+   T_C               1_raw_rf       0.000      0.000     84.300    57.428    0.631
+   T_C 2_linear_trainfit_leak       0.000      0.000     84.300    57.428    0.631
+   T_C        3_linear_ooffit       5.235      4.062     84.504    57.714    0.629
+   T_C     4_piecewise_ooffit      12.693     10.707     84.665    57.972    0.627
+P_kbar               1_raw_rf       1.333      0.394      6.809     4.623    0.501
+P_kbar 2_linear_trainfit_leak       1.234      0.577      6.729     4.568    0.513
+P_kbar        3_linear_ooffit       1.653      1.146      6.596     4.478    0.532
+P_kbar     4_piecewise_ooffit       1.784      1.275      6.636     4.699    0.526
+
+Table 7b: QRF leakage A/B coverage
+target           track  coverage_68  rmse_median
+   T_C A_trainfit_leak        1.000        0.000
+   T_C    B_oof_honest        0.737       73.373
+   T_C          C_test        0.707       84.300
+P_kbar A_trainfit_leak        1.000        1.584
+P_kbar    B_oof_honest        0.831        5.604
+P_kbar          C_test        0.615        6.935
+
+Ending Cell 9------------------------------------------
+Executing Cell 10--------------------------------------
+Ending Cell 10-----------------------------------------
+
+Executing:  91%|######### | 10/11 [00:04<00:00,  3.86cell/s]
+Executing:  91%|######### | 10/11 [00:04<00:00,  2.01cell/s]
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "C:\Users\NQTa\Documents\MLCourse\Final Project\.venv\Lib\site-packages\papermill\__main__.py", line 4, in <module>
+    papermill()
+    ~~~~~~~~~^^
+  File "C:\Users\NQTa\Documents\MLCourse\Final Project\.venv\Lib\site-packages\click\core.py", line 1485, in __call__
+    return self.main(*args, **kwargs)
+           ~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "C:\Users\NQTa\Documents\MLCourse\Final Project\.venv\Lib\site-packages\click\core.py", line 1406, in main
+    rv = self.invoke(ctx)
+  File "C:\Users\NQTa\Documents\MLCourse\Final Project\.venv\Lib\site-packages\click\core.py", line 1269, in invoke
+    return ctx.invoke(self.callback, **ctx.params)
+           ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\NQTa\Documents\MLCourse\Final Project\.venv\Lib\site-packages\click\core.py", line 824, in invoke
+    return callback(*args, **kwargs)
+  File "C:\Users\NQTa\Documents\MLCourse\Final Project\.venv\Lib\site-packages\click\decorators.py", line 34, in new_func
+    return f(get_current_context(), *args, **kwargs)
+  File "C:\Users\NQTa\Documents\MLCourse\Final Project\.venv\Lib\site-packages\papermill\cli.py", line 235, in papermill
+    execute_notebook(
+    ~~~~~~~~~~~~~~~~^
+        input_path=input_path,
+        ^^^^^^^^^^^^^^^^^^^^^^
+    ...<15 lines>...
+        execution_timeout=execution_timeout,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\NQTa\Documents\MLCourse\Final Project\.venv\Lib\site-packages\papermill\execute.py", line 131, in execute_notebook
+    raise_for_execution_errors(nb, output_path)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "C:\Users\NQTa\Documents\MLCourse\Final Project\.venv\Lib\site-packages\papermill\execute.py", line 251, in raise_for_execution_errors
+    raise error
+papermill.exceptions.PapermillExecutionError: 
+---------------------------------------------------------------------------
+Exception encountered at "In [9]":
+---------------------------------------------------------------------------
+EmptyDataError                            Traceback (most recent call last)
+Cell In[9], line 4
+      1 # Tables 8-11: Phase 11 extended analyses
+      2 table8_path = RESULTS / 'nb10_two_pyroxene_benchmark.csv'
+      3 if table8_path.exists():
+----> 4     t8 = pd.read_csv(table8_path)
+      5     t8.to_csv(RESULTS / 'table8_two_pyroxene.csv', index=False)
+      6     print('Table 8: two-pyroxene Thermobar benchmark')
+      7     print(t8.round(3).to_string(index=False))
+
+File ~\Documents\MLCourse\Final Project\.venv\Lib\site-packages\pandas\io\parsers\readers.py:873, in read_csv(filepath_or_buffer, sep, delimiter, header, names, index_col, usecols, dtype, engine, converters, true_values, false_values, skipinitialspace, skiprows, skipfooter, nrows, na_values, keep_default_na, na_filter, skip_blank_lines, parse_dates, date_format, dayfirst, cache_dates, iterator, chunksize, compression, thousands, decimal, lineterminator, quotechar, quoting, doublequote, escapechar, comment, encoding, encoding_errors, dialect, on_bad_lines, low_memory, memory_map, float_precision, storage_options, dtype_backend)
+    861 kwds_defaults = _refine_defaults_read(
+    862     dialect,
+    863     delimiter,
+   (...)    869     dtype_backend=dtype_backend,
+    870 )
+    871 kwds.update(kwds_defaults)
+--> 873 return _read(filepath_or_buffer, kwds)
+
+File ~\Documents\MLCourse\Final Project\.venv\Lib\site-packages\pandas\io\parsers\readers.py:300, in _read(filepath_or_buffer, kwds)
+    297 _validate_names(kwds.get("names", None))
+    299 # Create the parser.
+--> 300 parser = TextFileReader(filepath_or_buffer, **kwds)
+    302 if chunksize or iterator:
+    303     return parser
+
+File ~\Documents\MLCourse\Final Project\.venv\Lib\site-packages\pandas\io\parsers\readers.py:1645, in TextFileReader.__init__(self, f, engine, **kwds)
+   1642     self.options["has_index_names"] = kwds["has_index_names"]
+   1644 self.handles: IOHandles | None = None
+-> 1645 self._engine = self._make_engine(f, self.engine)
+
+File ~\Documents\MLCourse\Final Project\.venv\Lib\site-packages\pandas\io\parsers\readers.py:1922, in TextFileReader._make_engine(self, f, engine)
+   1919     raise ValueError(msg)
+   1921 try:
+-> 1922     return mapping[engine](f, **self.options)
+   1923 except Exception:
+   1924     if self.handles is not None:
+
+File ~\Documents\MLCourse\Final Project\.venv\Lib\site-packages\pandas\io\parsers\c_parser_wrapper.py:95, in CParserWrapper.__init__(self, src, **kwds)
+     92 if kwds["dtype_backend"] == "pyarrow":
+     93     # Fail here loudly instead of in cython after reading
+     94     import_optional_dependency("pyarrow")
+---> 95 self._reader = parsers.TextReader(src, **kwds)
+     97 self.unnamed_cols = self._reader.unnamed_cols
+     99 passed_names = self.names is None
+
+File pandas/_libs/parsers.pyx:575, in pandas._libs.parsers.TextReader.__cinit__()
+--> 575 'Could not get source, probably due dynamically evaluated source code.'
+
+EmptyDataError: No columns to parse from file
+
+[11:13:50] FAILED nb09_manuscript_compilation rc=1
