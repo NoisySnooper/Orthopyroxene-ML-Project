@@ -36,10 +36,13 @@ OPX_ONLY_FILE = 'opx_clean_opx_only.parquet'
 
 WINNING_CONFIG_FILE = 'nb03_winning_configurations.json'
 PER_FAMILY_WINNERS_FILE = 'nb03_per_family_winners.json'
+STACKED_MANIFEST_TEMPLATE = 'nb03_stacked_members_{target}_{track}.json'
+STACKED_META_TEMPLATE = 'meta_ridge_{target}_{track}_stacked.joblib'
 
-VALID_FAMILIES = ('forest', 'boosted')
+VALID_FAMILIES = ('forest', 'boosted', 'stacked')
 VALID_TARGETS = ('T_C', 'P_kbar')
 VALID_TRACKS = ('opx_only', 'opx_liq')
+STACKED_BASE_ORDER = ('RF', 'ERT', 'XGB', 'GB')
 
 
 def load_opx_core():
@@ -198,6 +201,95 @@ def canonical_model_path(target, track, family, models_dir=None, results_dir=Non
 def load_canonical_model(target, track, family, models_dir=None, results_dir=None):
     """Load the joblib for a (target, track, family) canonical model."""
     return joblib.load(canonical_model_path(target, track, family, models_dir, results_dir))
+
+
+def stacked_manifest_path(target, track, results_dir=None) -> Path:
+    rdir = _resolve_results_dir(results_dir)
+    return rdir / STACKED_MANIFEST_TEMPLATE.format(target=target, track=track)
+
+
+def load_stacked_manifest(target, track, results_dir=None) -> dict:
+    """Load the per-(target, track) stacked-member manifest. Shape:
+    {
+      'target': 'T_C', 'track': 'opx_liq',
+      'members': {
+        'RF':  {'filename': '...', 'feature_set': 'alr'},
+        'ERT': {...}, 'XGB': {...}, 'GB': {...}
+      },
+      'meta_filename': 'meta_ridge_T_C_opx_liq_stacked.joblib',
+    }
+    Produced by NB03 Phase 3.10.
+    """
+    path = stacked_manifest_path(target, track, results_dir)
+    if not path.exists():
+        raise FileNotFoundError(
+            f'Stacked manifest not found at {path}. Run nb03 Phase 3.10 first.'
+        )
+    with open(path) as f:
+        return json.load(f)
+
+
+def load_stacked_model(target, track, models_dir=None, results_dir=None):
+    """Return a predictor callable for the (target, track) stacked model.
+
+    The returned object exposes `predict(df)`, where `df` is a pandas
+    DataFrame in ExPetDB training schema. Internally it builds a separate
+    feature matrix per base model (per the manifest's feature_set), runs
+    each base estimator, stacks the 4 predictions column-wise, and
+    passes through the fitted RidgeCV meta model.
+
+    Also exposes `meta` (the RidgeCV), `members` (the manifest dict), and
+    `base_order` so inspection code can read coefficients and per-base
+    predictions directly.
+    """
+    if target not in VALID_TARGETS:
+        raise ValueError(f'target must be one of {VALID_TARGETS}')
+    if track not in VALID_TRACKS:
+        raise ValueError(f'track must be one of {VALID_TRACKS}')
+
+    from src.features import build_feature_matrix
+    from src.stacking import stacking_predict
+
+    mdir = Path(models_dir) if models_dir is not None else Path(MODELS)
+    manifest = load_stacked_manifest(target, track, results_dir)
+    members = manifest['members']
+    meta_filename = manifest.get(
+        'meta_filename',
+        STACKED_META_TEMPLATE.format(target=target, track=track),
+    )
+
+    def _resolve(fname):
+        for cand in (mdir / fname, mdir / 'canonical' / fname):
+            if cand.exists():
+                return cand
+        raise FileNotFoundError(f'Stacked member joblib {fname} not found under {mdir}.')
+
+    base_estimators = {k: joblib.load(_resolve(members[k]['filename']))
+                       for k in STACKED_BASE_ORDER}
+    meta = joblib.load(_resolve(meta_filename))
+
+    class _StackedPredictor:
+        def __init__(self, base, meta_model, member_meta, track_):
+            self._base = base
+            self.meta = meta_model
+            self.members = member_meta
+            self.base_order = STACKED_BASE_ORDER
+            self._use_liq = (track_ == 'opx_liq')
+
+        def predict_base(self, df):
+            preds = {}
+            for k in self.base_order:
+                X, _ = build_feature_matrix(df,
+                                            feature_set=self.members[k]['feature_set'],
+                                            use_liq=self._use_liq)
+                preds[k] = np.asarray(self._base[k].predict(X), dtype=float)
+            return preds
+
+        def predict(self, df):
+            return stacking_predict(self.meta, self.predict_base(df),
+                                    base_order=self.base_order)
+
+    return _StackedPredictor(base_estimators, meta, members, track)
 
 
 def canonical_model_filename_legacy(model_name, target, track, results_dir=None):

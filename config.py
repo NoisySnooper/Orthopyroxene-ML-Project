@@ -78,10 +78,11 @@ MULTI_SEED_RESULTS_FILE = 'nb03_multi_seed_results.csv'
 MULTI_SEED_SUMMARY_FILE = 'nb03_multi_seed_summary.csv'
 CANONICAL_PREDICTIONS_FILE = 'nb03_canonical_test_predictions.npz'
 
-# v7 two-family model design
+# v7 two-family model design; v9 adds the stacked family (single member per target/track)
 MODEL_FAMILIES = {
     'forest':  {'candidates': ('RF', 'ERT'),  'tiebreaker_preferred': 'RF'},
     'boosted': {'candidates': ('GB', 'XGB'), 'tiebreaker_preferred': 'XGB'},
+    'stacked': {'candidates': ('STACKED',),   'tiebreaker_preferred': 'STACKED'},
 }
 TIEBREAKER_RULE = (
     "when means within 1 std, prefer RF over ERT (forest), "
@@ -136,4 +137,52 @@ CANONICAL_FIGURES = [
      'caption': 'H2O dependence of residuals'},
     {'num': 15, 'stem': 'fig_nb11_model_family_ceiling',
      'caption': 'Model-family ceiling (supplementary)'},
+    # v9 Phase 2 additions (NB03 Optuna + resampling + stacking)
+    {'num': 16, 'stem': 'fig_nb03_resampling_pt_distribution',
+     'caption': 'Tempered resampling: P-T distribution before vs after'},
+    {'num': 17, 'stem': 'fig_nb03_resampling_impact_on_metrics',
+     'caption': 'Tempered resampling: T/P RMSE by P bin'},
+    {'num': 18, 'stem': 'fig_nb03_optuna_search_progress',
+     'caption': 'Optuna search convergence (best-so-far per study)'},
+    {'num': 19, 'stem': 'fig_nb03_optuna_hyperparameter_importance',
+     'caption': 'Optuna hyperparameter importance per base model'},
+    {'num': 20, 'stem': 'fig_nb03_stacking_weights',
+     'caption': 'Ridge stacking weights per (target, track)'},
+    {'num': 21, 'stem': 'fig_nb03_stacking_oof_correlation',
+     'caption': 'OOF correlation heatmap across base learners'},
+    {'num': 22, 'stem': 'fig_nb03_stacking_vs_base_comparison',
+     'caption': 'Stacking vs best base model with bootstrap CIs'},
+    {'num': 23, 'stem': 'fig_nb03_three_family_comparison',
+     'caption': 'Forest vs boosted vs stacked family overview'},
 ]
+
+# ---------------------------------------------------------------------------
+# v9 Phase 2: Optuna / resampling / stacking constants
+# ---------------------------------------------------------------------------
+
+OPTUNA_N_TRIALS = 50
+OPTUNA_TIMEOUT_PER_TRIAL = 300
+OPTUNA_N_JOBS_INNER = 4
+OPTUNA_SEED = 42
+OPTUNA_STUDIES_DIR = RESULTS / 'optuna_studies'
+OPTUNA_BEST_PARAMS_FILE = 'nb03_optuna_best_params.json'
+OPTUNA_BEST_PARAMS_PARTIAL_FILE = 'nb03_optuna_best_params_partial.json'
+OPTUNA_MODELS = ('RF', 'ERT', 'XGB', 'GB')
+OPTUNA_TARGETS = ('T_C', 'P_kbar')
+OPTUNA_TRACKS = ('opx_only', 'opx_liq')
+OPTUNA_FEATURE_SETS = ('raw', 'alr', 'pwlr')
+
+RESAMPLING_N_P_BINS = 5
+RESAMPLING_N_T_BINS = 5
+RESAMPLING_SEED = 42
+RESAMPLING_DIAGNOSTICS_FILE = 'nb03_resampling_diagnostics.csv'
+RESAMPLING_SUMMARY_FILE = 'nb03_resampling_summary.json'
+
+STACKING_ALPHAS = (0.001, 0.01, 0.1, 1.0, 10.0, 100.0)
+STACKING_CV_FOLDS = 5
+STACKING_SEED = 42
+STACKING_BASE_ORDER = ('RF', 'ERT', 'XGB', 'GB')
+STACKING_OOF_MATRIX_TEMPLATE = 'nb03_stacking_oof_matrix_{target}_{track}.npz'
+STACKING_MANIFEST_TEMPLATE = 'nb03_stacked_members_{target}_{track}.json'
+STACKING_META_TEMPLATE = 'meta_ridge_{target}_{track}_stacked.joblib'
+STACKING_DIAGNOSTICS_FILE = 'nb03_stacking_diagnostics.json'

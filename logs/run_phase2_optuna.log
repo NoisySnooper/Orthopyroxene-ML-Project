@@ -1,0 +1,52 @@
+2026-04-15 17:39:39,312 | INFO | ========================================================================
+2026-04-15 17:39:39,313 | INFO | run_phase2_optuna: n_trials=50, models=('RF', 'ERT', 'XGB', 'GB'), dry_run=True
+2026-04-15 17:39:40,984 | INFO | Planned studies: 48
+2026-04-15 17:39:41,054 | INFO | DRY RF|T_C|opx_only|raw -> study_RF_T_C_opx_only_raw.joblib
+2026-04-15 17:39:41,055 | INFO | DRY RF|P_kbar|opx_only|raw -> study_RF_P_kbar_opx_only_raw.joblib
+2026-04-15 17:39:41,055 | INFO | DRY ERT|T_C|opx_only|raw -> study_ERT_T_C_opx_only_raw.joblib
+2026-04-15 17:39:41,055 | INFO | DRY ERT|P_kbar|opx_only|raw -> study_ERT_P_kbar_opx_only_raw.joblib
+2026-04-15 17:39:41,057 | INFO | DRY XGB|T_C|opx_only|raw -> study_XGB_T_C_opx_only_raw.joblib
+2026-04-15 17:39:41,057 | INFO | DRY XGB|P_kbar|opx_only|raw -> study_XGB_P_kbar_opx_only_raw.joblib
+2026-04-15 17:39:41,058 | INFO | DRY GB|T_C|opx_only|raw -> study_GB_T_C_opx_only_raw.joblib
+2026-04-15 17:39:41,058 | INFO | DRY GB|P_kbar|opx_only|raw -> study_GB_P_kbar_opx_only_raw.joblib
+2026-04-15 17:39:41,068 | INFO | DRY RF|T_C|opx_only|alr -> study_RF_T_C_opx_only_alr.joblib
+2026-04-15 17:39:41,068 | INFO | DRY RF|P_kbar|opx_only|alr -> study_RF_P_kbar_opx_only_alr.joblib
+2026-04-15 17:39:41,069 | INFO | DRY ERT|T_C|opx_only|alr -> study_ERT_T_C_opx_only_alr.joblib
+2026-04-15 17:39:41,069 | INFO | DRY ERT|P_kbar|opx_only|alr -> study_ERT_P_kbar_opx_only_alr.joblib
+2026-04-15 17:39:41,069 | INFO | DRY XGB|T_C|opx_only|alr -> study_XGB_T_C_opx_only_alr.joblib
+2026-04-15 17:39:41,069 | INFO | DRY XGB|P_kbar|opx_only|alr -> study_XGB_P_kbar_opx_only_alr.joblib
+2026-04-15 17:39:41,069 | INFO | DRY GB|T_C|opx_only|alr -> study_GB_T_C_opx_only_alr.joblib
+2026-04-15 17:39:41,069 | INFO | DRY GB|P_kbar|opx_only|alr -> study_GB_P_kbar_opx_only_alr.joblib
+2026-04-15 17:39:41,119 | INFO | DRY RF|T_C|opx_only|pwlr -> study_RF_T_C_opx_only_pwlr.joblib
+2026-04-15 17:39:41,120 | INFO | DRY RF|P_kbar|opx_only|pwlr -> study_RF_P_kbar_opx_only_pwlr.joblib
+2026-04-15 17:39:41,120 | INFO | DRY ERT|T_C|opx_only|pwlr -> study_ERT_T_C_opx_only_pwlr.joblib
+2026-04-15 17:39:41,120 | INFO | DRY ERT|P_kbar|opx_only|pwlr -> study_ERT_P_kbar_opx_only_pwlr.joblib
+2026-04-15 17:39:41,120 | INFO | DRY XGB|T_C|opx_only|pwlr -> study_XGB_T_C_opx_only_pwlr.joblib
+2026-04-15 17:39:41,120 | INFO | DRY XGB|P_kbar|opx_only|pwlr -> study_XGB_P_kbar_opx_only_pwlr.joblib
+2026-04-15 17:39:41,120 | INFO | DRY GB|T_C|opx_only|pwlr -> study_GB_T_C_opx_only_pwlr.joblib
+2026-04-15 17:39:41,120 | INFO | DRY GB|P_kbar|opx_only|pwlr -> study_GB_P_kbar_opx_only_pwlr.joblib
+2026-04-15 17:39:41,160 | INFO | DRY RF|T_C|opx_liq|raw -> study_RF_T_C_opx_liq_raw.joblib
+2026-04-15 17:39:41,160 | INFO | DRY RF|P_kbar|opx_liq|raw -> study_RF_P_kbar_opx_liq_raw.joblib
+2026-04-15 17:39:41,161 | INFO | DRY ERT|T_C|opx_liq|raw -> study_ERT_T_C_opx_liq_raw.joblib
+2026-04-15 17:39:41,161 | INFO | DRY ERT|P_kbar|opx_liq|raw -> study_ERT_P_kbar_opx_liq_raw.joblib
+2026-04-15 17:39:41,161 | INFO | DRY XGB|T_C|opx_liq|raw -> study_XGB_T_C_opx_liq_raw.joblib
+2026-04-15 17:39:41,162 | INFO | DRY XGB|P_kbar|opx_liq|raw -> study_XGB_P_kbar_opx_liq_raw.joblib
+2026-04-15 17:39:41,162 | INFO | DRY GB|T_C|opx_liq|raw -> study_GB_T_C_opx_liq_raw.joblib
+2026-04-15 17:39:41,162 | INFO | DRY GB|P_kbar|opx_liq|raw -> study_GB_P_kbar_opx_liq_raw.joblib
+2026-04-15 17:39:41,183 | INFO | DRY RF|T_C|opx_liq|alr -> study_RF_T_C_opx_liq_alr.joblib
+2026-04-15 17:39:41,183 | INFO | DRY RF|P_kbar|opx_liq|alr -> study_RF_P_kbar_opx_liq_alr.joblib
+2026-04-15 17:39:41,183 | INFO | DRY ERT|T_C|opx_liq|alr -> study_ERT_T_C_opx_liq_alr.joblib
+2026-04-15 17:39:41,183 | INFO | DRY ERT|P_kbar|opx_liq|alr -> study_ERT_P_kbar_opx_liq_alr.joblib
+2026-04-15 17:39:41,183 | INFO | DRY XGB|T_C|opx_liq|alr -> study_XGB_T_C_opx_liq_alr.joblib
+2026-04-15 17:39:41,184 | INFO | DRY XGB|P_kbar|opx_liq|alr -> study_XGB_P_kbar_opx_liq_alr.joblib
+2026-04-15 17:39:41,184 | INFO | DRY GB|T_C|opx_liq|alr -> study_GB_T_C_opx_liq_alr.joblib
+2026-04-15 17:39:41,184 | INFO | DRY GB|P_kbar|opx_liq|alr -> study_GB_P_kbar_opx_liq_alr.joblib
+2026-04-15 17:39:41,251 | INFO | DRY RF|T_C|opx_liq|pwlr -> study_RF_T_C_opx_liq_pwlr.joblib
+2026-04-15 17:39:41,251 | INFO | DRY RF|P_kbar|opx_liq|pwlr -> study_RF_P_kbar_opx_liq_pwlr.joblib
+2026-04-15 17:39:41,251 | INFO | DRY ERT|T_C|opx_liq|pwlr -> study_ERT_T_C_opx_liq_pwlr.joblib
+2026-04-15 17:39:41,252 | INFO | DRY ERT|P_kbar|opx_liq|pwlr -> study_ERT_P_kbar_opx_liq_pwlr.joblib
+2026-04-15 17:39:41,252 | INFO | DRY XGB|T_C|opx_liq|pwlr -> study_XGB_T_C_opx_liq_pwlr.joblib
+2026-04-15 17:39:41,252 | INFO | DRY XGB|P_kbar|opx_liq|pwlr -> study_XGB_P_kbar_opx_liq_pwlr.joblib
+2026-04-15 17:39:41,252 | INFO | DRY GB|T_C|opx_liq|pwlr -> study_GB_T_C_opx_liq_pwlr.joblib
+2026-04-15 17:39:41,253 | INFO | DRY GB|P_kbar|opx_liq|pwlr -> study_GB_P_kbar_opx_liq_pwlr.joblib
+2026-04-15 17:39:41,253 | INFO | Dry run done. 48 studies listed.
