@@ -1,0 +1,153 @@
+18:59:23 | ========================================================================
+18:59:23 | run_phase2_optuna: n_trials=50, models=('RF', 'ERT', 'XGB', 'GB'), dry_run=False
+18:59:23 | Planned studies: 48
+C:\Users\NQTa\Documents\MLCourse\Final Project\src\optuna_search.py:142: ExperimentalWarning: Argument ``multivariate`` is an experimental feature. The interface can change in the future.
+  sampler = optuna.samplers.TPESampler(multivariate=True, seed=seed)
+19:01:06 | OK RF|T_C|opx_only|raw rmse=141.213 pruned=0 failed=0 (103s)
+C:\Users\NQTa\Documents\MLCourse\Final Project\src\optuna_search.py:142: ExperimentalWarning: Argument ``multivariate`` is an experimental feature. The interface can change in the future.
+  sampler = optuna.samplers.TPESampler(multivariate=True, seed=seed)
+19:03:32 | OK RF|P_kbar|opx_only|raw rmse=10.978 pruned=0 failed=0 (147s)
+C:\Users\NQTa\Documents\MLCourse\Final Project\src\optuna_search.py:142: ExperimentalWarning: Argument ``multivariate`` is an experimental feature. The interface can change in the future.
+  sampler = optuna.samplers.TPESampler(multivariate=True, seed=seed)
+19:04:36 | OK ERT|T_C|opx_only|raw rmse=139.512 pruned=0 failed=0 (64s)
+C:\Users\NQTa\Documents\MLCourse\Final Project\src\optuna_search.py:142: ExperimentalWarning: Argument ``multivariate`` is an experimental feature. The interface can change in the future.
+  sampler = optuna.samplers.TPESampler(multivariate=True, seed=seed)
+19:06:05 | OK ERT|P_kbar|opx_only|raw rmse=10.793 pruned=0 failed=0 (89s)
+C:\Users\NQTa\Documents\MLCourse\Final Project\src\optuna_search.py:142: ExperimentalWarning: Argument ``multivariate`` is an experimental feature. The interface can change in the future.
+  sampler = optuna.samplers.TPESampler(multivariate=True, seed=seed)
+19:07:02 | OK XGB|T_C|opx_only|raw rmse=136.762 pruned=0 failed=0 (58s)
+C:\Users\NQTa\Documents\MLCourse\Final Project\src\optuna_search.py:142: ExperimentalWarning: Argument ``multivariate`` is an experimental feature. The interface can change in the future.
+  sampler = optuna.samplers.TPESampler(multivariate=True, seed=seed)
+19:07:55 | OK XGB|P_kbar|opx_only|raw rmse=10.659 pruned=0 failed=0 (53s)
+C:\Users\NQTa\Documents\MLCourse\Final Project\src\optuna_search.py:142: ExperimentalWarning: Argument ``multivariate`` is an experimental feature. The interface can change in the future.
+  sampler = optuna.samplers.TPESampler(multivariate=True, seed=seed)
+19:09:38 | OK GB|T_C|opx_only|raw rmse=141.224 pruned=0 failed=0 (102s)
+C:\Users\NQTa\Documents\MLCourse\Final Project\src\optuna_search.py:142: ExperimentalWarning: Argument ``multivariate`` is an experimental feature. The interface can change in the future.
+  sampler = optuna.samplers.TPESampler(multivariate=True, seed=seed)
+19:10:56 | OK GB|P_kbar|opx_only|raw rmse=10.561 pruned=0 failed=0 (78s)
+C:\Users\NQTa\Documents\MLCourse\Final Project\src\optuna_search.py:142: ExperimentalWarning: Argument ``multivariate`` is an experimental feature. The interface can change in the future.
+  sampler = optuna.samplers.TPESampler(multivariate=True, seed=seed)
+19:13:11 | OK RF|T_C|opx_only|alr rmse=140.465 pruned=0 failed=0 (135s)
+C:\Users\NQTa\Documents\MLCourse\Final Project\src\optuna_search.py:142: ExperimentalWarning: Argument ``multivariate`` is an experimental feature. The interface can change in the future.
+  sampler = optuna.samplers.TPESampler(multivariate=True, seed=seed)
+19:16:17 | OK RF|P_kbar|opx_only|alr rmse=10.838 pruned=0 failed=0 (186s)
+19:16:17 | CHECKPOINT 10/48 studies done, partial saved
+C:\Users\NQTa\Documents\MLCourse\Final Project\src\optuna_search.py:142: ExperimentalWarning: Argument ``multivariate`` is an experimental feature. The interface can change in the future.
+  sampler = optuna.samplers.TPESampler(multivariate=True, seed=seed)
+19:18:16 | OK ERT|T_C|opx_only|alr rmse=139.909 pruned=0 failed=0 (119s)
+C:\Users\NQTa\Documents\MLCourse\Final Project\src\optuna_search.py:142: ExperimentalWarning: Argument ``multivariate`` is an experimental feature. The interface can change in the future.
+  sampler = optuna.samplers.TPESampler(multivariate=True, seed=seed)
+19:19:38 | OK ERT|P_kbar|opx_only|alr rmse=10.864 pruned=0 failed=0 (82s)
+C:\Users\NQTa\Documents\MLCourse\Final Project\src\optuna_search.py:142: ExperimentalWarning: Argument ``multivariate`` is an experimental feature. The interface can change in the future.
+  sampler = optuna.samplers.TPESampler(multivariate=True, seed=seed)
+19:22:39 | OK XGB|T_C|opx_only|alr rmse=134.691 pruned=0 failed=0 (181s)
+C:\Users\NQTa\Documents\MLCourse\Final Project\src\optuna_search.py:142: ExperimentalWarning: Argument ``multivariate`` is an experimental feature. The interface can change in the future.
+  sampler = optuna.samplers.TPESampler(multivariate=True, seed=seed)
+19:23:55 | OK XGB|P_kbar|opx_only|alr rmse=10.702 pruned=0 failed=0 (76s)
+C:\Users\NQTa\Documents\MLCourse\Final Project\src\optuna_search.py:142: ExperimentalWarning: Argument ``multivariate`` is an experimental feature. The interface can change in the future.
+  sampler = optuna.samplers.TPESampler(multivariate=True, seed=seed)
+19:26:01 | OK GB|T_C|opx_only|alr rmse=140.570 pruned=0 failed=0 (126s)
+C:\Users\NQTa\Documents\MLCourse\Final Project\src\optuna_search.py:142: ExperimentalWarning: Argument ``multivariate`` is an experimental feature. The interface can change in the future.
+  sampler = optuna.samplers.TPESampler(multivariate=True, seed=seed)
+19:27:41 | OK GB|P_kbar|opx_only|alr rmse=10.525 pruned=0 failed=0 (100s)
+C:\Users\NQTa\Documents\MLCourse\Final Project\src\optuna_search.py:142: ExperimentalWarning: Argument ``multivariate`` is an experimental feature. The interface can change in the future.
+  sampler = optuna.samplers.TPESampler(multivariate=True, seed=seed)
+19:30:47 | OK RF|T_C|opx_only|pwlr rmse=133.082 pruned=0 failed=0 (186s)
+C:\Users\NQTa\Documents\MLCourse\Final Project\src\optuna_search.py:142: ExperimentalWarning: Argument ``multivariate`` is an experimental feature. The interface can change in the future.
+  sampler = optuna.samplers.TPESampler(multivariate=True, seed=seed)
+19:35:03 | OK RF|P_kbar|opx_only|pwlr rmse=10.267 pruned=0 failed=0 (256s)
+C:\Users\NQTa\Documents\MLCourse\Final Project\src\optuna_search.py:142: ExperimentalWarning: Argument ``multivariate`` is an experimental feature. The interface can change in the future.
+  sampler = optuna.samplers.TPESampler(multivariate=True, seed=seed)
+19:37:01 | OK ERT|T_C|opx_only|pwlr rmse=132.532 pruned=0 failed=0 (118s)
+C:\Users\NQTa\Documents\MLCourse\Final Project\src\optuna_search.py:142: ExperimentalWarning: Argument ``multivariate`` is an experimental feature. The interface can change in the future.
+  sampler = optuna.samplers.TPESampler(multivariate=True, seed=seed)
+19:38:21 | OK ERT|P_kbar|opx_only|pwlr rmse=10.393 pruned=0 failed=0 (80s)
+19:38:21 | CHECKPOINT 20/48 studies done, partial saved
+C:\Users\NQTa\Documents\MLCourse\Final Project\src\optuna_search.py:142: ExperimentalWarning: Argument ``multivariate`` is an experimental feature. The interface can change in the future.
+  sampler = optuna.samplers.TPESampler(multivariate=True, seed=seed)
+19:46:59 | OK XGB|T_C|opx_only|pwlr rmse=132.055 pruned=0 failed=0 (518s)
+C:\Users\NQTa\Documents\MLCourse\Final Project\src\optuna_search.py:142: ExperimentalWarning: Argument ``multivariate`` is an experimental feature. The interface can change in the future.
+  sampler = optuna.samplers.TPESampler(multivariate=True, seed=seed)
+19:51:34 | OK XGB|P_kbar|opx_only|pwlr rmse=10.038 pruned=0 failed=0 (275s)
+C:\Users\NQTa\Documents\MLCourse\Final Project\src\optuna_search.py:142: ExperimentalWarning: Argument ``multivariate`` is an experimental feature. The interface can change in the future.
+  sampler = optuna.samplers.TPESampler(multivariate=True, seed=seed)
+20:02:49 | OK GB|T_C|opx_only|pwlr rmse=137.736 pruned=0 failed=0 (675s)
+C:\Users\NQTa\Documents\MLCourse\Final Project\src\optuna_search.py:142: ExperimentalWarning: Argument ``multivariate`` is an experimental feature. The interface can change in the future.
+  sampler = optuna.samplers.TPESampler(multivariate=True, seed=seed)
+20:07:48 | OK GB|P_kbar|opx_only|pwlr rmse=10.370 pruned=0 failed=0 (299s)
+C:\Users\NQTa\Documents\MLCourse\Final Project\src\optuna_search.py:142: ExperimentalWarning: Argument ``multivariate`` is an experimental feature. The interface can change in the future.
+  sampler = optuna.samplers.TPESampler(multivariate=True, seed=seed)
+20:10:09 | OK RF|T_C|opx_liq|raw rmse=79.472 pruned=0 failed=0 (141s)
+C:\Users\NQTa\Documents\MLCourse\Final Project\src\optuna_search.py:142: ExperimentalWarning: Argument ``multivariate`` is an experimental feature. The interface can change in the future.
+  sampler = optuna.samplers.TPESampler(multivariate=True, seed=seed)
+20:12:45 | OK RF|P_kbar|opx_liq|raw rmse=5.616 pruned=0 failed=0 (156s)
+C:\Users\NQTa\Documents\MLCourse\Final Project\src\optuna_search.py:142: ExperimentalWarning: Argument ``multivariate`` is an experimental feature. The interface can change in the future.
+  sampler = optuna.samplers.TPESampler(multivariate=True, seed=seed)
+20:14:24 | OK ERT|T_C|opx_liq|raw rmse=77.841 pruned=0 failed=0 (99s)
+C:\Users\NQTa\Documents\MLCourse\Final Project\src\optuna_search.py:142: ExperimentalWarning: Argument ``multivariate`` is an experimental feature. The interface can change in the future.
+  sampler = optuna.samplers.TPESampler(multivariate=True, seed=seed)
+20:16:09 | OK ERT|P_kbar|opx_liq|raw rmse=5.469 pruned=0 failed=0 (105s)
+C:\Users\NQTa\Documents\MLCourse\Final Project\src\optuna_search.py:142: ExperimentalWarning: Argument ``multivariate`` is an experimental feature. The interface can change in the future.
+  sampler = optuna.samplers.TPESampler(multivariate=True, seed=seed)
+20:17:13 | OK XGB|T_C|opx_liq|raw rmse=75.436 pruned=0 failed=0 (64s)
+C:\Users\NQTa\Documents\MLCourse\Final Project\src\optuna_search.py:142: ExperimentalWarning: Argument ``multivariate`` is an experimental feature. The interface can change in the future.
+  sampler = optuna.samplers.TPESampler(multivariate=True, seed=seed)
+20:18:30 | OK XGB|P_kbar|opx_liq|raw rmse=4.842 pruned=0 failed=0 (77s)
+20:18:30 | CHECKPOINT 30/48 studies done, partial saved
+C:\Users\NQTa\Documents\MLCourse\Final Project\src\optuna_search.py:142: ExperimentalWarning: Argument ``multivariate`` is an experimental feature. The interface can change in the future.
+  sampler = optuna.samplers.TPESampler(multivariate=True, seed=seed)
+20:23:08 | OK GB|T_C|opx_liq|raw rmse=78.124 pruned=0 failed=0 (279s)
+C:\Users\NQTa\Documents\MLCourse\Final Project\src\optuna_search.py:142: ExperimentalWarning: Argument ``multivariate`` is an experimental feature. The interface can change in the future.
+  sampler = optuna.samplers.TPESampler(multivariate=True, seed=seed)
+20:25:49 | OK GB|P_kbar|opx_liq|raw rmse=4.989 pruned=0 failed=0 (161s)
+C:\Users\NQTa\Documents\MLCourse\Final Project\src\optuna_search.py:142: ExperimentalWarning: Argument ``multivariate`` is an experimental feature. The interface can change in the future.
+  sampler = optuna.samplers.TPESampler(multivariate=True, seed=seed)
+20:28:04 | OK RF|T_C|opx_liq|alr rmse=77.863 pruned=0 failed=0 (136s)
+C:\Users\NQTa\Documents\MLCourse\Final Project\src\optuna_search.py:142: ExperimentalWarning: Argument ``multivariate`` is an experimental feature. The interface can change in the future.
+  sampler = optuna.samplers.TPESampler(multivariate=True, seed=seed)
+20:29:59 | OK RF|P_kbar|opx_liq|alr rmse=5.499 pruned=0 failed=0 (115s)
+C:\Users\NQTa\Documents\MLCourse\Final Project\src\optuna_search.py:142: ExperimentalWarning: Argument ``multivariate`` is an experimental feature. The interface can change in the future.
+  sampler = optuna.samplers.TPESampler(multivariate=True, seed=seed)
+20:31:16 | OK ERT|T_C|opx_liq|alr rmse=81.194 pruned=0 failed=0 (77s)
+C:\Users\NQTa\Documents\MLCourse\Final Project\src\optuna_search.py:142: ExperimentalWarning: Argument ``multivariate`` is an experimental feature. The interface can change in the future.
+  sampler = optuna.samplers.TPESampler(multivariate=True, seed=seed)
+20:32:58 | OK ERT|P_kbar|opx_liq|alr rmse=5.721 pruned=0 failed=0 (101s)
+C:\Users\NQTa\Documents\MLCourse\Final Project\src\optuna_search.py:142: ExperimentalWarning: Argument ``multivariate`` is an experimental feature. The interface can change in the future.
+  sampler = optuna.samplers.TPESampler(multivariate=True, seed=seed)
+20:34:36 | OK XGB|T_C|opx_liq|alr rmse=73.780 pruned=0 failed=0 (99s)
+C:\Users\NQTa\Documents\MLCourse\Final Project\src\optuna_search.py:142: ExperimentalWarning: Argument ``multivariate`` is an experimental feature. The interface can change in the future.
+  sampler = optuna.samplers.TPESampler(multivariate=True, seed=seed)
+20:35:50 | OK XGB|P_kbar|opx_liq|alr rmse=5.097 pruned=0 failed=0 (74s)
+C:\Users\NQTa\Documents\MLCourse\Final Project\src\optuna_search.py:142: ExperimentalWarning: Argument ``multivariate`` is an experimental feature. The interface can change in the future.
+  sampler = optuna.samplers.TPESampler(multivariate=True, seed=seed)
+20:41:18 | OK GB|T_C|opx_liq|alr rmse=76.601 pruned=0 failed=0 (328s)
+C:\Users\NQTa\Documents\MLCourse\Final Project\src\optuna_search.py:142: ExperimentalWarning: Argument ``multivariate`` is an experimental feature. The interface can change in the future.
+  sampler = optuna.samplers.TPESampler(multivariate=True, seed=seed)
+20:44:27 | OK GB|P_kbar|opx_liq|alr rmse=5.374 pruned=0 failed=0 (189s)
+20:44:27 | CHECKPOINT 40/48 studies done, partial saved
+C:\Users\NQTa\Documents\MLCourse\Final Project\src\optuna_search.py:142: ExperimentalWarning: Argument ``multivariate`` is an experimental feature. The interface can change in the future.
+  sampler = optuna.samplers.TPESampler(multivariate=True, seed=seed)
+20:47:06 | OK RF|T_C|opx_liq|pwlr rmse=77.339 pruned=0 failed=0 (159s)
+C:\Users\NQTa\Documents\MLCourse\Final Project\src\optuna_search.py:142: ExperimentalWarning: Argument ``multivariate`` is an experimental feature. The interface can change in the future.
+  sampler = optuna.samplers.TPESampler(multivariate=True, seed=seed)
+20:50:18 | OK RF|P_kbar|opx_liq|pwlr rmse=5.478 pruned=0 failed=0 (192s)
+C:\Users\NQTa\Documents\MLCourse\Final Project\src\optuna_search.py:142: ExperimentalWarning: Argument ``multivariate`` is an experimental feature. The interface can change in the future.
+  sampler = optuna.samplers.TPESampler(multivariate=True, seed=seed)
+20:52:00 | OK ERT|T_C|opx_liq|pwlr rmse=77.836 pruned=0 failed=0 (101s)
+C:\Users\NQTa\Documents\MLCourse\Final Project\src\optuna_search.py:142: ExperimentalWarning: Argument ``multivariate`` is an experimental feature. The interface can change in the future.
+  sampler = optuna.samplers.TPESampler(multivariate=True, seed=seed)
+20:53:20 | OK ERT|P_kbar|opx_liq|pwlr rmse=5.718 pruned=0 failed=0 (81s)
+C:\Users\NQTa\Documents\MLCourse\Final Project\src\optuna_search.py:142: ExperimentalWarning: Argument ``multivariate`` is an experimental feature. The interface can change in the future.
+  sampler = optuna.samplers.TPESampler(multivariate=True, seed=seed)
+20:55:29 | OK XGB|T_C|opx_liq|pwlr rmse=74.631 pruned=0 failed=0 (129s)
+C:\Users\NQTa\Documents\MLCourse\Final Project\src\optuna_search.py:142: ExperimentalWarning: Argument ``multivariate`` is an experimental feature. The interface can change in the future.
+  sampler = optuna.samplers.TPESampler(multivariate=True, seed=seed)
+20:58:13 | OK XGB|P_kbar|opx_liq|pwlr rmse=4.777 pruned=0 failed=0 (164s)
+C:\Users\NQTa\Documents\MLCourse\Final Project\src\optuna_search.py:142: ExperimentalWarning: Argument ``multivariate`` is an experimental feature. The interface can change in the future.
+  sampler = optuna.samplers.TPESampler(multivariate=True, seed=seed)
+21:04:25 | OK GB|T_C|opx_liq|pwlr rmse=75.635 pruned=0 failed=0 (372s)
+C:\Users\NQTa\Documents\MLCourse\Final Project\src\optuna_search.py:142: ExperimentalWarning: Argument ``multivariate`` is an experimental feature. The interface can change in the future.
+  sampler = optuna.samplers.TPESampler(multivariate=True, seed=seed)
+21:06:41 | OK GB|P_kbar|opx_liq|pwlr rmse=5.065 pruned=0 failed=0 (136s)
+21:06:41 | Complete: 48 studies in 2.12h. Log: C:\Users\NQTa\Documents\MLCourse\Final Project\logs\run_phase2_optuna.log
+Phase 2 Optuna sweep complete: 48 studies in 2.12h. See C:\Users\NQTa\Documents\MLCourse\Final Project\logs\run_phase2_optuna.log.
