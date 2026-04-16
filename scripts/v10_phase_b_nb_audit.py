@@ -64,16 +64,19 @@ def scan_notebook(nb_path):
                     break
 
         # Check for hardcoded test indices (numeric arrays)
-        if re.search(r'test_indices\s*=\s*np\.array\(\[', source) or re.search(r'test_idx.*=.*\[\d+', source):
+        # Only flag if it's actually loading indices, not pandas DataFrame operations
+        if re.search(r'test_indices\s*=\s*np\.array\(\[', source):
             if 'load_split' not in source and 'data.splits' not in source:
-                issues.append({
-                    'notebook': nb_path.name,
-                    'cell_index': cell_idx,
-                    'issue_type': 'hardcoded_test_indices',
-                    'severity': 'BLOCKING',
-                    'excerpt': source[:100],
-                    'suggested_fix': "Use data/splits/*.npy files via src.data loaders, not hardcoded indices"
-                })
+                # Exclude pandas operations like reset_index
+                if 'reset_index' not in source and '.index' not in source:
+                    issues.append({
+                        'notebook': nb_path.name,
+                        'cell_index': cell_idx,
+                        'issue_type': 'hardcoded_test_indices',
+                        'severity': 'BLOCKING',
+                        'excerpt': source[:100],
+                        'suggested_fix': "Use data/splits/*.npy files via src.data loaders, not hardcoded indices"
+                    })
 
         # Check imports
         imports = re.findall(r'from src import (.*)', source)

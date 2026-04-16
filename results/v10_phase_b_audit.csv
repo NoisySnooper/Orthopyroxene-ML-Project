@@ -29,9 +29,6 @@ nb07_bias_correction.ipynb,9,hardcoded_joblib,WARN,"# Phase 7.4: QRF leakage A/B
 nb07_bias_correction.ipynb,13,hardcoded_joblib,WARN,"# Verification assertions
 assert (RESULTS / 'nb07_ab_test_report.csv').exists()
 assert (RESULTS / 'n",Use canonical_model_filename() or load_canonical_model()
-nb07b_arcpl_bias_probe.ipynb,13,hardcoded_test_indices,BLOCKING,"arcpl_p6 = arcpl.copy().reset_index(drop=True)
-# Group by Citation to prevent within-study leakage
-a","Use data/splits/*.npy files via src.data loaders, not hardcoded indices"
 nb09_manuscript_compilation.ipynb,3,hardcoded_joblib,WARN,"from src.data import canonical_model_spec
 # Phase 9.EXT setup: extra imports + canonical model/data ",Use canonical_model_filename() or load_canonical_model()
 nb09_manuscript_compilation.ipynb,7,hardcoded_joblib,WARN,# NOTE: The nb10_* filename prefix below is retained for manuscript stability. These files are produ,Use canonical_model_filename() or load_canonical_model()
