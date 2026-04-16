@@ -1,0 +1,37 @@
+{
+  "target": "P_kbar",
+  "track": "opx_only",
+  "base_order": [
+    "RF",
+    "ERT",
+    "XGB",
+    "GB"
+  ],
+  "members": {
+    "RF": {
+      "filename": "model_RF_P_kbar_opx_only_pwlr.joblib",
+      "feature_set": "pwlr"
+    },
+    "ERT": {
+      "filename": "model_ERT_P_kbar_opx_only_pwlr.joblib",
+      "feature_set": "pwlr"
+    },
+    "XGB": {
+      "filename": "model_XGB_P_kbar_opx_only_alr.joblib",
+      "feature_set": "alr"
+    },
+    "GB": {
+      "filename": "model_GB_P_kbar_opx_only_pwlr.joblib",
+      "feature_set": "pwlr"
+    }
+  },
+  "meta_filename": "meta_ridge_P_kbar_opx_only_stacked.joblib",
+  "alpha": 100.0,
+  "coef": {
+    "RF": 0.29233055967788546,
+    "ERT": 0.2617261210706807,
+    "XGB": 0.13464952176333642,
+    "GB": 0.06810571864020666
+  },
+  "intercept": 2.4733175568764043
+}

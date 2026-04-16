@@ -1,0 +1,91 @@
+Input Notebook:  notebooks/nb05_loso_validation.ipynb
+Output Notebook: notebooks/nb05_loso_validation.ipynb
+Executing notebook with kernel: python3
+Executing Cell 1---------------------------------------
+Ending Cell 1------------------------------------------
+Executing Cell 2---------------------------------------
+Ending Cell 2------------------------------------------
+Executing Cell 3---------------------------------------
+Ending Cell 3------------------------------------------
+Executing Cell 4---------------------------------------
+Phase 3R global winning feature set: pwlr
+opx-liq rows: 600, studies: 93, clusters: 3, X.shape: (600, 72)
+Best params reconstructed for models: ['ERT', 'GB', 'RF', 'XGB']
+
+Ending Cell 4------------------------------------------
+Executing Cell 5---------------------------------------
+Ending Cell 5------------------------------------------
+Executing Cell 6---------------------------------------
+strategy:   0%|          | 0/3 [00:00<?, ?it/s]
+
+== LOSO (93 folds, group=Citation) ==
+
+LOSO:   0%|          | 0/4 [00:00<?, ?it/s]
+  RF   T_C      rmse=74.47  r2=+0.822  n=600
+
+  RF   P_kbar   rmse=5.60  r2=+0.642  n=600
+
+  ERT  T_C      rmse=76.53  r2=+0.812  n=600
+
+  ERT  P_kbar   rmse=5.85  r2=+0.609  n=600
+
+  XGB  T_C      rmse=76.55  r2=+0.812  n=600
+
+  XGB  P_kbar   rmse=5.14  r2=+0.698  n=600
+
+  GB   T_C      rmse=75.99  r2=+0.814  n=600
+
+  GB   P_kbar   rmse=5.70  r2=+0.630  n=600
+
+== Cluster-KFold (3 folds, group=chemical_cluster) ==
+
+Cluster-KFold:   0%|          | 0/4 [00:00<?, ?it/s]
+  RF   T_C      rmse=100.82  r2=+0.673  n=600
+
+  RF   P_kbar   rmse=6.45  r2=+0.526  n=600
+
+  ERT  T_C      rmse=103.02  r2=+0.659  n=600
+
+  ERT  P_kbar   rmse=6.61  r2=+0.502  n=600
+
+  XGB  T_C      rmse=98.09  r2=+0.691  n=600
+
+  XGB  P_kbar   rmse=6.00  r2=+0.589  n=600
+
+  GB   T_C      rmse=96.11  r2=+0.703  n=600
+
+  GB   P_kbar   rmse=6.43  r2=+0.529  n=600
+
+== TargetBinKFold (9 folds, group=pt_grid) ==
+
+TargetBinKFold:   0%|          | 0/4 [00:00<?, ?it/s]
+  RF   T_C      rmse=101.31  r2=+0.670  n=600
+
+  RF   P_kbar   rmse=8.54  r2=+0.168  n=600
+
+  ERT  T_C      rmse=104.91  r2=+0.646  n=600
+
+  ERT  P_kbar   rmse=8.46  r2=+0.183  n=600
+
+  XGB  T_C      rmse=99.29  r2=+0.683  n=600
+
+  XGB  P_kbar   rmse=7.55  r2=+0.349  n=600
+
+  GB   T_C      rmse=103.92  r2=+0.653  n=600
+
+  GB   P_kbar   rmse=7.32  r2=+0.388  n=600
+
+Wrote 24 pooled rows, 840 per-fold rows
+
+Ending Cell 6------------------------------------------
+Executing Cell 7---------------------------------------
+<Figure size 1400x800 with 6 Axes>
+Saved figures/fig_nb05_generalization.{png,pdf} (3 strategies x 4 models x 2 targets).
+
+Ending Cell 7------------------------------------------
+Executing Cell 8---------------------------------------
+=== NB05 complete ===
+  24 pooled rows across 3 strategies x 4 models x 2 targets
+  840 per-fold rows
+
+Ending Cell 8------------------------------------------

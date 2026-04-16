@@ -1,0 +1,83 @@
+Input Notebook:  notebooks/nb06_shap_analysis.ipynb
+Output Notebook: notebooks/nb06_shap_analysis.ipynb
+Executing notebook with kernel: python3
+Executing Cell 1---------------------------------------
+Ending Cell 1------------------------------------------
+Executing Cell 2---------------------------------------
+Ending Cell 2------------------------------------------
+Executing Cell 3---------------------------------------
+Ending Cell 3------------------------------------------
+Executing Cell 4---------------------------------------
+Ending Cell 4------------------------------------------
+Executing Cell 5---------------------------------------
+v7 primary (forest / T_C / opx_liq) feature set: pwlr
+
+Test set: 174 experiments
+X_test shape: (174, 72), n_features: 72
+
+Ending Cell 5------------------------------------------
+Executing Cell 6---------------------------------------
+shap_values_P shape: (174, 72)
+
+Ending Cell 6------------------------------------------
+Executing Cell 7---------------------------------------
+shap_values_T shape: (174, 72)
+
+Ending Cell 7------------------------------------------
+Executing Cell 8---------------------------------------
+Ending Cell 8------------------------------------------
+Executing Cell 9---------------------------------------
+=== NB06 complete ===
+  feature set: pwlr
+  n features: 72
+
+Ending Cell 9------------------------------------------
+Executing Cell 10--------------------------------------
+Ending Cell 10-----------------------------------------
+Executing Cell 11--------------------------------------
+Baseline RMSE P = 5.405 kbar | T = 83.90 C
+
+Ending Cell 11-----------------------------------------
+Executing Cell 12--------------------------------------
+Ending Cell 12-----------------------------------------
+Executing Cell 13--------------------------------------
+Dropping 10 features: ['pwlr_liq_SiO2_TiO2', 'pwlr_liq_SiO2_Al2O3', 'pwlr_liq_SiO2_FeO', 'pwlr_liq_SiO2_MgO', 'pwlr_liq_SiO2_CaO', 'pwlr_liq_SiO2_Na2O', 'pwlr_liq_SiO2_K2O', 'pwlr_liq_MgO_CaO', 'pwlr_liq_MgO_Na2O', 'pwlr_liq_MgO_K2O']
+
+P RMSE: 5.405 -> 5.954 kbar (delta = +0.549)
+T RMSE: 83.90 -> 93.93 C    (delta = +10.03)
+
+Ending Cell 13-----------------------------------------
+Executing Cell 14--------------------------------------
+Ending Cell 14-----------------------------------------
+Executing Cell 15--------------------------------------
+<Figure size 1200x500 with 2 Axes>
+Ending Cell 15-----------------------------------------
+Executing Cell 16--------------------------------------
+Ending Cell 16-----------------------------------------
+Executing Cell 17--------------------------------------
+<Figure size 700x600 with 2 Axes>
+Ending Cell 17-----------------------------------------
+Executing Cell 18--------------------------------------
+Ending Cell 18-----------------------------------------
+Executing Cell 19--------------------------------------
+Baseline P RMSE:   5.405 kbar
+Shuffled P RMSE:   11.382 kbar
+Shuffled R^2:      -0.395   (expected <= 0)
+
+Ending Cell 19-----------------------------------------
+Executing Cell 20--------------------------------------
+Ending Cell 20-----------------------------------------
+Executing Cell 21--------------------------------------
+RF P RMSE:    5.405 kbar
+Dummy P RMSE: 9.663 kbar
+
+Ending Cell 21-----------------------------------------
+Executing Cell 22--------------------------------------
+Ending Cell 22-----------------------------------------
+Executing Cell 23--------------------------------------
+Constrained perfect-signal P RMSE: 0.590 kbar (baseline 5.405)
+
+Unconstrained perfect-signal P RMSE: 0.580 kbar (expected ~0.1)
+Linear perfect-signal P RMSE: 0.115 kbar
+
+Ending Cell 23-----------------------------------------

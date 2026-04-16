@@ -1,0 +1,1 @@
+Figure 6. Pooled out-of-fold RMSE across three group-aware CV strategies (LOSO, cluster-KFold, gridded PT) for the canonical RF on the winning feature set.

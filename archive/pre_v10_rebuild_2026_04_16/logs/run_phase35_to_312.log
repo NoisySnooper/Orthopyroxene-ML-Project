@@ -1,0 +1,62 @@
+2026-04-16 00:58:28,826 | INFO | Recovery run starting. Repo: C:\Users\NQTa\Documents\MLCourse\Final Project
+2026-04-16 00:58:28,950 | INFO | ========================================================================
+2026-04-16 00:58:28,950 | INFO | PHASE 3.4 COMPLETION: fit+save 48 seed-42 base models
+2026-04-16 01:00:10,294 | INFO | Phase 3.4 save complete: 48 models saved, 0 skipped, 101.3s
+2026-04-16 01:00:10,295 | INFO | ========================================================================
+2026-04-16 01:00:10,295 | INFO | PHASE 3.5: winner selection per family
+2026-04-16 01:00:10,427 | INFO |   forest opx_only/T_C: RF|pwlr rmse=139.508 +- 18.363
+2026-04-16 01:00:10,677 | INFO |   forest opx_only/P_kbar: RF|pwlr rmse=10.701 +- 2.982
+2026-04-16 01:00:10,955 | INFO |   forest opx_liq/T_C: RF|pwlr rmse=79.585 +- 11.703
+2026-04-16 01:00:11,104 | INFO |   forest opx_liq/P_kbar: RF|alr rmse=5.939 +- 1.197
+2026-04-16 01:00:11,158 | INFO |   boosted opx_only/T_C: XGB|pwlr rmse=142.975 +- 19.143
+2026-04-16 01:00:11,182 | INFO |   boosted opx_only/P_kbar: XGB|alr rmse=10.715 +- 2.697
+2026-04-16 01:00:11,213 | INFO |   boosted opx_liq/T_C: XGB|alr rmse=77.773 +- 9.549
+2026-04-16 01:00:11,265 | INFO |   boosted opx_liq/P_kbar: XGB|raw rmse=4.811 +- 0.836
+2026-04-16 01:00:11,266 | INFO | Phase 3.5 complete: 8 canonical models, winners JSON written
+2026-04-16 01:00:11,267 | INFO | ========================================================================
+2026-04-16 01:00:11,267 | INFO | PHASE 3.6: canonical test predictions
+2026-04-16 01:00:12,012 | INFO | Phase 3.6 complete: 16 arrays in npz
+2026-04-16 01:00:12,012 | INFO | ========================================================================
+2026-04-16 01:00:12,013 | INFO | PHASE 3.7: verification
+2026-04-16 01:00:12,013 | INFO | Phase 3.7 complete: all 8 canonical models present
+2026-04-16 01:00:12,013 | INFO | ========================================================================
+2026-04-16 01:00:12,013 | INFO | PHASE 3.9: tempered resampling + resampled canonical models
+2026-04-16 01:00:12,098 | INFO |   opx_liq: n_in=426 -> n_out=426, cells=15, grown=9 shrunk=6 held=0
+2026-04-16 01:00:12,179 | INFO |   opx_only: n_in=845 -> n_out=845, cells=19, grown=14 shrunk=5 held=0
+2026-04-16 01:00:18,745 | INFO |   forest opx_liq T_C RF: canonical=83.895 resampled=88.499 (+4.604)
+2026-04-16 01:00:20,838 | INFO |   forest opx_liq P_kbar RF: canonical=5.416 resampled=7.651 (+2.235)
+2026-04-16 01:00:22,338 | INFO |   forest opx_only T_C RF: canonical=149.533 resampled=149.706 (+0.173)
+2026-04-16 01:00:29,907 | INFO |   forest opx_only P_kbar RF: canonical=10.371 resampled=12.170 (+1.800)
+2026-04-16 01:00:30,325 | INFO |   boosted opx_liq T_C XGB: canonical=90.611 resampled=90.324 (-0.287)
+2026-04-16 01:00:30,749 | INFO |   boosted opx_liq P_kbar XGB: canonical=4.811 resampled=5.264 (+0.453)
+2026-04-16 01:00:35,247 | INFO |   boosted opx_only T_C XGB: canonical=157.280 resampled=161.251 (+3.971)
+2026-04-16 01:00:35,690 | INFO |   boosted opx_only P_kbar XGB: canonical=10.452 resampled=10.052 (-0.400)
+2026-04-16 01:00:35,692 | INFO | Phase 3.9 complete: 8 resampled models saved, impact CSV written. (23.7s)
+2026-04-16 01:00:35,696 | INFO | ========================================================================
+2026-04-16 01:00:35,696 | INFO | PHASE 3.10: Ridge stacking meta-models
+2026-04-16 01:01:07,254 | INFO |   T_C opx_liq: alpha=100.0000 stacked=89.357 best_base=RF(84.893) (+4.464)
+2026-04-16 01:01:07,254 | WARNING |     SANITY: alpha at endpoint for T_C/opx_liq
+2026-04-16 01:01:07,254 | INFO |     (negative weights: ['RF'])
+2026-04-16 01:01:28,383 | INFO |   P_kbar opx_liq: alpha=100.0000 stacked=4.771 best_base=GB(4.740) (+0.031)
+2026-04-16 01:01:28,383 | WARNING |     SANITY: alpha at endpoint for P_kbar/opx_liq
+2026-04-16 01:01:28,383 | INFO |     (negative weights: ['RF'])
+2026-04-16 01:02:26,629 | INFO |   T_C opx_only: alpha=100.0000 stacked=158.560 best_base=RF(152.038) (+6.522)
+2026-04-16 01:02:26,630 | WARNING |     SANITY: alpha at endpoint for T_C/opx_only
+2026-04-16 01:02:26,630 | INFO |     (negative weights: ['RF', 'XGB'])
+2026-04-16 01:03:09,007 | INFO |   P_kbar opx_only: alpha=100.0000 stacked=10.686 best_base=RF(10.328) (+0.358)
+2026-04-16 01:03:09,007 | WARNING |     SANITY: alpha at endpoint for P_kbar/opx_only
+2026-04-16 01:03:09,010 | INFO | Phase 3.10 complete: 4 stacked meta-models saved (153.3s)
+2026-04-16 01:03:09,011 | INFO | ========================================================================
+2026-04-16 01:03:09,011 | INFO | PHASE 3.11 + 3.12: figures
+2026-04-16 01:03:12,403 | INFO |   saved figure: fig_nb03c_multiseed_rmse.{png,pdf}
+2026-04-16 01:03:13,475 | INFO |   saved figure: fig_nb03_resampling_pt_distribution.{png,pdf}
+2026-04-16 01:03:13,955 | INFO |   saved figure: fig_nb03_resampling_impact_on_metrics.{png,pdf}
+2026-04-16 01:03:17,338 | INFO |   saved figure: fig_nb03_optuna_search_progress.{png,pdf}
+2026-04-16 01:03:22,582 | INFO |   saved figure: fig_nb03_optuna_hyperparameter_importance.{png,pdf}
+2026-04-16 01:03:23,314 | INFO |   saved figure: fig_nb03_stacking_weights.{png,pdf}
+2026-04-16 01:03:24,668 | INFO |   saved figure: fig_nb03_stacking_oof_correlation.{png,pdf}
+2026-04-16 01:03:25,615 | INFO |   saved figure: fig_nb03_stacking_vs_base_comparison.{png,pdf}
+2026-04-16 01:03:26,785 | INFO |   saved figure: fig_nb03_three_family_comparison.{png,pdf}
+2026-04-16 01:03:26,786 | INFO | Phase 3.11+3.12 complete (17.8s)
+2026-04-16 01:03:26,786 | INFO | ========================================================================
+2026-04-16 01:03:26,786 | INFO | RECOVERY COMPLETE in 5.0 min

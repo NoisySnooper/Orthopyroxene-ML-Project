@@ -1,0 +1,1 @@
+Figure 11. Residuals on the opx-liq test set for raw RF, piecewise-corrected RF, and QRF median with 16-84% band. Top row T, bottom row P.

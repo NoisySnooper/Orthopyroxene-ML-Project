@@ -1,0 +1,33 @@
+{
+  "T": {
+    "choice": "D: composition-conditional correction",
+    "evidence": [
+      "arc mean residual = +48.51, test mean = -1.26 (distribution-shift gap = +49.77)",
+      "pearson(pred, residual) on ArcPL = +0.077",
+      "in-domain GroupKFold RMSE reduction: const=+17.8% (sig), linear=+17.7% (sig)",
+      "composition features with |r|>0.2 and p<0.05: 3",
+      "  top: liq_Na2O r=-0.38, H2O_Liq r=+0.37, liq_TiO2 r=-0.34"
+    ],
+    "arc_mean": 48.50667027646413,
+    "test_mean": -1.2630886068714455,
+    "pearson_r": 0.07749178022022611,
+    "pct_improve_const": 17.75869833123705,
+    "pct_improve_linear": 17.685459828601655
+  },
+  "P": {
+    "choice": "A: report uncorrected with caveat",
+    "evidence": [
+      "arc mean residual = +1.24, test mean = -1.03 (distribution-shift gap = +2.26)",
+      "pearson(pred, residual) on ArcPL = +0.020",
+      "in-domain GroupKFold RMSE reduction: const=+7.2% (ns), linear=-5.5% (ns)",
+      "composition features with |r|>0.2 and p<0.05: 3",
+      "  top: liq_Na2O r=-0.33, liq_FeO r=+0.27, H2O_Liq r=-0.23"
+    ],
+    "arc_mean": 1.2388243517259598,
+    "test_mean": -1.0261664180787582,
+    "pearson_r": 0.019940840812093033,
+    "pct_improve_const": 7.207419140249062,
+    "pct_improve_linear": -5.46273087667945
+  },
+  "tradeoff": "Tradeoff: any correction trained on ArcPL itself is in-domain for ArcPL and may not help other arc datasets. Users should be informed whenever the correction is applied. For manuscript honesty, present both raw and corrected numbers."
+}

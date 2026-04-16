@@ -1,0 +1,37 @@
+{
+  "target": "T_C",
+  "track": "opx_only",
+  "base_order": [
+    "RF",
+    "ERT",
+    "XGB",
+    "GB"
+  ],
+  "members": {
+    "RF": {
+      "filename": "model_RF_T_C_opx_only_pwlr.joblib",
+      "feature_set": "pwlr"
+    },
+    "ERT": {
+      "filename": "model_ERT_T_C_opx_only_pwlr.joblib",
+      "feature_set": "pwlr"
+    },
+    "XGB": {
+      "filename": "model_XGB_T_C_opx_only_pwlr.joblib",
+      "feature_set": "pwlr"
+    },
+    "GB": {
+      "filename": "model_GB_T_C_opx_only_pwlr.joblib",
+      "feature_set": "pwlr"
+    }
+  },
+  "meta_filename": "meta_ridge_T_C_opx_only_stacked.joblib",
+  "alpha": 100.0,
+  "coef": {
+    "RF": -0.06305327440467984,
+    "ERT": 0.9699594484454239,
+    "XGB": -0.05720280076797446,
+    "GB": 0.14711123836918313
+  },
+  "intercept": -0.5433953185777227
+}

@@ -1,93 +1,279 @@
-# opx ML thermobarometer
+# Pyroxene ML thermobarometer
 
-Machine-learning thermobarometer for orthopyroxene compositions. Predicts
-pressure (kbar) and temperature (C) of equilibrium from orthopyroxene oxide
-chemistry, with and without a paired liquid. Companion manuscript targeting
-*JGR ML & Computation*.
+Machine-learning thermobarometers for orthopyroxene and clinopyroxene
+compositions. Predicts pressure (kbar) and temperature (C) of equilibrium from
+mineral oxide chemistry, with or without a paired liquid, and extends to
+two-pyroxene and universal (any-phase-combination) configurations.
 
-## Pipeline layout
+Two manuscripts in preparation:
+1. **Opx paper (`manuscripts/opx_2026/`)** — first ML thermobarometer specific
+   to orthopyroxene. Target: *JGR Machine Learning and Computation*, 2026.
+2. **Cpx paper (`manuscripts/cpx_2026/`)** — framework paper covering
+   clinopyroxene, two-pyroxene, and universal masking model, with
+   head-to-head benchmarks against Agreda-Lopez 2024, Jorgenson 2022,
+   Wang 2021, Petrelli 2020. Target: 2027.
+
+**Status:** v9 complete (2026-04-16). v10+v11 planning complete (2026-04-16).
+Phase A execution pending user approval. See
+[`docs/v10_master_plan.md`](docs/v10_master_plan.md) for the active plan.
+
+---
+
+## v9 headline numbers (verified 2026-04-16)
+
+### Test set, 20-seed means (opx only, cpx/twopx not yet trained)
+
+| Track | Target | Best model | RMSE |
+|---|---|---|---|
+| opx_liq | T_C | XGB + alr features | 77.77 C |
+| opx_liq | P_kbar | XGB + raw features | 4.81 kbar |
+| opx_only | T_C | RF + pwlr | 139.5 C |
+| opx_only | P_kbar | GB + pwlr | 10.65 kbar |
+
+### ArcPL external validation, n=197 full scope
+
+| Family | T bias | T RMSE | P bias | P RMSE |
+|---|---|---|---|---|
+| Forest (RF) | +48.5 C | 71.6 | +1.24 kbar | 2.79 |
+| Boosted (XGB, primary) | +20.9 C | 63.7 | -0.09 kbar | 2.70 |
+
+### ArcPL Kd-equilibrated head-to-head, n=96
+
+| Method | T RMSE | P RMSE |
+|---|---|---|
+| Ours opx-liq stacked | 53.6 | 3.30 |
+| Ours opx-liq boosted | 56.2 | 3.12 |
+| Putirka 2008 opx-liq | 54.9 | 4.11 |
+| Agreda-Lopez cpx-liq | 45.0 | 1.94 |
+
+**Honest framing.** We match Putirka on T, beat Putirka on P by ~20%, lose
+to cpx-specific models (Agreda-Lopez, Jorgenson) which benefit from cpx's
+intrinsically higher P-T sensitivity. Opx paper claim is "first opx-specific
+ML thermobarometer with formal OOD uncertainty quantification", not a claim
+to beat cpx models. Cpx paper will claim parity or better vs cpx ML models
+per the three-gate criterion (see `docs/v10_master_plan.md` Section 8).
+
+---
+
+## v10 scope (two-paper, unified implementation)
+
+v10 is not a single-paper rebuild. It is the foundation work for both papers
+executed in one repo. Concretely:
+
+| Track | Pipeline | Models | Source notebook |
+|---|---|---|---|
+| opx_only | opx composition only | 8 | `nb03_opx_baseline_models` |
+| opx_liq | opx + liquid | 8 | `nb03_opx_baseline_models` |
+| cpx_only | cpx composition only | 8 | `nb03_cpx_baseline_models` |
+| cpx_liq | cpx + liquid | 8 | `nb03_cpx_baseline_models` |
+| twopx | opx + cpx pair | 8 | `nb03_twopx_baseline_models` |
+| universal | any phase combination (masking) | 8 | `nb03_universal_exploration` (isolated) |
+
+**Model roster (8 total, all pipelines):** RandomForest, ExtraTrees, XGBoost,
+GradientBoosting, CatBoost, LightGBM, ElasticNet, MLPRegressor. Plus 4
+ensemble methods compared (Ridge stacking, two-level, greedy Caruana 2004,
+AutoGluon) per `docs/v10_ensemble_methods_plan.md`.
+
+**Universal model is intentionally isolated.** Separate notebook, separate
+diagnostics directory (`results/universal/`, `figures/universal/`). Never
+combined with opx/cpx/twopx primary results. Side-project status. Potential
+third paper material.
+
+---
+
+## Pipeline layout (v10 target)
 
 ```
-config.py             # every path, constant, and seed (single source of truth)
+config.py                                  # single source of truth
 src/
-  features.py         # raw / alr / pwlr feature engineering + EPMA noise aug
-  models.py           # RF/ERT/XGB/GB factories, predict_median, predict_iqr
-  data.py             # cleaned-data loaders + canonical model bookkeeping
-  evaluation.py       # metrics, LOSO / Cluster-KFold / Gridded-PT splits
-  geotherm.py         # Hasterok & Chapman 2011 layered geotherm
-  io_utils.py         # save_figure, save_table, with_progress (tqdm)
-  plot_style.py       # Tol palette, rcParams preset, axis helpers
+  features.py                              # raw/alr/pwlr + engineered + augment
+  models.py                                # 8-model factory, predict_median, predict_iqr
+  data.py                                  # loaders for opx/cpx/twopx/universal tracks
+  evaluation.py                            # metrics, LOSO/Cluster/TargetBin/LeaveOneRegion CV
+  external_models.py                       # Agreda/Jorgenson/Wang/Petrelli/Putirka wrappers
+  optuna_search.py                         # TPE with median pruning
+  resampling.py                            # P-T tempered resampling (ablated v9, re-tested v10)
+  stacking.py                              # Ridge meta (+ greedy/two-level/AutoGluon in v10)
+  calibration.py                           # split conformal
+  geotherm.py                              # Hasterok & Chapman 2011
+  io_utils.py                              # save_figure, save_table
+  plot_style.py                            # Okabe-Ito palette, per-figure enforcement
+  universal.py                             # masking architecture (v10 new)
+  georoc_puller.py                         # GEOROC opx + cpx global pull (v10 new)
+  ensemble_alt.py                          # greedy/two-level/AutoGluon stackers (v10 new)
 notebooks/
-  nb01_data_cleaning.ipynb
-  nb02_eda_pca.ipynb                # writes opx_clean_core_with_clusters.parquet
-  nb03_baseline_models.ipynb        # 3-method x 4-model multi-seed benchmark
-  nb04_putirka_benchmark.ipynb
-  nb04b_lepr_arcpl_validation.ipynb
-  nb05_loso_validation.ipynb        # LOSO + Cluster-KFold + Gridded-PT
-  nb06_shap_analysis.ipynb          # SHAP + robustness appendix
-  nb07_bias_correction.ipynb        # QRF pressure-range correction
-  nb08_natural_samples.ipynb
-  nb09_manuscript_compilation.ipynb
-  nb10_extended_analyses.ipynb
-  nbF_figures.ipynb                 # canonical manuscript figures 1-14
+  nb01_data_cleaning.ipynb                 # unified opx+cpx+twopx
+  nb02_eda_pca.ipynb                       # unified EDA, per-track clusters
+  nb03_opx_baseline_models.ipynb           # opx test-first rebuild T01-T12
+  nb03_cpx_baseline_models.ipynb           # cpx test-first rebuild T01-T12
+  nb03_twopx_baseline_models.ipynb         # twopx test-first rebuild T01-T12
+  nb03_universal_exploration.ipynb         # universal masking (isolated)
+  nb04_benchmark.ipynb                     # external benchmarks + model heatmaps (merged NB04+NBM)
+  nb05_generalization.ipynb                # LOSO + Cluster + TargetBin + LeaveOneRegion
+  nb06_shap_analysis.ipynb                 # tree-SHAP + linear-SHAP on stack + kernel-SHAP on MLP
+  nb07_bias_correction.ipynb               # merged NB07+NB07b; composition-conditional T correction
+  nb08_natural_samples.ipynb               # merged NB08+NB08b; world maps static + interactive
+  nb09_manuscript_compilation.ipynb        # per-paper table subsets
+  nb10_extended_analyses.ipynb             # OOD, MC uncertainty, H2O sensitivity, twopx benchmark
+  nbF_figures.ipynb                        # per-paper canonical figure regen
+manuscripts/
+  opx_2026/                                # opx paper deliverables
+    figures/
+    tables/
+    text/
+    arxiv_submission/
+  cpx_2026/                                # cpx paper deliverables
+    figures/
+    tables/
+    text/
+docs/                                      # see Documentation map below
 ```
 
-Everything downstream of NB03 reads the Phase 3R winning feature set from
-`results/nb03_winning_configurations.json`. No feature method name is
-hardcoded in any notebook downstream of NB03.
+---
 
 ## Running the pipeline
 
 ```
 python -m venv .venv
-.venv\Scripts\activate            # Windows bash
+.venv\Scripts\activate                     # Windows PowerShell
 pip install -r requirements.txt
 ```
 
-Then run notebooks in order:
+Then notebooks in order:
 
-1. `nb01_data_cleaning` -> `data/processed/opx_clean_core.parquet`
-2. `nb02_eda_pca` -> `opx_clean_core_with_clusters.parquet` + EDA figures
-3. `nb03_baseline_models` -> winning config, canonical models, test prediction arrays
-4. `nb04_putirka_benchmark` (CPxOpx thermobar benchmark)
-5. `nb04b_lepr_arcpl_validation` (external validation on ArcPL)
-6. `nb05_loso_validation` (three grouped-CV strategies)
-7. `nb06_shap_analysis` (SHAP + robustness checks)
-8. `nb07_bias_correction` (QRF pressure-range correction)
-9. `nb08_natural_samples` (natural Lin 2023 peridotite dataset)
-10. `nb10_extended_analyses` (two-pyroxene, H2O, IQR, MC, OOD)
-11. `nb09_manuscript_compilation` (tables 1-10)
-12. `nbF_figures` (all 14 canonical figures)
+1. `nb01_data_cleaning` — ExPetDB + LEPR cleaning for all five tracks
+2. `nb02_eda_pca` — EDA + per-track chemical clusters
+3. `nb03_opx_baseline_models` — opx_only + opx_liq, test-first, 8 models
+4. `nb03_cpx_baseline_models` — cpx_only + cpx_liq, test-first, 8 models
+5. `nb03_twopx_baseline_models` — two-pyroxene, 8 models
+6. `nb03_universal_exploration` — universal masking (isolated side project)
+7. `nb04_benchmark` — ArcPL + Thermobar external benchmarks + model heatmaps
+8. `nb05_generalization` — four grouped-CV strategies
+9. `nb06_shap_analysis` — feature importance across all pipelines
+10. `nb07_bias_correction` — ArcPL bias probes + composition-conditional T
+11. `nb08_natural_samples` — cross-mineral convergence + world maps
+12. `nb10_extended_analyses` — OOD, MC, H2O, twopx benchmark
+13. `nb09_manuscript_compilation` — per-paper table subsets
+14. `nbF_figures` — per-paper canonical figure regen
 
-NB01 through NB03 are mandatory for everything else; the rest are independent
-given the NB03 outputs.
+NB01-NB03 mandatory for everything downstream. NB04-NB10 parallelizable once
+NB03 winners are frozen.
 
-## Key design decisions
+---
 
-- **One source of truth for features and prediction.** `src/features.py` and
-  `src/models.py` hold the canonical implementations. Notebooks import from
-  `src.` - no duplicated `make_pwlr_features` or `predict_median` anywhere.
-- **No hardcoded feature set.** NB03 benchmarks raw / alr / pwlr across 10
-  split seeds and writes the winning method to `nb03_winning_configurations.json`.
-  Every downstream notebook reads that JSON.
-- **Augmentation disabled by default** (`N_AUG = 1`). The NB03 appendix
-  documents the sensitivity test that justified dropping the `_aug` variants.
-- **Canonical splits and seeds.** `config.SEED_SPLIT = 42` drives every
-  `GroupShuffleSplit` call. Test indices are persisted in
-  `data/splits/test_indices_opx_liq.npy` and `test_indices_opx.npy`.
-- **Figures at 300 dpi.** `src.io_utils.save_figure` writes PNG, PDF, and an
-  optional caption TXT. NBF uses this helper for the canonical figure set.
+## Key design decisions (locked for v10)
+
+- **8 models in every pipeline.** RF, ERT, XGB, GB (v9 four) + CatBoost,
+  LightGBM, ElasticNet, MLPRegressor (v10 additions). Per test T11/T12 if
+  CatBoost or MLP beats the v9 four, it ships; otherwise ablated with data.
+- **Test-first NB03.** 12 pre-registered tests (T01-T12, plus T13-T14 for
+  universal). Each runs per-pipeline; ship/ablate decision logged to
+  `results/v10_nb03_test_log.csv`. See `docs/v10_nb03_test_protocol.md`.
+- **4 ensemble methods compared.** Ridge, two-level Ridge, greedy Caruana,
+  AutoGluon. Winner ships; others reported as ablation. See
+  `docs/v10_ensemble_methods_plan.md`.
+- **Stacking propagates everywhere.** Every downstream benchmark figure
+  (NB04-NB10) includes stacked alongside base models. Enforced per
+  `docs/v10_stacking_propagation_audit.md`.
+- **Markdown discipline.** Every code cell gets a rigorous markdown block:
+  Input / Output / Method / Connection / Why. Template in
+  `docs/v10_markdown_template.md`.
+- **Figure rigor.** Every figure passes the checklist in
+  `docs/v10_figure_audit.md`: all methods plotted, on-figure metrics
+  (R^2, RMSE, slope, intercept), Okabe-Ito palette, label-collision check,
+  JGR-MLC dimension compliance, PDF + PNG + TXT caption.
+- **World maps.** Two panels per mineral (opx, cpx, twopx): tectonic setting
+  color and predicted T color. Robinson projection (static matplotlib +
+  cartopy). Interactive folium version as supplementary.
+- **Beat-Agreda/Jorgenson gate is (c).** Must win on ArcPL AND LOSO AND
+  natural-sample agreement, each with 95% bootstrap CI excluding theirs. Else
+  framed as "matches" or "competitive".
+- **N_AUG=1 carried from v9.** EPMA augmentation hurt 6/8 test configs in v9
+  per test T04. Re-tested per pipeline in v10; ship/ablate per result.
+- **Canonical splits preserved.** `config.SEED_SPLIT=42`. Test indices in
+  `data/splits/test_indices_{track}.npy`.
+
+---
 
 ## Data sources
 
-- **Training core:** ExPetDB opx + paired liquid, Putirka 2008 KD filter,
-  Wo < 5 mol% orthopyroxene cut. See `nb01_data_cleaning` for the full
-  quality-control chain.
-- **External validation:** LEPR Wet Stitched April 2023 (ArcPL subset).
-- **Natural samples:** Lin et al. 2023 NE China peridotite xenoliths (from
-  the author-provided Supplementary Table S2).
+### Training (experimental, known T and P)
+- **ExPetDB** (primary) — opx, cpx, twopx experiments with paired liquid.
+  Putirka 2008 Kd filter (0.23-0.35), Wo < 5 mol% cut for opx. n=600 opx-liq
+  pairs in v9. Expected cpx-liq ~800-1500, twopx ~500-800.
+- **LEPR Wet Stitched April 2023** — secondary, cpx overlap with ExPetDB.
+  External papers (Jorgenson 2022, Agreda-Lopez 2024) also trained on LEPR,
+  so head-to-head comparisons use same data.
+
+### External validation (experimental, known T and P)
+- **ArcPL** — n=197 full scope, n=96 Kd-equilibrated for head-to-head.
+
+### External cpx ML models
+- **Agreda-Lopez et al. 2024** — cpx-liq thermobarometer, ET Regressor.
+- **Jorgenson et al. 2022** — cpx-only thermobarometer.
+- **Wang et al. 2021** — cpx-liq.
+- **Petrelli et al. 2020** — cpx-liq baseline ML.
+
+See `docs/v10_external_models_audit.md` for publicly-released training data
+status per model. Where training data is public, we re-run their models on
+our ArcPL subset for head-to-head. Where not, we use their published model
+artifact.
+
+### Natural samples (inference only, no known T/P)
+- **GEOROC 2024-12 SGFTFN opx** —
+  `data/natural/2024-12-SGFTFN_ORTHOPYROXENES.csv`. 78,532 opx analyses
+  with lat/lon and tectonic setting metadata. Driving the opx world map.
+- **GEOROC 2024-12 cpx** — TO BE PULLED in Phase H. Expected similar size.
+- **Curated localities (experimental T/P only, literature)** — TBD in Phase H
+  per `docs/v10_natural_worldwide_plan.md`.
+
+---
+
+## Documentation map
+
+### v10 planning documents (read in this order)
+
+| Doc | Purpose |
+|---|---|
+| [`docs/v10_master_plan.md`](docs/v10_master_plan.md) | **Start here.** Unified v10+v11 plan. |
+| [`docs/v10_markdown_template.md`](docs/v10_markdown_template.md) | Per-cell markdown template (rigorous format) |
+| [`docs/v10_cleanup_manifest.md`](docs/v10_cleanup_manifest.md) | Fresh-start cleanup file list |
+| [`docs/v10_notebooks_compatibility_audit.md`](docs/v10_notebooks_compatibility_audit.md) | Downstream NB compatibility matrix |
+| [`docs/v10_nb03_test_protocol.md`](docs/v10_nb03_test_protocol.md) | T01-T14 test-first protocol, per-pipeline |
+| [`docs/v10_cpx_pipeline_plan.md`](docs/v10_cpx_pipeline_plan.md) | Cpx pipeline design |
+| [`docs/v10_twopx_pipeline_plan.md`](docs/v10_twopx_pipeline_plan.md) | Two-pyroxene pipeline design |
+| [`docs/v10_universal_model_exploration.md`](docs/v10_universal_model_exploration.md) | Universal masking model (isolated) |
+| [`docs/v10_ensemble_methods_plan.md`](docs/v10_ensemble_methods_plan.md) | 4-method ensemble comparison |
+| [`docs/v10_stacking_propagation_audit.md`](docs/v10_stacking_propagation_audit.md) | Where stacking must appear in NB04-NB10 |
+| [`docs/v10_figure_audit.md`](docs/v10_figure_audit.md) | ~308 figure per-spec checklist |
+| [`docs/v10_natural_worldwide_plan.md`](docs/v10_natural_worldwide_plan.md) | GEOROC re-integration + world map |
+| [`docs/v10_external_models_audit.md`](docs/v10_external_models_audit.md) | External model training data verification |
+
+### Background methodology (with v10 re-evaluation blocks)
+
+| Doc | Purpose |
+|---|---|
+| [`docs/stacking_strategy.md`](docs/stacking_strategy.md) | Ridge meta design + v9 outcome + v10 test T09 hook |
+| [`docs/resampling_strategy.md`](docs/resampling_strategy.md) | Tempered P-T resampling + v9 ablation + v10 re-test |
+| [`docs/optuna_strategy.md`](docs/optuna_strategy.md) | TPE search + v9 outcome + v10 reuse decision |
+| [`docs/putirka_kd_filter_lookup.md`](docs/putirka_kd_filter_lookup.md) | Thermobar Kd API behavior |
+| [`docs/codebase_consistency_audit_optionB.md`](docs/codebase_consistency_audit_optionB.md) | ArcPL scope reconciliation |
+
+### v9 archive (historical)
+
+| Doc | Purpose |
+|---|---|
+| [`docs/v9_outcomes.md`](docs/v9_outcomes.md) | v9 execution log |
+| [`docs/v9_inventory_report.md`](docs/v9_inventory_report.md) | v9 artifact inventory |
+| [`docs/v9_archive_plan.md`](docs/v9_archive_plan.md) | v9 artifact archiving plan |
+| [`docs/v9_deletion_plan.md`](docs/v9_deletion_plan.md) | v9 cleanup plan (superseded by v10_cleanup_manifest) |
+
+---
 
 ## License and citation
 
-This repository supports a manuscript in preparation. Cite via the
-forthcoming DOI once published. Source code is MIT licensed.
+This repository supports two manuscripts in preparation. Cite via the
+forthcoming DOIs once published. Source code is MIT licensed. Training data
+from ExPetDB, LEPR, and GEOROC is subject to each source's respective
+license; see `data/README.md` (to be added in Phase A) for redistribution
+terms.

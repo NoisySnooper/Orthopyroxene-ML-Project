@@ -1,0 +1,199 @@
+Input Notebook:  notebooks/nb07b_arcpl_bias_probe.ipynb
+Output Notebook: notebooks/nb07b_arcpl_bias_probe.ipynb
+Executing notebook with kernel: python3
+Executing Cell 1---------------------------------------
+Ending Cell 1------------------------------------------
+Executing Cell 2---------------------------------------
+ArcPL n=197; Test n=174
+ArcPL columns: T_pred=True P_pred=True Citation=True
+
+Ending Cell 2------------------------------------------
+Executing Cell 3---------------------------------------
+Ending Cell 3------------------------------------------
+Executing Cell 4---------------------------------------
+
+T residual statistics (C):
+                       ArcPL (n=197)     Test set (n=174)
+  Mean residual:          +48.51           -1.26
+  Median residual:        +57.03           -9.53
+  Std of residual:         52.80           84.13
+  Mean abs deviation:      42.84           57.34
+  25/50/75 pct:        +11.8/+57.0/+86.5    -43.0/-9.5/+27.9
+
+P residual statistics (kbar):
+                       ArcPL (n=197)     Test set (n=174)
+  Mean residual:           +1.24           -1.03
+  Median residual:         +1.49           +0.00
+  Std of residual:          2.51            5.33
+  Mean abs deviation:       1.85            3.56
+  25/50/75 pct:        +0.2/+1.5/+2.8    -3.0/+0.0/+1.0
+
+Ending Cell 4------------------------------------------
+Executing Cell 5---------------------------------------
+Ending Cell 5------------------------------------------
+Executing Cell 6---------------------------------------
+<Figure size 1200x450 with 2 Axes>
+
+5 most OVER-predicted T samples (largest positive T_resid):
+               Citation   T_C      T_pred    T_resid  P_kbar    P_pred  P_resid  liq_SiO2  liq_MgO  H2O_Liq   Mg_num
+   Sisson2005_notinLEPR 825.0 1060.787488 235.787488   7.000 11.009277 4.009277 75.300000 0.410000      6.8 0.701601
+   Sisson2005_notinLEPR 825.0 1007.303139 182.303139   7.000  8.702957 1.702957 73.100000 0.490000      8.7 0.682974
+   Cadoux2014_notinLEPR 850.0 1014.521738 164.521738   0.972  3.749946 2.777946 74.133363 0.350846      3.4 0.729977
+   Cadoux2014_notinLEPR 850.0 1007.598746 157.598746   0.972  4.967255 3.995255 74.477263 0.351488      3.6 0.731960
+Melekhova2015_notinLEPR 920.0 1058.019702 138.019702  10.000 12.655494 2.655494 65.504608 2.509160     15.3 0.855681
+
+5 most UNDER-predicted T samples (largest negative T_resid):
+             Citation    T_C      T_pred    T_resid  P_kbar    P_pred   P_resid  liq_SiO2  liq_MgO  H2O_Liq   Mg_num
+Blatter2023_notinLEPR 1000.0  924.755438 -75.244562    11.0  8.552147 -2.447853     70.83     0.74      4.1 0.568841
+Blatter2023_notinLEPR 1100.0 1031.110884 -68.889116    13.4 13.487983  0.087983     56.79     2.19      2.6 0.743779
+Blatter2023_notinLEPR 1100.0 1031.663879 -68.336121    13.1 13.452091  0.352091     56.71     2.08      0.0 0.747438
+Blatter2017_notinLEPR 1000.0  932.048469 -67.951531     7.0  8.529265  1.529265     69.40     1.09      3.2 0.687746
+Blatter2023_notinLEPR 1100.0 1032.981205 -67.018795    13.8 13.629317 -0.170683     57.03     1.97      3.6 0.733112
+
+5 most OVER-predicted P samples:
+            Citation    T_C      T_pred   T_resid  P_kbar    P_pred  P_resid  liq_SiO2  liq_MgO  H2O_Liq   Mg_num
+Almeev2013_notinLEPR  975.0 1047.687597 72.687597    1.02  7.444179 6.424179     65.31     2.31      2.9 0.845992
+Sisson2005_notinLEPR  950.0 1040.097347 90.097347    7.00 13.112978 6.112978     60.20     1.79      4.9 0.682231
+Hamada2008_notinLEPR 1130.0 1190.633113 60.633113    3.00  9.106222 6.106222     52.30     6.28      1.6 0.791667
+Hamada2008_notinLEPR 1140.0 1195.297349 55.297349    4.00 10.035808 6.035808     51.80     6.73      1.6 0.804662
+Hamada2008_notinLEPR 1190.0 1206.413550 16.413550    4.00  9.740465 5.740465     50.90     7.61      0.7 0.816468
+
+5 most UNDER-predicted P samples:
+             Citation    T_C      T_pred    T_resid  P_kbar   P_pred   P_resid  liq_SiO2  liq_MgO  H2O_Liq   Mg_num
+Blatter2023_notinLEPR 1100.0 1059.449994 -40.550006    16.0 8.994256 -7.005744     62.13     3.36     4.72 0.839498
+Blatter2023_notinLEPR 1100.0 1048.943803 -51.056197    14.6 7.748939 -6.851061     63.12     2.96     4.60 0.828018
+Blatter2023_notinLEPR 1050.0 1032.444394 -17.555606    14.6 8.672695 -5.927305     63.48     2.43     5.19 0.811905
+Blatter2023_notinLEPR  900.0  913.453601  13.453601    14.6 9.816684 -4.783316     71.33     0.40     5.83 0.522269
+Blatter2023_notinLEPR  975.0  977.216065   2.216065    14.6 9.895481 -4.704519     66.51     1.30     5.90 0.692657
+
+Ending Cell 6------------------------------------------
+Executing Cell 7---------------------------------------
+Ending Cell 7------------------------------------------
+Executing Cell 8---------------------------------------
+T pearson(pred, residual) = +0.077 (p=0.279); linear fit residual = +0.0399 * pred + +7.18
+T bias by prediction quintile:
+                      mean_resid  median_resid     sem   ci_lo   ci_hi     n
+_T_bin                                                                      
+(905.765, 931.423]        45.783        57.962   5.866  34.286  57.280  40.0
+(931.423, 984.163]        46.299        61.438   8.217  30.195  62.403  39.0
+(984.163, 1048.788]       32.441         9.576  11.239  10.413  54.470  39.0
+(1048.788, 1153.728]      65.467        74.198   9.426  46.993  83.942  39.0
+(1153.728, 1289.03]       52.510        51.349   5.742  41.255  63.764  40.0
+P pearson(pred, residual) = +0.020 (p=0.781); linear fit residual = +0.0161 * pred + +1.11
+P bias by prediction quintile:
+                  mean_resid  median_resid    sem  ci_lo  ci_hi     n
+_P_bin                                                               
+(2.692, 4.589]         1.169         1.216  0.171  0.834  1.504  40.0
+(4.589, 7.638]         1.670         1.662  0.367  0.949  2.390  39.0
+(7.638, 8.631]         0.841         1.392  0.416  0.025  1.657  39.0
+(8.631, 10.232]        0.680         1.681  0.598 -0.492  1.852  39.0
+(10.232, 14.626]       1.821         2.438  0.324  1.187  2.455  40.0
+
+<Figure size 1200x480 with 2 Axes>
+288
+Ending Cell 8------------------------------------------
+Executing Cell 9---------------------------------------
+Ending Cell 9------------------------------------------
+Executing Cell 10--------------------------------------
+feature_cols available: ['liq_SiO2', 'liq_TiO2', 'liq_Al2O3', 'liq_FeO', 'liq_MgO', 'liq_CaO', 'liq_Na2O', 'liq_K2O', 'H2O_Liq', 'Mg_num', 'liq_Mg_num']
+
+T residual vs composition features (|r|>0.2 & p<0.05 marked *):
+  liq_Na2O       r = -0.380  p = 3.57e-08 *
+  H2O_Liq        r = +0.372  p = 7.63e-08 *
+  liq_TiO2       r = -0.340  p = 1.01e-06 *
+  liq_K2O        r = +0.184  p = 0.00945
+  liq_FeO        r = -0.163  p = 0.0224
+  liq_SiO2       r = +0.153  p = 0.0314
+  liq_Al2O3      r = -0.142  p = 0.0467
+  liq_CaO        r = -0.037  p = 0.604
+  liq_Mg_num     r = +0.018  p = 0.805
+  Mg_num         r = +0.014  p = 0.844
+  liq_MgO        r = -0.010  p = 0.893
+
+P residual vs composition features (|r|>0.2 & p<0.05 marked *):
+  liq_Na2O       r = -0.327  p = 2.64e-06 *
+  liq_FeO        r = +0.266  p = 0.000162 *
+  H2O_Liq        r = -0.226  p = 0.00143 *
+  liq_MgO        r = +0.173  p = 0.0153
+  liq_CaO        r = +0.171  p = 0.0164
+  liq_TiO2       r = +0.155  p = 0.0302
+  liq_SiO2       r = -0.148  p = 0.038
+  Mg_num         r = +0.102  p = 0.155
+  liq_Al2O3      r = -0.075  p = 0.297
+  liq_Mg_num     r = +0.046  p = 0.525
+  liq_K2O        r = +0.007  p = 0.924
+
+<Figure size 1400x900 with 12 Axes>
+<Figure size 1400x900 with 12 Axes>
+Ending Cell 10-----------------------------------------
+Executing Cell 11--------------------------------------
+Ending Cell 11-----------------------------------------
+Executing Cell 12--------------------------------------
+Statistic              ArcPL        Test set      Arc - Test
+--- T (C) ---
+  Mean residual:           +48.51       -1.26      +49.77
+  Median residual:         +57.03       -9.53      +66.55
+  Slope resid vs pred:    +0.0399     +0.0450     -0.0052
+  25/75 percentile:     [+11.8, +86.5]   [-43.0, +27.9]
+--- P (kbar) ---
+  Mean residual:            +1.24       -1.03       +2.26
+  Median residual:          +1.49       +0.00       +1.49
+  Slope resid vs pred:    +0.0161     -0.1309     +0.1470
+  25/75 percentile:     [+0.2, +2.8]   [-3.0, +1.0]
+
+<Figure size 1200x480 with 2 Axes>
+Ending Cell 12-----------------------------------------
+Executing Cell 13--------------------------------------
+Ending Cell 13-----------------------------------------
+Executing Cell 14--------------------------------------
+GroupKFold n_splits=5 (unique citations = 19)
+
+T RMSE (C): raw=71.601, const=58.886 (+17.8% vs raw), linear=58.938 (+17.7% vs raw)
+  Delta-RMSE 95% CI: const [-18.755, -6.401]  linear [-18.085, -7.028]
+
+
+P RMSE (kbar): raw=2.794, const=2.592 (+7.2% vs raw), linear=2.946 (-5.5% vs raw)
+  Delta-RMSE 95% CI: const [-0.402, +0.006]  linear [-0.068, +0.379]
+
+Ending Cell 14-----------------------------------------
+Executing Cell 15--------------------------------------
+Ending Cell 15-----------------------------------------
+Executing Cell 16--------------------------------------
+========================================================================
+PROBE 7: RECOMMENDATION
+========================================================================
+
+Temperature (T_C) recommendation: Option D: composition-conditional correction
+  - arc mean residual = +48.51, test mean = -1.26 (distribution-shift gap = +49.77)
+  - pearson(pred, residual) on ArcPL = +0.077
+  - in-domain GroupKFold RMSE reduction: const=+17.8% (sig), linear=+17.7% (sig)
+  - composition features with |r|>0.2 and p<0.05: 3
+  -   top: liq_Na2O r=-0.38, H2O_Liq r=+0.37, liq_TiO2 r=-0.34
+
+Pressure (P_kbar) recommendation: Option A: report uncorrected with caveat
+  - arc mean residual = +1.24, test mean = -1.03 (distribution-shift gap = +2.26)
+  - pearson(pred, residual) on ArcPL = +0.020
+  - in-domain GroupKFold RMSE reduction: const=+7.2% (ns), linear=-5.5% (ns)
+  - composition features with |r|>0.2 and p<0.05: 3
+  -   top: liq_Na2O r=-0.33, liq_FeO r=+0.27, H2O_Liq r=-0.23
+
+Tradeoff: any correction trained on ArcPL itself is in-domain for ArcPL and may not help other arc datasets. Users should be informed whenever the correction is applied. For manuscript honesty, present both raw and corrected numbers.
+
+========================================================================
+OUTPUTS CREATED BY NB07B
+========================================================================
+  results/nb07b_probe1_bias_stats.csv
+  results/nb07b_probe2_extreme_residuals.csv
+  results/nb07b_probe3_bias_by_quintile.csv
+  results/nb07b_probe3_linear_fit.json
+  results/nb07b_probe4_composition_corr.csv
+  results/nb07b_probe5_arcpl_vs_test.csv
+  results/nb07b_probe6_correction_cv.csv
+  results/nb07b_probe7_recommendation.json
+  figures/fig_nb07b_arcpl_residual_hist.{png,pdf}
+  figures/fig_nb07b_bias_vs_prediction.{png,pdf}
+  figures/fig_nb07b_bias_vs_composition_T.{png,pdf}
+  figures/fig_nb07b_bias_vs_composition_P.{png,pdf}
+  figures/fig_nb07b_residual_distribution_comparison.{png,pdf}
+
+Ending Cell 16-----------------------------------------

@@ -1,0 +1,87 @@
+Input Notebook:  notebooks/nb07_bias_correction.ipynb
+Output Notebook: notebooks/nb07_bias_correction.ipynb
+Executing notebook with kernel: python3
+Executing Cell 1---------------------------------------
+Ending Cell 1------------------------------------------
+Executing Cell 2---------------------------------------
+Ending Cell 2------------------------------------------
+Executing Cell 3---------------------------------------
+Ending Cell 3------------------------------------------
+Executing Cell 4---------------------------------------
+Ending Cell 4------------------------------------------
+Executing Cell 5---------------------------------------
+v7 forest opx_liq feature sets: T=pwlr  P=alr
+
+train n=426 test n=174 features: T=72 P=23
+
+Ending Cell 5------------------------------------------
+Executing Cell 6---------------------------------------
+OOF done. OOF T RMSE = 72.95, OOF P RMSE = 5.90
+
+Ending Cell 6------------------------------------------
+Executing Cell 7---------------------------------------
+target                  track  rmse_train  mae_train  rmse_test  mae_test  r2_test
+   T_C               1_raw_rf      20.529     10.145     83.895    57.526    0.634
+   T_C 2_linear_trainfit_leak      20.322     10.321     84.025    57.625    0.633
+   T_C        3_linear_ooffit      20.420     10.786     84.136    57.806    0.632
+   T_C     4_piecewise_ooffit      24.208     15.658     83.166    57.301    0.641
+P_kbar               1_raw_rf       0.000      0.000      5.416     3.279    0.684
+P_kbar 2_linear_trainfit_leak       0.000      0.000      5.416     3.279    0.684
+P_kbar        3_linear_ooffit       0.252      0.217      5.413     3.377    0.685
+P_kbar     4_piecewise_ooffit       1.808      1.314      5.689     3.953    0.652
+
+Ending Cell 7------------------------------------------
+Executing Cell 8---------------------------------------
+Ending Cell 8------------------------------------------
+Executing Cell 9---------------------------------------
+Paired bootstrap delta-RMSE (raw RF -> piecewise OOF-fit) on test set, B=2000:
+target  rmse_raw_rf  rmse_piecewise  delta_rmse_point  delta_rmse_boot_median  delta_rmse_ci_lo  delta_rmse_ci_hi  ci_contains_zero                                         interpretation
+   T_C      83.8952         83.1664            0.7288                  0.7460           -0.8947            2.3236              True       NULL: piecewise correction within sampling noise
+P_kbar       5.4156          5.6892           -0.2736                 -0.2701           -0.5287           -0.0624             False SIGNIFICANT: piecewise correction improves over raw RF
+
+[NULL] T_C: delta-RMSE point = +0.729 C, 95% CI [-0.895, +2.324] C
+[SIGNIFICANT] P_kbar: delta-RMSE point = -0.274 kbar, 95% CI [-0.529, -0.062] kbar
+
+Ending Cell 9------------------------------------------
+Executing Cell 10--------------------------------------
+target           track  coverage_68  rmse_median
+   T_C A_trainfit_leak        1.000       24.063
+   T_C    B_oof_honest        0.723       73.415
+   T_C          C_test        0.707       84.595
+P_kbar A_trainfit_leak        0.998        0.000
+P_kbar    B_oof_honest        0.716        5.900
+P_kbar          C_test        0.782        5.416
+
+Ending Cell 10-----------------------------------------
+Executing Cell 11--------------------------------------
+Ending Cell 11-----------------------------------------
+Executing Cell 12--------------------------------------
+Multi-alpha split-conformal calibration:
+target  alpha  nominal_coverage    q_hat  empirical_coverage
+P_kbar   0.32              0.68   3.0000              0.6494
+   T_C   0.32              0.68  35.3571              0.4885
+P_kbar   0.20              0.80   5.0000              0.7989
+   T_C   0.20              0.80  46.1806              0.5632
+P_kbar   0.10              0.90  10.0000              0.9598
+   T_C   0.10              0.90  92.5833              0.7931
+P_kbar   0.05              0.95  18.0000              0.9770
+   T_C   0.05              0.95 151.7708              0.9425
+
+Primary manuscript intervals (nominal 90%):
+  q_hat_P_90 = 10.00 kbar  empirical 96.0%
+  q_hat_T_90 = 92.6 C     empirical 79.3%
+
+Ending Cell 12-----------------------------------------
+Executing Cell 13--------------------------------------
+Saved test predictions n=174 to nb07_test_predictions.csv
+
+Ending Cell 13-----------------------------------------
+Executing Cell 14--------------------------------------
+=== NB07 complete ===
+  winning feature set: pwlr
+  AB test tracks: ['1_raw_rf', '2_linear_trainfit_leak', '3_linear_ooffit', '4_piecewise_ooffit']
+  QRF coverage tracks: ['A_trainfit_leak', 'B_oof_honest', 'C_test']
+  conformal alphas: [0.05, 0.1, 0.2, 0.32]
+  bias-correction null test: saved
+
+Ending Cell 14-----------------------------------------

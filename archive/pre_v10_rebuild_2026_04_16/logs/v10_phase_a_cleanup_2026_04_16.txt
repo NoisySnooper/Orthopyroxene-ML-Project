@@ -1,0 +1,48 @@
+  -> logs\cleaning_log.txt
+  -> logs\pipeline_health.txt
+  -> logs\v10_phase_a_cleanup_2026_04_16.txt
+  -> logs\nb02_papermill.log
+  -> logs\nb03_papermill.log
+  -> logs\nb03_search.log
+  -> logs\nb04_papermill.log
+  -> logs\nb05_papermill.log
+  -> logs\nb06_papermill.log
+  -> logs\nb07b_papermill.log
+  -> logs\nb07_papermill.log
+  -> logs\nb08_papermill.log
+  -> logs\nb09_papermill.log
+  -> logs\nbF_papermill.log
+  -> logs\optuna_overnight_launch.log
+  -> logs\recovery_run.log
+  -> logs\run_phase2_optuna.log
+  -> logs\run_phase35_to_312.log
+  -> nb03_optuna_best_params.json
+  -> nb03c_training.log
+[OK] Archived 289 items
+
+[6] Deleting per user review decisions...
+  [OK] Deleted src\__pycache__
+  [OK] Deleted __pycache__
+[OK] Deleted 2 items
+
+[7] Archiving per user review decisions...
+[OK] Archived 0 items
+
+[8] Handling stale runners...
+======================================================================
+v10 PHASE A CLEANUP [2026-04-16T19:19:31.321000]
+======================================================================
+
+[1] Checking pre-cleanup git tag...
+[OK] Tag pre_v10_cleanup_2026_04_16 found
+
+[2] Checking git status...
+WARN: Git tree has uncommitted changes. Consider committing first.
+
+[3] Checking free disk space (need 1000 MB)...
+[OK] 26773 MB free
+
+[4] Creating archive directory...
+[OK] Archive dir: C:\Users\NQTa\Documents\MLCourse\Final Project\archive\pre_v10_rebuild_2026_04_16
+
+[5] Archiving results, figures, models, logs...

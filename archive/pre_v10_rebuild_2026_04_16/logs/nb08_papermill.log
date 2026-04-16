@@ -1,0 +1,47 @@
+Input Notebook:  notebooks/nb08_natural_twopx.ipynb
+Output Notebook: notebooks/nb08_natural_twopx.ipynb
+Executing notebook with kernel: python3
+Executing Cell 1---------------------------------------
+Ending Cell 1------------------------------------------
+Executing Cell 2---------------------------------------
+NB08 v6 imports OK
+
+Ending Cell 2------------------------------------------
+Executing Cell 3---------------------------------------
+LEPR paired cpx+opx with ground truth: n=327
+
+Thermobar AllMatches natural set: n=437
+
+Ending Cell 3------------------------------------------
+Executing Cell 4---------------------------------------
+Youve selected a P-independent function
+
+Youve selected a T-independent function
+
+LEPR predictions done.
+  ML opx T  mean 1125 C   P mean 9.80 kbar
+  Jor cpx T mean 1086 C  P mean 7.71 kbar
+  Put2px T  mean 1082 C   P mean 5.04 kbar
+
+Ending Cell 4------------------------------------------
+Executing Cell 5---------------------------------------
+Conformal half-widths: sigma_T=50.0 C, sigma_P=3.00 kbar
+LEPR cross-mineral "equilibrium pair" fraction (|dT|<2s_T AND |dP|<2s_P): 0.728
+
+LEPR vs experimental ground truth (cross-mineral agreement):
+              Method  n_T  T_RMSE  T_bias  n_P  P_RMSE  P_bias
+  ML opx-only (ours)  327  114.94   80.21  327    5.53    2.46
+  Jorgenson cpx-only  327   74.92   42.13  327    1.84    0.38
+Putirka 2-px eq36/39  323   77.57   36.03  323    5.75   -2.33
+
+Saved nb08_natural_predictions.csv (n=327)
+
+Ending Cell 5------------------------------------------
+Executing Cell 6---------------------------------------
+<Figure size 1200x1000 with 4 Axes>
+Wrote fig_nb08_twopx_1to1.{png,pdf}
+=== NB08 complete ===
+
+Ending Cell 6------------------------------------------
+Executing Cell 7---------------------------------------
+Ending Cell 7------------------------------------------

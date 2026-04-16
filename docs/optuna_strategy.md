@@ -3,6 +3,7 @@
 **Status:** proposed for v9 Phase 2 (NB03 rebuild)
 **Author:** NQTa
 **Date:** 2026-04-15
+**Last updated:** 2026-04-16 with v9 empirical outcome block
 
 ---
 
@@ -10,7 +11,7 @@
 
 The v7/v8 pipeline used `HalvingRandomSearchCV` for hyperparameter optimization. Halving is defensible in principle (allocate more CV budget to survivors of each round) but has a known failure mode: promising hyperparameter regions can be eliminated prematurely when initial trials happen to underperform on the small early-round budgets. For regression problems with noisy CV scores, this produces search paths that are sensitive to the ordering of initial trials.
 
-Modern Bayesian optimization via Optuna's TPE (Tree-structured Parzen Estimator) sampler explores the hyperparameter space more efficiently by modeling the joint distribution of hyperparameter values and validation performance, then drawing new trials from the posterior over high-expected-improvement regions. Published cpx ML thermobarometry work (Ágreda-López 2024, Jorgenson 2022, Wang 2021) has not yet adopted Optuna; moving to it aligns this project with broader ML best practice and gives a cleaner convergence story for the manuscript Methods section.
+Modern Bayesian optimization via Optuna's TPE (Tree-structured Parzen Estimator) sampler explores the hyperparameter space more efficiently by modeling the joint distribution of hyperparameter values and validation performance, then drawing new trials from the posterior over high-expected-improvement regions. Published cpx ML thermobarometry work (Agreda-Lopez 2024, Jorgenson 2022, Wang 2021) has not yet adopted Optuna; moving to it aligns this project with broader ML best practice and gives a cleaner convergence story for the manuscript Methods section.
 
 ---
 
@@ -22,7 +23,7 @@ For every (model, target, track, feature_set) combination in the search grid:
 - 2 targets: T_C, P_kbar
 - 2 tracks: opx_only, opx_liq
 - 3 feature sets: raw, alr, pwlr
-- **Total: 4 × 2 × 2 × 3 = 48 Optuna studies**
+- **Total: 4 x 2 x 2 x 3 = 48 Optuna studies**
 
 Each study runs 50 trials under:
 
@@ -41,7 +42,7 @@ Hyperparameter selection is per feature_set. Phase 3.5's existing canonical-winn
 
 ## Why 50 trials per config
 
-Empirical guidance from the Optuna documentation and hyperparameter-search literature: TPE convergence typically plateaus between 30 and 80 trials for small parameter spaces (5 to 10 hyperparameters). 50 sits at the middle of this range and is also where the compute budget becomes tractable (48 studies × 50 trials × ~7 s per trial ≈ 5 hours on i7-1265U).
+Empirical guidance from the Optuna documentation and hyperparameter-search literature: TPE convergence typically plateaus between 30 and 80 trials for small parameter spaces (5 to 10 hyperparameters). 50 sits at the middle of this range and is also where the compute budget becomes tractable (48 studies x 50 trials x ~7 s per trial ~= 5 hours on i7-1265U).
 
 The convergence diagnostic figure (`fig_nb03_optuna_search_progress`) verifies this empirically per config. If a given study's best-so-far curve has not plateaued by trial 50, that means either the search space is too wide (rare with our fixed spaces) or the model architecture fits the data poorly at any settings (informative diagnostic on its own). Both outcomes are reportable.
 
@@ -117,7 +118,7 @@ Secondary benefit: the search-progress and hyperparameter-importance figures giv
 `src/optuna_search.py` (new module, to be written in Phase 2.2).
 
 Exposed function:
-- `optuna_search(model_name, X_train, y_train, groups, n_trials=50, seed=42, timeout_per_trial=300)` → returns `{'best_params', 'best_score', 'best_trial', 'study'}` dict
+- `optuna_search(model_name, X_train, y_train, groups, n_trials=50, seed=42, timeout_per_trial=300)` -> returns `{'best_params', 'best_score', 'best_trial', 'study'}` dict
 
 Called from NB03 Phase 3.3b (modified cell) in a 48-iteration loop. Intermediate progress saved every 10 studies to `results/nb03_optuna_best_params_partial.json`, finalized to `results/nb03_optuna_best_params.json` at the end.
 
@@ -129,3 +130,123 @@ Called from NB03 Phase 3.3b (modified cell) in a 48-iteration loop. Intermediate
 - Bergstra et al. (2011) NeurIPS — Algorithms for Hyper-Parameter Optimization (TPE original)
 - Bergstra & Bengio (2012) JMLR — Random Search for Hyper-Parameter Optimization (baseline comparison)
 - Li et al. (2018) JMLR — Hyperband / Successive Halving (the family HalvingRandomSearchCV belongs to)
+
+---
+
+## v9 empirical outcome (added 2026-04-16)
+
+### What happened
+
+All 48 studies completed in 2 hours 9 minutes on i7-1265U with `SEARCH_NJOBS=-1`. Zero failed studies, zero timeouts at the 300 s trial cap. Frozen best params committed to `results/nb03_optuna_best_params.json`.
+
+Sanity checks:
+
+- **Plateau check:** 47 of 48 studies showed < 5% improvement between trial 25 and trial 50. One study (ERT T_C opx_only raw) showed 7.2% late-stage improvement, suggesting it had not fully converged. Ship-as-is per 80/20 rule; flagged in the manuscript methods for transparency.
+- **Trial failure rate:** 0/2400 trials raised exceptions. All completed successfully.
+- **Pruner kill rate:** MedianPruner killed 18% of trials on average (range 8-34% per study). Healthy — it worked without over-killing.
+- **Progress snapshots:** written at every 10-study boundary. Crash resilience confirmed via a deliberate mid-run kill test during development.
+
+### v10 shipped decision
+
+- Optuna is **canonical** for v10.
+- The frozen v9 `nb03_optuna_best_params.json` is reused for v10 Phase C unless test T05 detects instability (winning feature set should match between v9 and v10 at >=10/12 combos).
+- If T05 fails, Optuna re-runs in v10 with budget estimate of ~2.5 hours.
+
+### Confirmed benefit vs prior regime
+
+Not a direct head-to-head with HalvingRandomSearchCV (v8 artifacts are archived, not comparable). Indirect signals:
+
+- v9 multi-seed RMSE std values are tighter than v7/v8 equivalents in comparable tables. For instance opx_liq T_C XGB+alr has std=9.55 across 20 seeds in v9 vs 11.2 in v7 per archived results.
+- Optuna's per-study hyperparameter importance figure (`fig_nb03_optuna_hyperparameter_importance.pdf`) gives a clean reviewer-facing defense of the search design.
+
+Net: methodology upgrade, no regret. Keep for v10.
+
+### Note for v11 cpx pipeline
+
+Re-run Optuna for cpx from scratch. Do not reuse opx params. Search spaces per model are generic enough to transfer, but best params are track- and feature-specific. Expected budget: same 2-3 hours.
+
+---
+
+## v10 scope update (2026-04-16)
+
+v10 expands the Optuna search grid along three axes: more models (4 -> 8),
+more tracks (2 -> 5 primary + 1 isolated), and per-pipeline independence.
+Compute budget scales accordingly.
+
+### Expanded search grid
+
+Per `docs/v10_master_plan.md` Section 3, the v10 Optuna grid is:
+
+| Axis | v9 | v10 | Multiplier |
+|---|---|---|---|
+| Models | 4 (RF, ERT, XGB, GB) | 8 (+ CatBoost, LightGBM, ElasticNet, MLP) | 2x |
+| Feature sets | 3 (raw, alr, pwlr) | 3 (same, per test T05 carry-over) | 1x |
+| Targets | 2 (T_C, P_kbar) | 2 (same) | 1x |
+| Tracks | 2 (opx_only, opx_liq) | 5 primary (+ opx + cpx tracks + twopx) + 1 universal | 2.5x + isolated |
+| Total studies (primary) | 48 | 240 (8 x 3 x 2 x 5) | 5x |
+| Total studies (universal, isolated) | 0 | 48 (8 x 3 x 2 x 1) | +48 |
+
+### Expected compute
+
+v9: 48 studies in 2.12 h on i7-1265U. Per-study average: 160 s.
+
+v10 scaling factors:
+
+- **Non-tree models add time:** CatBoost and LightGBM are comparable to XGB (~150 s/study). ElasticNet is fast (~30 s/study, no HP depth). MLP is slow due to backprop (~400 s/study per 50 trials). Average per-study time rises to ~200 s.
+- **Larger training sets:** cpx has ~1500-2000 samples vs opx ~600; fit time scales sub-linearly for trees, super-linearly for MLP. Per-study time on cpx ~250 s.
+- **Predicted total (primary only):** 240 studies x ~220 s average = 14.7 h. Sequential.
+- **With `SEARCH_NJOBS=-1` across studies:** dominated by sampler serialization within studies. Estimate 10-12 h wall time.
+- **Universal (isolated):** 48 studies x ~250 s (larger feature vector, mixed phase types) = 3.3 h.
+
+**v10 Optuna budget: 13-15 h total compute, schedulable across 2-3 overnight
+sessions.** Reuses v9 best_params for opx via test T05 carry-over if that
+test passes, saving ~3 h.
+
+### Tune-once-then-freeze extends to all pipelines
+
+Each pipeline has its own frozen best_params file:
+
+- `results/nb03_optuna_best_params_opx.json` (v9 file, carry over if T05 passes)
+- `results/nb03_optuna_best_params_cpx.json` (new v10)
+- `results/nb03_optuna_best_params_twopx.json` (new v10)
+- `results/nb03_optuna_best_params_universal.json` (new v10, isolated)
+
+No sharing between pipelines. Opx winners do not determine cpx winners.
+
+### Per-pipeline search space adjustments
+
+- **RF, ERT:** same search space across pipelines. Trees are scale-invariant.
+- **XGB, GB:** same.
+- **CatBoost, LightGBM:** same.
+- **ElasticNet:** per-pipeline `l1_ratio` and `alpha` search. Feature scale affects the regularization path.
+- **MLP:** per-pipeline `hidden_layer_sizes` search. Input dimensionality varies across pipelines (opx_only 9 features, twopx 18 features, universal ~45 features). Layer widths scale with input.
+
+### Test T05 gate
+
+Per `docs/v10_nb03_test_protocol.md` T05, winning feature set should be
+stable between v9 and v10 for opx at >=10 of 12 (model x target) combos.
+If stable, skip opx Optuna re-run; reuse v9 params. If unstable (<10/12),
+Optuna re-runs for opx with expanded 8-model grid (~2.5 h).
+
+### Study persistence extends
+
+`results/optuna_studies/` gains per-pipeline subdirs:
+
+```
+results/optuna_studies/
+  opx/
+    study_{model}_{target}_{track}_{feature_set}.joblib (48 studies)
+  cpx/
+    study_{model}_{target}_{track}_{feature_set}.joblib (96 studies)
+  twopx/
+    study_{model}_{target}_{track}_{feature_set}.joblib (48 studies)
+  universal/
+    study_{model}_{target}_{track}_{feature_set}.joblib (48 studies)
+```
+
+### Cross-references
+
+- 8-model roster: `docs/v10_master_plan.md` Section 3
+- Per-pipeline independence: `docs/v10_master_plan.md` Section 4
+- Test T05 (feature set stability): `docs/v10_nb03_test_protocol.md`
+- Compute budget detail: `docs/v10_master_plan.md` Section 6

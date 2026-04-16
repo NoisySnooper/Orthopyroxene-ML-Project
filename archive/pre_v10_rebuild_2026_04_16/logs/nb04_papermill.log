@@ -1,0 +1,579 @@
+Input Notebook:  notebooks/nb04_putirka_benchmark.ipynb
+Output Notebook: notebooks/nb04_putirka_benchmark.ipynb
+Executing notebook with kernel: python3
+Executing Cell 1---------------------------------------
+Ending Cell 1------------------------------------------
+Executing Cell 2---------------------------------------
+Ending Cell 2------------------------------------------
+Executing Cell 3---------------------------------------
+Ending Cell 3------------------------------------------
+Executing Cell 4---------------------------------------
+Ending Cell 4------------------------------------------
+Executing Cell 5---------------------------------------
+Forest-family opx-liq: T uses RF/pwlr, P uses RF/alr
+
+Ending Cell 5------------------------------------------
+Executing Cell 6---------------------------------------
+Test set: 174 experiments from 19 studies
+
+Ending Cell 6------------------------------------------
+Executing Cell 7---------------------------------------
+Ending Cell 7------------------------------------------
+Executing Cell 8---------------------------------------
+Ending Cell 8------------------------------------------
+Executing Cell 9---------------------------------------
+Option 2 (true P/T as input):
+
+  28a: n_valid=159, mean=1302
+  28b: n_valid=161, mean=1294
+  29a: n_valid=126, mean=11.1
+  29c: n_valid=145, mean=10.4
+
+Ending Cell 9------------------------------------------
+Executing Cell 10--------------------------------------
+Option 1 (iterative):
+
+  columns: ['P_kbar_calc', 'T_K_calc', 'Delta_P_kbar_Iter', 'Delta_T_K_Iter']
+  T_iter n_valid=126, mean=1303
+  P_iter n_valid=126, mean=11.4
+
+Ending Cell 10-----------------------------------------
+Executing Cell 11--------------------------------------
+ML: T RMSE=84.89, R2=0.625
+ML: P RMSE=5.07, R2=0.724
+Option 3 (ML-P fed to Putirka T, ML-T fed to Putirka P):
+
+  T_put_mlP mean=1308
+  P_put_mlT mean=11.4
+
+Ending Cell 11-----------------------------------------
+Executing Cell 12--------------------------------------
+T: all-method valid on 124/174
+P: all-method valid on 107/174
+
+FAIR comparison:
+                        Method Target   RMSE    MAE    R2  n_test
+          Putirka 28a (true P)      T 77.050 42.718 0.631     124
+  Putirka 28b_opx_sat (true P)      T 81.432 49.497 0.587     124
+   Putirka iterative (28a+29a)      T 77.842 49.592 0.623     124
+            Putirka 28a (ML P)      T 79.109 49.848 0.611     124
+                 ML-RF opx-liq      T 85.447 57.189 0.546     124
+          Putirka 29a (true T)      P  3.834  2.950 0.780     107
+Putirka 29c (opx-only, true T)      P  4.963  3.842 0.631     107
+   Putirka iterative (28a+29a)      P  3.818  2.918 0.782     107
+            Putirka 29a (ML T)      P  3.761  2.836 0.788     107
+                 ML-RF opx-liq      P  3.883  3.095 0.774     107
+
+Ending Cell 12-----------------------------------------
+Executing Cell 13--------------------------------------
+PRACTICAL comparison:
+                  Method Target   RMSE    MAE    R2  n_test  failure_pct
+ML-RF opx-liq (all test)      T 84.893 58.388 0.625     174        0.000
+ML-RF opx-liq (all test)      P  5.066  3.642 0.724     174        0.000
+    Putirka failure rate      T    NaN    NaN   NaN      50       28.736
+    Putirka failure rate      P    NaN    NaN   NaN      67       38.506
+
+Ending Cell 13-----------------------------------------
+Executing Cell 14--------------------------------------
+Wrote legacy results/nb04_putirka_vs_ml.csv (174 rows)
+
+Ending Cell 14-----------------------------------------
+Executing Cell 15--------------------------------------
+Ending Cell 15-----------------------------------------
+Executing Cell 16--------------------------------------
+N_full = 174
+T putirka_valid = 124, P putirka_valid = 107
+T intersection  = 124, P intersection  = 107
+
+Unified benchmark (RMSE with 95% bootstrap CI, B=2000):
+
+--- target = T ---
+        scope                       method   n              rmse_str  failure_pct
+         full         Putirka 28a (true P) 159  69.73 [49.79, 88.62]     8.620690
+         full Putirka 28b_opx_sat (true P) 161  77.22 [59.17, 95.01]     7.471264
+         full  Putirka iterative (28a+29a) 126  77.33 [57.07, 97.31]    27.586207
+         full           Putirka 28a (ML P) 161  74.00 [55.66, 90.49]     7.471264
+         full                ML-RF opx-liq 174  84.89 [70.09, 99.97]     0.000000
+putirka_valid         Putirka 28a (true P) 124  77.05 [54.51, 99.65]     8.620690
+putirka_valid Putirka 28b_opx_sat (true P) 124 81.43 [59.64, 102.86]     7.471264
+putirka_valid  Putirka iterative (28a+29a) 124  77.84 [57.33, 97.54]    27.586207
+putirka_valid           Putirka 28a (ML P) 124  79.11 [57.40, 98.18]     7.471264
+putirka_valid                ML-RF opx-liq 124 85.45 [66.85, 105.55]     0.000000
+ intersection         Putirka 28a (true P) 124  77.05 [52.99, 98.39]     8.620690
+ intersection Putirka 28b_opx_sat (true P) 124 81.43 [58.60, 102.72]     7.471264
+ intersection  Putirka iterative (28a+29a) 124  77.84 [57.55, 97.24]    27.586207
+ intersection           Putirka 28a (ML P) 124 79.11 [58.53, 100.13]     7.471264
+ intersection                ML-RF opx-liq 124 85.45 [66.08, 105.48]     0.000000
+
+--- target = P ---
+        scope                         method   n          rmse_str  failure_pct
+         full           Putirka 29a (true T) 126 4.75 [3.78, 5.71]    27.586207
+         full Putirka 29c (opx-only, true T) 145 4.84 [4.24, 5.41]    16.666667
+         full    Putirka iterative (28a+29a) 126 4.89 [3.86, 5.90]    27.586207
+         full             Putirka 29a (ML T) 125 5.09 [3.88, 6.24]    28.160920
+         full                  ML-RF opx-liq 174 5.07 [4.24, 5.91]     0.000000
+putirka_valid           Putirka 29a (true T) 107 3.83 [3.29, 4.38]    27.586207
+putirka_valid Putirka 29c (opx-only, true T) 107 4.96 [4.25, 5.66]    16.666667
+putirka_valid    Putirka iterative (28a+29a) 107 3.82 [3.25, 4.37]    27.586207
+putirka_valid             Putirka 29a (ML T) 107 3.76 [3.16, 4.33]    28.160920
+putirka_valid                  ML-RF opx-liq 107 3.88 [3.35, 4.38]     0.000000
+ intersection           Putirka 29a (true T) 107 3.83 [3.27, 4.42]    27.586207
+ intersection Putirka 29c (opx-only, true T) 107 4.96 [4.30, 5.69]    16.666667
+ intersection    Putirka iterative (28a+29a) 107 3.82 [3.22, 4.37]    27.586207
+ intersection             Putirka 29a (ML T) 107 3.76 [3.16, 4.33]    28.160920
+ intersection                  ML-RF opx-liq 107 3.88 [3.36, 4.38]     0.000000
+
+Ending Cell 16-----------------------------------------
+Executing Cell 17--------------------------------------
+Paired Wilcoxon signed-rank on |residuals| (ML vs Putirka variant,
+intersection scope, B=2000 paired bootstrap for Delta-RMSE CI):
+delta_rmse > 0 => ML is better (lower error).
+
+target                          ml_vs  n_pairs  wilcoxon_stat  p_value  delta_rmse  delta_ci_lo  delta_ci_hi
+     T           Putirka 28a (true P)      124         2499.0   0.0006     -8.3974     -18.0415      -0.6451
+     T   Putirka 28b_opx_sat (true P)      124         3559.0   0.4307     -4.0154     -13.1574       3.8512
+     T    Putirka iterative (28a+29a)      124         3165.0   0.0766     -7.6052     -14.5623      -1.4455
+     T             Putirka 28a (ML P)      124         3501.0   0.3510     -6.3384     -14.1243       0.4892
+     P           Putirka 29a (true T)      107         2604.0   0.3757     -0.0491      -0.7453       0.6030
+     P Putirka 29c (opx-only, true T)      107         2354.0   0.0964      1.0797       0.2719       1.8923
+     P    Putirka iterative (28a+29a)      107         2569.0   0.3199     -0.0647      -0.7246       0.5944
+     P             Putirka 29a (ML T)      107         2402.0   0.1301     -0.1225      -0.7845       0.5478
+
+Ending Cell 17-----------------------------------------
+Executing Cell 18--------------------------------------
+Putirka convergence: 124 / 174 (failure rate 28.7%)
+
+Mann-Whitney U, converged vs failed samples (sorted by p):
+  feature  n_converged  n_failed  mean_converged  mean_failed  mannwhitney_U  p_value
+      T_C          124        50       1271.5776    1345.7900         2010.5   0.0003
+  liq_MgO          124        50         10.2961      12.0216         2265.5   0.0055
+FeO_total          124        50          8.9697       7.5930         3886.0   0.0090
+liq_Al2O3          124        50         15.0922      13.8792         3858.0   0.0118
+     SiO2          124        50         54.1235      55.0491         2463.0   0.0343
+      CaO          124        50          1.7037       1.5199         3665.0   0.0605
+    Al2O3          124        50          4.4089       3.7349         3587.0   0.1057
+   P_kbar          124        50         11.5793      12.0803         3385.5   0.3399
+      MgO          124        50         30.0690      31.2371         2823.5   0.3587
+  liq_CaO          124        50          9.0952       9.1309         2980.0   0.6911
+ liq_SiO2          124        50         50.6040      50.8728         2981.0   0.6935
+
+Ending Cell 18-----------------------------------------
+Executing Cell 19--------------------------------------
+<Figure size 1200x400 with 2 Axes>
+=== NB04 complete ===
+
+Ending Cell 19-----------------------------------------
+Executing Cell 20--------------------------------------
+Ending Cell 20-----------------------------------------
+Executing Cell 21--------------------------------------
+Three-way benchmark set (ArcPL scope): n=114 experiments
+  of which n_cpx_liq=197
+
+Ending Cell 21-----------------------------------------
+Executing Cell 22--------------------------------------
+Youve selected a P-independent function
+
+Youve selected a T-independent function
+
+Youve selected a P-independent function
+Youve selected a T-independent function
+Youve selected a T-independent function
+
+
+Ours shim: m_for_ours shape=(114, 92)
+  SiO2 present: True
+  FeO_total present: True
+  liq_SiO2 present: True
+  liq_FeO present: True
+
+
+Methods available: ['Agreda-Lopez cpx-only', 'Agreda-Lopez cpx-liq', 'Jorgenson cpx-only', 'Wang 2021 cpx-liq', 'Putirka 2008 cpx-liq', 'Ours opx-liq forest', 'Ours opx-liq boosted', 'Ours opx-only forest', 'Ours opx-only boosted']
+
+Option B: Kd equilibrium pass = 96/114 (84.2%)
+
+v8-check: preds has 13 methods; Putirka opx variants present: ['Putirka 2008 opx-liq', 'Putirka 2008 opx-only']
+
+Ending Cell 22-----------------------------------------
+Executing Cell 23--------------------------------------
+                        Method  T_n  T_RMSE  T_RMSE_CI_lo  T_RMSE_CI_hi   T_R2  T_coverage_pct  P_n  P_RMSE  P_RMSE_CI_lo  P_RMSE_CI_hi   P_R2  P_coverage_pct
+         Agreda-Lopez cpx-only  114  85.016        73.564        96.274  0.167         100.000  114   2.072         1.832         2.306  0.721         100.000
+          Agreda-Lopez cpx-liq  114  49.325        41.183        58.051  0.719         100.000  114   1.997         1.754         2.240  0.741         100.000
+            Jorgenson cpx-only  114  80.412        66.657        93.826  0.254         100.000  114   1.528         1.296         1.751  0.849         100.000
+             Wang 2021 cpx-liq  112  87.336        76.070        97.954  0.074          98.246  114   1.978         1.715         2.215  0.746         100.000
+          Putirka 2008 cpx-liq  112  54.368        46.049        62.825  0.641          98.246  112   3.373         2.916         3.828  0.274          98.246
+           Ours opx-liq forest  114  72.858        63.031        82.874  0.388         100.000  114   2.849         2.520         3.164  0.473         100.000
+          Ours opx-liq boosted  114  61.827        54.584        68.892  0.559         100.000  114   3.279         2.661         3.849  0.302         100.000
+          Ours opx-only forest  114 118.676       106.015       131.382 -0.624         100.000  114   4.183         3.620         4.784 -0.135         100.000
+         Ours opx-only boosted  114 110.609        96.367       124.169 -0.411         100.000  114   5.618         5.014         6.189 -1.048         100.000
+          Putirka 2008 opx-liq  110  56.212        48.468        63.938  0.621          96.491  110   3.912         3.389         4.427  0.026          96.491
+ Putirka 2008 opx-liq [true P]  112  53.161        45.166        61.114  0.657          98.246  110   3.775         3.239         4.284  0.093          96.491
+         Putirka 2008 opx-only   69  62.010        49.252        74.331  0.318          60.526   69   4.620         3.646         5.558 -0.671          60.526
+Putirka 2008 opx-only [true T]   69  58.201        45.779        69.922  0.400          60.526   71   4.775         3.856         5.676 -0.816          62.281
+
+Ending Cell 23-----------------------------------------
+Executing Cell 24--------------------------------------
+Scope arcpl_paired: n=112
+Scope lepr_full:    n=298  (includes training rows for Ours)
+Scope cpx_scope:    n=114
+
+[arcpl_paired] running 112 rows ...
+
+Youve selected a P-independent function
+
+Youve selected a T-independent function
+
+Youve selected a P-independent function
+Youve selected a T-independent function
+Youve selected a T-independent function
+
+  Putirka opx-only [true T] skipped (module 'Thermobar' has no attribute 'calculate_opx_only_temp')
+
+<Figure size 1600x1020 with 3 Axes>
+Saved fig_nb04_method_benchmark_paired: panels [A, B, C] with n_methods=18 rows. Coverage range: 62% - 100%. Methods with cov<90%: ['Putirka 2008 opx-only']
+
+[arcpl_paired] benchmark table:
+                         Method  T_n  T_RMSE   T_R2  T_coverage_pct  P_n  P_RMSE   P_R2  P_coverage_pct
+          Agreda-Lopez cpx-only  112  79.780  0.227         100.000  112   2.065  0.728         100.000
+           Agreda-Lopez cpx-liq  112  49.821  0.699         100.000  112   1.992  0.747         100.000
+             Jorgenson cpx-only  112  75.082  0.316         100.000  112   1.537  0.849         100.000
+              Wang 2021 cpx-liq  112  87.336  0.074         100.000  112   1.994  0.746         100.000
+           Putirka 2008 cpx-liq  112  54.368  0.641         100.000  112   3.373  0.274         100.000
+            Ours opx-liq forest  112  68.130  0.437         100.000  112   2.873  0.474         100.000
+           Ours opx-liq boosted  112  59.276  0.573         100.000  112   2.959  0.441         100.000
+           Ours opx-liq stacked  112  57.856  0.594         100.000  112   3.117  0.380         100.000
+  Ours opx-liq resampled forest  112  71.858  0.373         100.000  112   3.418  0.255         100.000
+ Ours opx-liq resampled boosted  112  61.128  0.546         100.000  112   3.116  0.380         100.000
+           Ours opx-only forest  112 113.864 -0.574         100.000  112   4.183 -0.116         100.000
+          Ours opx-only boosted  112 106.567 -0.379         100.000  112   5.631 -1.023         100.000
+          Ours opx-only stacked  112 105.438 -0.350         100.000  112   4.249 -0.152         100.000
+ Ours opx-only resampled forest  112 127.902 -0.986         100.000  112   4.382 -0.225         100.000
+Ours opx-only resampled boosted  112 120.628 -0.767         100.000  112   4.561 -0.327         100.000
+           Putirka 2008 opx-liq  110  56.212  0.621          98.214  110   3.912  0.026          98.214
+  Putirka 2008 opx-liq [true P]  112  53.161  0.657         100.000  110   3.775  0.093          98.214
+          Putirka 2008 opx-only   69  62.010  0.318          61.607   69   4.620 -0.671          61.607
+
+[arcpl_paired] benchmark (Kd eq-pass, n=96):
+                         Method  T_n  T_RMSE   T_R2  T_coverage_pct  P_n  P_RMSE   P_R2  P_coverage_pct
+          Agreda-Lopez cpx-only   96  74.884  0.281         100.000   96   2.010  0.733         100.000
+           Agreda-Lopez cpx-liq   96  44.966  0.741         100.000   96   1.944  0.750         100.000
+             Jorgenson cpx-only   96  69.299  0.384         100.000   96   1.512  0.849         100.000
+              Wang 2021 cpx-liq   96  90.632 -0.053         100.000   96   2.060  0.719         100.000
+           Putirka 2008 cpx-liq   96  54.776  0.615         100.000   96   3.484  0.198         100.000
+            Ours opx-liq forest   96  64.063  0.474         100.000   96   2.981  0.413         100.000
+           Ours opx-liq boosted   96  56.236  0.594         100.000   96   3.118  0.357         100.000
+           Ours opx-liq stacked   96  53.592  0.632         100.000   96   3.295  0.282         100.000
+  Ours opx-liq resampled forest   96  69.864  0.374         100.000   96   3.621  0.133         100.000
+ Ours opx-liq resampled boosted   96  59.040  0.553         100.000   96   3.292  0.284         100.000
+           Ours opx-only forest   96 118.931 -0.814         100.000   96   4.343 -0.247         100.000
+          Ours opx-only boosted   96 111.874 -0.605         100.000   96   5.654 -1.113         100.000
+          Ours opx-only stacked   96 110.548 -0.567         100.000   96   4.339 -0.244         100.000
+ Ours opx-only resampled forest   96 133.073 -1.271         100.000   96   4.548 -0.367         100.000
+Ours opx-only resampled boosted   96 124.996 -1.004         100.000   96   4.711 -0.467         100.000
+           Putirka 2008 opx-liq   94  54.939  0.618          97.917   94   4.105 -0.111          97.917
+  Putirka 2008 opx-liq [true P]   96  52.312  0.649         100.000   94   3.986 -0.048          97.917
+          Putirka 2008 opx-only   63  60.559  0.366          65.625   63   4.129 -0.301          65.625
+
+[lepr_full] running 298 rows ...
+
+Youve selected a P-independent function
+
+Youve selected a T-independent function
+Youve selected a P-independent function
+
+Youve selected a T-independent function
+Youve selected a T-independent function
+
+  Putirka opx-only [true T] skipped (module 'Thermobar' has no attribute 'calculate_opx_only_temp')
+
+<Figure size 1600x1020 with 3 Axes>
+Saved fig_nb04_method_benchmark_lepr_full: panels [A, B, C] with n_methods=18 rows. Coverage range: 53% - 100%. Methods with cov<90%: ['Putirka 2008 opx-only']
+
+[lepr_full] benchmark table:
+                         Method  T_n  T_RMSE   T_R2  T_coverage_pct  P_n  P_RMSE   P_R2  P_coverage_pct
+          Agreda-Lopez cpx-only  298  74.845  0.566         100.000  298   2.092  0.837         100.000
+           Agreda-Lopez cpx-liq  298  54.574  0.769         100.000  298   1.971  0.855         100.000
+             Jorgenson cpx-only  298  66.334  0.659         100.000  298   1.686  0.894         100.000
+              Wang 2021 cpx-liq  298  88.068  0.400         100.000  297   2.428  0.779          99.664
+           Putirka 2008 cpx-liq  291  57.733  0.745          97.651  290   3.121  0.636          97.315
+            Ours opx-liq forest  298  69.860  0.622         100.000  298   3.237  0.609         100.000
+           Ours opx-liq boosted  298  60.787  0.714         100.000  298   3.562  0.527         100.000
+           Ours opx-liq stacked  298  62.196  0.701         100.000  298   3.418  0.564         100.000
+  Ours opx-liq resampled forest  298  74.634  0.569         100.000  298   4.078  0.379         100.000
+ Ours opx-liq resampled boosted  298  66.360  0.659         100.000  298   3.946  0.419         100.000
+           Ours opx-only forest  298 107.290  0.109         100.000  298   5.895 -0.297         100.000
+          Ours opx-only boosted  298  99.883  0.228         100.000  298   6.753 -0.702         100.000
+          Ours opx-only stacked  298  98.323  0.252         100.000  298   5.486 -0.123         100.000
+ Ours opx-only resampled forest  298 123.255 -0.176         100.000  298   4.856  0.120         100.000
+Ours opx-only resampled boosted  298 119.044 -0.097         100.000  298   5.396 -0.086         100.000
+           Putirka 2008 opx-liq  276  61.051  0.725          92.617  276   3.989  0.417          92.617
+  Putirka 2008 opx-liq [true P]  292  57.626  0.746          97.987  276   3.712  0.495          92.617
+          Putirka 2008 opx-only  158  57.648  0.677          53.020  158   4.493 -0.042          53.020
+
+[lepr_full] benchmark (Kd eq-pass, n=203):
+                         Method  T_n  T_RMSE   T_R2  T_coverage_pct  P_n  P_RMSE   P_R2  P_coverage_pct
+          Agreda-Lopez cpx-only  203  66.389  0.660         100.000  203   2.016  0.838         100.000
+           Agreda-Lopez cpx-liq  203  44.808  0.845         100.000  203   1.843  0.865         100.000
+             Jorgenson cpx-only  203  54.856  0.768         100.000  203   1.688  0.887         100.000
+              Wang 2021 cpx-liq  203  82.341  0.477         100.000  202   2.180  0.809          99.507
+           Putirka 2008 cpx-liq  202  51.138  0.799          99.507  202   3.093  0.616          99.507
+            Ours opx-liq forest  203  60.179  0.720         100.000  203   2.921  0.660         100.000
+           Ours opx-liq boosted  203  56.888  0.750         100.000  203   2.911  0.663         100.000
+           Ours opx-liq stacked  203  55.847  0.759         100.000  203   2.927  0.659         100.000
+  Ours opx-liq resampled forest  203  64.642  0.677         100.000  203   3.971  0.372         100.000
+ Ours opx-liq resampled boosted  203  61.832  0.705         100.000  203   3.251  0.579         100.000
+           Ours opx-only forest  203 102.118  0.195         100.000  203   4.893  0.047         100.000
+          Ours opx-only boosted  203  92.507  0.340         100.000  203   6.216 -0.539         100.000
+          Ours opx-only stacked  203  94.290  0.314         100.000  203   4.791  0.086         100.000
+ Ours opx-only resampled forest  203 115.546 -0.030         100.000  203   4.378  0.237         100.000
+Ours opx-only resampled boosted  203 108.457  0.092         100.000  203   4.952  0.024         100.000
+           Putirka 2008 opx-liq  194  55.049  0.770          95.567  194   3.577  0.486          95.567
+  Putirka 2008 opx-liq [true P]  203  51.412  0.796         100.000  194   3.357  0.547          95.567
+          Putirka 2008 opx-only  125  56.836  0.689          61.576  125   4.487 -0.122          61.576
+
+[cpx_scope] running 114 rows ...
+
+Youve selected a P-independent function
+
+Youve selected a T-independent function
+Youve selected a P-independent function
+
+Youve selected a T-independent function
+Youve selected a T-independent function
+
+  Putirka opx-only [true T] skipped (module 'Thermobar' has no attribute 'calculate_opx_only_temp')
+
+<Figure size 1600x1020 with 3 Axes>
+Saved fig_nb04_method_benchmark_cpx_scope: panels [A, B, C] with n_methods=18 rows. Coverage range: 61% - 100%. Methods with cov<90%: ['Putirka 2008 opx-only']
+
+[cpx_scope] benchmark table:
+                         Method  T_n  T_RMSE   T_R2  T_coverage_pct  P_n  P_RMSE   P_R2  P_coverage_pct
+          Agreda-Lopez cpx-only  114  84.762  0.172         100.000  114   2.045  0.729         100.000
+           Agreda-Lopez cpx-liq  114  49.115  0.722         100.000  114   1.987  0.744         100.000
+             Jorgenson cpx-only  114  80.412  0.254         100.000  114   1.528  0.849         100.000
+              Wang 2021 cpx-liq  112  87.336  0.074          98.246  114   1.978  0.746         100.000
+           Putirka 2008 cpx-liq  112  54.368  0.641          98.246  112   3.373  0.274          98.246
+            Ours opx-liq forest  114  72.858  0.388         100.000  114   2.849  0.473         100.000
+           Ours opx-liq boosted  114  61.827  0.559         100.000  114   3.279  0.302         100.000
+           Ours opx-liq stacked  114  59.256  0.595         100.000  114   3.346  0.273         100.000
+  Ours opx-liq resampled forest  114  76.091  0.332         100.000  114   3.389  0.255         100.000
+ Ours opx-liq resampled boosted  114  62.152  0.555         100.000  114   3.426  0.238         100.000
+           Ours opx-only forest  114 118.676 -0.624         100.000  114   4.183 -0.135         100.000
+          Ours opx-only boosted  114 110.609 -0.411         100.000  114   5.618 -1.048         100.000
+          Ours opx-only stacked  114 110.353 -0.404         100.000  114   4.246 -0.170         100.000
+ Ours opx-only resampled forest  114 132.805 -1.034         100.000  114   4.353 -0.229         100.000
+Ours opx-only resampled boosted  114 124.063 -0.775         100.000  114   4.568 -0.354         100.000
+           Putirka 2008 opx-liq  110  56.212  0.621          96.491  110   3.912  0.026          96.491
+  Putirka 2008 opx-liq [true P]  112  53.161  0.657          98.246  110   3.775  0.093          96.491
+          Putirka 2008 opx-only   69  62.010  0.318          60.526   69   4.620 -0.671          60.526
+
+[cpx_scope] benchmark (Kd eq-pass, n=96):
+                         Method  T_n  T_RMSE   T_R2  T_coverage_pct  P_n  P_RMSE   P_R2  P_coverage_pct
+          Agreda-Lopez cpx-only   96  74.998  0.279         100.000   96   2.008  0.733         100.000
+           Agreda-Lopez cpx-liq   96  44.321  0.748         100.000   96   1.935  0.752         100.000
+             Jorgenson cpx-only   96  69.299  0.384         100.000   96   1.512  0.849         100.000
+              Wang 2021 cpx-liq   96  90.632 -0.053         100.000   96   2.060  0.719         100.000
+           Putirka 2008 cpx-liq   96  54.776  0.615         100.000   96   3.484  0.198         100.000
+            Ours opx-liq forest   96  64.063  0.474         100.000   96   2.981  0.413         100.000
+           Ours opx-liq boosted   96  56.236  0.594         100.000   96   3.118  0.357         100.000
+           Ours opx-liq stacked   96  53.592  0.632         100.000   96   3.295  0.282         100.000
+  Ours opx-liq resampled forest   96  69.864  0.374         100.000   96   3.621  0.133         100.000
+ Ours opx-liq resampled boosted   96  59.040  0.553         100.000   96   3.292  0.284         100.000
+           Ours opx-only forest   96 118.928 -0.814         100.000   96   4.343 -0.247         100.000
+          Ours opx-only boosted   96 111.895 -0.606         100.000   96   5.654 -1.113         100.000
+          Ours opx-only stacked   96 110.547 -0.567         100.000   96   4.340 -0.245         100.000
+ Ours opx-only resampled forest   96 133.067 -1.271         100.000   96   4.548 -0.367         100.000
+Ours opx-only resampled boosted   96 125.001 -1.004         100.000   96   4.711 -0.467         100.000
+           Putirka 2008 opx-liq   94  54.939  0.618          97.917   94   4.105 -0.111          97.917
+  Putirka 2008 opx-liq [true P]   96  52.312  0.649         100.000   94   3.986 -0.048          97.917
+          Putirka 2008 opx-only   63  60.559  0.366          65.625   63   4.129 -0.301          65.625
+
+Ending Cell 24-----------------------------------------
+Executing Cell 25--------------------------------------
+Ending Cell 25-----------------------------------------
+Executing Cell 26--------------------------------------
+Ending Cell 26-----------------------------------------
+Executing Cell 27--------------------------------------
+Part 3: ArcPL subset before overlap removal: n=324
+Overlap removal: 197 -> 197
+
+ family target   n   rmse    mae    r2
+ forest    T_C 197 71.601 59.491 0.587
+ forest P_kbar 197  2.794  2.311 0.500
+boosted    T_C 197 63.680 54.370 0.674
+boosted P_kbar 197  2.703  2.042 0.532
+ family target   rmse  rmse_ci_lo  rmse_ci_hi   n
+ forest    T_C 71.601      65.387      77.895 197
+ forest P_kbar  2.794       2.553       3.030 197
+boosted    T_C 63.680      58.755      69.321 197
+boosted P_kbar  2.703       2.386       3.045 197
+
+<Figure size 1600x800 with 8 Axes>
+Saved figures/fig_nb04_arcpl_opx_liq_scatter.{png,pdf}
+
+Ending Cell 27-----------------------------------------
+Executing Cell 28--------------------------------------
+Put-schema: opx_in (197, 9), liq_in (197, 12)
+Putirka convergence: 185/197 converged, 178/197 pass Kd eq, fair (Option B) n=166/197 (84.3% coverage, reject rate 15.7%)
+
+<Figure size 1100x1400 with 6 Axes>
+Saved figures/fig_nb04_putirka_vs_ml_arcpl.{png,pdf}
+  Row 1 (ML all):       T RMSE=71.6 C  P RMSE=2.79 kbar
+  Row 2 (ML fair):      T RMSE=70.5 C  P RMSE=2.93 kbar
+  Row 3 (Putirka fair): T RMSE=50.3 C  P RMSE=3.73 kbar
+Fair-subset verdict: ML wins P if 2.93 < 3.73; Putirka wins T if 50.3 < 70.5.
+
+Ending Cell 28-----------------------------------------
+Executing Cell 29--------------------------------------
+Ending Cell 29-----------------------------------------
+Executing Cell 30--------------------------------------
+Part 4 split: measured n=130 VBD n=67
+
+Stratified metrics:
+ family   subset target   n   rmse    mae    r2  rmse_ci_lo  rmse_ci_hi
+ forest measured    T_C 130 66.597 56.184 0.672      60.963      72.180
+ forest measured P_kbar 130  2.877  2.393 0.568       2.584       3.163
+ forest      vbd    T_C  67 80.427 65.907 0.351      66.810      94.127
+ forest      vbd P_kbar  67  2.625  2.152 0.147       2.225       2.979
+boosted measured    T_C 130 60.678 53.129 0.727      55.967      65.055
+boosted measured P_kbar 130  2.923  2.181 0.554       2.472       3.330
+boosted      vbd    T_C  67 69.134 56.777 0.521      57.072      81.547
+boosted      vbd P_kbar  67  2.213  1.770 0.394       1.861       2.558
+
+Mann-Whitney:
+ family target  n_measured  n_vbd  U_stat  p_value  median_abs_resid_measured  median_abs_resid_vbd
+ forest    T_C         130     67  3970.0   0.3105                    58.9534               57.5155
+ forest P_kbar         130     67  4721.0   0.3350                     2.1279                1.6647
+boosted    T_C         130     67  4402.0   0.9024                    57.1878               48.6533
+boosted P_kbar         130     67  4686.0   0.3833                     1.6316                1.4429
+
+Ending Cell 30-----------------------------------------
+Executing Cell 31--------------------------------------
+Ending Cell 31-----------------------------------------
+Executing Cell 32--------------------------------------
+Part 5 scopes: all n=197  fair n=185
+
+Part 5 (all scope):
+                        method scope   n    rmse  rmse_ci_lo  rmse_ci_hi  coverage_pct  signed_bias target
+           Ours opx-liq forest   all 197  71.601      65.255      77.728       100.000       48.507    T_C
+          Ours opx-only forest   all 197 106.089      96.552     115.759       100.000       81.765    T_C
+          Ours opx-liq boosted   all 197  63.680      58.439      69.285       100.000       20.947    T_C
+         Ours opx-only boosted   all 197 100.229      90.043     110.258       100.000       68.615    T_C
+          Putirka 2008 opx-liq   all 185  50.078      44.855      55.388        93.909       28.040    T_C
+ Putirka 2008 opx-liq [true P]   all 197  46.424      41.091      51.847       100.000       29.475    T_C
+         Putirka 2008 opx-only   all  94  58.314      48.082      68.521        47.716       20.004    T_C
+Putirka 2008 opx-only [true T]   all  94  54.011      44.135      64.450        47.716       31.841    T_C
+           Ours opx-liq forest   all 197   2.794       2.554       3.024       100.000        1.239 P_kbar
+          Ours opx-only forest   all 197   3.909       3.518       4.320       100.000        2.766 P_kbar
+          Ours opx-liq boosted   all 197   2.703       2.368       3.045       100.000       -0.093 P_kbar
+         Ours opx-only boosted   all 197   6.364       5.927       6.785       100.000        5.346 P_kbar
+          Putirka 2008 opx-liq   all 185   3.601       3.234       3.957        93.909       -0.969 P_kbar
+ Putirka 2008 opx-liq [true P]   all 185   3.469       3.114       3.840        93.909       -1.344 P_kbar
+         Putirka 2008 opx-only   all  94   4.116       3.303       4.903        47.716       -2.106 P_kbar
+Putirka 2008 opx-only [true T]   all  94   4.446       3.640       5.242        47.716       -1.636 P_kbar
+
+Part 5 (fair scope):
+                        method scope   n    rmse  rmse_ci_lo  rmse_ci_hi  coverage_pct  signed_bias target
+           Ours opx-liq forest  fair 185  71.030      64.636      78.001        100.00       46.811    T_C
+          Ours opx-only forest  fair 185 107.217      97.083     117.961        100.00       81.575    T_C
+          Ours opx-liq boosted  fair 185  62.981      57.656      68.829        100.00       17.743    T_C
+         Ours opx-only boosted  fair 185 101.304      90.254     111.502        100.00       68.084    T_C
+          Putirka 2008 opx-liq  fair 185  50.078      45.023      55.268        100.00       28.040    T_C
+ Putirka 2008 opx-liq [true P]  fair 185  47.400      41.772      53.106        100.00       30.315    T_C
+         Putirka 2008 opx-only  fair  92  58.936      48.380      69.221         49.73       20.308    T_C
+Putirka 2008 opx-only [true T]  fair  92  54.550      44.394      64.512         49.73       32.298    T_C
+           Ours opx-liq forest  fair 185   2.834       2.581       3.074        100.00        1.243 P_kbar
+          Ours opx-only forest  fair 185   3.841       3.428       4.251        100.00        2.676 P_kbar
+          Ours opx-liq boosted  fair 185   2.742       2.413       3.088        100.00       -0.074 P_kbar
+         Ours opx-only boosted  fair 185   6.209       5.793       6.668        100.00        5.182 P_kbar
+          Putirka 2008 opx-liq  fair 185   3.601       3.253       3.968        100.00       -0.969 P_kbar
+ Putirka 2008 opx-liq [true P]  fair 185   3.469       3.101       3.825        100.00       -1.344 P_kbar
+         Putirka 2008 opx-only  fair  92   4.140       3.295       4.900         49.73       -2.128 P_kbar
+Putirka 2008 opx-only [true T]  fair  92   4.474       3.623       5.276         49.73       -1.648 P_kbar
+
+Ending Cell 32-----------------------------------------
+Executing Cell 33--------------------------------------
+Ending Cell 33-----------------------------------------
+Executing Cell 34--------------------------------------
+  feature check raw: use_liq=True (112, 25) (0 NaN) | use_liq=False (112, 16) (0 NaN)
+  feature check pwlr: use_liq=True (112, 72) (0 NaN) | use_liq=False (112, 43) (0 NaN)
+  feature check alr: use_liq=True (112, 23) (0 NaN) | use_liq=False (112, 15) (0 NaN)
+
+Youve selected a P-independent function
+
+Youve selected a T-independent function
+Youve selected a P-independent function
+Im normalizing using the Jorgenson method, e.g. 100 total, 2dp
+
+Youve selected a T-independent function
+Im normalizing using the Jorgenson method, e.g. 100 total, 2dp
+Youve selected a T-independent function
+
+Youve selected a P-independent function
+Youve selected a T-independent function
+Youve selected a T-independent function
+
+Youve selected a P-independent function
+Youve selected a T-independent function
+
+Methods computed (14):
+  - Ours opx-liq forest
+  - Ours opx-liq boosted
+  - Ours opx-only forest
+  - Ours opx-only boosted
+  - Agreda-Lopez cpx-only
+  - Agreda-Lopez cpx-liq
+  - Jorgenson cpx-only
+  - Jorgenson cpx-liq
+  - Wang 2021 cpx-liq
+  - Putirka 2008 cpx-liq
+  - Putirka 2008 cpx-only
+  - Wang 2021 cpx-only
+  - Putirka 2008 opx-liq
+  - Putirka 2008 opx-only
+
+<Figure size 1600x1600 with 16 Axes>
+
+Saved fig_nb04_diagnostic_encyclopedia_T.
+  Off-axis: ['none']
+  <95% coverage: ['none']
+
+<Figure size 1600x1600 with 16 Axes>
+
+Saved fig_nb04_diagnostic_encyclopedia_P.
+  Off-axis: ['Putirka 2008 opx-liq: 1/110 off-axis', 'Putirka 2008 cpx-liq: 2/112 off-axis']
+  <95% coverage: ['Putirka 2008 opx-only: 62% coverage']
+
+Ending Cell 34-----------------------------------------
+Executing Cell 35--------------------------------------
+Ending Cell 35-----------------------------------------
+Executing Cell 36--------------------------------------
+========================================================================
+OPERATOR DECISION REQUIRED - NB04 headline framing
+========================================================================
+
+Key numbers (opx-liq test set, N_full = 174):
+  ML RMSE (full):         T 84.9 C | P 5.07 kbar
+  Intersection scope (n_T=124, n_P=107):
+    ML:           T 85.4 C [66.1, 105.5]
+                  P 3.88 kbar [3.36, 4.38]
+    Putirka28a/29a T 77.0 C [53.0, 98.4]
+                   P 3.83 kbar [3.27, 4.42]
+  Putirka failure rate:   T 8.6% | P 27.6%
+  Paired Wilcoxon p:      T 0.0006007 | P 0.3757
+  Paired Delta-RMSE 95% CI:
+    T [-18.04, -0.65] C   (> 0 => ML better)
+    P [-0.745, +0.603] kbar
+
+Framing options:
+  A. "ML + broader applicability": lead with ML always-works vs
+     Putirka failure rate. Intersection RMSE is secondary (comparable).
+  B. "ML reduces error": lead with the intersection-scope RMSE + Wilcoxon
+     p-value, with failure rate as a supporting point.
+  C. "Hybrid": lead with the unified table (all three scopes), then show
+     the 4-panel figure, and let the reader read RMSE + failure rate.
+
+Tell Claude which framing (A / B / C) to commit to in the manuscript body.
+No downstream cell auto-selects; the CSVs and figure are all written.
+========================================================================
+
+Ending Cell 36-----------------------------------------

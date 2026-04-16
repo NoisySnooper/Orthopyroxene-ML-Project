@@ -1,0 +1,147 @@
+{
+  "forest_family": {
+    "opx_only_T_C": {
+      "model_name": "RF",
+      "feature_set": "pwlr",
+      "filename": "model_T_C_opx_only_forest.joblib",
+      "rmse_test_mean": 139.50774449210417,
+      "rmse_test_std": 18.362979371142256,
+      "r2_test_mean": 0.5044336375465901,
+      "r2_test_std": 0.1209207269554572
+    },
+    "opx_only_P_kbar": {
+      "model_name": "RF",
+      "feature_set": "pwlr",
+      "filename": "model_P_kbar_opx_only_forest.joblib",
+      "rmse_test_mean": 10.700503035365262,
+      "rmse_test_std": 2.9821065076935427,
+      "r2_test_mean": 0.2677224878009842,
+      "r2_test_std": 0.2677885074251054
+    },
+    "opx_liq_T_C": {
+      "model_name": "RF",
+      "feature_set": "pwlr",
+      "filename": "model_T_C_opx_liq_forest.joblib",
+      "rmse_test_mean": 79.58539669986351,
+      "rmse_test_std": 11.7034452011305,
+      "r2_test_mean": 0.7498833120614408,
+      "r2_test_std": 0.1172086233699209
+    },
+    "opx_liq_P_kbar": {
+      "model_name": "RF",
+      "feature_set": "alr",
+      "filename": "model_P_kbar_opx_liq_forest.joblib",
+      "rmse_test_mean": 5.93851144676416,
+      "rmse_test_std": 1.1972251252519346,
+      "r2_test_mean": 0.6132258444680124,
+      "r2_test_std": 0.089243255720581
+    }
+  },
+  "boosted_family": {
+    "opx_only_T_C": {
+      "model_name": "XGB",
+      "feature_set": "pwlr",
+      "filename": "model_T_C_opx_only_boosted.joblib",
+      "rmse_test_mean": 142.97514912734874,
+      "rmse_test_std": 19.142798317463228,
+      "r2_test_mean": 0.4789582134096436,
+      "r2_test_std": 0.1322471310869888
+    },
+    "opx_only_P_kbar": {
+      "model_name": "XGB",
+      "feature_set": "alr",
+      "filename": "model_P_kbar_opx_only_boosted.joblib",
+      "rmse_test_mean": 10.71517593990722,
+      "rmse_test_std": 2.697235826537689,
+      "r2_test_mean": 0.2728210437030919,
+      "r2_test_std": 0.2067207001085541
+    },
+    "opx_liq_T_C": {
+      "model_name": "XGB",
+      "feature_set": "alr",
+      "filename": "model_T_C_opx_liq_boosted.joblib",
+      "rmse_test_mean": 77.77313997978864,
+      "rmse_test_std": 9.548861860565207,
+      "r2_test_mean": 0.7622887680403714,
+      "r2_test_std": 0.1036511668054096
+    },
+    "opx_liq_P_kbar": {
+      "model_name": "XGB",
+      "feature_set": "raw",
+      "filename": "model_P_kbar_opx_liq_boosted.joblib",
+      "rmse_test_mean": 4.8109014835058,
+      "rmse_test_std": 0.8364457941033597,
+      "r2_test_mean": 0.7409074743114675,
+      "r2_test_std": 0.0786296762890423
+    }
+  },
+  "tiebreaker_rule": "when means within 1 std, prefer RF over ERT (forest), prefer XGB over GB (boosted)",
+  "selection_metadata": {
+    "n_seeds": 20,
+    "split_seeds": [
+      42,
+      43,
+      44,
+      45,
+      46,
+      47,
+      48,
+      49,
+      50,
+      51,
+      52,
+      53,
+      54,
+      55,
+      56,
+      57,
+      58,
+      59,
+      60,
+      61
+    ],
+    "feature_methods": [
+      "raw",
+      "alr",
+      "pwlr"
+    ]
+  },
+  "stacked_family": {
+    "opx_liq_T_C": {
+      "model_name": "STACKED",
+      "feature_set": "per-base",
+      "filename": "meta_ridge_T_C_opx_liq_stacked.joblib",
+      "rmse_test_mean": 89.35724468532253,
+      "rmse_test_std": null,
+      "r2_test_mean": 0.5850361625522691,
+      "r2_test_std": null
+    },
+    "opx_liq_P_kbar": {
+      "model_name": "STACKED",
+      "feature_set": "per-base",
+      "filename": "meta_ridge_P_kbar_opx_liq_stacked.joblib",
+      "rmse_test_mean": 4.771343653827223,
+      "rmse_test_std": null,
+      "r2_test_mean": 0.7549482627347501,
+      "r2_test_std": null
+    },
+    "opx_only_T_C": {
+      "model_name": "STACKED",
+      "feature_set": "per-base",
+      "filename": "meta_ridge_T_C_opx_only_stacked.joblib",
+      "rmse_test_mean": 158.559923068713,
+      "rmse_test_std": null,
+      "r2_test_mean": 0.18595817176167428,
+      "r2_test_std": null
+    },
+    "opx_only_P_kbar": {
+      "model_name": "STACKED",
+      "feature_set": "per-base",
+      "filename": "meta_ridge_P_kbar_opx_only_stacked.joblib",
+      "rmse_test_mean": 10.68617387117705,
+      "rmse_test_std": null,
+      "r2_test_mean": 0.41144116793950747,
+      "r2_test_std": null
+    }
+  }
+}

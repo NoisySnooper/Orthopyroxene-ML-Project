@@ -1,0 +1,14 @@
+figure,present
+fig_nb02_clusters.png,True
+fig_nb03c_multiseed_rmse.png,True
+fig_nb04_method_benchmark_paired.png,True
+fig_nb04_diagnostic_encyclopedia_T.png,True
+fig_nb04_diagnostic_encyclopedia_P.png,True
+fig_nb04_arcpl_opx_liq_scatter.png,True
+fig_nb04_h2o_sensitivity.png,True
+fig_nb04_opx_only_comparison.png,True
+fig_nb05_generalization.png,True
+fig_nb06_shap_P_beeswarm.png,True
+fig_nb06_shap_T_beeswarm.png,True
+fig_nb07_conformal_coverage.png,False
+fig_nb08_twopx_1to1.png,True

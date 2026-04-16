@@ -1,0 +1,39 @@
+{
+  "n_calibration": 43,
+  "alphas": {
+    "0.32": {
+      "nominal_coverage": 0.6799999999999999,
+      "q_hat_P_kbar": 3.0,
+      "q_hat_T_C": 35.35714285714289,
+      "empirical_cov_P": 0.6494252873563219,
+      "empirical_cov_T": 0.4885057471264368
+    },
+    "0.20": {
+      "nominal_coverage": 0.8,
+      "q_hat_P_kbar": 5.0,
+      "q_hat_T_C": 46.18055555555566,
+      "empirical_cov_P": 0.7988505747126436,
+      "empirical_cov_T": 0.5632183908045977
+    },
+    "0.10": {
+      "nominal_coverage": 0.9,
+      "q_hat_P_kbar": 10.0,
+      "q_hat_T_C": 92.58333333333348,
+      "empirical_cov_P": 0.9597701149425287,
+      "empirical_cov_T": 0.7931034482758621
+    },
+    "0.05": {
+      "nominal_coverage": 0.95,
+      "q_hat_P_kbar": 17.999999523162998,
+      "q_hat_T_C": 151.77083333333348,
+      "empirical_cov_P": 0.9770114942528736,
+      "empirical_cov_T": 0.9425287356321839
+    }
+  },
+  "primary_alpha": 0.1,
+  "q_hat_P_kbar": 10.0,
+  "q_hat_T_C": 92.58333333333348,
+  "coverage_P": 0.9597701149425287,
+  "coverage_T": 0.7931034482758621,
+  "alpha": 0.1
+}

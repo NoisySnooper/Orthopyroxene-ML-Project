@@ -1,0 +1,37 @@
+{
+  "target": "T_C",
+  "track": "opx_liq",
+  "base_order": [
+    "RF",
+    "ERT",
+    "XGB",
+    "GB"
+  ],
+  "members": {
+    "RF": {
+      "filename": "model_RF_T_C_opx_liq_pwlr.joblib",
+      "feature_set": "pwlr"
+    },
+    "ERT": {
+      "filename": "model_ERT_T_C_opx_liq_alr.joblib",
+      "feature_set": "alr"
+    },
+    "XGB": {
+      "filename": "model_XGB_T_C_opx_liq_alr.joblib",
+      "feature_set": "alr"
+    },
+    "GB": {
+      "filename": "model_GB_T_C_opx_liq_alr.joblib",
+      "feature_set": "alr"
+    }
+  },
+  "meta_filename": "meta_ridge_T_C_opx_liq_stacked.joblib",
+  "alpha": 100.0,
+  "coef": {
+    "RF": -0.011911084724794132,
+    "ERT": 0.20419579307429958,
+    "XGB": 0.4037660101584327,
+    "GB": 0.42468846633298185
+  },
+  "intercept": -25.80388726907836
+}

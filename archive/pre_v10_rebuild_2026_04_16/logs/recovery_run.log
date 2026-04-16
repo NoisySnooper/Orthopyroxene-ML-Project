@@ -1,0 +1,62 @@
+00:58:28 | Recovery run starting. Repo: C:\Users\NQTa\Documents\MLCourse\Final Project
+00:58:28 | ========================================================================
+00:58:28 | PHASE 3.4 COMPLETION: fit+save 48 seed-42 base models
+01:00:10 | Phase 3.4 save complete: 48 models saved, 0 skipped, 101.3s
+01:00:10 | ========================================================================
+01:00:10 | PHASE 3.5: winner selection per family
+01:00:10 |   forest opx_only/T_C: RF|pwlr rmse=139.508 +- 18.363
+01:00:10 |   forest opx_only/P_kbar: RF|pwlr rmse=10.701 +- 2.982
+01:00:10 |   forest opx_liq/T_C: RF|pwlr rmse=79.585 +- 11.703
+01:00:11 |   forest opx_liq/P_kbar: RF|alr rmse=5.939 +- 1.197
+01:00:11 |   boosted opx_only/T_C: XGB|pwlr rmse=142.975 +- 19.143
+01:00:11 |   boosted opx_only/P_kbar: XGB|alr rmse=10.715 +- 2.697
+01:00:11 |   boosted opx_liq/T_C: XGB|alr rmse=77.773 +- 9.549
+01:00:11 |   boosted opx_liq/P_kbar: XGB|raw rmse=4.811 +- 0.836
+01:00:11 | Phase 3.5 complete: 8 canonical models, winners JSON written
+01:00:11 | ========================================================================
+01:00:11 | PHASE 3.6: canonical test predictions
+01:00:12 | Phase 3.6 complete: 16 arrays in npz
+01:00:12 | ========================================================================
+01:00:12 | PHASE 3.7: verification
+01:00:12 | Phase 3.7 complete: all 8 canonical models present
+01:00:12 | ========================================================================
+01:00:12 | PHASE 3.9: tempered resampling + resampled canonical models
+01:00:12 |   opx_liq: n_in=426 -> n_out=426, cells=15, grown=9 shrunk=6 held=0
+01:00:12 |   opx_only: n_in=845 -> n_out=845, cells=19, grown=14 shrunk=5 held=0
+01:00:18 |   forest opx_liq T_C RF: canonical=83.895 resampled=88.499 (+4.604)
+01:00:20 |   forest opx_liq P_kbar RF: canonical=5.416 resampled=7.651 (+2.235)
+01:00:22 |   forest opx_only T_C RF: canonical=149.533 resampled=149.706 (+0.173)
+01:00:29 |   forest opx_only P_kbar RF: canonical=10.371 resampled=12.170 (+1.800)
+01:00:30 |   boosted opx_liq T_C XGB: canonical=90.611 resampled=90.324 (-0.287)
+01:00:30 |   boosted opx_liq P_kbar XGB: canonical=4.811 resampled=5.264 (+0.453)
+01:00:35 |   boosted opx_only T_C XGB: canonical=157.280 resampled=161.251 (+3.971)
+01:00:35 |   boosted opx_only P_kbar XGB: canonical=10.452 resampled=10.052 (-0.400)
+01:00:35 | Phase 3.9 complete: 8 resampled models saved, impact CSV written. (23.7s)
+01:00:35 | ========================================================================
+01:00:35 | PHASE 3.10: Ridge stacking meta-models
+01:01:07 |   T_C opx_liq: alpha=100.0000 stacked=89.357 best_base=RF(84.893) (+4.464)
+01:01:07 |     SANITY: alpha at endpoint for T_C/opx_liq
+01:01:07 |     (negative weights: ['RF'])
+01:01:28 |   P_kbar opx_liq: alpha=100.0000 stacked=4.771 best_base=GB(4.740) (+0.031)
+01:01:28 |     SANITY: alpha at endpoint for P_kbar/opx_liq
+01:01:28 |     (negative weights: ['RF'])
+01:02:26 |   T_C opx_only: alpha=100.0000 stacked=158.560 best_base=RF(152.038) (+6.522)
+01:02:26 |     SANITY: alpha at endpoint for T_C/opx_only
+01:02:26 |     (negative weights: ['RF', 'XGB'])
+01:03:09 |   P_kbar opx_only: alpha=100.0000 stacked=10.686 best_base=RF(10.328) (+0.358)
+01:03:09 |     SANITY: alpha at endpoint for P_kbar/opx_only
+01:03:09 | Phase 3.10 complete: 4 stacked meta-models saved (153.3s)
+01:03:09 | ========================================================================
+01:03:09 | PHASE 3.11 + 3.12: figures
+01:03:12 |   saved figure: fig_nb03c_multiseed_rmse.{png,pdf}
+01:03:13 |   saved figure: fig_nb03_resampling_pt_distribution.{png,pdf}
+01:03:13 |   saved figure: fig_nb03_resampling_impact_on_metrics.{png,pdf}
+01:03:17 |   saved figure: fig_nb03_optuna_search_progress.{png,pdf}
+01:03:22 |   saved figure: fig_nb03_optuna_hyperparameter_importance.{png,pdf}
+01:03:23 |   saved figure: fig_nb03_stacking_weights.{png,pdf}
+01:03:24 |   saved figure: fig_nb03_stacking_oof_correlation.{png,pdf}
+01:03:25 |   saved figure: fig_nb03_stacking_vs_base_comparison.{png,pdf}
+01:03:26 |   saved figure: fig_nb03_three_family_comparison.{png,pdf}
+01:03:26 | Phase 3.11+3.12 complete (17.8s)
+01:03:26 | ========================================================================
+01:03:26 | RECOVERY COMPLETE in 5.0 min

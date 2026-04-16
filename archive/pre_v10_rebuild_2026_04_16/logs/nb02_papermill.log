@@ -1,0 +1,87 @@
+Input Notebook:  notebooks/nb02_eda_pca.ipynb
+Output Notebook: notebooks/nb02_eda_pca.ipynb
+Executing notebook with kernel: python3
+Executing Cell 1---------------------------------------
+Ending Cell 1------------------------------------------
+Executing Cell 2---------------------------------------
+Ending Cell 2------------------------------------------
+Executing Cell 3---------------------------------------
+Ending Cell 3------------------------------------------
+Executing Cell 4---------------------------------------
+Loaded 1035 experiments, 123 studies
+
+Ending Cell 4------------------------------------------
+Executing Cell 5---------------------------------------
+<Figure size 800x800 with 4 Axes>
+Ending Cell 5------------------------------------------
+Executing Cell 6---------------------------------------
+Ending Cell 6------------------------------------------
+Executing Cell 7---------------------------------------
+PCA: 3 components explain 98.7% variance
+
+Ending Cell 7------------------------------------------
+Executing Cell 8---------------------------------------
+<Figure size 1400x600 with 4 Axes>
+Ending Cell 8------------------------------------------
+Executing Cell 9---------------------------------------
+Ending Cell 9------------------------------------------
+Executing Cell 10--------------------------------------
+<Figure size 600x800 with 2 Axes>
+Ending Cell 10-----------------------------------------
+Executing Cell 11--------------------------------------
+<Figure size 1300x800 with 6 Axes>
+Ending Cell 11-----------------------------------------
+Executing Cell 12--------------------------------------
+  k=3: silhouette = 0.357
+
+  k=4: silhouette = 0.326
+
+  k=5: silhouette = 0.319
+
+  k=6: silhouette = 0.326
+
+  k=7: silhouette = 0.303
+  k=8: silhouette = 0.326
+
+  k=9: silhouette = 0.305
+
+  k=10: silhouette = 0.311
+
+Best k (silhouette): 3
+
+Final cluster sizes:
+chemical_cluster
+0    402
+1    434
+2    199
+Name: count, dtype: int64
+
+Ending Cell 12-----------------------------------------
+Executing Cell 13--------------------------------------
+<Figure size 800x700 with 1 Axes>
+Ending Cell 13-----------------------------------------
+Executing Cell 14--------------------------------------
+Ending Cell 14-----------------------------------------
+Executing Cell 15--------------------------------------
+                    n   T_mean   T_std  P_mean  P_std  SiO2_mean  Mg_num_mean
+chemical_cluster                                                             
+0                 402  1263.95  186.36   16.43  18.20      55.99        88.94
+1                 434  1302.35  146.58   16.08   8.97      53.78        87.93
+2                 199  1034.83  150.96    7.26   6.09      51.89        66.33
+
+Ending Cell 15-----------------------------------------
+Executing Cell 16--------------------------------------
+Cluster labels assigned:
+ chemical_cluster          cluster_name   n
+                0 decompression residue 402
+                1    primitive basaltic 434
+                2      evolved/depleted 199
+
+Ending Cell 16-----------------------------------------
+Executing Cell 17--------------------------------------
+Saved opx_clean_core_with_clusters.parquet with chemical_cluster + cluster_name columns
+  cluster_name unique: ['decompression residue', 'evolved/depleted', 'primitive basaltic']
+
+=== NB02 complete ===
+
+Ending Cell 17-----------------------------------------

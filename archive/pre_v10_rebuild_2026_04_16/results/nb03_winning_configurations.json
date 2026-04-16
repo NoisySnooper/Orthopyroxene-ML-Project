@@ -1,0 +1,5 @@
+{
+  "global_feature_set": "pwlr",
+  "runner_up_feature_set": "alr",
+  "_note": "v9 shim: legacy NB05/09/nbF expect single global_feature_set; per-family winners in nb03_per_family_winners.json are the v7+ source of truth"
+}
