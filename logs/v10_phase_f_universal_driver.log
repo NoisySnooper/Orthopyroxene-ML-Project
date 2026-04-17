@@ -1,0 +1,6 @@
+[2026-04-16 22:21:55] Phase F universal driver START  total=1 studies n_trials=3
+[2026-04-16 22:21:55] [1/1]
+[2026-04-16 22:21:55] START RF__T_C__universal__universal_raw (n_trials=3)
+[2026-04-16 22:21:55]   data shape X=(2224, 45) y=(2224,) n_groups=189
+[2026-04-16 22:22:03] DONE  RF__T_C__universal__universal_raw  best_rmse=118.6202  elapsed=8.2s
+[2026-04-16 22:22:03] Phase F universal driver DONE  completed=1  failed=0

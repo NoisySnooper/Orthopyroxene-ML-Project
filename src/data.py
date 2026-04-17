@@ -36,6 +36,7 @@ OPX_ONLY_FILE = 'opx_clean_opx_only.parquet'
 CPX_LIQ_FILE = 'cpx_clean_cpx_liq.parquet'
 CPX_ONLY_FILE = 'cpx_clean_cpx_only.parquet'
 TWOPX_FILE = 'twopx_clean.parquet'
+UNIVERSAL_FILE = 'universal_clean.parquet'
 
 WINNING_CONFIG_FILE = 'nb03_winning_configurations.json'
 PER_FAMILY_WINNERS_FILE = 'nb03_per_family_winners.json'
@@ -85,6 +86,10 @@ def load_twopx():
     return pd.read_parquet(DATA_PROC / TWOPX_FILE)
 
 
+def load_universal():
+    return pd.read_parquet(DATA_PROC / UNIVERSAL_FILE)
+
+
 def load_splits(track):
     if track == 'opx_liq':
         tr = np.load(DATA_SPLITS / 'train_indices_opx_liq.npy')
@@ -101,6 +106,9 @@ def load_splits(track):
     elif track == 'twopx':
         tr = np.load(DATA_SPLITS / 'train_indices_twopx.npy')
         te = np.load(DATA_SPLITS / 'test_indices_twopx.npy')
+    elif track == 'universal':
+        tr = np.load(DATA_SPLITS / 'train_indices_universal.npy')
+        te = np.load(DATA_SPLITS / 'test_indices_universal.npy')
     else:
         raise ValueError(f'unknown track: {track!r}')
     return tr, te
