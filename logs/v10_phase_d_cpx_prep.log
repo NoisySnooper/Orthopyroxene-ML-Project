@@ -1,0 +1,19 @@
+[2026-04-16 22:05:42] v10 Phase D cpx data prep START
+[2026-04-16 22:05:52] ExPetDB sheets loaded: Experiment=16082, Clinopyroxene=3315, Liquid=12117
+[2026-04-16 22:05:52] [1] Build cpx_only frame...
+[2026-04-16 22:05:52] cpx rows: 3315  experiments: 2790
+[2026-04-16 22:05:52]   after T/P dropna: 3315  (-0)
+[2026-04-16 22:05:52]   after T>0, P>0: 3313  (-2)
+[2026-04-16 22:05:52]   after oxide_sum in [95.0,102.0]: 3185  (-128)
+[2026-04-16 22:05:52]   after cation_sum in [3.95,4.05]: 2897  (-288)
+[2026-04-16 22:05:52]   cpx_only final n=2897  n_citations=249
+[2026-04-16 22:05:52]   wrote C:\Users\NQTa\Documents\MLCourse\Final Project\data\processed\cpx_clean_cpx_only.parquet
+[2026-04-16 22:05:52] [2] Build cpx_liq frame (inner-join to Liquid)...
+[2026-04-16 22:05:52]   liq deduped: 12117 -> 11206 rows per (Exp, Cit)
+[2026-04-16 22:05:52]   cpx_liq after Liquid join: 2385
+[2026-04-16 22:05:52]   cpx_liq final n=2385  n_citations=230
+[2026-04-16 22:05:52]   wrote C:\Users\NQTa\Documents\MLCourse\Final Project\data\processed\cpx_clean_cpx_liq.parquet
+[2026-04-16 22:05:52] [3] Generate train/test splits by Citation...
+[2026-04-16 22:05:52]   cpx_only split: train=2113 test=784 (train pub=174 / test pub=75)
+[2026-04-16 22:05:52]   cpx_liq split: train=1731 test=654 (train pub=161 / test pub=69)
+[2026-04-16 22:05:52] v10 Phase D cpx data prep DONE
