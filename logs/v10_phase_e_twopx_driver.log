@@ -1,0 +1,6 @@
+[2026-04-16 22:14:45] Phase E twopx driver START  total=1 studies n_trials=3
+[2026-04-16 22:14:45] [1/1]
+[2026-04-16 22:14:45] START RF__T_C__twopx__twopx_components (n_trials=3)
+[2026-04-16 22:14:45]   data shape X=(96, 14) y=(96,) n_groups=32
+[2026-04-16 22:14:50] DONE  RF__T_C__twopx__twopx_components  best_rmse=77.9585  elapsed=4.8s
+[2026-04-16 22:14:50] Phase E twopx driver DONE  completed=1  failed=0
