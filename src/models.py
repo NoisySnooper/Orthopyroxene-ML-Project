@@ -19,12 +19,36 @@ from sklearn.ensemble import (
     HistGradientBoostingRegressor,
     RandomForestRegressor,
 )
+from sklearn.linear_model import ElasticNet
+from sklearn.neural_network import MLPRegressor
+from sklearn.pipeline import Pipeline
+from sklearn.preprocessing import StandardScaler
 from xgboost import XGBRegressor
+from catboost import CatBoostRegressor
+from lightgbm import LGBMRegressor
 
 from config import SEED_MODEL
 
 SEARCH_NJOBS = -1
 ESTIMATOR_NJOBS = 1
+
+
+def _make_elasticnet():
+    return Pipeline([
+        ('scaler', StandardScaler()),
+        ('enet', ElasticNet(random_state=SEED_MODEL, max_iter=10000)),
+    ])
+
+
+def _make_mlp():
+    return Pipeline([
+        ('scaler', StandardScaler()),
+        ('mlp', MLPRegressor(random_state=SEED_MODEL,
+                             early_stopping=True,
+                             validation_fraction=0.15,
+                             n_iter_no_change=20,
+                             max_iter=500)),
+    ])
 
 
 BASE_MODELS = {
@@ -36,6 +60,15 @@ BASE_MODELS = {
                                                  early_stopping=True,
                                                  validation_fraction=0.15,
                                                  n_iter_no_change=20),
+    'CatBoost': lambda: CatBoostRegressor(random_seed=SEED_MODEL,
+                                          verbose=False,
+                                          allow_writing_files=False,
+                                          thread_count=ESTIMATOR_NJOBS),
+    'LightGBM': lambda: LGBMRegressor(random_state=SEED_MODEL,
+                                      n_jobs=ESTIMATOR_NJOBS,
+                                      verbose=-1),
+    'ElasticNet': _make_elasticnet,
+    'MLP': _make_mlp,
 }
 
 
@@ -79,7 +112,14 @@ MODEL_CLASSES = {
     'ERT': ExtraTreesRegressor,
     'XGB': XGBRegressor,
     'GB':  HistGradientBoostingRegressor,
+    'CatBoost': CatBoostRegressor,
+    'LightGBM': LGBMRegressor,
+    'ElasticNet': ElasticNet,
+    'MLP': MLPRegressor,
 }
+
+
+PIPELINE_MODELS = {'ElasticNet', 'MLP'}
 
 
 def parse_params(s):
@@ -99,13 +139,31 @@ def build_model(model_name, params, seed=SEED_MODEL):
     """Construct a fresh estimator with the given hyperparameters and seed.
 
     Mirrors BASE_MODELS sklearn/xgboost constructor signatures so that
-    `seed` is always honored and njobs flags remain consistent.
+    `seed` is always honored and njobs flags remain consistent. For
+    pipeline models (ElasticNet, MLP), params target the inner step.
     """
     p = dict(params)
     if model_name == 'GB':
         return HistGradientBoostingRegressor(**p, random_state=seed)
     if model_name == 'XGB':
         return XGBRegressor(**p, random_state=seed, n_jobs=-1, verbosity=0)
+    if model_name == 'CatBoost':
+        return CatBoostRegressor(**p, random_seed=seed, verbose=False,
+                                 allow_writing_files=False)
+    if model_name == 'LightGBM':
+        return LGBMRegressor(**p, random_state=seed, n_jobs=-1, verbose=-1)
+    if model_name == 'ElasticNet':
+        est = _make_elasticnet()
+        if p:
+            est.set_params(**{f'enet__{k}': v for k, v in p.items()})
+        est.named_steps['enet'].set_params(random_state=seed)
+        return est
+    if model_name == 'MLP':
+        est = _make_mlp()
+        if p:
+            est.set_params(**{f'mlp__{k}': v for k, v in p.items()})
+        est.named_steps['mlp'].set_params(random_state=seed)
+        return est
     if model_name not in MODEL_CLASSES:
         raise KeyError(f'unknown model: {model_name!r}')
     return MODEL_CLASSES[model_name](**p, random_state=seed, n_jobs=-1)
