@@ -1,0 +1,6 @@
+[2026-04-16 22:07:44] Phase D cpx driver START  total=1 studies n_trials=3
+[2026-04-16 22:07:44] [1/1]
+[2026-04-16 22:07:44] START RF__T_C__cpx_only__raw (n_trials=3)
+[2026-04-16 22:07:44]   data shape X=(2113, 16) y=(2113,) n_groups=174
+[2026-04-16 22:07:50] DONE  RF__T_C__cpx_only__raw  best_rmse=145.3297  elapsed=5.8s
+[2026-04-16 22:07:50] Phase D cpx driver DONE  completed=1  failed=0
