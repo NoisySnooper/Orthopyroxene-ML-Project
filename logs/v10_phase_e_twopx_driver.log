@@ -4,3 +4,266 @@
 [2026-04-16 22:14:45]   data shape X=(96, 14) y=(96,) n_groups=32
 [2026-04-16 22:14:50] DONE  RF__T_C__twopx__twopx_components  best_rmse=77.9585  elapsed=4.8s
 [2026-04-16 22:14:50] Phase E twopx driver DONE  completed=1  failed=0
+[2026-04-17 08:16:05] Phase E twopx driver START  total=64 studies n_trials=50
+[2026-04-17 08:16:05] Resumed partial: 1 prior results
+[2026-04-17 08:16:05] [1/64]
+[2026-04-17 08:16:05] START RF__T_C__twopx__raw (n_trials=50)
+[2026-04-17 08:16:05]   data shape X=(96, 31) y=(96,) n_groups=32
+[2026-04-17 08:18:45] DONE  RF__T_C__twopx__raw  best_rmse=71.4437  elapsed=160.5s
+[2026-04-17 08:18:45] [2/64]
+[2026-04-17 08:18:45] START RF__T_C__twopx__alr (n_trials=50)
+[2026-04-17 08:18:45]   data shape X=(96, 29) y=(96,) n_groups=32
+[2026-04-17 08:22:46] DONE  RF__T_C__twopx__alr  best_rmse=70.1449  elapsed=240.1s
+[2026-04-17 08:22:46] [3/64]
+[2026-04-17 08:22:46] START RF__T_C__twopx__pwlr (n_trials=50)
+[2026-04-17 08:22:46]   data shape X=(96, 94) y=(96,) n_groups=32
+[2026-04-17 08:24:50] Phase E twopx driver START  total=64 studies n_trials=50
+[2026-04-17 08:24:50] Resumed partial: 3 prior results
+[2026-04-17 08:24:50] [1/64] SKIP RF/T_C/twopx/raw (cached)
+[2026-04-17 08:24:50] [2/64] SKIP RF/T_C/twopx/alr (cached)
+[2026-04-17 08:24:50] [3/64]
+[2026-04-17 08:24:50] START RF__T_C__twopx__pwlr (n_trials=50)
+[2026-04-17 08:24:50]   data shape X=(96, 94) y=(96,) n_groups=32
+[2026-04-17 08:27:50] DONE  RF__T_C__twopx__pwlr  best_rmse=76.6687  elapsed=180.6s
+[2026-04-17 08:27:50] [4/64] SKIP RF/T_C/twopx/twopx_components (cached)
+[2026-04-17 08:27:50] [5/64]
+[2026-04-17 08:27:50] START RF__P_kbar__twopx__raw (n_trials=50)
+[2026-04-17 08:27:50]   data shape X=(96, 31) y=(96,) n_groups=32
+[2026-04-17 08:30:40] DONE  RF__P_kbar__twopx__raw  best_rmse=4.8476  elapsed=169.3s
+[2026-04-17 08:30:40] [6/64]
+[2026-04-17 08:30:40] START RF__P_kbar__twopx__alr (n_trials=50)
+[2026-04-17 08:30:40]   data shape X=(96, 29) y=(96,) n_groups=32
+[2026-04-17 08:33:34] DONE  RF__P_kbar__twopx__alr  best_rmse=4.9088  elapsed=173.8s
+[2026-04-17 08:33:34] [7/64]
+[2026-04-17 08:33:34] START RF__P_kbar__twopx__pwlr (n_trials=50)
+[2026-04-17 08:33:34]   data shape X=(96, 94) y=(96,) n_groups=32
+[2026-04-17 08:35:53] DONE  RF__P_kbar__twopx__pwlr  best_rmse=5.2853  elapsed=139.7s
+[2026-04-17 08:35:53] [8/64]
+[2026-04-17 08:35:53] START RF__P_kbar__twopx__twopx_components (n_trials=50)
+[2026-04-17 08:35:53]   data shape X=(96, 14) y=(96,) n_groups=32
+[2026-04-17 08:38:26] DONE  RF__P_kbar__twopx__twopx_components  best_rmse=5.1485  elapsed=152.9s
+[2026-04-17 08:38:26] [9/64]
+[2026-04-17 08:38:26] START ERT__T_C__twopx__raw (n_trials=50)
+[2026-04-17 08:38:26]   data shape X=(96, 31) y=(96,) n_groups=32
+[2026-04-17 08:40:32] DONE  ERT__T_C__twopx__raw  best_rmse=73.2765  elapsed=126.4s
+[2026-04-17 08:40:32] [10/64]
+[2026-04-17 08:40:32] START ERT__T_C__twopx__alr (n_trials=50)
+[2026-04-17 08:40:33]   data shape X=(96, 29) y=(96,) n_groups=32
+[2026-04-17 08:42:34] DONE  ERT__T_C__twopx__alr  best_rmse=72.3125  elapsed=121.8s
+[2026-04-17 08:42:34] [11/64]
+[2026-04-17 08:42:34] START ERT__T_C__twopx__pwlr (n_trials=50)
+[2026-04-17 08:42:34]   data shape X=(96, 94) y=(96,) n_groups=32
+[2026-04-17 08:44:24] DONE  ERT__T_C__twopx__pwlr  best_rmse=70.7390  elapsed=109.7s
+[2026-04-17 08:44:24] [12/64]
+[2026-04-17 08:44:24] START ERT__T_C__twopx__twopx_components (n_trials=50)
+[2026-04-17 08:44:24]   data shape X=(96, 14) y=(96,) n_groups=32
+[2026-04-17 08:46:19] DONE  ERT__T_C__twopx__twopx_components  best_rmse=71.9706  elapsed=115.1s
+[2026-04-17 08:46:19] [13/64]
+[2026-04-17 08:46:19] START ERT__P_kbar__twopx__raw (n_trials=50)
+[2026-04-17 08:46:19]   data shape X=(96, 31) y=(96,) n_groups=32
+[2026-04-17 08:47:43] DONE  ERT__P_kbar__twopx__raw  best_rmse=4.8330  elapsed=83.5s
+[2026-04-17 08:47:43] [14/64]
+[2026-04-17 08:47:43] START ERT__P_kbar__twopx__alr (n_trials=50)
+[2026-04-17 08:47:43]   data shape X=(96, 29) y=(96,) n_groups=32
+[2026-04-17 08:49:27] DONE  ERT__P_kbar__twopx__alr  best_rmse=5.0660  elapsed=104.5s
+[2026-04-17 08:49:27] [15/64]
+[2026-04-17 08:49:27] START ERT__P_kbar__twopx__pwlr (n_trials=50)
+[2026-04-17 08:49:27]   data shape X=(96, 94) y=(96,) n_groups=32
+[2026-04-17 08:50:57] DONE  ERT__P_kbar__twopx__pwlr  best_rmse=4.8102  elapsed=89.8s
+[2026-04-17 08:50:57] [16/64]
+[2026-04-17 08:50:57] START ERT__P_kbar__twopx__twopx_components (n_trials=50)
+[2026-04-17 08:50:57]   data shape X=(96, 14) y=(96,) n_groups=32
+[2026-04-17 08:52:46] DONE  ERT__P_kbar__twopx__twopx_components  best_rmse=5.4649  elapsed=109.4s
+[2026-04-17 08:52:46] [17/64]
+[2026-04-17 08:52:46] START XGB__T_C__twopx__raw (n_trials=50)
+[2026-04-17 08:52:46]   data shape X=(96, 31) y=(96,) n_groups=32
+[2026-04-17 08:53:22] DONE  XGB__T_C__twopx__raw  best_rmse=66.8626  elapsed=36.1s
+[2026-04-17 08:53:22] [18/64]
+[2026-04-17 08:53:22] START XGB__T_C__twopx__alr (n_trials=50)
+[2026-04-17 08:53:22]   data shape X=(96, 29) y=(96,) n_groups=32
+[2026-04-17 08:53:56] DONE  XGB__T_C__twopx__alr  best_rmse=69.5698  elapsed=34.0s
+[2026-04-17 08:53:56] [19/64]
+[2026-04-17 08:53:56] START XGB__T_C__twopx__pwlr (n_trials=50)
+[2026-04-17 08:53:56]   data shape X=(96, 94) y=(96,) n_groups=32
+[2026-04-17 08:55:09] DONE  XGB__T_C__twopx__pwlr  best_rmse=78.3425  elapsed=72.6s
+[2026-04-17 08:55:09] [20/64]
+[2026-04-17 08:55:09] START XGB__T_C__twopx__twopx_components (n_trials=50)
+[2026-04-17 08:55:09]   data shape X=(96, 14) y=(96,) n_groups=32
+[2026-04-17 08:55:35] DONE  XGB__T_C__twopx__twopx_components  best_rmse=69.9032  elapsed=25.8s
+[2026-04-17 08:55:35] [21/64]
+[2026-04-17 08:55:35] START XGB__P_kbar__twopx__raw (n_trials=50)
+[2026-04-17 08:55:35]   data shape X=(96, 31) y=(96,) n_groups=32
+[2026-04-17 08:55:59] DONE  XGB__P_kbar__twopx__raw  best_rmse=4.5552  elapsed=24.4s
+[2026-04-17 08:55:59] [22/64]
+[2026-04-17 08:55:59] START XGB__P_kbar__twopx__alr (n_trials=50)
+[2026-04-17 08:55:59]   data shape X=(96, 29) y=(96,) n_groups=32
+[2026-04-17 08:56:29] DONE  XGB__P_kbar__twopx__alr  best_rmse=4.6777  elapsed=29.3s
+[2026-04-17 08:56:29] [23/64]
+[2026-04-17 08:56:29] START XGB__P_kbar__twopx__pwlr (n_trials=50)
+[2026-04-17 08:56:29]   data shape X=(96, 94) y=(96,) n_groups=32
+[2026-04-17 08:57:10] DONE  XGB__P_kbar__twopx__pwlr  best_rmse=5.0620  elapsed=40.9s
+[2026-04-17 08:57:10] [24/64]
+[2026-04-17 08:57:10] START XGB__P_kbar__twopx__twopx_components (n_trials=50)
+[2026-04-17 08:57:10]   data shape X=(96, 14) y=(96,) n_groups=32
+[2026-04-17 08:57:33] DONE  XGB__P_kbar__twopx__twopx_components  best_rmse=5.0456  elapsed=23.5s
+[2026-04-17 08:57:33] [25/64]
+[2026-04-17 08:57:33] START GB__T_C__twopx__raw (n_trials=50)
+[2026-04-17 08:57:33]   data shape X=(96, 31) y=(96,) n_groups=32
+[2026-04-17 08:58:32] DONE  GB__T_C__twopx__raw  best_rmse=69.6364  elapsed=58.5s
+[2026-04-17 08:58:32] [26/64]
+[2026-04-17 08:58:32] START GB__T_C__twopx__alr (n_trials=50)
+[2026-04-17 08:58:32]   data shape X=(96, 29) y=(96,) n_groups=32
+[2026-04-17 08:59:27] DONE  GB__T_C__twopx__alr  best_rmse=72.0672  elapsed=55.5s
+[2026-04-17 08:59:27] [27/64]
+[2026-04-17 08:59:27] START GB__T_C__twopx__pwlr (n_trials=50)
+[2026-04-17 08:59:27]   data shape X=(96, 94) y=(96,) n_groups=32
+[2026-04-17 09:00:48] DONE  GB__T_C__twopx__pwlr  best_rmse=81.5837  elapsed=80.6s
+[2026-04-17 09:00:48] [28/64]
+[2026-04-17 09:00:48] START GB__T_C__twopx__twopx_components (n_trials=50)
+[2026-04-17 09:00:48]   data shape X=(96, 14) y=(96,) n_groups=32
+[2026-04-17 09:01:45] DONE  GB__T_C__twopx__twopx_components  best_rmse=71.4443  elapsed=57.4s
+[2026-04-17 09:01:45] [29/64]
+[2026-04-17 09:01:45] START GB__P_kbar__twopx__raw (n_trials=50)
+[2026-04-17 09:01:45]   data shape X=(96, 31) y=(96,) n_groups=32
+[2026-04-17 09:02:43] DONE  GB__P_kbar__twopx__raw  best_rmse=4.5546  elapsed=57.8s
+[2026-04-17 09:02:43] [30/64]
+[2026-04-17 09:02:43] START GB__P_kbar__twopx__alr (n_trials=50)
+[2026-04-17 09:02:43]   data shape X=(96, 29) y=(96,) n_groups=32
+[2026-04-17 09:03:21] DONE  GB__P_kbar__twopx__alr  best_rmse=4.7190  elapsed=37.7s
+[2026-04-17 09:03:21] [31/64]
+[2026-04-17 09:03:21] START GB__P_kbar__twopx__pwlr (n_trials=50)
+[2026-04-17 09:03:21]   data shape X=(96, 94) y=(96,) n_groups=32
+[2026-04-17 09:04:22] DONE  GB__P_kbar__twopx__pwlr  best_rmse=4.9783  elapsed=61.0s
+[2026-04-17 09:04:22] [32/64]
+[2026-04-17 09:04:22] START GB__P_kbar__twopx__twopx_components (n_trials=50)
+[2026-04-17 09:04:22]   data shape X=(96, 14) y=(96,) n_groups=32
+[2026-04-17 09:05:03] DONE  GB__P_kbar__twopx__twopx_components  best_rmse=4.7543  elapsed=41.0s
+[2026-04-17 09:05:03] [33/64]
+[2026-04-17 09:05:03] START CatBoost__T_C__twopx__raw (n_trials=50)
+[2026-04-17 09:05:03]   data shape X=(96, 31) y=(96,) n_groups=32
+[2026-04-17 09:09:06] DONE  CatBoost__T_C__twopx__raw  best_rmse=68.9854  elapsed=243.5s
+[2026-04-17 09:09:06] [34/64]
+[2026-04-17 09:09:06] START CatBoost__T_C__twopx__alr (n_trials=50)
+[2026-04-17 09:09:06]   data shape X=(96, 29) y=(96,) n_groups=32
+[2026-04-17 09:15:19] DONE  CatBoost__T_C__twopx__alr  best_rmse=69.1698  elapsed=373.3s
+[2026-04-17 09:15:19] [35/64]
+[2026-04-17 09:15:19] START CatBoost__T_C__twopx__pwlr (n_trials=50)
+[2026-04-17 09:15:19]   data shape X=(96, 94) y=(96,) n_groups=32
+[2026-04-17 09:26:15] DONE  CatBoost__T_C__twopx__pwlr  best_rmse=72.3982  elapsed=655.2s
+[2026-04-17 09:26:15] [36/64]
+[2026-04-17 09:26:15] START CatBoost__T_C__twopx__twopx_components (n_trials=50)
+[2026-04-17 09:26:15]   data shape X=(96, 14) y=(96,) n_groups=32
+[2026-04-17 09:29:10] DONE  CatBoost__T_C__twopx__twopx_components  best_rmse=71.7523  elapsed=175.5s
+[2026-04-17 09:29:10] [37/64]
+[2026-04-17 09:29:10] START CatBoost__P_kbar__twopx__raw (n_trials=50)
+[2026-04-17 09:29:10]   data shape X=(96, 31) y=(96,) n_groups=32
+[2026-04-17 09:43:16] DONE  CatBoost__P_kbar__twopx__raw  best_rmse=4.5604  elapsed=845.8s
+[2026-04-17 09:43:16] [38/64]
+[2026-04-17 09:43:16] START CatBoost__P_kbar__twopx__alr (n_trials=50)
+[2026-04-17 09:43:16]   data shape X=(96, 29) y=(96,) n_groups=32
+[2026-04-17 09:54:04] DONE  CatBoost__P_kbar__twopx__alr  best_rmse=4.6960  elapsed=647.7s
+[2026-04-17 09:54:04] [39/64]
+[2026-04-17 09:54:04] START CatBoost__P_kbar__twopx__pwlr (n_trials=50)
+[2026-04-17 09:54:04]   data shape X=(96, 94) y=(96,) n_groups=32
+[2026-04-17 10:17:13] DONE  CatBoost__P_kbar__twopx__pwlr  best_rmse=4.7874  elapsed=1389.1s
+[2026-04-17 10:17:13] [40/64]
+[2026-04-17 10:17:13] START CatBoost__P_kbar__twopx__twopx_components (n_trials=50)
+[2026-04-17 10:17:13]   data shape X=(96, 14) y=(96,) n_groups=32
+[2026-04-17 10:23:27] DONE  CatBoost__P_kbar__twopx__twopx_components  best_rmse=4.9756  elapsed=373.7s
+[2026-04-17 10:23:27] [41/64]
+[2026-04-17 10:23:27] START LightGBM__T_C__twopx__raw (n_trials=50)
+[2026-04-17 10:23:27]   data shape X=(96, 31) y=(96,) n_groups=32
+[2026-04-17 10:23:41] DONE  LightGBM__T_C__twopx__raw  best_rmse=67.4182  elapsed=14.4s
+[2026-04-17 10:23:41] [42/64]
+[2026-04-17 10:23:41] START LightGBM__T_C__twopx__alr (n_trials=50)
+[2026-04-17 10:23:41]   data shape X=(96, 29) y=(96,) n_groups=32
+[2026-04-17 10:23:53] DONE  LightGBM__T_C__twopx__alr  best_rmse=70.8405  elapsed=11.7s
+[2026-04-17 10:23:53] [43/64]
+[2026-04-17 10:23:53] START LightGBM__T_C__twopx__pwlr (n_trials=50)
+[2026-04-17 10:23:53]   data shape X=(96, 94) y=(96,) n_groups=32
+[2026-04-17 10:24:06] DONE  LightGBM__T_C__twopx__pwlr  best_rmse=77.1016  elapsed=13.2s
+[2026-04-17 10:24:06] [44/64]
+[2026-04-17 10:24:06] START LightGBM__T_C__twopx__twopx_components (n_trials=50)
+[2026-04-17 10:24:06]   data shape X=(96, 14) y=(96,) n_groups=32
+[2026-04-17 10:24:17] DONE  LightGBM__T_C__twopx__twopx_components  best_rmse=71.0799  elapsed=11.0s
+[2026-04-17 10:24:17] [45/64]
+[2026-04-17 10:24:17] START LightGBM__P_kbar__twopx__raw (n_trials=50)
+[2026-04-17 10:24:17]   data shape X=(96, 31) y=(96,) n_groups=32
+[2026-04-17 10:24:28] DONE  LightGBM__P_kbar__twopx__raw  best_rmse=4.5291  elapsed=11.1s
+[2026-04-17 10:24:28] [46/64]
+[2026-04-17 10:24:28] START LightGBM__P_kbar__twopx__alr (n_trials=50)
+[2026-04-17 10:24:28]   data shape X=(96, 29) y=(96,) n_groups=32
+[2026-04-17 10:24:43] DONE  LightGBM__P_kbar__twopx__alr  best_rmse=4.5815  elapsed=15.3s
+[2026-04-17 10:24:43] [47/64]
+[2026-04-17 10:24:43] START LightGBM__P_kbar__twopx__pwlr (n_trials=50)
+[2026-04-17 10:24:43]   data shape X=(96, 94) y=(96,) n_groups=32
+[2026-04-17 10:24:55] DONE  LightGBM__P_kbar__twopx__pwlr  best_rmse=4.7800  elapsed=11.1s
+[2026-04-17 10:24:55] [48/64]
+[2026-04-17 10:24:55] START LightGBM__P_kbar__twopx__twopx_components (n_trials=50)
+[2026-04-17 10:24:55]   data shape X=(96, 14) y=(96,) n_groups=32
+[2026-04-17 10:25:06] DONE  LightGBM__P_kbar__twopx__twopx_components  best_rmse=4.6294  elapsed=11.5s
+[2026-04-17 10:25:06] [49/64]
+[2026-04-17 10:25:06] START ElasticNet__T_C__twopx__raw (n_trials=50)
+[2026-04-17 10:25:06]   data shape X=(96, 31) y=(96,) n_groups=32
+[2026-04-17 10:25:12] DONE  ElasticNet__T_C__twopx__raw  best_rmse=70.7419  elapsed=6.4s
+[2026-04-17 10:25:12] [50/64]
+[2026-04-17 10:25:12] START ElasticNet__T_C__twopx__alr (n_trials=50)
+[2026-04-17 10:25:12]   data shape X=(96, 29) y=(96,) n_groups=32
+[2026-04-17 10:25:18] DONE  ElasticNet__T_C__twopx__alr  best_rmse=71.9159  elapsed=5.9s
+[2026-04-17 10:25:18] [51/64]
+[2026-04-17 10:25:18] START ElasticNet__T_C__twopx__pwlr (n_trials=50)
+[2026-04-17 10:25:18]   data shape X=(96, 94) y=(96,) n_groups=32
+[2026-04-17 10:25:27] DONE  ElasticNet__T_C__twopx__pwlr  best_rmse=73.8732  elapsed=8.4s
+[2026-04-17 10:25:27] [52/64]
+[2026-04-17 10:25:27] START ElasticNet__T_C__twopx__twopx_components (n_trials=50)
+[2026-04-17 10:25:27]   data shape X=(96, 14) y=(96,) n_groups=32
+[2026-04-17 10:25:32] DONE  ElasticNet__T_C__twopx__twopx_components  best_rmse=70.8078  elapsed=5.3s
+[2026-04-17 10:25:32] [53/64]
+[2026-04-17 10:25:32] START ElasticNet__P_kbar__twopx__raw (n_trials=50)
+[2026-04-17 10:25:32]   data shape X=(96, 31) y=(96,) n_groups=32
+[2026-04-17 10:25:38] DONE  ElasticNet__P_kbar__twopx__raw  best_rmse=6.1423  elapsed=5.9s
+[2026-04-17 10:25:38] [54/64]
+[2026-04-17 10:25:38] START ElasticNet__P_kbar__twopx__alr (n_trials=50)
+[2026-04-17 10:25:38]   data shape X=(96, 29) y=(96,) n_groups=32
+[2026-04-17 10:25:43] DONE  ElasticNet__P_kbar__twopx__alr  best_rmse=6.1943  elapsed=5.4s
+[2026-04-17 10:25:43] [55/64]
+[2026-04-17 10:25:43] START ElasticNet__P_kbar__twopx__pwlr (n_trials=50)
+[2026-04-17 10:25:43]   data shape X=(96, 94) y=(96,) n_groups=32
+[2026-04-17 10:25:51] DONE  ElasticNet__P_kbar__twopx__pwlr  best_rmse=5.9992  elapsed=7.3s
+[2026-04-17 10:25:51] [56/64]
+[2026-04-17 10:25:51] START ElasticNet__P_kbar__twopx__twopx_components (n_trials=50)
+[2026-04-17 10:25:51]   data shape X=(96, 14) y=(96,) n_groups=32
+[2026-04-17 10:25:56] DONE  ElasticNet__P_kbar__twopx__twopx_components  best_rmse=6.2672  elapsed=5.6s
+[2026-04-17 10:25:56] [57/64]
+[2026-04-17 10:25:56] START MLP__T_C__twopx__raw (n_trials=50)
+[2026-04-17 10:25:56]   data shape X=(96, 31) y=(96,) n_groups=32
+[2026-04-17 10:27:21] DONE  MLP__T_C__twopx__raw  best_rmse=214.7778  elapsed=85.2s
+[2026-04-17 10:27:21] [58/64]
+[2026-04-17 10:27:21] START MLP__T_C__twopx__alr (n_trials=50)
+[2026-04-17 10:27:21]   data shape X=(96, 29) y=(96,) n_groups=32
+[2026-04-17 10:29:39] DONE  MLP__T_C__twopx__alr  best_rmse=219.3456  elapsed=137.3s
+[2026-04-17 10:29:39] [59/64]
+[2026-04-17 10:29:39] START MLP__T_C__twopx__pwlr (n_trials=50)
+[2026-04-17 10:29:39]   data shape X=(96, 94) y=(96,) n_groups=32
+[2026-04-17 10:31:40] DONE  MLP__T_C__twopx__pwlr  best_rmse=315.5567  elapsed=120.9s
+[2026-04-17 10:31:40] [60/64]
+[2026-04-17 10:31:40] START MLP__T_C__twopx__twopx_components (n_trials=50)
+[2026-04-17 10:31:40]   data shape X=(96, 14) y=(96,) n_groups=32
+[2026-04-17 10:33:32] DONE  MLP__T_C__twopx__twopx_components  best_rmse=313.6238  elapsed=112.1s
+[2026-04-17 10:33:32] [61/64]
+[2026-04-17 10:33:32] START MLP__P_kbar__twopx__raw (n_trials=50)
+[2026-04-17 10:33:32]   data shape X=(96, 31) y=(96,) n_groups=32
+[2026-04-17 10:34:58] DONE  MLP__P_kbar__twopx__raw  best_rmse=5.1126  elapsed=86.3s
+[2026-04-17 10:34:58] [62/64]
+[2026-04-17 10:34:58] START MLP__P_kbar__twopx__alr (n_trials=50)
+[2026-04-17 10:34:58]   data shape X=(96, 29) y=(96,) n_groups=32
+[2026-04-17 10:36:14] DONE  MLP__P_kbar__twopx__alr  best_rmse=5.4151  elapsed=76.0s
+[2026-04-17 10:36:14] [63/64]
+[2026-04-17 10:36:14] START MLP__P_kbar__twopx__pwlr (n_trials=50)
+[2026-04-17 10:36:14]   data shape X=(96, 94) y=(96,) n_groups=32
+[2026-04-17 10:37:18] DONE  MLP__P_kbar__twopx__pwlr  best_rmse=5.4941  elapsed=63.9s
+[2026-04-17 10:37:18] [64/64]
+[2026-04-17 10:37:18] START MLP__P_kbar__twopx__twopx_components (n_trials=50)
+[2026-04-17 10:37:18]   data shape X=(96, 14) y=(96,) n_groups=32
+[2026-04-17 10:38:27] DONE  MLP__P_kbar__twopx__twopx_components  best_rmse=5.4542  elapsed=68.6s
+[2026-04-17 10:38:27] Phase E twopx driver DONE  completed=64  failed=0

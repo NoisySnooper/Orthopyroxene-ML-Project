@@ -11,6 +11,7 @@ from __future__ import annotations
 
 import ast
 import json
+import os
 
 import numpy as np
 from sklearn.base import clone
@@ -141,17 +142,23 @@ def build_model(model_name, params, seed=SEED_MODEL):
     Mirrors BASE_MODELS sklearn/xgboost constructor signatures so that
     `seed` is always honored and njobs flags remain consistent. For
     pipeline models (ElasticNet, MLP), params target the inner step.
+
+    Env var V10_MAX_JOBS caps n_jobs/thread_count per model (useful when
+    running multiple runners in parallel). Default -1 (all cores).
     """
+    nj = int(os.environ.get('V10_MAX_JOBS', '-1'))
     p = dict(params)
     if model_name == 'GB':
         return HistGradientBoostingRegressor(**p, random_state=seed)
     if model_name == 'XGB':
-        return XGBRegressor(**p, random_state=seed, n_jobs=-1, verbosity=0)
+        return XGBRegressor(**p, random_state=seed, n_jobs=nj, verbosity=0)
     if model_name == 'CatBoost':
-        return CatBoostRegressor(**p, random_seed=seed, verbose=False,
+        # CatBoost thread_count: -1 means all cores; pass cap when set.
+        tc = {} if nj == -1 else {'thread_count': nj}
+        return CatBoostRegressor(**p, **tc, random_seed=seed, verbose=False,
                                  allow_writing_files=False)
     if model_name == 'LightGBM':
-        return LGBMRegressor(**p, random_state=seed, n_jobs=-1, verbose=-1)
+        return LGBMRegressor(**p, random_state=seed, n_jobs=nj, verbose=-1)
     if model_name == 'ElasticNet':
         est = _make_elasticnet()
         if p:
