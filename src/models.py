@@ -164,6 +164,13 @@ def build_model(model_name, params, seed=SEED_MODEL):
     if model_name == 'MLP':
         est = _make_mlp()
         if p:
+            # Translate Optuna trial keys (n_layers, layer_size) to sklearn's
+            # hidden_layer_sizes tuple. Mirror logic in optuna_search._suggest_mlp_params.
+            if 'n_layers' in p or 'layer_size' in p:
+                n_layers = int(p.pop('n_layers', 1))
+                layer_size = int(p.pop('layer_size', 64))
+                p['hidden_layer_sizes'] = ((layer_size,) if n_layers == 1
+                                           else (layer_size, layer_size // 2))
             p_out = {k if k.startswith('mlp__') else f'mlp__{k}': v
                      for k, v in p.items()}
             est.set_params(**p_out)

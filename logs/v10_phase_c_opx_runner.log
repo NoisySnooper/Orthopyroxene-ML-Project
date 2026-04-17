@@ -1,0 +1,175 @@
+[2026-04-17 08:04:29] START opx runner  cells=12
+[2026-04-17 08:04:29] [1/12]
+[2026-04-17 08:04:29] CELL T_C/opx_only/raw START
+[2026-04-17 08:04:41] CELL FAILED T_C/opx_only/raw: Invalid parameter 'n_layers' for estimator MLPRegressor(early_stopping=True, max_iter=500, n_iter_no_change=20,
+             random_state=42, validation_fraction=0.15). Valid parameters are: ['activation', 'alpha', 'batch_size', 'beta_1', 'beta_2', 'early_stopping', 'epsilon', 'hidden_layer_sizes', 'learning_rate', 'learning_rate_init', 'loss', 'max_fun', 'max_iter', 'momentum', 'n_iter_no_change', 'nesterovs_momentum', 'power_t', 'random_state', 'shuffle', 'solver', 'tol', 'validation_fraction', 'verbose', 'warm_start'].
+[2026-04-17 08:04:41] Traceback (most recent call last):
+  File "C:\Users\NQTa\Documents\MLCourse\Final Project\scripts\v10_phase_c_opx_runner.py", line 161, in main
+    br, er = run_one_cell(t, tr, fs, bp, fh)
+             ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\NQTa\Documents\MLCourse\Final Project\scripts\v10_phase_c_opx_runner.py", line 84, in run_one_cell
+    base_df, base_preds = evaluate_all_bases(
+                          ~~~~~~~~~~~~~~~~~~^
+        bp, splits, target=target, track=track, feature_set=feature_set)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\NQTa\Documents\MLCourse\Final Project\src\v10_phase_c_analysis.py", line 148, in evaluate_all_bases
+    est = refit_model(m, params, splits['X_tr'], splits['y_tr'])
+  File "C:\Users\NQTa\Documents\MLCourse\Final Project\src\v10_phase_c_analysis.py", line 89, in refit_model
+    est = build_model(model_name, best_params)
+  File "C:\Users\NQTa\Documents\MLCourse\Final Project\src\models.py", line 169, in build_model
+    est.set_params(**p_out)
+    ~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\NQTa\Documents\MLCourse\Final Project\.venv\Lib\site-packages\sklearn\pipeline.py", line 287, in set_params
+    self._set_params("steps", **kwargs)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\NQTa\Documents\MLCourse\Final Project\.venv\Lib\site-packages\sklearn\utils\metaestimators.py", line 75, in _set_params
+    super().set_params(**params)
+    ~~~~~~~~~~~~~~~~~~^^^^^^^^^^
+  File "C:\Users\NQTa\Documents\MLCourse\Final Project\.venv\Lib\site-packages\sklearn\base.py", line 378, in set_params
+    valid_params[key].set_params(**sub_params)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^
+  File "C:\Users\NQTa\Documents\MLCourse\Final Project\.venv\Lib\site-packages\sklearn\base.py", line 366, in set_params
+    raise ValueError(
+    ...<2 lines>...
+    )
+ValueError: Invalid parameter 'n_layers' for estimator MLPRegressor(early_stopping=True, max_iter=500, n_iter_no_change=20,
+             random_state=42, validation_fraction=0.15). Valid parameters are: ['activation', 'alpha', 'batch_size', 'beta_1', 'beta_2', 'early_stopping', 'epsilon', 'hidden_layer_sizes', 'learning_rate', 'learning_rate_init', 'loss', 'max_fun', 'max_iter', 'momentum', 'n_iter_no_change', 'nesterovs_momentum', 'power_t', 'random_state', 'shuffle', 'solver', 'tol', 'validation_fraction', 'verbose', 'warm_start'].
+
+[2026-04-17 08:04:41] [2/12]
+[2026-04-17 08:04:41] CELL T_C/opx_only/alr START
+[2026-04-17 08:04:44] CELL FAILED T_C/opx_only/alr: Invalid parameter 'n_layers' for estimator MLPRegressor(early_stopping=True, max_iter=500, n_iter_no_change=20,
+             random_state=42, validation_fraction=0.15). Valid parameters are: ['activation', 'alpha', 'batch_size', 'beta_1', 'beta_2', 'early_stopping', 'epsilon', 'hidden_layer_sizes', 'learning_rate', 'learning_rate_init', 'loss', 'max_fun', 'max_iter', 'momentum', 'n_iter_no_change', 'nesterovs_momentum', 'power_t', 'random_state', 'shuffle', 'solver', 'tol', 'validation_fraction', 'verbose', 'warm_start'].
+[2026-04-17 08:04:44] Traceback (most recent call last):
+  File "C:\Users\NQTa\Documents\MLCourse\Final Project\scripts\v10_phase_c_opx_runner.py", line 161, in main
+    br, er = run_one_cell(t, tr, fs, bp, fh)
+             ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\NQTa\Documents\MLCourse\Final Project\scripts\v10_phase_c_opx_runner.py", line 84, in run_one_cell
+    base_df, base_preds = evaluate_all_bases(
+                          ~~~~~~~~~~~~~~~~~~^
+        bp, splits, target=target, track=track, feature_set=feature_set)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\NQTa\Documents\MLCourse\Final Project\src\v10_phase_c_analysis.py", line 148, in evaluate_all_bases
+    est = refit_model(m, params, splits['X_tr'], splits['y_tr'])
+  File "C:\Users\NQTa\Documents\MLCourse\Final Project\src\v10_phase_c_analysis.py", line 89, in refit_model
+    est = build_model(model_name, best_params)
+  File "C:\Users\NQTa\Documents\MLCourse\Final Project\src\models.py", line 169, in build_model
+    est.set_params(**p_out)
+    ~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\NQTa\Documents\MLCourse\Final Project\.venv\Lib\site-packages\sklearn\pipeline.py", line 287, in set_params
+    self._set_params("steps", **kwargs)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\NQTa\Documents\MLCourse\Final Project\.venv\Lib\site-packages\sklearn\utils\metaestimators.py", line 75, in _set_params
+    super().set_params(**params)
+    ~~~~~~~~~~~~~~~~~~^^^^^^^^^^
+  File "C:\Users\NQTa\Documents\MLCourse\Final Project\.venv\Lib\site-packages\sklearn\base.py", line 378, in set_params
+    valid_params[key].set_params(**sub_params)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^
+  File "C:\Users\NQTa\Documents\MLCourse\Final Project\.venv\Lib\site-packages\sklearn\base.py", line 366, in set_params
+    raise ValueError(
+    ...<2 lines>...
+    )
+ValueError: Invalid parameter 'n_layers' for estimator MLPRegressor(early_stopping=True, max_iter=500, n_iter_no_change=20,
+             random_state=42, validation_fraction=0.15). Valid parameters are: ['activation', 'alpha', 'batch_size', 'beta_1', 'beta_2', 'early_stopping', 'epsilon', 'hidden_layer_sizes', 'learning_rate', 'learning_rate_init', 'loss', 'max_fun', 'max_iter', 'momentum', 'n_iter_no_change', 'nesterovs_momentum', 'power_t', 'random_state', 'shuffle', 'solver', 'tol', 'validation_fraction', 'verbose', 'warm_start'].
+
+[2026-04-17 08:04:44] [3/12]
+[2026-04-17 08:04:44] CELL T_C/opx_only/pwlr START
+[2026-04-17 08:04:56] CELL FAILED T_C/opx_only/pwlr: Invalid parameter 'n_layers' for estimator MLPRegressor(early_stopping=True, max_iter=500, n_iter_no_change=20,
+             random_state=42, validation_fraction=0.15). Valid parameters are: ['activation', 'alpha', 'batch_size', 'beta_1', 'beta_2', 'early_stopping', 'epsilon', 'hidden_layer_sizes', 'learning_rate', 'learning_rate_init', 'loss', 'max_fun', 'max_iter', 'momentum', 'n_iter_no_change', 'nesterovs_momentum', 'power_t', 'random_state', 'shuffle', 'solver', 'tol', 'validation_fraction', 'verbose', 'warm_start'].
+[2026-04-17 08:04:56] Traceback (most recent call last):
+  File "C:\Users\NQTa\Documents\MLCourse\Final Project\scripts\v10_phase_c_opx_runner.py", line 161, in main
+    br, er = run_one_cell(t, tr, fs, bp, fh)
+             ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\NQTa\Documents\MLCourse\Final Project\scripts\v10_phase_c_opx_runner.py", line 84, in run_one_cell
+    base_df, base_preds = evaluate_all_bases(
+                          ~~~~~~~~~~~~~~~~~~^
+        bp, splits, target=target, track=track, feature_set=feature_set)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\NQTa\Documents\MLCourse\Final Project\src\v10_phase_c_analysis.py", line 148, in evaluate_all_bases
+    est = refit_model(m, params, splits['X_tr'], splits['y_tr'])
+  File "C:\Users\NQTa\Documents\MLCourse\Final Project\src\v10_phase_c_analysis.py", line 89, in refit_model
+    est = build_model(model_name, best_params)
+  File "C:\Users\NQTa\Documents\MLCourse\Final Project\src\models.py", line 169, in build_model
+    est.set_params(**p_out)
+    ~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\NQTa\Documents\MLCourse\Final Project\.venv\Lib\site-packages\sklearn\pipeline.py", line 287, in set_params
+    self._set_params("steps", **kwargs)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\NQTa\Documents\MLCourse\Final Project\.venv\Lib\site-packages\sklearn\utils\metaestimators.py", line 75, in _set_params
+    super().set_params(**params)
+    ~~~~~~~~~~~~~~~~~~^^^^^^^^^^
+  File "C:\Users\NQTa\Documents\MLCourse\Final Project\.venv\Lib\site-packages\sklearn\base.py", line 378, in set_params
+    valid_params[key].set_params(**sub_params)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^
+  File "C:\Users\NQTa\Documents\MLCourse\Final Project\.venv\Lib\site-packages\sklearn\base.py", line 366, in set_params
+    raise ValueError(
+    ...<2 lines>...
+    )
+ValueError: Invalid parameter 'n_layers' for estimator MLPRegressor(early_stopping=True, max_iter=500, n_iter_no_change=20,
+             random_state=42, validation_fraction=0.15). Valid parameters are: ['activation', 'alpha', 'batch_size', 'beta_1', 'beta_2', 'early_stopping', 'epsilon', 'hidden_layer_sizes', 'learning_rate', 'learning_rate_init', 'loss', 'max_fun', 'max_iter', 'momentum', 'n_iter_no_change', 'nesterovs_momentum', 'power_t', 'random_state', 'shuffle', 'solver', 'tol', 'validation_fraction', 'verbose', 'warm_start'].
+
+[2026-04-17 08:04:56] [4/12]
+[2026-04-17 08:04:56] CELL T_C/opx_liq/raw START
+[2026-04-17 08:06:38] START opx runner  cells=12
+[2026-04-17 08:06:38] [1/12]
+[2026-04-17 08:06:38] CELL T_C/opx_only/raw START
+[2026-04-17 08:06:50]   bases: {'RF': 158.20283010789362, 'ERT': 163.11989303243521, 'XGB': 150.56434145730861, 'GB': 158.28441115545291, 'CatBoost': 156.70885646136742, 'LightGBM': 150.92428743383365, 'ElasticNet': 161.44341013521057, 'MLP': 152.09370838204325}
+[2026-04-17 08:07:33]   ensembles: {'ridge': 154.25386417634965, 'two_level': 151.21335737067236, 'greedy': 152.70142725959613}
+[2026-04-17 08:07:33] CELL T_C/opx_only/raw DONE  elapsed=54.9s
+[2026-04-17 08:07:33] [2/12]
+[2026-04-17 08:07:33] CELL T_C/opx_only/alr START
+[2026-04-17 08:07:38]   bases: {'RF': 156.34193286791898, 'ERT': 167.56149126118055, 'XGB': 148.51963112068918, 'GB': 148.44211222306242, 'CatBoost': 153.7270720421567, 'LightGBM': 147.98216692463086, 'ElasticNet': 172.3240765068681, 'MLP': 187.0875290965652}
+[2026-04-17 08:08:00]   ensembles: {'ridge': 149.57729630616842, 'two_level': 159.86246709887718, 'greedy': 152.94247923277302}
+[2026-04-17 08:08:00] CELL T_C/opx_only/alr DONE  elapsed=27.2s
+[2026-04-17 08:08:00] [3/12]
+[2026-04-17 08:08:00] CELL T_C/opx_only/pwlr START
+[2026-04-17 08:08:28]   bases: {'RF': 152.03803894431385, 'ERT': 158.7682524348852, 'XGB': 157.42162230023015, 'GB': 164.95764606107355, 'CatBoost': 154.99613924437068, 'LightGBM': 151.9982029252617, 'ElasticNet': 170.63253534764343, 'MLP': 169.3974713266843}
+[2026-04-17 08:09:41]   ensembles: {'ridge': 154.5256210639195, 'two_level': 155.07274655128566, 'greedy': 154.48003764712598}
+[2026-04-17 08:09:41] CELL T_C/opx_only/pwlr DONE  elapsed=101.7s
+[2026-04-17 08:09:41] [4/12]
+[2026-04-17 08:09:41] CELL T_C/opx_liq/raw START
+[2026-04-17 08:09:46]   bases: {'RF': 88.00002150509985, 'ERT': 90.91379911216922, 'XGB': 87.27021358840244, 'GB': 86.18018609793371, 'CatBoost': 92.455109330282, 'LightGBM': 87.02433037856319, 'ElasticNet': 77.06189003628756, 'MLP': 150.81248180205156}
+[2026-04-17 08:10:02]   ensembles: {'ridge': 78.15592962616073, 'two_level': 79.34193934475178, 'greedy': 78.025073536639}
+[2026-04-17 08:10:02] CELL T_C/opx_liq/raw DONE  elapsed=20.7s
+[2026-04-17 08:10:02] [5/12]
+[2026-04-17 08:10:02] CELL T_C/opx_liq/alr START
+[2026-04-17 08:10:10]   bases: {'RF': 87.06672081186457, 'ERT': 91.84259600746492, 'XGB': 89.51538033555532, 'GB': 93.42528308903331, 'CatBoost': 97.04027575648364, 'LightGBM': 93.67288280454915, 'ElasticNet': 86.30549546200969, 'MLP': 118.45182210362069}
+[2026-04-17 08:10:31]   ensembles: {'ridge': 87.97176260575982, 'two_level': 86.84596275655296, 'greedy': 86.44571313841107}
+[2026-04-17 08:10:31] CELL T_C/opx_liq/alr DONE  elapsed=29.1s
+[2026-04-17 08:10:31] [6/12]
+[2026-04-17 08:10:31] CELL T_C/opx_liq/pwlr START
+[2026-04-17 08:10:41]   bases: {'RF': 84.89279850533423, 'ERT': 86.62753117460504, 'XGB': 87.81703053564898, 'GB': 88.06798441640005, 'CatBoost': 87.78784269451208, 'LightGBM': 88.43982595114524, 'ElasticNet': 87.82374772804963, 'MLP': 156.70205626460464}
+[2026-04-17 08:11:17]   ensembles: {'ridge': 84.14971650834822, 'two_level': 83.25138723262816, 'greedy': 83.01841178006373}
+[2026-04-17 08:11:17] CELL T_C/opx_liq/pwlr DONE  elapsed=46.0s
+[2026-04-17 08:11:17] [7/12]
+[2026-04-17 08:11:17] CELL P_kbar/opx_only/raw START
+[2026-04-17 08:11:25]   bases: {'RF': 12.259346060811689, 'ERT': 12.102255702827854, 'XGB': 11.694452745544185, 'GB': 11.78393254859307, 'CatBoost': 11.618123774518436, 'LightGBM': 11.759372339315046, 'ElasticNet': 13.260640816734675, 'MLP': 13.545528139663277}
+[2026-04-17 08:11:53]   ensembles: {'ridge': 11.735618568805892, 'two_level': 11.858185054313406, 'greedy': 11.856485457384338}
+[2026-04-17 08:11:53] CELL P_kbar/opx_only/raw DONE  elapsed=35.7s
+[2026-04-17 08:11:53] [8/12]
+[2026-04-17 08:11:53] CELL P_kbar/opx_only/alr START
+[2026-04-17 08:12:21]   bases: {'RF': 11.10107032422439, 'ERT': 11.089994665435292, 'XGB': 10.590686093279974, 'GB': 11.809735279814351, 'CatBoost': 11.95646152384662, 'LightGBM': 11.728056442848887, 'ElasticNet': 13.287063103294065, 'MLP': 12.743452113487686}
+[2026-04-17 08:14:11]   ensembles: {'ridge': 11.782395922915459, 'two_level': 11.413159118782149, 'greedy': 11.546859269485743}
+[2026-04-17 08:14:11] CELL P_kbar/opx_only/alr DONE  elapsed=137.9s
+[2026-04-17 08:14:11] [9/12]
+[2026-04-17 08:14:11] CELL P_kbar/opx_only/pwlr START
+[2026-04-17 08:14:54]   bases: {'RF': 10.327722797494394, 'ERT': 10.885709307356297, 'XGB': 10.201704063434224, 'GB': 11.225029233628339, 'CatBoost': 11.019120556806822, 'LightGBM': 10.917548603110205, 'ElasticNet': 13.14665944124552, 'MLP': 11.935439686369369}
+[2026-04-17 08:18:14]   ensembles: {'ridge': 10.178244068792008, 'two_level': 10.583582829430878, 'greedy': 10.211027425067185}
+[2026-04-17 08:18:14] CELL P_kbar/opx_only/pwlr DONE  elapsed=243.0s
+[2026-04-17 08:18:14] [10/12]
+[2026-04-17 08:18:14] CELL P_kbar/opx_liq/raw START
+[2026-04-17 08:18:22]   bases: {'RF': 5.42136820051842, 'ERT': 5.716456434300911, 'XGB': 4.742615369523226, 'GB': 4.756658215332069, 'CatBoost': 5.484648241870014, 'LightGBM': 5.01687393312468, 'ElasticNet': 5.585970379506894, 'MLP': 3.8156075924116495}
+[2026-04-17 08:18:47]   ensembles: {'ridge': 3.890039267595015, 'two_level': 3.9374833982310933, 'greedy': 3.8254548426441537}
+[2026-04-17 08:18:47] CELL P_kbar/opx_liq/raw DONE  elapsed=33.2s
+[2026-04-17 08:18:47] [11/12]
+[2026-04-17 08:18:47] CELL P_kbar/opx_liq/alr START
+[2026-04-17 08:18:56]   bases: {'RF': 5.065722658162609, 'ERT': 6.6496458465320005, 'XGB': 4.926977363783257, 'GB': 5.119886200031969, 'CatBoost': 5.104686653586727, 'LightGBM': 5.267934211738234, 'ElasticNet': 6.482865762630683, 'MLP': 5.491743896088443}
+[2026-04-17 08:19:29]   ensembles: {'ridge': 4.056487264075174, 'two_level': 4.512034328043101, 'greedy': 4.648435143840157}
+[2026-04-17 08:19:29] CELL P_kbar/opx_liq/alr DONE  elapsed=41.8s
+[2026-04-17 08:19:29] [12/12]
+[2026-04-17 08:19:29] CELL P_kbar/opx_liq/pwlr START
+[2026-04-17 08:19:52]   bases: {'RF': 5.249150516567117, 'ERT': 6.6338216051795325, 'XGB': 5.031449146588685, 'GB': 5.048598637281868, 'CatBoost': 5.230592092571972, 'LightGBM': 5.394992207963286, 'ElasticNet': 6.638145442783235, 'MLP': 5.720952328477712}
+[2026-04-17 08:21:04]   ensembles: {'ridge': 4.210741592705984, 'two_level': 4.533584601045804, 'greedy': 4.918893919666225}
+[2026-04-17 08:21:04] CELL P_kbar/opx_liq/pwlr DONE  elapsed=95.3s
+[2026-04-17 08:21:04] wrote C:\Users\NQTa\Documents\MLCourse\Final Project\results\v10_opx_per_cell_results.csv
+[2026-04-17 08:21:04] wrote C:\Users\NQTa\Documents\MLCourse\Final Project\results\v10_opx_ensemble_results.csv
+[2026-04-17 08:21:04] DONE  n_base_rows=96  n_ens_rows=36
