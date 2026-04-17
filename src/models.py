@@ -155,13 +155,18 @@ def build_model(model_name, params, seed=SEED_MODEL):
     if model_name == 'ElasticNet':
         est = _make_elasticnet()
         if p:
-            est.set_params(**{f'enet__{k}': v for k, v in p.items()})
+            # Accept either prefixed ('enet__alpha') or bare ('alpha') keys.
+            p_out = {k if k.startswith('enet__') else f'enet__{k}': v
+                     for k, v in p.items()}
+            est.set_params(**p_out)
         est.named_steps['enet'].set_params(random_state=seed)
         return est
     if model_name == 'MLP':
         est = _make_mlp()
         if p:
-            est.set_params(**{f'mlp__{k}': v for k, v in p.items()})
+            p_out = {k if k.startswith('mlp__') else f'mlp__{k}': v
+                     for k, v in p.items()}
+            est.set_params(**p_out)
         est.named_steps['mlp'].set_params(random_state=seed)
         return est
     if model_name not in MODEL_CLASSES:
