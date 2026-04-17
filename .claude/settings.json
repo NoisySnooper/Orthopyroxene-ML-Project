@@ -90,7 +90,9 @@
       "Bash(claude update *)",
       "Bash(claude --version)",
       "Bash(python scripts/v10_audit.py)",
-      "Bash(python scripts/v10_phase_a_cleanup.py)"
+      "Bash(python scripts/v10_phase_a_cleanup.py)",
+      "Bash(python scripts/v10_external_models_audit.py)",
+      "Bash(python scripts/v10_phase_b_nb_audit.py)"
     ]
   }
 }
