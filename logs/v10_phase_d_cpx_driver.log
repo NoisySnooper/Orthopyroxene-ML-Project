@@ -4,3 +4,490 @@
 [2026-04-16 22:07:44]   data shape X=(2113, 16) y=(2113,) n_groups=174
 [2026-04-16 22:07:50] DONE  RF__T_C__cpx_only__raw  best_rmse=145.3297  elapsed=5.8s
 [2026-04-16 22:07:50] Phase D cpx driver DONE  completed=1  failed=0
+[2026-04-17 08:16:05] Phase D cpx driver START  total=96 studies n_trials=50
+[2026-04-17 08:16:05] Resumed partial: 1 prior results
+[2026-04-17 08:16:05] [1/96] SKIP RF/T_C/cpx_only/raw (cached)
+[2026-04-17 08:16:05] [2/96]
+[2026-04-17 08:16:05] START RF__T_C__cpx_only__alr (n_trials=50)
+[2026-04-17 08:16:05]   data shape X=(2113, 15) y=(2113,) n_groups=174
+[2026-04-17 08:21:07] DONE  RF__T_C__cpx_only__alr  best_rmse=140.3843  elapsed=301.7s
+[2026-04-17 08:21:07] [3/96]
+[2026-04-17 08:21:07] START RF__T_C__cpx_only__pwlr (n_trials=50)
+[2026-04-17 08:21:07]   data shape X=(2113, 43) y=(2113,) n_groups=174
+[2026-04-17 08:24:47] Phase D cpx driver START  total=96 studies n_trials=50
+[2026-04-17 08:24:47] Resumed partial: 2 prior results
+[2026-04-17 08:24:47] [1/96] SKIP RF/T_C/cpx_only/raw (cached)
+[2026-04-17 08:24:47] [2/96] SKIP RF/T_C/cpx_only/alr (cached)
+[2026-04-17 08:24:47] [3/96]
+[2026-04-17 08:24:47] START RF__T_C__cpx_only__pwlr (n_trials=50)
+[2026-04-17 08:24:48]   data shape X=(2113, 43) y=(2113,) n_groups=174
+[2026-04-17 08:33:53] DONE  RF__T_C__cpx_only__pwlr  best_rmse=141.4604  elapsed=545.5s
+[2026-04-17 08:33:53] [4/96]
+[2026-04-17 08:33:53] START RF__T_C__cpx_liq__raw (n_trials=50)
+[2026-04-17 08:33:53]   data shape X=(1731, 25) y=(1731,) n_groups=161
+[2026-04-17 08:37:18] DONE  RF__T_C__cpx_liq__raw  best_rmse=84.7798  elapsed=205.5s
+[2026-04-17 08:37:18] [5/96]
+[2026-04-17 08:37:18] START RF__T_C__cpx_liq__alr (n_trials=50)
+[2026-04-17 08:37:18]   data shape X=(1731, 23) y=(1731,) n_groups=161
+[2026-04-17 08:40:13] DONE  RF__T_C__cpx_liq__alr  best_rmse=83.0643  elapsed=174.5s
+[2026-04-17 08:40:13] [6/96]
+[2026-04-17 08:40:13] START RF__T_C__cpx_liq__pwlr (n_trials=50)
+[2026-04-17 08:40:13]   data shape X=(1731, 72) y=(1731,) n_groups=161
+[2026-04-17 08:46:55] DONE  RF__T_C__cpx_liq__pwlr  best_rmse=81.4326  elapsed=402.4s
+[2026-04-17 08:46:55] [7/96]
+[2026-04-17 08:46:55] START RF__P_kbar__cpx_only__raw (n_trials=50)
+[2026-04-17 08:46:55]   data shape X=(2113, 16) y=(2113,) n_groups=174
+[2026-04-17 08:50:05] DONE  RF__P_kbar__cpx_only__raw  best_rmse=16.9405  elapsed=189.6s
+[2026-04-17 08:50:05] [8/96]
+[2026-04-17 08:50:05] START RF__P_kbar__cpx_only__alr (n_trials=50)
+[2026-04-17 08:50:05]   data shape X=(2113, 15) y=(2113,) n_groups=174
+[2026-04-17 08:52:35] DONE  RF__P_kbar__cpx_only__alr  best_rmse=16.5711  elapsed=149.9s
+[2026-04-17 08:52:35] [9/96]
+[2026-04-17 08:52:35] START RF__P_kbar__cpx_only__pwlr (n_trials=50)
+[2026-04-17 08:52:35]   data shape X=(2113, 43) y=(2113,) n_groups=174
+[2026-04-17 09:00:49] DONE  RF__P_kbar__cpx_only__pwlr  best_rmse=15.9420  elapsed=494.3s
+[2026-04-17 09:00:49] [10/96]
+[2026-04-17 09:00:49] START RF__P_kbar__cpx_liq__raw (n_trials=50)
+[2026-04-17 09:00:49]   data shape X=(1731, 25) y=(1731,) n_groups=161
+[2026-04-17 09:05:59] DONE  RF__P_kbar__cpx_liq__raw  best_rmse=8.1970  elapsed=309.7s
+[2026-04-17 09:05:59] [11/96]
+[2026-04-17 09:05:59] START RF__P_kbar__cpx_liq__alr (n_trials=50)
+[2026-04-17 09:05:59]   data shape X=(1731, 23) y=(1731,) n_groups=161
+[2026-04-17 09:09:59] DONE  RF__P_kbar__cpx_liq__alr  best_rmse=8.3224  elapsed=240.5s
+[2026-04-17 09:09:59] [12/96]
+[2026-04-17 09:09:59] START RF__P_kbar__cpx_liq__pwlr (n_trials=50)
+[2026-04-17 09:09:59]   data shape X=(1731, 72) y=(1731,) n_groups=161
+[2026-04-17 09:17:58] DONE  RF__P_kbar__cpx_liq__pwlr  best_rmse=8.1525  elapsed=478.6s
+[2026-04-17 09:17:58] [13/96]
+[2026-04-17 09:17:58] START ERT__T_C__cpx_only__raw (n_trials=50)
+[2026-04-17 09:17:58]   data shape X=(2113, 16) y=(2113,) n_groups=174
+[2026-04-17 09:20:03] DONE  ERT__T_C__cpx_only__raw  best_rmse=134.3728  elapsed=125.4s
+[2026-04-17 09:20:03] [14/96]
+[2026-04-17 09:20:03] START ERT__T_C__cpx_only__alr (n_trials=50)
+[2026-04-17 09:20:03]   data shape X=(2113, 15) y=(2113,) n_groups=174
+[2026-04-17 09:22:17] DONE  ERT__T_C__cpx_only__alr  best_rmse=141.7722  elapsed=133.8s
+[2026-04-17 09:22:17] [15/96]
+[2026-04-17 09:22:17] START ERT__T_C__cpx_only__pwlr (n_trials=50)
+[2026-04-17 09:22:17]   data shape X=(2113, 43) y=(2113,) n_groups=174
+[2026-04-17 09:24:50] DONE  ERT__T_C__cpx_only__pwlr  best_rmse=151.7135  elapsed=152.7s
+[2026-04-17 09:24:50] [16/96]
+[2026-04-17 09:24:50] START ERT__T_C__cpx_liq__raw (n_trials=50)
+[2026-04-17 09:24:50]   data shape X=(1731, 25) y=(1731,) n_groups=161
+[2026-04-17 09:27:15] DONE  ERT__T_C__cpx_liq__raw  best_rmse=81.0237  elapsed=144.7s
+[2026-04-17 09:27:15] [17/96]
+[2026-04-17 09:27:15] START ERT__T_C__cpx_liq__alr (n_trials=50)
+[2026-04-17 09:27:15]   data shape X=(1731, 23) y=(1731,) n_groups=161
+[2026-04-17 09:30:11] DONE  ERT__T_C__cpx_liq__alr  best_rmse=82.6660  elapsed=176.7s
+[2026-04-17 09:30:11] [18/96]
+[2026-04-17 09:30:11] START ERT__T_C__cpx_liq__pwlr (n_trials=50)
+[2026-04-17 09:30:11]   data shape X=(1731, 72) y=(1731,) n_groups=161
+[2026-04-17 09:35:53] DONE  ERT__T_C__cpx_liq__pwlr  best_rmse=77.3643  elapsed=341.2s
+[2026-04-17 09:35:53] [19/96]
+[2026-04-17 09:35:53] START ERT__P_kbar__cpx_only__raw (n_trials=50)
+[2026-04-17 09:35:53]   data shape X=(2113, 16) y=(2113,) n_groups=174
+[2026-04-17 09:38:18] DONE  ERT__P_kbar__cpx_only__raw  best_rmse=17.5804  elapsed=145.3s
+[2026-04-17 09:38:18] [20/96]
+[2026-04-17 09:38:18] START ERT__P_kbar__cpx_only__alr (n_trials=50)
+[2026-04-17 09:38:18]   data shape X=(2113, 15) y=(2113,) n_groups=174
+[2026-04-17 09:39:58] DONE  ERT__P_kbar__cpx_only__alr  best_rmse=17.2694  elapsed=100.4s
+[2026-04-17 09:39:58] [21/96]
+[2026-04-17 09:39:58] START ERT__P_kbar__cpx_only__pwlr (n_trials=50)
+[2026-04-17 09:39:58]   data shape X=(2113, 43) y=(2113,) n_groups=174
+[2026-04-17 09:44:43] DONE  ERT__P_kbar__cpx_only__pwlr  best_rmse=17.7527  elapsed=284.8s
+[2026-04-17 09:44:43] [22/96]
+[2026-04-17 09:44:43] START ERT__P_kbar__cpx_liq__raw (n_trials=50)
+[2026-04-17 09:44:43]   data shape X=(1731, 25) y=(1731,) n_groups=161
+[2026-04-17 09:47:55] DONE  ERT__P_kbar__cpx_liq__raw  best_rmse=7.8458  elapsed=191.6s
+[2026-04-17 09:47:55] [23/96]
+[2026-04-17 09:47:55] START ERT__P_kbar__cpx_liq__alr (n_trials=50)
+[2026-04-17 09:47:55]   data shape X=(1731, 23) y=(1731,) n_groups=161
+[2026-04-17 09:50:32] DONE  ERT__P_kbar__cpx_liq__alr  best_rmse=8.3795  elapsed=157.0s
+[2026-04-17 09:50:32] [24/96]
+[2026-04-17 09:50:32] START ERT__P_kbar__cpx_liq__pwlr (n_trials=50)
+[2026-04-17 09:50:32]   data shape X=(1731, 72) y=(1731,) n_groups=161
+[2026-04-17 09:55:58] DONE  ERT__P_kbar__cpx_liq__pwlr  best_rmse=8.2078  elapsed=326.7s
+[2026-04-17 09:55:58] [25/96]
+[2026-04-17 09:55:58] START XGB__T_C__cpx_only__raw (n_trials=50)
+[2026-04-17 09:55:58]   data shape X=(2113, 16) y=(2113,) n_groups=174
+[2026-04-17 09:57:41] DONE  XGB__T_C__cpx_only__raw  best_rmse=142.8641  elapsed=102.7s
+[2026-04-17 09:57:41] [26/96]
+[2026-04-17 09:57:41] START XGB__T_C__cpx_only__alr (n_trials=50)
+[2026-04-17 09:57:41]   data shape X=(2113, 15) y=(2113,) n_groups=174
+[2026-04-17 09:59:41] DONE  XGB__T_C__cpx_only__alr  best_rmse=140.2476  elapsed=120.2s
+[2026-04-17 09:59:41] [27/96]
+[2026-04-17 09:59:41] START XGB__T_C__cpx_only__pwlr (n_trials=50)
+[2026-04-17 09:59:41]   data shape X=(2113, 43) y=(2113,) n_groups=174
+[2026-04-17 10:03:02] DONE  XGB__T_C__cpx_only__pwlr  best_rmse=139.5386  elapsed=200.8s
+[2026-04-17 10:03:02] [28/96]
+[2026-04-17 10:03:02] START XGB__T_C__cpx_liq__raw (n_trials=50)
+[2026-04-17 10:03:02]   data shape X=(1731, 25) y=(1731,) n_groups=161
+[2026-04-17 10:09:52] DONE  XGB__T_C__cpx_liq__raw  best_rmse=80.2048  elapsed=409.9s
+[2026-04-17 10:09:52] [29/96]
+[2026-04-17 10:09:52] START XGB__T_C__cpx_liq__alr (n_trials=50)
+[2026-04-17 10:09:52]   data shape X=(1731, 23) y=(1731,) n_groups=161
+[2026-04-17 10:14:53] DONE  XGB__T_C__cpx_liq__alr  best_rmse=78.5927  elapsed=300.8s
+[2026-04-17 10:14:53] [30/96]
+[2026-04-17 10:14:53] START XGB__T_C__cpx_liq__pwlr (n_trials=50)
+[2026-04-17 10:14:53]   data shape X=(1731, 72) y=(1731,) n_groups=161
+[2026-04-17 10:22:04] DONE  XGB__T_C__cpx_liq__pwlr  best_rmse=79.5850  elapsed=431.3s
+[2026-04-17 10:22:04] [31/96]
+[2026-04-17 10:22:04] START XGB__P_kbar__cpx_only__raw (n_trials=50)
+[2026-04-17 10:22:04]   data shape X=(2113, 16) y=(2113,) n_groups=174
+[2026-04-17 10:23:53] DONE  XGB__P_kbar__cpx_only__raw  best_rmse=17.1365  elapsed=108.5s
+[2026-04-17 10:23:53] [32/96]
+[2026-04-17 10:23:53] START XGB__P_kbar__cpx_only__alr (n_trials=50)
+[2026-04-17 10:23:53]   data shape X=(2113, 15) y=(2113,) n_groups=174
+[2026-04-17 10:26:29] DONE  XGB__P_kbar__cpx_only__alr  best_rmse=15.9731  elapsed=155.9s
+[2026-04-17 10:26:29] [33/96]
+[2026-04-17 10:26:29] START XGB__P_kbar__cpx_only__pwlr (n_trials=50)
+[2026-04-17 10:26:29]   data shape X=(2113, 43) y=(2113,) n_groups=174
+[2026-04-17 10:29:20] DONE  XGB__P_kbar__cpx_only__pwlr  best_rmse=16.0264  elapsed=171.3s
+[2026-04-17 10:29:20] [34/96]
+[2026-04-17 10:29:20] START XGB__P_kbar__cpx_liq__raw (n_trials=50)
+[2026-04-17 10:29:20]   data shape X=(1731, 25) y=(1731,) n_groups=161
+[2026-04-17 10:31:19] DONE  XGB__P_kbar__cpx_liq__raw  best_rmse=7.3010  elapsed=119.0s
+[2026-04-17 10:31:19] [35/96]
+[2026-04-17 10:31:19] START XGB__P_kbar__cpx_liq__alr (n_trials=50)
+[2026-04-17 10:31:19]   data shape X=(1731, 23) y=(1731,) n_groups=161
+[2026-04-17 10:34:00] DONE  XGB__P_kbar__cpx_liq__alr  best_rmse=7.8786  elapsed=161.1s
+[2026-04-17 10:34:00] [36/96]
+[2026-04-17 10:34:00] START XGB__P_kbar__cpx_liq__pwlr (n_trials=50)
+[2026-04-17 10:34:00]   data shape X=(1731, 72) y=(1731,) n_groups=161
+[2026-04-17 10:37:00] DONE  XGB__P_kbar__cpx_liq__pwlr  best_rmse=8.1728  elapsed=179.6s
+[2026-04-17 10:37:00] [37/96]
+[2026-04-17 10:37:00] START GB__T_C__cpx_only__raw (n_trials=50)
+[2026-04-17 10:37:00]   data shape X=(2113, 16) y=(2113,) n_groups=174
+[2026-04-17 10:42:25] DONE  GB__T_C__cpx_only__raw  best_rmse=141.6158  elapsed=325.8s
+[2026-04-17 10:42:25] [38/96]
+[2026-04-17 10:42:25] START GB__T_C__cpx_only__alr (n_trials=50)
+[2026-04-17 10:42:25]   data shape X=(2113, 15) y=(2113,) n_groups=174
+[2026-04-17 10:43:22] Phase D cpx driver START  total=96 studies n_trials=50
+[2026-04-17 10:43:22] Resumed partial: 37 prior results
+[2026-04-17 10:43:22] [1/96] SKIP RF/T_C/cpx_only/raw (cached)
+[2026-04-17 10:43:22] [2/96] SKIP RF/T_C/cpx_only/alr (cached)
+[2026-04-17 10:43:22] [3/96] SKIP RF/T_C/cpx_only/pwlr (cached)
+[2026-04-17 10:43:22] [4/96] SKIP RF/T_C/cpx_liq/raw (cached)
+[2026-04-17 10:43:22] [5/96] SKIP RF/T_C/cpx_liq/alr (cached)
+[2026-04-17 10:43:22] [6/96] SKIP RF/T_C/cpx_liq/pwlr (cached)
+[2026-04-17 10:43:22] [7/96] SKIP RF/P_kbar/cpx_only/raw (cached)
+[2026-04-17 10:43:22] [8/96] SKIP RF/P_kbar/cpx_only/alr (cached)
+[2026-04-17 10:43:22] [9/96] SKIP RF/P_kbar/cpx_only/pwlr (cached)
+[2026-04-17 10:43:22] [10/96] SKIP RF/P_kbar/cpx_liq/raw (cached)
+[2026-04-17 10:43:22] [11/96] SKIP RF/P_kbar/cpx_liq/alr (cached)
+[2026-04-17 10:43:22] [12/96] SKIP RF/P_kbar/cpx_liq/pwlr (cached)
+[2026-04-17 10:43:22] [13/96] SKIP ERT/T_C/cpx_only/raw (cached)
+[2026-04-17 10:43:22] [14/96] SKIP ERT/T_C/cpx_only/alr (cached)
+[2026-04-17 10:43:22] [15/96] SKIP ERT/T_C/cpx_only/pwlr (cached)
+[2026-04-17 10:43:22] [16/96] SKIP ERT/T_C/cpx_liq/raw (cached)
+[2026-04-17 10:43:22] [17/96] SKIP ERT/T_C/cpx_liq/alr (cached)
+[2026-04-17 10:43:22] [18/96] SKIP ERT/T_C/cpx_liq/pwlr (cached)
+[2026-04-17 10:43:22] [19/96] SKIP ERT/P_kbar/cpx_only/raw (cached)
+[2026-04-17 10:43:22] [20/96] SKIP ERT/P_kbar/cpx_only/alr (cached)
+[2026-04-17 10:43:22] [21/96] SKIP ERT/P_kbar/cpx_only/pwlr (cached)
+[2026-04-17 10:43:22] [22/96] SKIP ERT/P_kbar/cpx_liq/raw (cached)
+[2026-04-17 10:43:22] [23/96] SKIP ERT/P_kbar/cpx_liq/alr (cached)
+[2026-04-17 10:43:22] [24/96] SKIP ERT/P_kbar/cpx_liq/pwlr (cached)
+[2026-04-17 10:43:22] [25/96] SKIP XGB/T_C/cpx_only/raw (cached)
+[2026-04-17 10:43:22] [26/96] SKIP XGB/T_C/cpx_only/alr (cached)
+[2026-04-17 10:43:22] [27/96] SKIP XGB/T_C/cpx_only/pwlr (cached)
+[2026-04-17 10:43:22] [28/96] SKIP XGB/T_C/cpx_liq/raw (cached)
+[2026-04-17 10:43:22] [29/96] SKIP XGB/T_C/cpx_liq/alr (cached)
+[2026-04-17 10:43:22] [30/96] SKIP XGB/T_C/cpx_liq/pwlr (cached)
+[2026-04-17 10:43:22] [31/96] SKIP XGB/P_kbar/cpx_only/raw (cached)
+[2026-04-17 10:43:22] [32/96] SKIP XGB/P_kbar/cpx_only/alr (cached)
+[2026-04-17 10:43:22] [33/96] SKIP XGB/P_kbar/cpx_only/pwlr (cached)
+[2026-04-17 10:43:22] [34/96] SKIP XGB/P_kbar/cpx_liq/raw (cached)
+[2026-04-17 10:43:22] [35/96] SKIP XGB/P_kbar/cpx_liq/alr (cached)
+[2026-04-17 10:43:22] [36/96] SKIP XGB/P_kbar/cpx_liq/pwlr (cached)
+[2026-04-17 10:43:22] [37/96] SKIP GB/T_C/cpx_only/raw (cached)
+[2026-04-17 10:43:22] [38/96]
+[2026-04-17 10:43:22] START GB__T_C__cpx_only__alr (n_trials=50)
+[2026-04-17 10:43:22]   data shape X=(2113, 15) y=(2113,) n_groups=174
+[2026-04-17 10:47:35] DONE  GB__T_C__cpx_only__alr  best_rmse=140.1003  elapsed=253.2s
+[2026-04-17 10:47:35] [39/96]
+[2026-04-17 10:47:35] START GB__T_C__cpx_only__pwlr (n_trials=50)
+[2026-04-17 10:47:35]   data shape X=(2113, 43) y=(2113,) n_groups=174
+[2026-04-17 10:52:21] DONE  GB__T_C__cpx_only__pwlr  best_rmse=135.4204  elapsed=286.4s
+[2026-04-17 10:52:21] [40/96]
+[2026-04-17 10:52:21] START GB__T_C__cpx_liq__raw (n_trials=50)
+[2026-04-17 10:52:21]   data shape X=(1731, 25) y=(1731,) n_groups=161
+[2026-04-17 10:55:20] DONE  GB__T_C__cpx_liq__raw  best_rmse=82.4253  elapsed=178.8s
+[2026-04-17 10:55:20] [41/96]
+[2026-04-17 10:55:20] START GB__T_C__cpx_liq__alr (n_trials=50)
+[2026-04-17 10:55:20]   data shape X=(1731, 23) y=(1731,) n_groups=161
+[2026-04-17 10:57:59] DONE  GB__T_C__cpx_liq__alr  best_rmse=81.7220  elapsed=159.0s
+[2026-04-17 10:57:59] [42/96]
+[2026-04-17 10:57:59] START GB__T_C__cpx_liq__pwlr (n_trials=50)
+[2026-04-17 10:57:59]   data shape X=(1731, 72) y=(1731,) n_groups=161
+[2026-04-17 11:01:01] DONE  GB__T_C__cpx_liq__pwlr  best_rmse=82.7752  elapsed=182.3s
+[2026-04-17 11:01:01] [43/96]
+[2026-04-17 11:01:01] START GB__P_kbar__cpx_only__raw (n_trials=50)
+[2026-04-17 11:01:01]   data shape X=(2113, 16) y=(2113,) n_groups=174
+[2026-04-17 11:02:49] DONE  GB__P_kbar__cpx_only__raw  best_rmse=16.4310  elapsed=108.0s
+[2026-04-17 11:02:49] [44/96]
+[2026-04-17 11:02:49] START GB__P_kbar__cpx_only__alr (n_trials=50)
+[2026-04-17 11:02:49]   data shape X=(2113, 15) y=(2113,) n_groups=174
+[2026-04-17 11:04:31] DONE  GB__P_kbar__cpx_only__alr  best_rmse=17.1085  elapsed=101.8s
+[2026-04-17 11:04:31] [45/96]
+[2026-04-17 11:04:31] START GB__P_kbar__cpx_only__pwlr (n_trials=50)
+[2026-04-17 11:04:31]   data shape X=(2113, 43) y=(2113,) n_groups=174
+[2026-04-17 11:06:44] DONE  GB__P_kbar__cpx_only__pwlr  best_rmse=15.4482  elapsed=132.4s
+[2026-04-17 11:06:44] [46/96]
+[2026-04-17 11:06:44] START GB__P_kbar__cpx_liq__raw (n_trials=50)
+[2026-04-17 11:06:44]   data shape X=(1731, 25) y=(1731,) n_groups=161
+[2026-04-17 11:09:08] DONE  GB__P_kbar__cpx_liq__raw  best_rmse=7.5373  elapsed=144.0s
+[2026-04-17 11:09:08] [47/96]
+[2026-04-17 11:09:08] START GB__P_kbar__cpx_liq__alr (n_trials=50)
+[2026-04-17 11:09:08]   data shape X=(1731, 23) y=(1731,) n_groups=161
+[2026-04-17 11:12:32] DONE  GB__P_kbar__cpx_liq__alr  best_rmse=8.0788  elapsed=204.7s
+[2026-04-17 11:12:32] [48/96]
+[2026-04-17 11:12:32] START GB__P_kbar__cpx_liq__pwlr (n_trials=50)
+[2026-04-17 11:12:32]   data shape X=(1731, 72) y=(1731,) n_groups=161
+[2026-04-17 11:14:59] DONE  GB__P_kbar__cpx_liq__pwlr  best_rmse=8.2378  elapsed=147.0s
+[2026-04-17 11:14:59] [49/96]
+[2026-04-17 11:14:59] START CatBoost__T_C__cpx_only__raw (n_trials=50)
+[2026-04-17 11:14:59]   data shape X=(2113, 16) y=(2113,) n_groups=174
+[2026-04-17 11:39:09] DONE  CatBoost__T_C__cpx_only__raw  best_rmse=136.9370  elapsed=1450.1s
+[2026-04-17 11:39:09] [50/96]
+[2026-04-17 11:39:09] START CatBoost__T_C__cpx_only__alr (n_trials=50)
+[2026-04-17 11:39:09]   data shape X=(2113, 15) y=(2113,) n_groups=174
+[2026-04-17 11:40:58] Phase D cpx driver START  total=96 studies n_trials=50
+[2026-04-17 11:40:58] Resumed partial: 49 prior results
+[2026-04-17 11:40:58] [1/96] SKIP RF/T_C/cpx_only/raw (cached)
+[2026-04-17 11:40:58] [2/96] SKIP RF/T_C/cpx_only/alr (cached)
+[2026-04-17 11:40:58] [3/96] SKIP RF/T_C/cpx_only/pwlr (cached)
+[2026-04-17 11:40:58] [4/96] SKIP RF/T_C/cpx_liq/raw (cached)
+[2026-04-17 11:40:58] [5/96] SKIP RF/T_C/cpx_liq/alr (cached)
+[2026-04-17 11:40:58] [6/96] SKIP RF/T_C/cpx_liq/pwlr (cached)
+[2026-04-17 11:40:58] [7/96] SKIP RF/P_kbar/cpx_only/raw (cached)
+[2026-04-17 11:40:58] [8/96] SKIP RF/P_kbar/cpx_only/alr (cached)
+[2026-04-17 11:40:58] [9/96] SKIP RF/P_kbar/cpx_only/pwlr (cached)
+[2026-04-17 11:40:58] [10/96] SKIP RF/P_kbar/cpx_liq/raw (cached)
+[2026-04-17 11:40:58] [11/96] SKIP RF/P_kbar/cpx_liq/alr (cached)
+[2026-04-17 11:40:58] [12/96] SKIP RF/P_kbar/cpx_liq/pwlr (cached)
+[2026-04-17 11:40:58] [13/96] SKIP ERT/T_C/cpx_only/raw (cached)
+[2026-04-17 11:40:58] [14/96] SKIP ERT/T_C/cpx_only/alr (cached)
+[2026-04-17 11:40:58] [15/96] SKIP ERT/T_C/cpx_only/pwlr (cached)
+[2026-04-17 11:40:58] [16/96] SKIP ERT/T_C/cpx_liq/raw (cached)
+[2026-04-17 11:40:58] [17/96] SKIP ERT/T_C/cpx_liq/alr (cached)
+[2026-04-17 11:40:58] [18/96] SKIP ERT/T_C/cpx_liq/pwlr (cached)
+[2026-04-17 11:40:58] [19/96] SKIP ERT/P_kbar/cpx_only/raw (cached)
+[2026-04-17 11:40:58] [20/96] SKIP ERT/P_kbar/cpx_only/alr (cached)
+[2026-04-17 11:40:58] [21/96] SKIP ERT/P_kbar/cpx_only/pwlr (cached)
+[2026-04-17 11:40:58] [22/96] SKIP ERT/P_kbar/cpx_liq/raw (cached)
+[2026-04-17 11:40:58] [23/96] SKIP ERT/P_kbar/cpx_liq/alr (cached)
+[2026-04-17 11:40:58] [24/96] SKIP ERT/P_kbar/cpx_liq/pwlr (cached)
+[2026-04-17 11:40:58] [25/96] SKIP XGB/T_C/cpx_only/raw (cached)
+[2026-04-17 11:40:58] [26/96] SKIP XGB/T_C/cpx_only/alr (cached)
+[2026-04-17 11:40:58] [27/96] SKIP XGB/T_C/cpx_only/pwlr (cached)
+[2026-04-17 11:40:58] [28/96] SKIP XGB/T_C/cpx_liq/raw (cached)
+[2026-04-17 11:40:58] [29/96] SKIP XGB/T_C/cpx_liq/alr (cached)
+[2026-04-17 11:40:58] [30/96] SKIP XGB/T_C/cpx_liq/pwlr (cached)
+[2026-04-17 11:40:58] [31/96] SKIP XGB/P_kbar/cpx_only/raw (cached)
+[2026-04-17 11:40:58] [32/96] SKIP XGB/P_kbar/cpx_only/alr (cached)
+[2026-04-17 11:40:58] [33/96] SKIP XGB/P_kbar/cpx_only/pwlr (cached)
+[2026-04-17 11:40:58] [34/96] SKIP XGB/P_kbar/cpx_liq/raw (cached)
+[2026-04-17 11:40:58] [35/96] SKIP XGB/P_kbar/cpx_liq/alr (cached)
+[2026-04-17 11:40:58] [36/96] SKIP XGB/P_kbar/cpx_liq/pwlr (cached)
+[2026-04-17 11:40:58] [37/96] SKIP GB/T_C/cpx_only/raw (cached)
+[2026-04-17 11:40:58] [38/96] SKIP GB/T_C/cpx_only/alr (cached)
+[2026-04-17 11:40:58] [39/96] SKIP GB/T_C/cpx_only/pwlr (cached)
+[2026-04-17 11:40:58] [40/96] SKIP GB/T_C/cpx_liq/raw (cached)
+[2026-04-17 11:40:58] [41/96] SKIP GB/T_C/cpx_liq/alr (cached)
+[2026-04-17 11:40:58] [42/96] SKIP GB/T_C/cpx_liq/pwlr (cached)
+[2026-04-17 11:40:58] [43/96] SKIP GB/P_kbar/cpx_only/raw (cached)
+[2026-04-17 11:40:58] [44/96] SKIP GB/P_kbar/cpx_only/alr (cached)
+[2026-04-17 11:40:58] [45/96] SKIP GB/P_kbar/cpx_only/pwlr (cached)
+[2026-04-17 11:40:58] [46/96] SKIP GB/P_kbar/cpx_liq/raw (cached)
+[2026-04-17 11:40:58] [47/96] SKIP GB/P_kbar/cpx_liq/alr (cached)
+[2026-04-17 11:40:58] [48/96] SKIP GB/P_kbar/cpx_liq/pwlr (cached)
+[2026-04-17 11:40:58] [49/96] SKIP CatBoost/T_C/cpx_only/raw (cached)
+[2026-04-17 11:40:58] [50/96]
+[2026-04-17 11:40:58] START CatBoost__T_C__cpx_only__alr (n_trials=50)
+[2026-04-17 11:40:58]   data shape X=(2113, 15) y=(2113,) n_groups=174
+[2026-04-17 11:48:26] DONE  CatBoost__T_C__cpx_only__alr  best_rmse=135.6907  elapsed=448.3s
+[2026-04-17 11:48:26] [51/96]
+[2026-04-17 11:48:26] START CatBoost__T_C__cpx_only__pwlr (n_trials=50)
+[2026-04-17 11:48:26]   data shape X=(2113, 43) y=(2113,) n_groups=174
+[2026-04-17 12:12:51] DONE  CatBoost__T_C__cpx_only__pwlr  best_rmse=137.0034  elapsed=1465.1s
+[2026-04-17 12:12:51] [52/96]
+[2026-04-17 12:12:51] START CatBoost__T_C__cpx_liq__raw (n_trials=50)
+[2026-04-17 12:12:51]   data shape X=(1731, 25) y=(1731,) n_groups=161
+[2026-04-17 12:25:05] DONE  CatBoost__T_C__cpx_liq__raw  best_rmse=78.1884  elapsed=733.7s
+[2026-04-17 12:25:05] [53/96]
+[2026-04-17 12:25:05] START CatBoost__T_C__cpx_liq__alr (n_trials=50)
+[2026-04-17 12:25:05]   data shape X=(1731, 23) y=(1731,) n_groups=161
+[2026-04-17 12:43:33] DONE  CatBoost__T_C__cpx_liq__alr  best_rmse=77.7735  elapsed=1108.1s
+[2026-04-17 12:43:33] [54/96]
+[2026-04-17 12:43:33] START CatBoost__T_C__cpx_liq__pwlr (n_trials=50)
+[2026-04-17 12:43:33]   data shape X=(1731, 72) y=(1731,) n_groups=161
+[2026-04-17 13:23:04] DONE  CatBoost__T_C__cpx_liq__pwlr  best_rmse=77.9573  elapsed=2370.8s
+[2026-04-17 13:23:04] [55/96]
+[2026-04-17 13:23:04] START CatBoost__P_kbar__cpx_only__raw (n_trials=50)
+[2026-04-17 13:23:04]   data shape X=(2113, 16) y=(2113,) n_groups=174
+[2026-04-17 13:28:51] DONE  CatBoost__P_kbar__cpx_only__raw  best_rmse=16.7485  elapsed=347.1s
+[2026-04-17 13:28:51] [56/96]
+[2026-04-17 13:28:51] START CatBoost__P_kbar__cpx_only__alr (n_trials=50)
+[2026-04-17 13:28:51]   data shape X=(2113, 15) y=(2113,) n_groups=174
+[2026-04-17 13:35:07] DONE  CatBoost__P_kbar__cpx_only__alr  best_rmse=16.6465  elapsed=376.0s
+[2026-04-17 13:35:07] [57/96]
+[2026-04-17 13:35:07] START CatBoost__P_kbar__cpx_only__pwlr (n_trials=50)
+[2026-04-17 13:35:07]   data shape X=(2113, 43) y=(2113,) n_groups=174
+[2026-04-17 13:54:32] DONE  CatBoost__P_kbar__cpx_only__pwlr  best_rmse=16.6146  elapsed=1164.6s
+[2026-04-17 13:54:32] [58/96]
+[2026-04-17 13:54:32] START CatBoost__P_kbar__cpx_liq__raw (n_trials=50)
+[2026-04-17 13:54:32]   data shape X=(1731, 25) y=(1731,) n_groups=161
+[2026-04-17 14:02:49] DONE  CatBoost__P_kbar__cpx_liq__raw  best_rmse=7.6254  elapsed=496.7s
+[2026-04-17 14:02:49] [59/96]
+[2026-04-17 14:02:49] START CatBoost__P_kbar__cpx_liq__alr (n_trials=50)
+[2026-04-17 14:02:49]   data shape X=(1731, 23) y=(1731,) n_groups=161
+[2026-04-17 14:10:30] DONE  CatBoost__P_kbar__cpx_liq__alr  best_rmse=8.0712  elapsed=461.5s
+[2026-04-17 14:10:30] [60/96]
+[2026-04-17 14:10:30] START CatBoost__P_kbar__cpx_liq__pwlr (n_trials=50)
+[2026-04-17 14:10:30]   data shape X=(1731, 72) y=(1731,) n_groups=161
+[2026-04-17 14:29:33] DONE  CatBoost__P_kbar__cpx_liq__pwlr  best_rmse=7.9903  elapsed=1143.3s
+[2026-04-17 14:29:33] [61/96]
+[2026-04-17 14:29:33] START LightGBM__T_C__cpx_only__raw (n_trials=50)
+[2026-04-17 14:29:33]   data shape X=(2113, 16) y=(2113,) n_groups=174
+[2026-04-17 14:30:14] DONE  LightGBM__T_C__cpx_only__raw  best_rmse=140.8242  elapsed=40.8s
+[2026-04-17 14:30:14] [62/96]
+[2026-04-17 14:30:14] START LightGBM__T_C__cpx_only__alr (n_trials=50)
+[2026-04-17 14:30:14]   data shape X=(2113, 15) y=(2113,) n_groups=174
+[2026-04-17 14:31:01] DONE  LightGBM__T_C__cpx_only__alr  best_rmse=139.4158  elapsed=47.0s
+[2026-04-17 14:31:01] [63/96]
+[2026-04-17 14:31:01] START LightGBM__T_C__cpx_only__pwlr (n_trials=50)
+[2026-04-17 14:31:01]   data shape X=(2113, 43) y=(2113,) n_groups=174
+[2026-04-17 14:31:51] DONE  LightGBM__T_C__cpx_only__pwlr  best_rmse=137.0418  elapsed=49.6s
+[2026-04-17 14:31:51] [64/96]
+[2026-04-17 14:31:51] START LightGBM__T_C__cpx_liq__raw (n_trials=50)
+[2026-04-17 14:31:51]   data shape X=(1731, 25) y=(1731,) n_groups=161
+[2026-04-17 14:33:00] DONE  LightGBM__T_C__cpx_liq__raw  best_rmse=82.5097  elapsed=68.9s
+[2026-04-17 14:33:00] [65/96]
+[2026-04-17 14:33:00] START LightGBM__T_C__cpx_liq__alr (n_trials=50)
+[2026-04-17 14:33:00]   data shape X=(1731, 23) y=(1731,) n_groups=161
+[2026-04-17 14:34:14] DONE  LightGBM__T_C__cpx_liq__alr  best_rmse=79.3913  elapsed=74.7s
+[2026-04-17 14:34:14] [66/96]
+[2026-04-17 14:34:14] START LightGBM__T_C__cpx_liq__pwlr (n_trials=50)
+[2026-04-17 14:34:14]   data shape X=(1731, 72) y=(1731,) n_groups=161
+[2026-04-17 14:36:04] DONE  LightGBM__T_C__cpx_liq__pwlr  best_rmse=81.8343  elapsed=110.1s
+[2026-04-17 14:36:04] [67/96]
+[2026-04-17 14:36:04] START LightGBM__P_kbar__cpx_only__raw (n_trials=50)
+[2026-04-17 14:36:04]   data shape X=(2113, 16) y=(2113,) n_groups=174
+[2026-04-17 14:36:58] DONE  LightGBM__P_kbar__cpx_only__raw  best_rmse=16.7869  elapsed=53.9s
+[2026-04-17 14:36:58] [68/96]
+[2026-04-17 14:36:58] START LightGBM__P_kbar__cpx_only__alr (n_trials=50)
+[2026-04-17 14:36:58]   data shape X=(2113, 15) y=(2113,) n_groups=174
+[2026-04-17 14:37:57] DONE  LightGBM__P_kbar__cpx_only__alr  best_rmse=16.1309  elapsed=58.5s
+[2026-04-17 14:37:57] [69/96]
+[2026-04-17 14:37:57] START LightGBM__P_kbar__cpx_only__pwlr (n_trials=50)
+[2026-04-17 14:37:57]   data shape X=(2113, 43) y=(2113,) n_groups=174
+[2026-04-17 14:39:30] DONE  LightGBM__P_kbar__cpx_only__pwlr  best_rmse=15.3781  elapsed=92.7s
+[2026-04-17 14:39:30] [70/96]
+[2026-04-17 14:39:30] START LightGBM__P_kbar__cpx_liq__raw (n_trials=50)
+[2026-04-17 14:39:30]   data shape X=(1731, 25) y=(1731,) n_groups=161
+[2026-04-17 14:40:22] DONE  LightGBM__P_kbar__cpx_liq__raw  best_rmse=7.4385  elapsed=52.5s
+[2026-04-17 14:40:22] [71/96]
+[2026-04-17 14:40:22] START LightGBM__P_kbar__cpx_liq__alr (n_trials=50)
+[2026-04-17 14:40:22]   data shape X=(1731, 23) y=(1731,) n_groups=161
+[2026-04-17 14:41:30] DONE  LightGBM__P_kbar__cpx_liq__alr  best_rmse=7.9627  elapsed=67.9s
+[2026-04-17 14:41:30] [72/96]
+[2026-04-17 14:41:30] START LightGBM__P_kbar__cpx_liq__pwlr (n_trials=50)
+[2026-04-17 14:41:30]   data shape X=(1731, 72) y=(1731,) n_groups=161
+[2026-04-17 14:43:35] DONE  LightGBM__P_kbar__cpx_liq__pwlr  best_rmse=8.2312  elapsed=125.2s
+[2026-04-17 14:43:35] [73/96]
+[2026-04-17 14:43:35] START ElasticNet__T_C__cpx_only__raw (n_trials=50)
+[2026-04-17 14:43:35]   data shape X=(2113, 16) y=(2113,) n_groups=174
+[2026-04-17 14:43:40] DONE  ElasticNet__T_C__cpx_only__raw  best_rmse=145.7527  elapsed=4.6s
+[2026-04-17 14:43:40] [74/96]
+[2026-04-17 14:43:40] START ElasticNet__T_C__cpx_only__alr (n_trials=50)
+[2026-04-17 14:43:40]   data shape X=(2113, 15) y=(2113,) n_groups=174
+[2026-04-17 14:43:43] DONE  ElasticNet__T_C__cpx_only__alr  best_rmse=149.9482  elapsed=3.3s
+[2026-04-17 14:43:43] [75/96]
+[2026-04-17 14:43:43] START ElasticNet__T_C__cpx_only__pwlr (n_trials=50)
+[2026-04-17 14:43:43]   data shape X=(2113, 43) y=(2113,) n_groups=174
+[2026-04-17 14:43:53] DONE  ElasticNet__T_C__cpx_only__pwlr  best_rmse=153.4354  elapsed=9.7s
+[2026-04-17 14:43:53] [76/96]
+[2026-04-17 14:43:53] START ElasticNet__T_C__cpx_liq__raw (n_trials=50)
+[2026-04-17 14:43:53]   data shape X=(1731, 25) y=(1731,) n_groups=161
+[2026-04-17 14:43:57] DONE  ElasticNet__T_C__cpx_liq__raw  best_rmse=94.6175  elapsed=4.8s
+[2026-04-17 14:43:57] [77/96]
+[2026-04-17 14:43:57] START ElasticNet__T_C__cpx_liq__alr (n_trials=50)
+[2026-04-17 14:43:57]   data shape X=(1731, 23) y=(1731,) n_groups=161
+[2026-04-17 14:44:01] DONE  ElasticNet__T_C__cpx_liq__alr  best_rmse=97.3225  elapsed=3.5s
+[2026-04-17 14:44:01] [78/96]
+[2026-04-17 14:44:01] START ElasticNet__T_C__cpx_liq__pwlr (n_trials=50)
+[2026-04-17 14:44:01]   data shape X=(1731, 72) y=(1731,) n_groups=161
+[2026-04-17 14:44:11] DONE  ElasticNet__T_C__cpx_liq__pwlr  best_rmse=96.3549  elapsed=10.6s
+[2026-04-17 14:44:11] [79/96]
+[2026-04-17 14:44:11] START ElasticNet__P_kbar__cpx_only__raw (n_trials=50)
+[2026-04-17 14:44:11]   data shape X=(2113, 16) y=(2113,) n_groups=174
+[2026-04-17 14:44:16] DONE  ElasticNet__P_kbar__cpx_only__raw  best_rmse=16.6849  elapsed=4.6s
+[2026-04-17 14:44:16] [80/96]
+[2026-04-17 14:44:16] START ElasticNet__P_kbar__cpx_only__alr (n_trials=50)
+[2026-04-17 14:44:16]   data shape X=(2113, 15) y=(2113,) n_groups=174
+[2026-04-17 14:44:20] DONE  ElasticNet__P_kbar__cpx_only__alr  best_rmse=17.0011  elapsed=3.7s
+[2026-04-17 14:44:20] [81/96]
+[2026-04-17 14:44:20] START ElasticNet__P_kbar__cpx_only__pwlr (n_trials=50)
+[2026-04-17 14:44:20]   data shape X=(2113, 43) y=(2113,) n_groups=174
+[2026-04-17 14:44:28] DONE  ElasticNet__P_kbar__cpx_only__pwlr  best_rmse=17.1434  elapsed=7.9s
+[2026-04-17 14:44:28] [82/96]
+[2026-04-17 14:44:28] START ElasticNet__P_kbar__cpx_liq__raw (n_trials=50)
+[2026-04-17 14:44:28]   data shape X=(1731, 25) y=(1731,) n_groups=161
+[2026-04-17 14:44:43] DONE  ElasticNet__P_kbar__cpx_liq__raw  best_rmse=9.1786  elapsed=15.1s
+[2026-04-17 14:44:43] [83/96]
+[2026-04-17 14:44:43] START ElasticNet__P_kbar__cpx_liq__alr (n_trials=50)
+[2026-04-17 14:44:43]   data shape X=(1731, 23) y=(1731,) n_groups=161
+[2026-04-17 14:44:47] DONE  ElasticNet__P_kbar__cpx_liq__alr  best_rmse=8.9314  elapsed=4.2s
+[2026-04-17 14:44:47] [84/96]
+[2026-04-17 14:44:47] START ElasticNet__P_kbar__cpx_liq__pwlr (n_trials=50)
+[2026-04-17 14:44:47]   data shape X=(1731, 72) y=(1731,) n_groups=161
+[2026-04-17 14:44:56] DONE  ElasticNet__P_kbar__cpx_liq__pwlr  best_rmse=9.1078  elapsed=9.4s
+[2026-04-17 14:44:56] [85/96]
+[2026-04-17 14:44:56] START MLP__T_C__cpx_only__raw (n_trials=50)
+[2026-04-17 14:44:56]   data shape X=(2113, 16) y=(2113,) n_groups=174
+[2026-04-17 14:51:26] DONE  MLP__T_C__cpx_only__raw  best_rmse=154.6208  elapsed=389.2s
+[2026-04-17 14:51:26] [86/96]
+[2026-04-17 14:51:26] START MLP__T_C__cpx_only__alr (n_trials=50)
+[2026-04-17 14:51:26]   data shape X=(2113, 15) y=(2113,) n_groups=174
+[2026-04-17 14:58:02] DONE  MLP__T_C__cpx_only__alr  best_rmse=148.8169  elapsed=396.3s
+[2026-04-17 14:58:02] [87/96]
+[2026-04-17 14:58:02] START MLP__T_C__cpx_only__pwlr (n_trials=50)
+[2026-04-17 14:58:02]   data shape X=(2113, 43) y=(2113,) n_groups=174
+[2026-04-17 15:07:04] DONE  MLP__T_C__cpx_only__pwlr  best_rmse=168.4956  elapsed=541.8s
+[2026-04-17 15:07:04] [88/96]
+[2026-04-17 15:07:04] START MLP__T_C__cpx_liq__raw (n_trials=50)
+[2026-04-17 15:07:04]   data shape X=(1731, 25) y=(1731,) n_groups=161
+[2026-04-17 15:11:57] DONE  MLP__T_C__cpx_liq__raw  best_rmse=106.5312  elapsed=293.5s
+[2026-04-17 15:11:57] [89/96]
+[2026-04-17 15:11:57] START MLP__T_C__cpx_liq__alr (n_trials=50)
+[2026-04-17 15:11:57]   data shape X=(1731, 23) y=(1731,) n_groups=161
+[2026-04-17 15:19:42] DONE  MLP__T_C__cpx_liq__alr  best_rmse=102.8509  elapsed=465.1s
+[2026-04-17 15:19:42] [90/96]
+[2026-04-17 15:19:42] START MLP__T_C__cpx_liq__pwlr (n_trials=50)
+[2026-04-17 15:19:42]   data shape X=(1731, 72) y=(1731,) n_groups=161
+[2026-04-17 15:30:50] DONE  MLP__T_C__cpx_liq__pwlr  best_rmse=107.0533  elapsed=668.0s
+[2026-04-17 15:30:50] [91/96]
+[2026-04-17 15:30:50] START MLP__P_kbar__cpx_only__raw (n_trials=50)
+[2026-04-17 15:30:50]   data shape X=(2113, 16) y=(2113,) n_groups=174
+[2026-04-17 15:38:53] DONE  MLP__P_kbar__cpx_only__raw  best_rmse=16.6369  elapsed=482.4s
+[2026-04-17 15:38:53] [92/96]
+[2026-04-17 15:38:53] START MLP__P_kbar__cpx_only__alr (n_trials=50)
+[2026-04-17 15:38:53]   data shape X=(2113, 15) y=(2113,) n_groups=174
+[2026-04-17 15:42:45] DONE  MLP__P_kbar__cpx_only__alr  best_rmse=17.0839  elapsed=232.1s
+[2026-04-17 15:42:45] [93/96]
+[2026-04-17 15:42:45] START MLP__P_kbar__cpx_only__pwlr (n_trials=50)
+[2026-04-17 15:42:45]   data shape X=(2113, 43) y=(2113,) n_groups=174
+[2026-04-17 15:50:26] DONE  MLP__P_kbar__cpx_only__pwlr  best_rmse=17.9303  elapsed=461.5s
+[2026-04-17 15:50:26] [94/96]
+[2026-04-17 15:50:26] START MLP__P_kbar__cpx_liq__raw (n_trials=50)
+[2026-04-17 15:50:26]   data shape X=(1731, 25) y=(1731,) n_groups=161
+[2026-04-17 15:55:19] DONE  MLP__P_kbar__cpx_liq__raw  best_rmse=7.2849  elapsed=292.8s
+[2026-04-17 15:55:19] [95/96]
+[2026-04-17 15:55:19] START MLP__P_kbar__cpx_liq__alr (n_trials=50)
+[2026-04-17 15:55:19]   data shape X=(1731, 23) y=(1731,) n_groups=161
+[2026-04-17 16:02:50] DONE  MLP__P_kbar__cpx_liq__alr  best_rmse=7.9206  elapsed=451.1s
+[2026-04-17 16:02:50] [96/96]
+[2026-04-17 16:02:50] START MLP__P_kbar__cpx_liq__pwlr (n_trials=50)
+[2026-04-17 16:02:50]   data shape X=(1731, 72) y=(1731,) n_groups=161
+[2026-04-17 16:08:17] DONE  MLP__P_kbar__cpx_liq__pwlr  best_rmse=7.7039  elapsed=326.9s
+[2026-04-17 16:08:17] Phase D cpx driver DONE  completed=96  failed=0
