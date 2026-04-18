@@ -1,0 +1,7 @@
+target,method_class,model,feature_set,track,single_seed_rmse,single_seed_r2,seed_rmse_mean,seed_rmse_std,seed_rmse_min,seed_rmse_max,notes
+T_C,v10_best_base,ElasticNet,raw,twopx,79.53579684431216,0.4654148865964121,79.53579684431216,0.0,79.53579684431216,79.53579684431216,20-seed spread from v10_twopx_multiseed_summary.csv
+T_C,v10_best_ensemble,greedy,pwlr,twopx,81.04040551446074,,,,,,"stacked ensemble, single fit per Phase E"
+T_C,putirka_twopx,Putirka 2008 eq36/37/38/39,n/a,twopx,,,,,,,"DEFERRED: requires paired opx-cpx Thermobar call, not executed in Phase G.5"
+P_kbar,v10_best_base,XGB,alr,twopx,4.262968061132832,0.430308827767271,4.260655790848926,0.0285095154039839,4.218022795879677,4.320401765153186,20-seed spread from v10_twopx_multiseed_summary.csv
+P_kbar,v10_best_ensemble,greedy,pwlr,twopx,4.513915817286822,,,,,,"stacked ensemble, single fit per Phase E"
+P_kbar,putirka_twopx,Putirka 2008 eq36/37/38/39,n/a,twopx,,,,,,,"DEFERRED: requires paired opx-cpx Thermobar call, not executed in Phase G.5"

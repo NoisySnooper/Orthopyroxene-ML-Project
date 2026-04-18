@@ -1,0 +1,25 @@
+[2026-04-18 15:34:52] START canonical_cells=[('ElasticNet', 'T_C', 'opx_liq', 'raw'), ('MLP', 'P_kbar', 'opx_liq', 'raw'), ('ElasticNet', 'P_kbar', 'opx_liq', 'raw')]
+[2026-04-18 15:34:52] 
+=== ElasticNet/raw/T_C/opx_liq combined n=600 ===
+[2026-04-18 15:34:52] LOSO n_folds=93 rmse=69.400 [62.507,76.348] elapsed=0.2s
+[2026-04-18 15:34:54] ClusterKFold k=5 n_folds=5 rmse=68.644 [62.025,75.792] elapsed=1.7s
+[2026-04-18 15:34:54] TargetBinKFold n_folds=4 rmse=70.950 [64.393,77.817] folds=[('deep_crustal_MASH', 245), ('deeper_mantle', 40), ('lithospheric_mantle', 178), ('shallow_crustal', 137)] elapsed=0.1s
+[2026-04-18 15:34:54] LORO n_folds=7 rmse=69.897 [63.591,76.646] folds=[('MORB', 39), ('arc_silicic', 89), ('basalt', 70), ('mantle_melting', 198), ('metamorphic', 17), ('other', 128), ('partitioning', 59)] elapsed=0.1s
+[2026-04-18 15:34:54] 
+=== MLP/raw/P_kbar/opx_liq combined n=600 ===
+[2026-04-18 15:35:05] LOSO n_folds=93 rmse=4.588 [4.154,5.063] elapsed=11.3s
+[2026-04-18 15:35:06] ClusterKFold k=5 n_folds=5 rmse=7.286 [6.649,7.870] elapsed=0.9s
+[2026-04-18 15:35:07] TargetBinKFold n_folds=4 rmse=6.506 [6.114,6.944] folds=[('deep_crustal_MASH', 245), ('deeper_mantle', 40), ('lithospheric_mantle', 178), ('shallow_crustal', 137)] elapsed=0.6s
+[2026-04-18 15:35:08] LORO n_folds=7 rmse=5.881 [5.261,6.503] folds=[('MORB', 39), ('arc_silicic', 89), ('basalt', 70), ('mantle_melting', 198), ('metamorphic', 17), ('other', 128), ('partitioning', 59)] elapsed=0.9s
+[2026-04-18 15:35:08] 
+=== ElasticNet/raw/P_kbar/opx_liq combined n=600 ===
+[2026-04-18 15:35:10] LOSO n_folds=93 rmse=5.397 [4.899,5.904] elapsed=1.8s
+[2026-04-18 15:35:10] ClusterKFold k=5 n_folds=5 rmse=7.441 [6.885,7.966] elapsed=0.3s
+[2026-04-18 15:35:10] TargetBinKFold n_folds=4 rmse=7.106 [6.533,7.644] folds=[('deep_crustal_MASH', 245), ('deeper_mantle', 40), ('lithospheric_mantle', 178), ('shallow_crustal', 137)] elapsed=0.2s
+[2026-04-18 15:35:10] LORO n_folds=7 rmse=6.171 [5.565,6.797] folds=[('MORB', 39), ('arc_silicic', 89), ('basalt', 70), ('mantle_melting', 198), ('metamorphic', 17), ('other', 128), ('partitioning', 59)] elapsed=0.3s
+[2026-04-18 15:35:10] wrote C:\Users\NQTa\Documents\MLCourse\Final Project\results\v10_opx_liq_generalization.csv rows=12
+[2026-04-18 15:35:10] wrote C:\Users\NQTa\Documents\MLCourse\Final Project\results\v10_opx_liq_generalization_predictions.csv rows=7200
+[2026-04-18 15:35:11] wrote figures/fig26_generalization_opx_liq.{pdf,png}
+[2026-04-18 15:35:11] wrote C:\Users\NQTa\Documents\MLCourse\Final Project\tables\S8_6_generalization_opx_liq.md
+[2026-04-18 15:35:11] wrote C:\Users\NQTa\Documents\MLCourse\Final Project\tables\S8_6_generalization_opx_liq.csv
+[2026-04-18 15:35:11] DONE

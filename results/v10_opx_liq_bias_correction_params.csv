@@ -1,0 +1,13 @@
+model,target,track,feature_set,regime,a,b
+ElasticNet,T_C,opx_liq,raw,deep_crustal_MASH,0.8437657861586202,192.72868913951277
+ElasticNet,T_C,opx_liq,raw,deeper_mantle,1.325957978831714,-463.84811077478867
+ElasticNet,T_C,opx_liq,raw,lithospheric_mantle,0.9187051548345255,116.33387244872938
+ElasticNet,T_C,opx_liq,raw,shallow_crustal,1.03415215732078,-64.35101319972114
+MLP,P_kbar,opx_liq,raw,deep_crustal_MASH,0.07636671174565372,9.249378671449062
+MLP,P_kbar,opx_liq,raw,deeper_mantle,0.23529079604396796,26.57536217254337
+MLP,P_kbar,opx_liq,raw,lithospheric_mantle,0.4346040909886656,11.106823695980443
+MLP,P_kbar,opx_liq,raw,shallow_crustal,0.1284047007880936,0.5281084925229994
+ElasticNet,P_kbar,opx_liq,raw,deep_crustal_MASH,0.12242726875713729,8.81348976851415
+ElasticNet,P_kbar,opx_liq,raw,deeper_mantle,0.30370618364201196,25.49141411973081
+ElasticNet,P_kbar,opx_liq,raw,lithospheric_mantle,0.4559545045678654,10.206976978034197
+ElasticNet,P_kbar,opx_liq,raw,shallow_crustal,0.015048381089438767,0.9852945397822059

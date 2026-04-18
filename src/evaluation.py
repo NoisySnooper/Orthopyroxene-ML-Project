@@ -141,6 +141,78 @@ def cluster_kfold_splits(X, y, clusters):
     return list(gkf.split(X, y, groups=clusters))
 
 
+STUDY_TYPE_PATTERNS = [
+    ('MORB',            r'mid.?ocean ridge|morb\b'),
+    ('mantle_melting',  r'peridotite|harzburgite|lherzolite|mantle melt'),
+    ('primitive_mafic', r'boninite|komatiite|picrite'),
+    ('arc_silicic',     r'andesite|dacite|rhyolite|high.silica|\barc\b|subduction'),
+    ('basalt',          r'basalt|tholeiite|alkali'),
+    ('partitioning',    r'chromite|chromium|cr partition|partitioning between'),
+    ('metamorphic',     r'dehydration|amphibol|gneiss|granulite|eclogite'),
+]
+
+
+def infer_study_type(citations):
+    """Return a study-type label array inferred from Citation strings.
+
+    Used as the 'region' proxy for LeaveOneRegionOut: experimental petrology
+    citations rarely name a specific geography (the corpus is mostly mantle
+    melting / phase equilibria calibrations), so we categorize by the
+    petrologic study *type* — mantle_melting, MORB, arc_silicic, basalt,
+    primitive_mafic, partitioning, metamorphic, or `other` for strings that
+    match no keyword.
+    """
+    import re
+    labels = []
+    for c in citations:
+        s = str(c).lower()
+        matched = None
+        for label, pattern in STUDY_TYPE_PATTERNS:
+            if re.search(pattern, s, re.IGNORECASE):
+                matched = label
+                break
+        labels.append(matched if matched else 'other')
+    return np.array(labels, dtype=object)
+
+
+def leave_one_region_out_splits(X, y, regions, min_train_fold=50):
+    """LeaveOneRegionOut iterator. Folds with training set smaller than
+    `min_train_fold` are skipped so each yielded split has enough data to
+    refit. Returns a list of (train_idx, test_idx, region_label) tuples —
+    the region label lets callers attribute per-fold metrics.
+    """
+    regions = np.asarray(regions)
+    splits = []
+    for region in sorted(pd.Series(regions).unique()):
+        test_mask = (regions == region)
+        train_mask = ~test_mask
+        if train_mask.sum() < min_train_fold:
+            continue
+        if test_mask.sum() < 1:
+            continue
+        splits.append((np.where(train_mask)[0], np.where(test_mask)[0], region))
+    return splits
+
+
+def target_bin_kfold_splits(X, y, bin_labels, min_train_fold=50):
+    """Leave-one-target-bin-out iterator. `bin_labels` is a pre-computed
+    categorical label per sample (e.g. from `assign_p_regime`). Same skip-
+    rule as LORO — bins with training set below `min_train_fold` are
+    dropped. Returns (train_idx, test_idx, bin_label) tuples.
+    """
+    bin_labels = np.asarray(bin_labels)
+    splits = []
+    for bin_ in sorted(pd.Series(bin_labels).unique()):
+        test_mask = (bin_labels == bin_)
+        train_mask = ~test_mask
+        if train_mask.sum() < min_train_fold:
+            continue
+        if test_mask.sum() < 1:
+            continue
+        splits.append((np.where(train_mask)[0], np.where(test_mask)[0], bin_))
+    return splits
+
+
 def oof_rf(X, y, groups, params, seed, n_folds=10):
     """Out-of-fold RandomForest predictions on the full training set using
     10-fold StratifiedGroupKFold. Per-fold predictions use `predict_median`

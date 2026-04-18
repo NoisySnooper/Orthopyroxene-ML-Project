@@ -392,4 +392,139 @@ value=1.223 kbar, source=robust, winning regime=shallow_crustal.
 - 9fa09cb: `Phase G.1b/G.1c artifacts: external benchmark + 20-seed
   multi-seed refit` (brings previously-untracked science artifacts under
   version control, precondition for Chunk C).
-- Chunk C commit: see next commit below this log update.
+- f81c6a3: `Phase G Chunk C: two-axis honesty bar for opx_liq per-regime
+  claims`
+- c4f0d31: `chore: prune Phase C/G.1 one-shot editor scripts`
+
+---
+
+## Sub-phases G.2 - G.6 (2026-04-18, autonomous run)
+
+User directive: "Do a comprehensive audit for anything outstanding or
+unusual or uncompleted, then run phase g autonomously start to finish."
+
+### G.2 NB05 generalization rebuild
+
+Script: `scripts/v10_phase_g_nb05_generalization.py`.
+Canonical cells audited: ElasticNet/raw/T_C, MLP/raw/P_kbar,
+ElasticNet/raw/P_kbar.
+
+Four out-of-sample strategies (`src/evaluation.py` extensions):
+- `LOSO` (LeaveOneGroupOut on Citation) — 93 folds
+- `ClusterKFold` (NB02 k-means chemical clusters)
+- `TargetBinKFold` (pre-registered P regime bins)
+- `LeaveOneRegionOut` — NEW petrologic study-type categorization inferred
+  from Citation text via 7 regex patterns (MORB / mantle_melting /
+  arc_silicic / basalt / primitive_mafic / partitioning / metamorphic /
+  other); `min_train_fold=50` gate.
+
+Rationale for petrologic (not geographic) region: the v10 opx_liq test
+set resolved cleanly to 7 petrologic classes but only 55/174 samples
+matched geographic region keywords, yielding unbalanced folds.
+
+Outputs:
+- `results/v10_opx_liq_generalization.csv` (12 rows: 3 cells x 4 strategies)
+- `results/v10_opx_liq_generalization_predictions.csv` (7200 rows: per-cell x per-strategy per-sample)
+- `figures/fig26_generalization_opx_liq.{pdf,png,txt}`
+- `tables/S8_6_generalization_opx_liq.{md,csv}`
+
+Headline MLP/raw P_kbar: LOSO 4.588, ClusterKFold 7.286, TargetBinKFold
+6.506, LeaveOneRegionOut 5.881 kbar.
+
+### G.3 NB06 SHAP rebuild
+
+Script: `scripts/v10_phase_g_nb06_shap.py`.
+
+Five canonical opx_liq cells, three explainer strategies:
+- `ElasticNet/raw/T_C` + `ElasticNet/raw/P_kbar` -> `shap.LinearExplainer`
+  (exact for linear models; pipeline unwrapped via `est.named_steps`)
+- `CatBoost/raw/P_kbar` + `XGB/alr/T_C` -> `shap.TreeExplainer`
+- `MLP/raw/P_kbar` -> `shap.KernelExplainer` (KMeans k=50 background,
+  80-sample random subset of test, nsamples=100, seed=SEED_BOOTSTRAP)
+
+Top features by mean|SHAP|:
+- T_C (ElasticNet/raw): `raw_liq_MgO` dominant
+- P_kbar (ElasticNet/raw): `raw_CaO`, `Wo_frac` dominant
+- P_kbar (MLP/raw, sampled): `raw_liq_MgO`, `En_frac`
+
+Outputs:
+- `results/v10_opx_liq_shap_importance.csv` (123 rows)
+- `results/v10_opx_liq_shap_values.npz` (per-cell SHAP arrays)
+- `figures/fig27_shap_summary_opx_liq.{pdf,png,txt}`
+- `tables/S8_7_shap_top_features_opx_liq.{md,csv}`
+
+### G.4 NB07 bias correction rebuild
+
+Script: `scripts/v10_phase_g_nb07_bias.py`.
+
+Per-regime piecewise linear correction `y_corr = a * y_pred + b` fit on
+StratifiedGroupKFold 10-fold OOF predictions from train, applied to
+test per regime.
+
+Results:
+- **MLP/raw/P_kbar**: ALL 3.82 -> 2.58 kbar (+1.23 kbar improvement)
+- **ElasticNet/raw/P_kbar**: ALL 5.59 -> 3.05 kbar (+2.53 kbar improvement)
+- **ElasticNet/raw/T_C**: ALL 77.06 -> 77.17 (neutral wash);
+  shallow_crustal HURT 35.33 -> 54.01 -- consistent with the v9 finding
+  that train-OOF T bias does not transfer to the held-out test set.
+
+ArcPL composition-conditional T probe is DEFERRED: the available ArcPL
+xlsx is cpx-liq only (Agreda), and the v10 pipeline does not currently
+wire the opx Thermobar/external call needed to regenerate v9's opx ArcPL
+n=197 benchmark. Documented in the script docstring.
+
+Outputs:
+- `results/v10_opx_liq_bias_correction.csv`
+- `results/v10_opx_liq_bias_correction_params.csv`
+- `figures/fig28_bias_correction_opx_liq.{pdf,png,txt}`
+- `tables/S8_8_bias_correction_opx_liq.{md,csv}`
+
+### G.5 NB10 twopx benchmark rebuild
+
+Script: `scripts/v10_phase_g_nb10_twopx_benchmark.py`. Fixes the v9
+empty `nb10_two_pyroxene_benchmark.csv` regression by consolidating
+`v10_twopx_per_cell_results.csv`, `v10_twopx_multiseed_summary.csv`,
+and `v10_twopx_ensemble_results.csv` into a single benchmark with:
+- `v10_best_base` per target (ElasticNet/raw for T_C 79.54 deg C; XGB/alr
+  for P_kbar 4.26 kbar)
+- `v10_best_ensemble` per target (greedy/pwlr both targets)
+- `putirka_twopx` placeholder row with NaN RMSE -- DEFERRED because the
+  Putirka eq36/37/38/39 call requires paired opx-cpx Thermobar invocation
+  that is not wired into v10. Downstream consumers see the gap explicitly.
+
+Outputs:
+- `results/v10_twopx_benchmark_final.csv` (6 rows: 2 targets x 3 method_class)
+- `figures/fig29_twopx_benchmark.{pdf,png,txt}`
+- `tables/S8_9_twopx_benchmark.{md,csv}`
+
+### G.6 Figure audit
+
+Script: `scripts/v10_phase_g_figure_audit.py` implementing
+`docs/v10_figure_audit.md` section 3 checklist (scoped to Phase G
+outputs fig24-fig29):
+- PDF + PNG + TXT present and non-empty
+- PDF has valid `%PDF-` header
+- PNG DPI >= 150 (matplotlib 300 dpi savefig -> `pHYs` chunk check)
+
+Result: 6/6 PASS. Log: `logs/v10_phase_g_figure_audit.log`; CSV:
+`results/v10_phase_g_figure_audit.csv`.
+
+The full 308-figure inventory audit (all pipelines, all NBs) is gated on
+Phase H NBF rebuild and is NOT in scope for Phase G.
+
+### Phase G self-audit
+
+Script: `scripts/v10_phase_g_full_selfaudit.py` covers G.2-G.6 artifact
+presence, schema, and known-good values (e.g. MLP P_kbar ALL improvement
+is positive). Result: 30/30 PASS.
+
+Log: `logs/v10_phase_g_full_selfaudit.md`.
+
+Chunks A/B/C keep their own self-audits
+(`v10_phase_g_chunkB_selfaudit.py`, `v10_phase_g_chunkC_selfaudit.py`)
+and still pass from Chunk C's run.
+
+### Phase G commits (G.2 - G.6 bundle)
+
+- (pending, single bundle): `Phase G.2-G.6: NB05/NB06/NB07/NB10 rebuild,
+  figure audit, self-audit`
