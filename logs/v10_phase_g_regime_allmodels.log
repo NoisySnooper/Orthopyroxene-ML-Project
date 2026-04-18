@@ -1,0 +1,61 @@
+[2026-04-18 09:24:05] START regime_allmodels bootstrap n_boot=500
+[2026-04-18 09:24:05] [opx_liq] train n=426 test n=174
+[2026-04-18 09:24:05] [opx/opx_liq] cells=48
+[2026-04-18 09:24:10]   [8/48] fit ERT/T_C/alr
+[2026-04-18 09:24:13]   [16/48] fit XGB/P_kbar/raw
+[2026-04-18 09:24:21]   [24/48] fit GB/P_kbar/pwlr
+[2026-04-18 09:24:35]   [32/48] fit LightGBM/T_C/alr
+[2026-04-18 09:24:36]   [40/48] fit ElasticNet/P_kbar/raw
+[2026-04-18 09:24:47]   [48/48] fit MLP/P_kbar/pwlr
+[2026-04-18 09:24:49] [opx_liq] checkpoint rows=832
+[2026-04-18 09:24:49] [opx_only] train n=845 test n=190
+[2026-04-18 09:24:49] [opx/opx_only] cells=48
+[2026-04-18 09:24:56]   [8/48] fit ERT/T_C/alr
+[2026-04-18 09:25:03]   [16/48] fit XGB/P_kbar/raw
+[2026-04-18 09:25:11]   [24/48] fit GB/P_kbar/pwlr
+[2026-04-18 09:28:12]   [32/48] fit LightGBM/T_C/alr
+[2026-04-18 09:28:14]   [40/48] fit ElasticNet/P_kbar/raw
+[2026-04-18 09:28:29]   [48/48] fit MLP/P_kbar/pwlr
+[2026-04-18 09:28:30] [opx_only] checkpoint rows=1616
+[2026-04-18 09:28:30] [cpx_liq] train n=1731 test n=654
+[2026-04-18 09:28:30] [cpx/cpx_liq] cells=48
+[2026-04-18 09:28:43]   [8/48] fit ERT/T_C/alr
+[2026-04-18 09:28:57]   [16/48] fit XGB/P_kbar/raw
+[2026-04-18 09:29:07]   [24/48] fit GB/P_kbar/pwlr
+[2026-04-18 09:29:52]   [32/48] fit LightGBM/T_C/alr
+[2026-04-18 09:29:55]   [40/48] fit ElasticNet/P_kbar/raw
+[2026-04-18 09:30:11]   [48/48] fit MLP/P_kbar/pwlr
+[2026-04-18 09:30:30]   ext fail ('Jorgenson 2022', 'T_C'): "['Sample_ID_Liq', 'Fe3Fet_Liq', 'NiO_Liq', 'CoO_Liq', 'CO2_Liq', 'H2O_Liq'] not found in axis"
+[2026-04-18 09:30:30]   ext fail ('Jorgenson 2022', 'P_kbar'): "['Sample_ID_Liq', 'Fe3Fet_Liq', 'NiO_Liq', 'CoO_Liq', 'CO2_Liq', 'H2O_Liq'] not found in axis"
+[2026-04-18 09:30:30]   ext fail ('Wang 2021', 'T_C'): 'Fe3Fet_Liq'
+[2026-04-18 09:30:30]   ext fail ('Wang 2021', 'P_kbar'): 'Fe3Fet_Liq'
+[2026-04-18 09:30:31] [cpx_liq] checkpoint rows=2534
+[2026-04-18 09:30:31] [cpx_only] train n=2113 test n=784
+[2026-04-18 09:30:31] [cpx/cpx_only] cells=48
+[2026-04-18 09:30:45]   [8/48] fit ERT/T_C/alr
+[2026-04-18 09:30:51]   [16/48] fit XGB/P_kbar/raw
+[2026-04-18 09:30:58]   [24/48] fit GB/P_kbar/pwlr
+[2026-04-18 09:31:48]   [32/48] fit LightGBM/T_C/alr
+[2026-04-18 09:31:49]   [40/48] fit ElasticNet/P_kbar/raw
+[2026-04-18 09:32:15]   [48/48] fit MLP/P_kbar/pwlr
+[2026-04-18 09:32:42]   ext fail ('Jorgenson 2022', 'T_C'): 'K2O_Cpx'
+[2026-04-18 09:32:42]   ext fail ('Jorgenson 2022', 'P_kbar'): 'K2O_Cpx'
+[2026-04-18 09:32:44] [cpx_only] checkpoint rows=3435
+[2026-04-18 09:32:44] [twopx] train n=96 test n=48
+[2026-04-18 09:32:44] [twopx/twopx] cells=64
+[2026-04-18 09:32:49]   [8/64] fit RF/P_kbar/twopx_components
+[2026-04-18 09:32:52]   [16/64] fit ERT/P_kbar/twopx_components
+[2026-04-18 09:32:54]   [24/64] fit XGB/P_kbar/twopx_components
+[2026-04-18 09:32:56]   [32/64] fit GB/P_kbar/twopx_components
+[2026-04-18 09:33:18]   [40/64] fit CatBoost/P_kbar/twopx_components
+[2026-04-18 09:33:18]   [48/64] fit LightGBM/P_kbar/twopx_components
+[2026-04-18 09:33:18]   [56/64] fit ElasticNet/P_kbar/twopx_components
+[2026-04-18 09:33:20]   [64/64] fit MLP/P_kbar/twopx_components
+[2026-04-18 09:33:20]   twopx external skipped: If using all scalar values, you must pass an index
+[2026-04-18 09:33:20] [twopx] checkpoint rows=4395
+[2026-04-18 09:33:20] [universal] train n=2224 test n=1005
+[2026-04-18 09:33:20] [universal/universal] cells=16
+[2026-04-18 09:33:31]   [8/16] fit GB/P_kbar/universal_raw
+[2026-04-18 09:33:48]   [16/16] fit MLP/P_kbar/universal_raw
+[2026-04-18 09:33:48] [universal] checkpoint rows=4667
+[2026-04-18 09:33:48] DONE total rows=4667 -> C:\Users\NQTa\Documents\MLCourse\Final Project\results\v10_regime_allmodels.csv

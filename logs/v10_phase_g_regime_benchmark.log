@@ -1,0 +1,14 @@
+[2026-04-18 00:22:16] START regime benchmark
+[2026-04-18 00:22:17] [opx_liq] test n=174
+[2026-04-18 00:22:17]   v10 best T_C: ElasticNet/raw
+[2026-04-18 00:22:17]   v10 best P_kbar: MLP/raw
+[2026-04-18 00:22:18] [opx_only] test n=190
+[2026-04-18 00:22:18]   v10 best T_C: LightGBM/alr
+[2026-04-18 00:22:20]   v10 best P_kbar: XGB/pwlr
+[2026-04-18 00:22:28] [cpx_liq] test n=654
+[2026-04-18 00:22:28]   v10 best T_C: CatBoost/pwlr
+[2026-04-18 00:23:00]   v10 best P_kbar: LightGBM/pwlr
+[2026-04-18 00:23:44] [cpx_only] test n=784
+[2026-04-18 00:23:44]   v10 best T_C: ERT/pwlr
+[2026-04-18 00:23:46]   v10 best P_kbar: MLP/alr
+[2026-04-18 00:24:38] wrote C:\Users\NQTa\Documents\MLCourse\Final Project\results\v10_regime_benchmark.csv rows=56

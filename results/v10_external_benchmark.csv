@@ -1,0 +1,59 @@
+method,target,track,n,rmse,mae,r2,notes
+Agreda-Lopez 2024 [P<20 kbar],P_kbar,cpx_liq,524.0,3.4479997650689658,2.036006375345216,0.6678911228478663,restricted to Agreda calibration window
+Putirka 33/30 (true T) [filtered],P_kbar,cpx_liq,459.0,5.481340246933859,4.011373316471562,0.7976163562148764,"filtered plausible P_kbar, dropped=195/654"
+Putirka 33/30 (true T),P_kbar,cpx_liq,467.0,5.653202454414809,4.12846048025487,0.7836002562151155,
+v10 best ensemble (ridge pwlr),P_kbar,cpx_liq,,6.521954916556333,,,v10 ensemble
+v10 best base (LightGBM pwlr),P_kbar,cpx_liq,,6.536933057636693,,0.7641649466484713,"v10 base model, fixed Citation split"
+Jorgenson 2022 (true T),P_kbar,cpx_liq,654.0,9.142791098769893,3.673404310112281,0.5386634373227644,
+Jorgenson 2022 (true T) [filtered],P_kbar,cpx_liq,654.0,9.142791098769893,3.673404310112281,0.5386634373227644,"filtered plausible P_kbar, dropped=0/654"
+Petrelli 2020 (true T),P_kbar,cpx_liq,654.0,9.31235979869753,4.2002916898753035,0.521392195186462,
+Petrelli 2020 (true T) [filtered],P_kbar,cpx_liq,654.0,9.31235979869753,4.2002916898753035,0.521392195186462,"filtered plausible P_kbar, dropped=0/654"
+Agreda-Lopez 2024,P_kbar,cpx_liq,654.0,9.314120906172828,3.2769959110304243,0.5212111541825393,
+Wang 2021 (true T) [filtered],P_kbar,cpx_liq,621.0,10.45675225836832,5.599237903084767,0.3865363274464838,"filtered plausible P_kbar, dropped=33/654"
+Wang 2021 (true T),P_kbar,cpx_liq,625.0,12.313441877925898,6.035252701171802,0.16999249842896846,
+Agreda-Lopez 2024 [P<20 kbar],T_C,cpx_liq,524.0,37.56543289785632,23.879511197389082,0.9092156142124539,restricted to Agreda calibration window
+Putirka 33/30 (true P) [filtered],T_C,cpx_liq,517.0,63.42823974860093,46.50708997485045,0.8644721617380398,"filtered plausible T_C, dropped=137/654"
+v10 best ensemble (ridge pwlr),T_C,cpx_liq,,68.36042538109832,,,v10 ensemble
+v10 best base (CatBoost pwlr),T_C,cpx_liq,,71.57088937329678,,0.8331187979546553,"v10 base model, fixed Citation split"
+Agreda-Lopez 2024,T_C,cpx_liq,654.0,80.60596491815518,32.85283499058416,0.7883252996116121,
+Jorgenson 2022 (true P),T_C,cpx_liq,654.0,84.78365179774528,41.02316399653091,0.7658151325449399,
+Jorgenson 2022 (true P) [filtered],T_C,cpx_liq,654.0,84.78365179774528,41.02316399653091,0.7658151325449399,"filtered plausible T_C, dropped=0/654"
+Petrelli 2020 (true P),T_C,cpx_liq,654.0,88.30257919821986,45.26596330275488,0.7459721285690923,
+Petrelli 2020 (true P) [filtered],T_C,cpx_liq,654.0,88.30257919821986,45.26596330275488,0.7459721285690923,"filtered plausible T_C, dropped=0/654"
+Putirka 33/30 (true P),T_C,cpx_liq,520.0,113.10682411647103,52.96633400488997,0.5779433949197816,
+Wang 2021 (true P) [filtered],T_C,cpx_liq,652.0,150.49117917167194,102.74119451937828,0.26263151714372834,"filtered plausible T_C, dropped=2/654"
+Wang 2021 (true P),T_C,cpx_liq,654.0,161.1392585464587,105.63923105745218,0.15406437801573303,
+Agreda-Lopez 2024 [P<20 kbar],P_kbar,cpx_only,575.0,3.3005470249109012,2.0131396426950525,0.7201390043203856,restricted to Agreda calibration window
+Putirka 32d/32a (true T) [filtered],P_kbar,cpx_only,743.0,11.827069399048248,5.228478131186029,0.6064146210245033,"filtered plausible P_kbar, dropped=41/784"
+v10 best base (MLP alr),P_kbar,cpx_only,,13.46565902091653,,0.5440999660358039,"v10 base model, fixed Citation split"
+Putirka 32d/32a (true T),P_kbar,cpx_only,754.0,13.653494290743637,5.833097343667706,0.5018488236298492,
+v10 best ensemble (two_level raw),P_kbar,cpx_only,,14.285077508613965,,,v10 ensemble
+Jorgenson 2022 (true T),P_kbar,cpx_only,784.0,17.8158958589918,6.298354192010723,0.20195068464864807,
+Jorgenson 2022 (true T) [filtered],P_kbar,cpx_only,784.0,17.8158958589918,6.298354192010723,0.20195068464864807,"filtered plausible P_kbar, dropped=0/784"
+Agreda-Lopez 2024,P_kbar,cpx_only,784.0,18.21907694309427,6.936168986542051,0.16542160372714199,
+Agreda-Lopez 2024 [P<20 kbar],T_C,cpx_only,575.0,70.27909348676249,41.7657526905122,0.7770908511896184,restricted to Agreda calibration window
+Jorgenson 2022 (true P),T_C,cpx_only,784.0,109.9099844820048,56.15054510610174,0.7044396303484797,
+Jorgenson 2022 (true P) [filtered],T_C,cpx_only,784.0,109.9099844820048,56.15054510610174,0.7044396303484797,"filtered plausible T_C, dropped=0/784"
+Agreda-Lopez 2024,T_C,cpx_only,784.0,112.11949305453702,63.87739768946467,0.6924369501226298,
+v10 best base (ERT pwlr),T_C,cpx_only,,127.34987708248192,,0.6032024625860912,"v10 base model, fixed Citation split"
+v10 best ensemble (two_level pwlr),T_C,cpx_only,,128.88196340101865,,,v10 ensemble
+Putirka 32d/32a (true P) [filtered],T_C,cpx_only,773.0,177.91548550553242,109.24285824697373,0.18197604696501868,"filtered plausible T_C, dropped=11/784"
+Putirka 32d/32a (true P),T_C,cpx_only,780.0,185.53636785180313,113.44205055438562,0.149992726358114,
+v10 best base (MLP raw),P_kbar,opx_liq,,3.8156075924116495,,0.8432874421372423,"v10 base model, fixed Citation split"
+v10 best ensemble (greedy raw),P_kbar,opx_liq,,3.8254548426441537,,,v10 ensemble
+Putirka 29a (true T) [filtered],P_kbar,opx_liq,126.0,4.750309233457235,3.355149583773676,0.7756280925791822,"filtered plausible P_kbar, dropped=48/174"
+Putirka 29a (true T),P_kbar,opx_liq,139.0,876.390238335422,245.1165424456278,-8295.724980315272,
+Putirka 28a (true P) [filtered],T_C,opx_liq,161.0,71.67099988574215,39.99990934816562,0.7482676062334662,"filtered plausible T_C, dropped=13/174"
+v10 best base (ElasticNet raw),T_C,opx_liq,,77.06189003628756,,0.6913757651788929,"v10 base model, fixed Citation split"
+v10 best ensemble (greedy raw),T_C,opx_liq,,78.025073536639,,,v10 ensemble
+Putirka 28a (true P),T_C,opx_liq,174.0,367.9682058139346,135.75203340413123,-6.036736746114935,
+v10 best ensemble (ridge pwlr),P_kbar,opx_only,,10.178244068792008,,,v10 ensemble
+v10 best base (XGB pwlr),P_kbar,opx_only,,10.201704063434224,,0.4635974285454857,"v10 base model, fixed Citation split"
+Putirka 29c (true T),P_kbar,opx_only,140.0,13.337426168244214,6.714522289878542,0.12689330968790435,
+Putirka 29c (true T) [filtered],P_kbar,opx_only,140.0,13.337426168244214,6.714522289878542,0.12689330968790435,"filtered plausible P_kbar, dropped=50/190"
+v10 best base (LightGBM alr),T_C,opx_only,,147.98216692463086,,0.2909471074020734,"v10 base model, fixed Citation split"
+v10 best ensemble (ridge alr),T_C,opx_only,,149.57729630616842,,,v10 ensemble
+v10 best base (XGB alr),P_kbar,twopx,,4.262968061132832,,0.430308827767271,"v10 base model, fixed Citation split"
+v10 best ensemble (greedy pwlr),P_kbar,twopx,,4.513915817286822,,,v10 ensemble
+v10 best base (ElasticNet raw),T_C,twopx,,79.53579684431216,,0.4654148865964121,"v10 base model, fixed Citation split"
+v10 best ensemble (greedy pwlr),T_C,twopx,,81.04040551446074,,,v10 ensemble

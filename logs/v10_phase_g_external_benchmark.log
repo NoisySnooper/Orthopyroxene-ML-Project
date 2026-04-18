@@ -1,0 +1,21 @@
+[2026-04-17 23:47:23] START external benchmark
+[2026-04-17 23:47:23] [opx_liq] running
+[2026-04-17 23:47:24] [opx_only] running
+[2026-04-17 23:47:24] [cpx_liq] running
+[2026-04-17 23:47:25] cpx_liq Jorgenson 2022 T FAIL "['Sample_ID_Liq', 'NiO_Liq', 'CoO_Liq', 'CO2_Liq'] not found in axis"
+[2026-04-17 23:47:25] cpx_liq Jorgenson 2022 P FAIL "['Sample_ID_Liq', 'NiO_Liq', 'CoO_Liq', 'CO2_Liq'] not found in axis"
+[2026-04-17 23:47:27] cpx_liq Agreda FAIL "Agreda phase=cpx_liq missing columns: ['MnO_Liq']"
+[2026-04-17 23:47:27] [cpx_only] running
+[2026-04-17 23:48:25] wrote C:\Users\NQTa\Documents\MLCourse\Final Project\results\v10_external_benchmark.csv  rows=35  elapsed=61.7s
+[2026-04-17 23:57:43] START external benchmark
+[2026-04-17 23:57:43] [opx_liq] running
+[2026-04-17 23:57:44] [opx_only] running
+[2026-04-17 23:57:44] [cpx_liq] running
+[2026-04-17 23:58:24] [cpx_only] running
+[2026-04-17 23:59:11] wrote C:\Users\NQTa\Documents\MLCourse\Final Project\results\v10_external_benchmark.csv  rows=54  elapsed=88.1s
+[2026-04-18 00:08:01] START external benchmark
+[2026-04-18 00:08:01] [opx_liq] running
+[2026-04-18 00:08:03] [opx_only] running
+[2026-04-18 00:08:03] [cpx_liq] running
+[2026-04-18 00:08:50] [cpx_only] running
+[2026-04-18 00:09:41] wrote C:\Users\NQTa\Documents\MLCourse\Final Project\results\v10_external_benchmark.csv  rows=58  elapsed=99.8s

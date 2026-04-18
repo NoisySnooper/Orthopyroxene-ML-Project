@@ -1,0 +1,17 @@
+[2026-04-17 21:42:45] START universal runner  targets=['T_C', 'P_kbar']
+[2026-04-17 21:42:45] CELL T_C/universal/universal_raw START
+[2026-04-17 21:42:46]   X_tr=(2224, 45)  X_te=(1005, 45)
+[2026-04-17 21:43:05]   bases: {'RF': 143.70943987497077, 'ERT': 146.47941328272222, 'XGB': 146.42845806598484, 'GB': 145.16768096605153, 'CatBoost': 144.65224644515126, 'LightGBM': 146.77686346982327, 'ElasticNet': 152.9175171981898, 'MLP': 157.37230611109723}
+[2026-04-17 21:44:26]   ensembles: {'ridge': 152.9036210537715, 'two_level': 151.09389113865203, 'greedy': 147.07295628368507}
+[2026-04-17 21:44:26]   winner=greedy  scope_rmse={'cpx_liq': {'n': 581, 'rmse': 84.44788172542633}, 'cpx_only': {'n': 87, 'rmse': 394.5488071717248}, 'opx_liq': {'n': 77, 'rmse': 61.65168450528915}, 'opx_only': {'n': 95, 'rmse': 167.9169767185755}, 'twopx': {'n': 21, 'rmse': 88.1317644602647}, 'twopx_liq': {'n': 144, 'rmse': 79.82800887853143}}
+[2026-04-17 21:44:26] CELL T_C/universal/universal_raw DONE  elapsed=100.9s
+[2026-04-17 21:44:26] CELL P_kbar/universal/universal_raw START
+[2026-04-17 21:44:26]   X_tr=(2224, 45)  X_te=(1005, 45)
+[2026-04-17 21:44:36]   bases: {'RF': 18.21770058418554, 'ERT': 17.484084756675266, 'XGB': 18.52097922473502, 'GB': 18.49208931032146, 'CatBoost': 17.716272561857583, 'LightGBM': 18.465052773781256, 'ElasticNet': 18.951133563033462, 'MLP': 16.623944645460554}
+[2026-04-17 21:45:06]   ensembles: {'ridge': 17.15742949944901, 'two_level': 16.36275171515301, 'greedy': 17.15923500199783}
+[2026-04-17 21:45:06]   winner=two_level  scope_rmse={'cpx_liq': {'n': 581, 'rmse': 9.601748921006793}, 'cpx_only': {'n': 87, 'rmse': 44.2133141280805}, 'opx_liq': {'n': 77, 'rmse': 6.058872057932582}, 'opx_only': {'n': 95, 'rmse': 19.860940457721885}, 'twopx': {'n': 21, 'rmse': 11.474232115739385}, 'twopx_liq': {'n': 144, 'rmse': 4.065339034498567}}
+[2026-04-17 21:45:06] CELL P_kbar/universal/universal_raw DONE  elapsed=39.5s
+[2026-04-17 21:45:06] wrote C:\Users\NQTa\Documents\MLCourse\Final Project\results\universal\v10_universal_per_cell_results.csv
+[2026-04-17 21:45:06] wrote C:\Users\NQTa\Documents\MLCourse\Final Project\results\universal\v10_universal_ensemble_results.csv
+[2026-04-17 21:45:06] wrote C:\Users\NQTa\Documents\MLCourse\Final Project\results\universal\v10_universal_scope_rmse.csv
+[2026-04-17 21:45:06] DONE  n_base=16  n_ens=6  n_scope=12

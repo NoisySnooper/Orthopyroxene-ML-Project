@@ -1,0 +1,28 @@
+[2026-04-17 23:47:23] START external benchmark
+[2026-04-17 23:47:23] [opx_liq] running
+[2026-04-17 23:47:24] [opx_only] running
+[2026-04-17 23:47:24] [cpx_liq] running
+Youve selected a P-independent function
+Im normalizing using the Jorgenson method, e.g. 100 total, 2dp
+[2026-04-17 23:47:25] cpx_liq Jorgenson 2022 T FAIL "['Sample_ID_Liq', 'NiO_Liq', 'CoO_Liq', 'CO2_Liq'] not found in axis"
+Youve selected a T-independent function
+Im normalizing using the Jorgenson method, e.g. 100 total, 2dp
+[2026-04-17 23:47:25] cpx_liq Jorgenson 2022 P FAIL "['Sample_ID_Liq', 'NiO_Liq', 'CoO_Liq', 'CO2_Liq'] not found in axis"
+Traceback (most recent call last):
+  File "C:\Users\NQTa\Documents\MLCourse\Final Project\scripts\v10_phase_g_external_benchmark.py", line 340, in bench_cpx_liq
+    out_T = predict_agreda_from_df(df_te.rename(columns=_agreda_cpx_liq_rename(df_te)),
+                                    MODELS / 'external', 'cpx_liq', 'T')
+  File "C:\Users\NQTa\Documents\MLCourse\Final Project\src\external_models.py", line 153, in predict_agreda_from_df
+    raise KeyError(f'Agreda phase={phase} missing columns: {missing}')
+KeyError: "Agreda phase=cpx_liq missing columns: ['MnO_Liq']"
+Youve selected a P-independent function
+Youve selected a T-independent function
+Youve selected a T-independent function
+Youve selected a P-independent function
+Youve selected a T-independent function
+Youve selected a T-independent function
+[2026-04-17 23:47:27] cpx_liq Agreda FAIL "Agreda phase=cpx_liq missing columns: ['MnO_Liq']"
+[2026-04-17 23:47:27] [cpx_only] running
+Youve selected a P-independent function
+Youve selected a T-independent function
+[2026-04-17 23:48:25] wrote C:\Users\NQTa\Documents\MLCourse\Final Project\results\v10_external_benchmark.csv  rows=35  elapsed=61.7s
