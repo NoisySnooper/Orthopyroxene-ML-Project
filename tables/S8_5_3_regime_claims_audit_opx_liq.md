@@ -1,0 +1,15 @@
+# Table S8.5.3 · Per-regime claims audit (opx_liq)
+
+Verdict rule: "outperforms" requires non-overlapping bootstrap 95% CIs AND n ≥ 20.
+Otherwise: "competitive with" (CIs overlap, sufficient n) or "insufficient data" (n < 20).
+
+| regime              | target   |   n | sample_size_limited   |   v10_rmse |   putirka_rmse | ci_overlap   | verdict                                |
+|:--------------------|:---------|----:|:----------------------|-----------:|---------------:|:-------------|:---------------------------------------|
+| shallow_crustal     | T_C      |  47 | False                 |     23.47  |         25.524 | True         | competitive with Putirka (CIs overlap) |
+| shallow_crustal     | P_kbar   |  47 | False                 |      2.663 |          3.886 | False        | v10 outperforms Putirka                |
+| deep_crustal_MASH   | T_C      |  61 | False                 |     78.464 |         87.478 | True         | competitive with Putirka (CIs overlap) |
+| deep_crustal_MASH   | P_kbar   |  61 | False                 |      2.079 |          2.314 | True         | competitive with Putirka (CIs overlap) |
+| lithospheric_mantle | T_C      |  58 | False                 |     93.698 |         79.652 | True         | competitive with Putirka (CIs overlap) |
+| lithospheric_mantle | P_kbar   |  58 | False                 |      4.538 |          4.66  | True         | competitive with Putirka (CIs overlap) |
+| deeper_mantle       | T_C      |   8 | True                  |    105.604 |         85.501 | True         | insufficient data (n < 20)             |
+| deeper_mantle       | P_kbar   |   8 | True                  |      4.556 |          8.519 | True         | insufficient data (n < 20)             |

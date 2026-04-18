@@ -338,3 +338,21 @@ Both tests run ONLY in `nb03_universal_exploration.ipynb`. Neither test runs in 
 - If both pass: universal model becomes the lead novelty claim in the cpx paper.
 
 See `docs/v10_universal_model_exploration.md` Sections 5-7 for full rationale, evaluation protocol, and decision tree details.
+
+---
+
+## 12. T15: pre-registered regime-stratified pass condition (opx-liq pressure)
+
+**Scope:** opx pipeline only (T15 for primary pipelines; T13 and T14 remain reserved for the universal exploration track — see Section 11).
+
+**Hypothesis:** on the pre-registered four-bin P partition (edges `[0, 5, 15, 30, 100]` kbar, registered 2026-04-17 in `docs/v10_p_regime_preregistration.md`), at least one regime with n ≥ 20 shows a directional v10-outperforms-Putirka claim for the `P_kbar` target at the honesty bar: non-overlapping bootstrap 95% CIs.
+
+**Rationale:** the opx paper's pre-registered headline claim is that the v10 thermobarometer is better calibrated in at least one geologically meaningful P regime, not globally. Section G.1c-extended produces the all-models regime CSV; the opx-liq subset of that CSV, filtered to the pre-registered bins, drives this test.
+
+**Pass condition:** `results/v10_opx_per_regime_claims_audit.csv` contains at least one row matching `target == 'P_kbar'` AND `sample_size_limited == False` AND `ci_overlap == False` AND `v10_rmse < putirka_rmse`. If yes, the audit row counts as a "pre-registered headline claim passes." Otherwise the test fails and the manuscript's headline claim is reframed as calibration-domain characterization only (no directional claim).
+
+**Source of truth:** `results/v10_opx_per_regime_claims_audit.csv` (produced by `notebooks/nb04_v10_benchmark.ipynb`). This test does NOT re-run any training; it is a pure consistency check between the headline claim and the audit table.
+
+**Log format:** results appended to `results/v10_nb03_test_log.csv` with `test_id=T15`, `pipeline=opx`, `target=P_kbar`, `track=opx_liq`. The `details` JSON field carries the winning regime, its v10 and Putirka RMSEs with CIs, and n.
+
+**Execution:** `scripts/v10_nb03_test_t15.py` (see Appendix). One-shot script; no side effects beyond appending one row to the test log.

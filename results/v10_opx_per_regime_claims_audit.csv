@@ -1,0 +1,9 @@
+regime,target,n,sample_size_limited,v10_rmse,putirka_rmse,ci_overlap,verdict
+shallow_crustal,T_C,47,False,23.46950633881204,25.52386491004583,True,competitive with Putirka (CIs overlap)
+shallow_crustal,P_kbar,47,False,2.6629062653698017,3.886363899698184,False,v10 outperforms Putirka
+deep_crustal_MASH,T_C,61,False,78.46430905099997,87.478244585471,True,competitive with Putirka (CIs overlap)
+deep_crustal_MASH,P_kbar,61,False,2.078945257682617,2.3144340490953392,True,competitive with Putirka (CIs overlap)
+lithospheric_mantle,T_C,58,False,93.6982941619437,79.65209323346028,True,competitive with Putirka (CIs overlap)
+lithospheric_mantle,P_kbar,58,False,4.538469782286738,4.659726169083871,True,competitive with Putirka (CIs overlap)
+deeper_mantle,T_C,8,True,105.60448966787888,85.50088439343597,True,insufficient data (n < 20)
+deeper_mantle,P_kbar,8,True,4.555771723826939,8.51948552579252,True,insufficient data (n < 20)

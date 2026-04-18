@@ -166,6 +166,13 @@ CANONICAL_FIGURES = [
      'caption': 'Stacking vs best base model with bootstrap CIs'},
     {'num': 23, 'stem': 'fig_nb03_three_family_comparison',
      'caption': 'Forest vs boosted vs stacked family overview'},
+    {'num': 24, 'stem': 'fig_nb04_per_regime_rmse_opx_liq',
+     'caption': ('Per-regime RMSE for opx-liq with bootstrap 95% CIs under '
+                 'the pre-registered pressure partition (0/5/15/30/100 kbar; '
+                 'registered 2026-04-17; see docs/v10_p_regime_preregistration.md)')},
+    {'num': 25, 'stem': 'fig_nb04_per_regime_residual_violins_opx_liq',
+     'caption': ('Per-regime residual distributions (opx-liq, T and P) '
+                 'across methods; pre-registered bins')},
 ]
 
 # ---------------------------------------------------------------------------
