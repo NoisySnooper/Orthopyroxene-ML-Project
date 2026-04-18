@@ -1,0 +1,13 @@
+target,track,feature_set,phase_scope,n,rmse,ensemble
+T_C,universal,universal_raw,cpx_liq,581,84.44788172542633,greedy
+T_C,universal,universal_raw,cpx_only,87,394.5488071717248,greedy
+T_C,universal,universal_raw,opx_liq,77,61.65168450528915,greedy
+T_C,universal,universal_raw,opx_only,95,167.9169767185755,greedy
+T_C,universal,universal_raw,twopx,21,88.1317644602647,greedy
+T_C,universal,universal_raw,twopx_liq,144,79.82800887853143,greedy
+P_kbar,universal,universal_raw,cpx_liq,581,9.601748921006802,two_level
+P_kbar,universal,universal_raw,cpx_only,87,44.213314128080484,two_level
+P_kbar,universal,universal_raw,opx_liq,77,6.058872057932569,two_level
+P_kbar,universal,universal_raw,opx_only,95,19.86094045772189,two_level
+P_kbar,universal,universal_raw,twopx,21,11.474232115739385,two_level
+P_kbar,universal,universal_raw,twopx_liq,144,4.065339034498566,two_level
