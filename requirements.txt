@@ -17,3 +17,4 @@ papermill>=2.6
 seaborn>=0.13
 nbformat>=5.9
 cartopy>=0.25
+folium>=0.20
