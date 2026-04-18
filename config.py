@@ -36,6 +36,18 @@ CATION_SUM_MAX = 4.05
 OXIDE_TOTAL_MIN = 95.0
 OXIDE_TOTAL_MAX = 102.0
 
+# --- Pre-registered P-regime bins (locked 2026-04-17) ---
+# Rationale and registration: docs/v10_p_regime_preregistration.md
+# Bins are right-open: P = 5.0 kbar -> 'deep_crustal_MASH'.
+# Any modification MUST be accompanied by a dated entry in the
+# pre-registration document's modification history.
+P_REGIME_BIN_EDGES_KBAR = [0.0, 5.0, 15.0, 30.0, P_CEILING_KBAR]
+P_REGIME_LABELS = ['shallow_crustal', 'deep_crustal_MASH',
+                   'lithospheric_mantle', 'deeper_mantle']
+P_REGIME_REGISTERED_DATE = '2026-04-17'
+P_REGIME_RATIONALE_DOC = 'docs/v10_p_regime_preregistration.md'
+P_REGIME_MIN_N_FOR_CLAIMS = 20  # Bins with n < this are flagged sample-size-limited
+
 # Random seeds (centralized for reproducibility)
 SEED_SPLIT = 42
 SEED_MODEL = 42

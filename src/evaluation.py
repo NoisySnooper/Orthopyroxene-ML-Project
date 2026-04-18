@@ -29,6 +29,13 @@ from sklearn.model_selection import (
 
 from src.models import predict_median
 
+from config import (
+    P_REGIME_BIN_EDGES_KBAR,
+    P_REGIME_LABELS,
+    P_REGIME_MIN_N_FOR_CLAIMS,
+    SEED_BOOTSTRAP,
+)
+
 
 COLUMN_ALIASES = {
     'T_true_C':     ['T_C_true', 'y_T_true', 'obs_T_C', 'T_true', 'T_C_obs'],
@@ -146,6 +153,170 @@ def oof_rf(X, y, groups, params, seed, n_folds=10):
         rf.fit(X[tr], y[tr])
         oof[va] = predict_median(rf, X[va])
     return oof
+
+
+# --- Pre-registered P-regime analysis ---------------------------------------
+# Registration: docs/v10_p_regime_preregistration.md (locked 2026-04-17).
+# Bin edges and labels come from config.py; do not hardcode here.
+
+def assign_p_regime(p_kbar):
+    """Return regime label array for each pressure value.
+
+    Uses the pre-registered right-open bin structure from config:
+    P_REGIME_BIN_EDGES_KBAR = [0, 5, 15, 30, 100]. P = 5.0 is placed in
+    'deep_crustal_MASH' (not 'shallow_crustal'). Negatives are clipped to 0;
+    values at or above the ceiling fall into 'deeper_mantle'. NaN pressures
+    return the literal string 'unassigned'.
+    """
+    p = np.asarray(p_kbar, dtype=float)
+    labels = np.array(['unassigned'] * len(p), dtype=object)
+    finite = np.isfinite(p)
+    if not finite.any():
+        return labels
+    p_valid = p[finite]
+    p_clipped = np.clip(p_valid, 0.0, P_REGIME_BIN_EDGES_KBAR[-1] - 1e-9)
+    bin_idx = np.digitize(p_clipped, P_REGIME_BIN_EDGES_KBAR[1:-1], right=False)
+    labels[finite] = np.array([P_REGIME_LABELS[i] for i in bin_idx], dtype=object)
+    return labels
+
+
+def _bootstrap_stat(y_true, y_pred, stat_fn, n_bootstrap=1000,
+                    seed=SEED_BOOTSTRAP):
+    """Return (point, ci_low, ci_high) for stat_fn(y_true, y_pred) via
+    bootstrap on paired (y_true, y_pred) rows with a fixed seed."""
+    y_true = np.asarray(y_true, dtype=float)
+    y_pred = np.asarray(y_pred, dtype=float)
+    n = len(y_true)
+    if n == 0:
+        return (np.nan, np.nan, np.nan)
+    point = float(stat_fn(y_true, y_pred))
+    rng = np.random.default_rng(seed)
+    idx = rng.integers(0, n, size=(n_bootstrap, n))
+    boots = np.empty(n_bootstrap, dtype=float)
+    for b in range(n_bootstrap):
+        boots[b] = stat_fn(y_true[idx[b]], y_pred[idx[b]])
+    lo, hi = np.percentile(boots, [2.5, 97.5])
+    return (point, float(lo), float(hi))
+
+
+def _rmse(y_true, y_pred):
+    return float(np.sqrt(np.mean((y_pred - y_true) ** 2)))
+
+
+def _bias(y_true, y_pred):
+    return float(np.mean(y_pred - y_true))
+
+
+def compute_per_regime_metrics(y_true, y_pred, p_kbar_true, metric='rmse',
+                               n_bootstrap=1000, seed=SEED_BOOTSTRAP,
+                               y_pred_lo=None, y_pred_hi=None):
+    """Return per-regime metric table with bootstrap 95% CIs.
+
+    Columns: regime, n, metric, metric_ci_low, metric_ci_high,
+             sample_size_limited.
+    metric options: 'rmse', 't_bias', 'p_bias', 'coverage_90'.
+    'coverage_90' requires y_pred_lo and y_pred_hi (prediction-interval
+    bounds covering the central 90%). Empty bins return NaN metrics with
+    n=0.
+    """
+    y_true = np.asarray(y_true, dtype=float)
+    y_pred = np.asarray(y_pred, dtype=float)
+    p_true = np.asarray(p_kbar_true, dtype=float)
+    regimes = assign_p_regime(p_true)
+
+    if metric == 'rmse':
+        stat_fn = _rmse
+    elif metric in ('t_bias', 'p_bias', 'bias'):
+        stat_fn = _bias
+    elif metric == 'coverage_90':
+        if y_pred_lo is None or y_pred_hi is None:
+            raise ValueError("coverage_90 requires y_pred_lo and y_pred_hi")
+        y_pred_lo = np.asarray(y_pred_lo, dtype=float)
+        y_pred_hi = np.asarray(y_pred_hi, dtype=float)
+        stat_fn = None
+    else:
+        raise ValueError(f"Unknown metric: {metric}")
+
+    rows = []
+    for label in P_REGIME_LABELS:
+        mask = (regimes == label)
+        n = int(mask.sum())
+        limited = n < P_REGIME_MIN_N_FOR_CLAIMS
+
+        if n == 0:
+            rows.append({
+                'regime': label, 'n': 0, 'metric': metric,
+                'metric_value': np.nan,
+                'metric_ci_low': np.nan, 'metric_ci_high': np.nan,
+                'sample_size_limited': True,
+            })
+            continue
+
+        if metric == 'coverage_90':
+            yt = y_true[mask]; lo = y_pred_lo[mask]; hi = y_pred_hi[mask]
+            cov_fn = lambda _t, _p, _l=lo, _h=hi: float(np.mean((_t >= _l) & (_t <= _h)))
+            # Bootstrap on paired indices; use y_true twice as dummy y_pred.
+            rng = np.random.default_rng(seed)
+            idx = rng.integers(0, n, size=(n_bootstrap, n))
+            point = float(np.mean((yt >= lo) & (yt <= hi)))
+            boots = np.empty(n_bootstrap, dtype=float)
+            for b in range(n_bootstrap):
+                bi = idx[b]
+                boots[b] = float(np.mean((yt[bi] >= lo[bi]) & (yt[bi] <= hi[bi])))
+            ci_lo, ci_hi = np.percentile(boots, [2.5, 97.5])
+            rows.append({
+                'regime': label, 'n': n, 'metric': metric,
+                'metric_value': point,
+                'metric_ci_low': float(ci_lo), 'metric_ci_high': float(ci_hi),
+                'sample_size_limited': limited,
+            })
+        else:
+            point, lo, hi = _bootstrap_stat(
+                y_true[mask], y_pred[mask], stat_fn,
+                n_bootstrap=n_bootstrap, seed=seed,
+            )
+            rows.append({
+                'regime': label, 'n': n, 'metric': metric,
+                'metric_value': point,
+                'metric_ci_low': lo, 'metric_ci_high': hi,
+                'sample_size_limited': limited,
+            })
+    return pd.DataFrame(rows)
+
+
+def per_regime_benchmark(predictions_dict, y_true, p_kbar_true,
+                          metrics=('rmse', 't_bias', 'p_bias'),
+                          n_bootstrap=1000, seed=SEED_BOOTSTRAP):
+    """Long-format benchmark table across multiple methods.
+
+    predictions_dict: mapping method name -> either {'y_pred': array} or
+    {'y_pred': array, 'y_pred_lo': array, 'y_pred_hi': array} for methods
+    that report prediction intervals (enables 'coverage_90' metric).
+
+    Returns DataFrame with columns: method, regime, n, metric,
+    metric_value, metric_ci_low, metric_ci_high, sample_size_limited.
+    """
+    frames = []
+    for method, preds in predictions_dict.items():
+        y_pred = preds.get('y_pred') if isinstance(preds, dict) else preds
+        lo = preds.get('y_pred_lo') if isinstance(preds, dict) else None
+        hi = preds.get('y_pred_hi') if isinstance(preds, dict) else None
+        for metric in metrics:
+            if metric == 'coverage_90' and (lo is None or hi is None):
+                continue
+            df = compute_per_regime_metrics(
+                y_true, y_pred, p_kbar_true, metric=metric,
+                n_bootstrap=n_bootstrap, seed=seed,
+                y_pred_lo=lo, y_pred_hi=hi,
+            )
+            df.insert(0, 'method', method)
+            frames.append(df)
+    if not frames:
+        return pd.DataFrame(columns=[
+            'method', 'regime', 'n', 'metric', 'metric_value',
+            'metric_ci_low', 'metric_ci_high', 'sample_size_limited',
+        ])
+    return pd.concat(frames, ignore_index=True)
 
 
 def oof_qrf(X, y, groups, params, seed, n_folds=10,
