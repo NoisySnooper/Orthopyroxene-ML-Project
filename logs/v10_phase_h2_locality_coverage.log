@@ -1,0 +1,22 @@
+[2026-04-18 19:04:17] START H.2 locality coverage diagnostic
+[2026-04-18 19:04:17] 15 localities; 53050 natural opx predictions
+[2026-04-18 19:04:17] wrote C:\Users\NQTa\Documents\MLCourse\Final Project\results\v10_phase_h2_locality_coverage.csv
+[2026-04-18 19:04:17] localities clearing n>=20 floor: 11/15
+[2026-04-18 19:04:17] 
+         locality  n_in_bbox  n_tectonic_matched  clears_n20_floor  pred_T_C_mean  pred_P_kbar_mean   ood_pct
+ Mount St. Helens         70                  70              True    1060.754227          4.714489  0.000000
+        Kamchatka        544                 544              True    1132.307187         11.677909  0.183824
+    Central Andes        390                 390              True    1008.319105          5.811778  0.769231
+  Lesser Antilles        269                 269              True     996.412085          7.857867  1.486989
+           Aegean       1015                 791              True     970.251400          4.925246  0.394089
+        Aleutians         33                  33              True     975.325415          6.515532 15.151515
+   Kilbourne Hole          0                   0             False            NaN               NaN       NaN
+      Spitsbergen         33                   0              True    1242.409449         19.553456  3.030303
+  Siberian craton       1049                   0              True    1265.101512         28.260716  0.381316
+  Kaapvaal craton       2583                   0              True    1235.804989         18.894707  0.116144
+Kerguelen Plateau         54                   0              True    1248.374848         18.952564  0.000000
+          Kilauea          2                   2             False    1097.414280          5.289019  0.000000
+          Iceland         49                   0              True     955.286070          4.626050 46.938776
+          Reunion          0                   0             False            NaN               NaN       NaN
+         Erta Ale          0                   0             False            NaN               NaN       NaN
+[2026-04-18 19:04:17] DONE
