@@ -216,6 +216,90 @@ def predict_putirka_cpx_liq(df: pd.DataFrame, target: Literal['T', 'P'],
     return _extract(out, celsius=False)
 
 
+def predict_putirka_opx_liq(df: pd.DataFrame, target: Literal['T', 'P'],
+                            P_kbar: np.ndarray | None = None,
+                            T_K: np.ndarray | None = None) -> np.ndarray:
+    """Putirka 2008 opx-liq. T uses eq28a (global); P uses eq29a (global).
+
+    Phase H.0a addition (2026-04-18). Required for:
+      * G.4 ArcPL opx un-deferral
+      * H.3 opx-liq natural-sample inference
+      * H.6 curated-locality classical benchmark
+    """
+    import Thermobar as pt
+    _check_thermobar_version()
+    opx = df[[c for c in df.columns if c.endswith('_Opx')]].copy()
+    liq = df[[c for c in df.columns if c.endswith('_Liq')]].copy()
+    if target == 'T':
+        out = pt.calculate_opx_liq_temp(
+            equationT='T_Put2008_eq28a', opx_comps=opx, liq_comps=liq, P=P_kbar)
+        return _extract(out, celsius=True)
+    out = pt.calculate_opx_liq_press(
+        equationP='P_Put2008_eq29a', opx_comps=opx, liq_comps=liq, T=T_K)
+    return _extract(out, celsius=False)
+
+
+def predict_putirka_opx_only(df: pd.DataFrame, target: Literal['T', 'P'],
+                             P_kbar: np.ndarray | None = None,
+                             T_K: np.ndarray | None = None) -> np.ndarray:
+    """Putirka 2008 opx-only. Only P is defined (eq29c); T falls back to
+    opx-liq eq28a when liq is available, else NaN. Phase H.0a addition.
+    """
+    import Thermobar as pt
+    _check_thermobar_version()
+    opx = df[[c for c in df.columns if c.endswith('_Opx')]].copy()
+    if target == 'P':
+        out = pt.calculate_opx_only_press(
+            equationP='P_Put2008_eq29c', opx_comps=opx, T=T_K)
+        return _extract(out, celsius=False)
+    # T: no opx-only T function in Thermobar 1.0.70; callers must use
+    # cpx-opx or opx-liq when T is needed.
+    return np.full(len(df), np.nan, dtype=float)
+
+
+def predict_putirka_twopx(df: pd.DataFrame, target: Literal['T', 'P'],
+                          which: Literal['eq36_eq39',
+                                         'eq37_eq38'] = 'eq36_eq39',
+                          P_kbar: np.ndarray | None = None,
+                          T_K: np.ndarray | None = None) -> np.ndarray:
+    """Putirka 2008 two-pyroxene (cpx-opx). Default pair: T_eq36 + P_eq39.
+
+    Phase H.0a addition. Required for:
+      * H.3 twopx natural-sample inference
+      * H.4 cross-mineral convergence classical reference
+      * G.5 twopx benchmark un-deferral (Putirka row)
+    """
+    import Thermobar as pt
+    _check_thermobar_version()
+    cpx = df[[c for c in df.columns if c.endswith('_Cpx')]].copy()
+    opx = df[[c for c in df.columns if c.endswith('_Opx')]].copy()
+    eqT, eqP = ('T_Put2008_eq36', 'P_Put2008_eq39') \
+        if which == 'eq36_eq39' else ('T_Put2008_eq37', 'P_Put2008_eq38')
+    if target == 'T':
+        out = pt.calculate_cpx_opx_temp(
+            equationT=eqT, cpx_comps=cpx, opx_comps=opx, P=P_kbar)
+        return _extract(out, celsius=True)
+    out = pt.calculate_cpx_opx_press(
+        equationP=eqP, cpx_comps=cpx, opx_comps=opx, T=T_K)
+    return _extract(out, celsius=False)
+
+
+def compute_cpx_opx_kd_femg(df: pd.DataFrame) -> np.ndarray:
+    """Fe-Mg exchange coefficient between cpx and opx:
+
+        KD = (FeOt_Cpx / MgO_Cpx) / (FeOt_Opx / MgO_Opx)
+
+    Putirka 2008 equilibrium range: KD in [0.95, 1.23]. Phase H.0a /
+    Phase H.4b equilibrium flag.
+    """
+    fe_cpx = pd.to_numeric(df['FeOt_Cpx'], errors='coerce')
+    mg_cpx = pd.to_numeric(df['MgO_Cpx'], errors='coerce')
+    fe_opx = pd.to_numeric(df['FeOt_Opx'], errors='coerce')
+    mg_opx = pd.to_numeric(df['MgO_Opx'], errors='coerce')
+    kd = (fe_cpx / mg_cpx) / (fe_opx / mg_opx)
+    return kd.values
+
+
 def _extract(x, celsius: bool) -> np.ndarray:
     """Pull a 1-D float array out of a Thermobar return (may be DataFrame,
     Series, or numpy array). Apply K->C conversion based on an explicit,
