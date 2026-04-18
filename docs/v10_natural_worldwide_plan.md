@@ -47,8 +47,14 @@ are embedded in sections 4, 5, 6 below:
    tectonic setting otherwise.
 6. **ArcPL opx G.4 deferral may unblock.** Thermobar wiring for H.0a
    (classical P-T on natural samples) is the same wiring that was
-   missing in G.4. **Resolution:** un-defer G.4 ArcPL opx probe after
-   H.0a lands.
+   missing in G.4. **Resolution (2026-04-18):** ArcPL opx has n=197
+   paired opx+liq compositions with literature P-T in
+   `archive/pre_v10_rebuild_2026_04_16/results/nb04_arcpl_opx_liq_predictions_forest.csv`.
+   Rather than a standalone G.4 probe, fold it into H.6 as a curated
+   "ArcPL-opx" locality (scope = inference only, per user directive).
+   The same Thermobar+canonical-model+G.4-correction pipeline that runs
+   on the 15 curated sites runs here too. This closes H.0d without a
+   separate script.
 
 ---
 
@@ -69,7 +75,8 @@ H.0  Prereqs (NEW, collision-driven)
   H.0a  Wire Thermobar for classical P-T inference on natural samples
   H.0b  Run Phase C canonical-cell selection for cpx_only / cpx_liq / twopx
   H.0c  (Optional) replicate Phase G Chunks A-C per-regime audit for cpx_liq
-  H.0d  Un-defer G.4 ArcPL opx probe (unblocked by H.0a)
+  H.0d  [RESOLVED 2026-04-18] ArcPL opx folded into H.6 as curated locality,
+        no separate probe needed (see Section 0 collision 6)
 
 H.1  Data pulls
   H.1a  Re-merge lat/lon into natural_opx_cleaned
