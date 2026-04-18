@@ -1,0 +1,39 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+*.egg-info/
+
+# Virtualenv
+.venv/
+venv/
+env/
+
+# Jupyter
+.ipynb_checkpoints/
+*-checkpoint.ipynb
+
+# IDE / tooling
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Claude Code local state (per-user, not checked in)
+.claude/settings.local.json
+.claude/scheduled_tasks.lock
+.claude/projects/
+
+# Scratch helpers (pattern prefixes used for one-shot debug scripts)
+logs/_*.py
+logs/_*.ipynb
+
+# Ad-hoc root-level scratch CSVs
+/_*.csv
