@@ -280,9 +280,12 @@ def compute_external_preds(track, df_te, y_T, y_P, fh):
             df_ag, MODELS/'external','cpx_liq','T')['median'])
         _safe(('Agreda 2024','P_kbar'), lambda: predict_agreda_from_df(
             df_ag, MODELS/'external','cpx_liq','P')['median'])
-        # Jorgenson + Wang require _Cpx / _Liq suffixed frames
-        df_jw = df_te.rename(columns=_agreda_cpx_liq_rename()).copy()
-        df_jw['MnO_Liq'] = 0.0
+        # Jorgenson + Wang: reuse the Putirka-grade phase frames (they
+        # carry the full Thermobar schema; the agreda rename dict omits
+        # Fe3Fet_Liq / NiO_Liq / CoO_Liq / CO2_Liq / H2O_Liq /
+        # Sample_ID_Liq which Thermobar tries to drop during normalization).
+        df_jw = pd.concat([cpx.reset_index(drop=True),
+                           liq.reset_index(drop=True)], axis=1)
         _safe(('Jorgenson 2022','T_C'), lambda: predict_jorgenson(
             df_jw, 'T', phase='cpx_liq', P_kbar=y_P))
         _safe(('Jorgenson 2022','P_kbar'), lambda: predict_jorgenson(
@@ -305,8 +308,10 @@ def compute_external_preds(track, df_te, y_T, y_P, fh):
             df_ag, MODELS/'external','cpx_only','T')['median'])
         _safe(('Agreda 2024','P_kbar'), lambda: predict_agreda_from_df(
             df_ag, MODELS/'external','cpx_only','P')['median'])
-        # Jorgenson cpx_only
-        df_jw = df_te.rename(columns=_agreda_cpx_only_rename()).copy()
+        # Jorgenson cpx_only: reuse Putirka-grade cpx frame (has
+        # K2O_Cpx + all other columns Thermobar requires; the agreda
+        # rename dict omits K2O_Cpx).
+        df_jw = cpx.reset_index(drop=True)
         _safe(('Jorgenson 2022','T_C'), lambda: predict_jorgenson(
             df_jw, 'T', phase='cpx_only', P_kbar=y_P))
         _safe(('Jorgenson 2022','P_kbar'), lambda: predict_jorgenson(
