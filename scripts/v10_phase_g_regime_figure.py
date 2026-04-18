@@ -5,8 +5,12 @@ regime-stratified RMSE benchmark (reads v10_regime_allmodels.csv).
 Emits four figure variants, each in PDF + PNG (300 dpi):
   figures/v10_regime_opx.{pdf,png}          opx_liq + opx_only only
   figures/v10_regime_cpx.{pdf,png}          cpx_liq + cpx_only only
-  figures/v10_regime_combined.{pdf,png}     twopx + universal only
-  figures/v10_regime_all.{pdf,png}          every track, 6-row mega figure
+  figures/v10_regime_combined.{pdf,png}     twopx only
+  figures/v10_regime_all.{pdf,png}          cpx+opx+twopx tracks stacked
+
+Universal model excluded 2026-04-18: scope limited to cpx/opx/twopx for
+the current paper; universal is a later project (see
+docs/v10_universal_model_exploration.md for historical context).
 
 Each panel shows per-regime RMSE with bootstrap 95% CIs, for:
   - v10 cell spread (grey band: min/max across all Optuna cells)
@@ -73,17 +77,14 @@ TRACK_TARGETS = [
     ('cpx_only',  'P_kbar'),
     ('twopx',     'T_C'),
     ('twopx',     'P_kbar'),
-    ('universal', 'T_C'),
-    ('universal', 'P_kbar'),
 ]
 
 # For opx_only we keep only P_kbar; for others we keep both if present.
 SCOPES = {
     'opx':      ['opx_liq', 'opx_only'],
     'cpx':      ['cpx_liq', 'cpx_only'],
-    'combined': ['twopx', 'universal'],
-    'all':      ['opx_liq', 'opx_only', 'cpx_liq', 'cpx_only',
-                 'twopx', 'universal'],
+    'combined': ['twopx'],
+    'all':      ['opx_liq', 'opx_only', 'cpx_liq', 'cpx_only', 'twopx'],
 }
 
 TARGET_LABEL = {'T_C': 'T (\u00b0C)', 'P_kbar': 'P (kbar)'}

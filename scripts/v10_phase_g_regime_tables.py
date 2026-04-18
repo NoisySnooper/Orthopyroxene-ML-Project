@@ -37,10 +37,11 @@ OUT_DIR.mkdir(parents=True, exist_ok=True)
 SCOPES = {
     'opx':      ['opx_liq', 'opx_only'],
     'cpx':      ['cpx_liq', 'cpx_only'],
-    'combined': ['twopx', 'universal'],
-    'all':      ['opx_liq', 'opx_only', 'cpx_liq', 'cpx_only',
-                 'twopx', 'universal'],
+    'combined': ['twopx'],
+    'all':      ['opx_liq', 'opx_only', 'cpx_liq', 'cpx_only', 'twopx'],
 }
+# Universal model excluded 2026-04-18: scope limited to cpx/opx/twopx for
+# the current paper; universal is a later project.
 # Pre-registered P-regime labels first (authoritative, 2026-04-17 pre-reg);
 # then the exploratory finer-grained bins; then ALL.
 P_ORDER = ['shallow_crustal', 'deep_crustal_MASH', 'lithospheric_mantle',
