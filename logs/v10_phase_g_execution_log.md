@@ -294,3 +294,102 @@ table + manuscript artifact presence, and T15 log consistency.
   retrain. For this chunk, figures 24 and 25 were rendered in a mini-
   notebook and their outputs were written back into nbF's cell
   metadata; the rest of nbF remains stale.
+
+---
+
+## G.1c-ext Chunk C: two-axis honesty bar (2026-04-18)
+
+Motivation (flagged mid-chunk): Chunk B's audit only checked axis 1
+(test-set bootstrap CI). The pre-registration doc specifies only that
+non-overlapping 95% CIs are required; it does not name a specific CI
+construction. Chunk C extends the honesty bar to axis 2 (20-seed RMSE
+spread per cell, same fixed Citation-grouped train/test split; only
+model-fit stochasticity varies). Putirka equations are deterministic
+closed-form, so their axis-2 collapses to a point. The revised rule:
+"v10 outperforms Putirka (robust)" requires axis-1 non-overlap
+AND axis-2 non-overlap AND n >= 20.
+
+### Why a new probe is needed
+
+The existing `results/v10_opx_multiseed_results.csv` stores only per-seed
+aggregate test RMSE for the full opx test set — no predictions, no
+per-regime RMSE. To compute per-regime seed spread without re-running
+the full 272-cell x 20-seed multi-hour job, Chunk C re-fits ONLY the
+seven cells that nb04's regime benchmark picked as per-regime best
+(one cell per (regime, target)):
+
+    T_C:     ERT/pwlr (shallow), ElasticNet/raw (deep, litho),
+             ElasticNet/pwlr (deeper, n<20)
+    P_kbar:  ElasticNet/raw (shallow, **headline claim**),
+             MLP/raw (deep), CatBoost/raw (litho),
+             MLP/alr (deeper, n<20)
+
+140 total fits, ~2 minutes on local CPU. Per-seed aggregate RMSE is
+cross-checked against `v10_opx_multiseed_summary.csv` and matches to
+1e-6 for all seven cells (i.e. same fits as the original multi-seed run,
+just with predictions saved this time).
+
+### Deliverables
+
+- `scripts/v10_phase_g_chunkC_seed_regime_probe.py` - refits seven
+  per-regime-best cells at 20 seeds, saves per-sample predictions.
+- `scripts/v10_phase_g_chunkC_robust_audit.py` - consumes probe +
+  Chunk B benchmark, emits two-axis claims audit.
+- `scripts/v10_phase_g_chunkC_update_si_table.py` - emits Table S8.5.4.
+- `scripts/v10_phase_g_chunkC_selfaudit.py` - 19-item self-audit.
+- `results/v10_chunkC_perseed_predictions.csv`  (24,360 rows: 7 cells x
+  20 seeds x 174 test samples).
+- `results/v10_chunkC_perseed_regime_rmse.csv`  (560 rows: 7 cells x
+  20 seeds x 4 regimes).
+- `results/v10_chunkC_perseed_aggregate_rmse.csv` (140 rows, cross-check).
+- `results/v10_opx_per_regime_claims_audit_robust.csv` (8 rows, canonical).
+- `tables/S8_5_4_regime_claims_audit_robust_opx_liq.{md,csv}` -
+  reviewer-facing SI table (supersedes S8.5.3 for manuscript citation).
+- `docs/v10_nb03_test_protocol.md` Section 12: T15 pass condition
+  upgraded to v2 (requires both axes non-overlap); v1 deprecated with
+  rationale.
+- `scripts/v10_nb03_test_t15.py` revised to read the robust audit; falls
+  back to legacy axis-1 CSV with a WARNING tag if robust is missing,
+  so the script remains runnable on cold checkouts.
+- `manuscripts/opx_2026/text/regime_results_autofilled.md` revised with
+  new framing paragraph, seed-RMSE columns in the per-target tables,
+  and an explicit note that had the same regime been anchored on MLP/raw
+  (seed RMSE spread [2.03, 5.79] kbar) the claim would have collapsed.
+- `logs/v10_phase_g_chunkC_selfaudit.md` - 19/19 pass.
+- `logs/v10_phase_g_chunkB_selfaudit.md` - 24/24 pass (re-verified; Chunk C
+  did not break any Chunk B post-conditions).
+
+### Headline finding
+
+The pre-registered shallow_crustal / P_kbar claim survives the two-axis
+honesty bar. The per-regime-best cell is ElasticNet/raw, which is
+deterministic given fixed Optuna hyperparameters (20-seed RMSE spread
+of exactly zero). v10 RMSE = 2.66 kbar [2.25, 3.13], Putirka 29a
+RMSE = 3.89 kbar [3.24, 4.47]; n = 47; both axes non-overlapping;
+robust_verdict = "v10 outperforms Putirka (robust)".
+
+T15 re-run at 2026-04-18 with the v2 pass condition: passed=True,
+value=1.223 kbar, source=robust, winning regime=shallow_crustal.
+
+### Transparency findings (NOT verdict changes)
+
+- **deep_crustal_MASH P_kbar (MLP/raw):** Chunk B point estimate 2.08 kbar
+  is on the favorable tail of the seed distribution; 20-seed mean is 2.54,
+  spread [2.01, 3.07]. Still "competitive with Putirka" either way, but
+  the autofill now discloses the seed spread.
+- **deeper_mantle P_kbar (MLP/alr):** Chunk B point 4.56 kbar; 20-seed
+  mean 7.06, spread [3.78, 24.02]. n=8 keeps this "insufficient data"
+  regardless, but the extreme instability is now documented.
+- **Alternative-choice stress test:** if shallow_crustal had been anchored
+  on MLP/raw (the aggregate test-set winner) instead of ElasticNet/raw,
+  the seed spread [2.03, 5.79] kbar would have overlapped Putirka's
+  lower CI (3.24) and the claim would have collapsed. The robust audit
+  explicitly guards against this kind of hidden-variance trap.
+
+### Commits
+
+- 913ba87: `chore: add .gitignore`
+- 9fa09cb: `Phase G.1b/G.1c artifacts: external benchmark + 20-seed
+  multi-seed refit` (brings previously-untracked science artifacts under
+  version control, precondition for Chunk C).
+- Chunk C commit: see next commit below this log update.

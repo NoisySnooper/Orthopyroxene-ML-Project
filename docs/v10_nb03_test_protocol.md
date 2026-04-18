@@ -345,14 +345,16 @@ See `docs/v10_universal_model_exploration.md` Sections 5-7 for full rationale, e
 
 **Scope:** opx pipeline only (T15 for primary pipelines; T13 and T14 remain reserved for the universal exploration track — see Section 11).
 
-**Hypothesis:** on the pre-registered four-bin P partition (edges `[0, 5, 15, 30, 100]` kbar, registered 2026-04-17 in `docs/v10_p_regime_preregistration.md`), at least one regime with n ≥ 20 shows a directional v10-outperforms-Putirka claim for the `P_kbar` target at the honesty bar: non-overlapping bootstrap 95% CIs.
+**Hypothesis:** on the pre-registered four-bin P partition (edges `[0, 5, 15, 30, 100]` kbar, registered 2026-04-17 in `docs/v10_p_regime_preregistration.md`), at least one regime with n ≥ 20 shows a directional v10-outperforms-Putirka claim for the `P_kbar` target at the **two-axis honesty bar** (see v2 below).
 
 **Rationale:** the opx paper's pre-registered headline claim is that the v10 thermobarometer is better calibrated in at least one geologically meaningful P regime, not globally. Section G.1c-extended produces the all-models regime CSV; the opx-liq subset of that CSV, filtered to the pre-registered bins, drives this test.
 
-**Pass condition:** `results/v10_opx_per_regime_claims_audit.csv` contains at least one row matching `target == 'P_kbar'` AND `sample_size_limited == False` AND `ci_overlap == False` AND `v10_rmse < putirka_rmse`. If yes, the audit row counts as a "pre-registered headline claim passes." Otherwise the test fails and the manuscript's headline claim is reframed as calibration-domain characterization only (no directional claim).
+**Pass condition (v2, revised 2026-04-18 in Chunk C):** `results/v10_opx_per_regime_claims_audit_robust.csv` contains at least one row matching `target == 'P_kbar'` AND `n >= 20` AND `axis1_nonoverlap == True` AND `axis2_nonoverlap == True` (equivalently `robust_outperforms == True`). Both axes must pass: axis 1 (test-set bootstrap CI) quantifies sampling noise; axis 2 (20-seed RMSE spread) quantifies model-fit stochasticity. If both pass, the audit row counts as a "pre-registered headline claim passes, robustly." Otherwise the test fails and the manuscript's headline claim is reframed as calibration-domain characterization only (no directional claim).
 
-**Source of truth:** `results/v10_opx_per_regime_claims_audit.csv` (produced by `notebooks/nb04_v10_benchmark.ipynb`). This test does NOT re-run any training; it is a pure consistency check between the headline claim and the audit table.
+**Pass condition (v1, deprecated):** the original single-axis pass condition read `results/v10_opx_per_regime_claims_audit.csv` and required only non-overlapping bootstrap 95% CI on the residual axis. Chunk C (2026-04-18) found that for non-deterministic cells (MLP/raw, CatBoost/raw) a single-seed point estimate could fall on the favorable tail of the across-seed RMSE distribution, inflating apparent performance. The robust audit adds the seed-axis check; v2 is the canonical pass condition for all future manuscript claims.
 
-**Log format:** results appended to `results/v10_nb03_test_log.csv` with `test_id=T15`, `pipeline=opx`, `target=P_kbar`, `track=opx_liq`. The `details` JSON field carries the winning regime, its v10 and Putirka RMSEs with CIs, and n.
+**Source of truth:** `results/v10_opx_per_regime_claims_audit_robust.csv` (produced by `scripts/v10_phase_g_chunkC_robust_audit.py`, which consumes `results/v10_opx_per_regime_benchmark.csv` from nb04 and `results/v10_chunkC_perseed_regime_rmse.csv` from `scripts/v10_phase_g_chunkC_seed_regime_probe.py`). This test does NOT re-run any training; it is a pure consistency check between the headline claim and the robust audit table.
 
-**Execution:** `scripts/v10_nb03_test_t15.py` (see Appendix). One-shot script; no side effects beyond appending one row to the test log.
+**Log format:** results appended to `results/v10_nb03_test_log.csv` with `test_id=T15`, `pipeline=opx`, `target=P_kbar`, `track=opx_liq`. The `details` JSON field carries the winning regime, its v10 and Putirka RMSEs with CIs, seed-axis CI, and n.
+
+**Execution:** `scripts/v10_nb03_test_t15.py` (see Appendix). One-shot script; no side effects beyond appending one row to the test log. After Chunk C the script reads the robust audit CSV.
