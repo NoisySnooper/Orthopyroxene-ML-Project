@@ -26,5 +26,5 @@ Summary: 24/24 checks pass.
 | 20 | 14. SI table artifact S8_5_2_regime_rmse_ci_opx_liq.csv | PASS | bytes=505 |
 | 21 | 14. SI table artifact S8_5_3_regime_claims_audit_opx_liq.md | PASS | bytes=1755 |
 | 22 | 14. SI table artifact S8_5_3_regime_claims_audit_opx_liq.csv | PASS | bytes=935 |
-| 23 | 15. regime_results_autofilled.md exists | PASS | bytes=6140 |
+| 23 | 15. regime_results_autofilled.md exists | PASS | bytes=9064 |
 | 24 | 16. T15 log row consistent with claims audit | PASS | t15_pass=True audit_hit=True |
