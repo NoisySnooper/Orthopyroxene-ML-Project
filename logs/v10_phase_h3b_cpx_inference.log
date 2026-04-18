@@ -1,0 +1,5 @@
+[2026-04-18 19:26:05] START H.3b cpx inference (pre-staged)
+[2026-04-18 19:26:05] SKIP cpx_only: natural input missing -> C:\Users\NQTa\Documents\MLCourse\Final Project\data\natural\natural_cpx_with_coords.csv
+[2026-04-18 19:26:05] SKIP cpx_liq: natural input missing -> C:\Users\NQTa\Documents\MLCourse\Final Project\data\natural\natural_cpx_liq_pairs.csv
+[2026-04-18 19:26:05] no cpx tracks executed: awaiting H.1b (and H.1d for cpx_liq). This is expected until GEOROC cpx lands.
+[2026-04-18 19:26:05] DONE (no-op)
