@@ -2,10 +2,53 @@
 
 **Status:** canonical spec for Phase H + Phase I natural-sample work and world map figures
 **Author:** NQTa
-**Date:** 2026-04-16
+**Date:** 2026-04-16 (revised 2026-04-18 for Phase G collision integration)
 **Companion to:** `v10_master_plan.md`, `v10_figure_audit.md`
 
 User priority: world map is visually impressive centerpiece. Natural samples give cross-mineral convergence check. Both mineral-specific maps required (opx, cpx, twopx).
+
+---
+
+## 0. Phase G boundary conditions (added 2026-04-18)
+
+Phase G established a pre-registered per-regime claims framework
+(`docs/v10_p_regime_preregistration.md`) and a two-axis honesty bar
+(test-set bootstrap CI + 20-seed spread) for opx_liq. Phase H inference
+on natural samples collides with that framework in six ways; resolutions
+are embedded in sections 4, 5, 6 below:
+
+1. **Self-referential regime bins.** Phase G bins use *true* P from
+   ExPetDB. Natural samples have no ground truth, so per-regime RMSE
+   claims on natural predictions are circular. **Resolution:** the
+   two-axis honesty bar stays scoped to the calibration domain.
+   Natural-sample visuals may stratify by predicted P regime (coloring,
+   panel splits) but produce no RMSE claim per regime.
+2. **G.4 bias correction is not applied by default.** Corrections were
+   fit on train-OOF per true-P regime, validated on test. Applying them
+   to natural samples requires regime labels from predicted P (circular)
+   and extrapolates beyond the fit domain. **Resolution:** raw
+   predictions are the primary artifact. A supplementary panel on
+   curated localities (where literature P is known, so regime is
+   assignable) shows the correction effect as a sensitivity.
+3. **Canonical cell roster incomplete for cpx and twopx.** Phase G
+   Chunks A-C ran for opx_liq only. `v10_optuna_best_params_cpx.json`
+   and `v10_optuna_best_params_twopx.json` exist from Phase 3.3b but the
+   Chunk A pre-registration and canonical-cell selection have not. H.0
+   locks those before inference.
+4. **Two-axis honesty bar only exists for opx_liq.** Manuscript claims
+   about cpx or twopx natural-sample predictions cannot cite the
+   Chunk C framework. **Resolution:** opx carries full Chunks A-C rigor;
+   cpx and twopx are descriptive with test-set bootstrap CI only (no
+   20-seed axis unless H.0c opts in).
+5. **Per-locality min_n=20 floor.** Phase G registered n>=20 for
+   per-regime claims. Curated localities with n<20 (likely Erta Ale,
+   Spitsbergen, some xenolith sites) cannot carry bootstrap CI claims.
+   **Resolution:** per-locality RMSE reported where n>=20; pooled by
+   tectonic setting otherwise.
+6. **ArcPL opx G.4 deferral may unblock.** Thermobar wiring for H.0a
+   (classical P-T on natural samples) is the same wiring that was
+   missing in G.4. **Resolution:** un-defer G.4 ArcPL opx probe after
+   H.0a lands.
 
 ---
 
@@ -16,6 +59,53 @@ Three deliverable categories from Phase H + I:
 1. **Natural sample inference** — run every trained model on large natural-sample datasets, produce per-sample P-T predictions with uncertainty
 2. **Cross-mineral convergence** — where a sample has both opx and cpx analyzed, compare what opx-only, cpx-only, twopx, and universal models predict
 3. **World map figures** — static (publication) + interactive (supplementary/repo), two panels each (tectonic setting + predicted T), separate per mineral
+
+---
+
+## 1.5 Revised Phase H execution plan (2026-04-18)
+
+```
+H.0  Prereqs (NEW, collision-driven)
+  H.0a  Wire Thermobar for classical P-T inference on natural samples
+  H.0b  Run Phase C canonical-cell selection for cpx_only / cpx_liq / twopx
+  H.0c  (Optional) replicate Phase G Chunks A-C per-regime audit for cpx_liq
+  H.0d  Un-defer G.4 ArcPL opx probe (unblocked by H.0a)
+
+H.1  Data pulls
+  H.1a  Re-merge lat/lon into natural_opx_cleaned
+  H.1b  Pull GEOROC cpx 2024-12
+  H.1c  Pull GEOROC liquid/glass
+  H.1d  Build twopx pairs by sample+citation match
+
+H.2  Curated localities
+  H.2a  Populate curated_localities.csv (15 localities)
+  H.2b  Note per-locality n; flag any <20 for claims framework
+
+H.3  Inference (raw predictions only, no G.4 corrections)
+  H.3a  Run canonical opx_liq + opx_only on natural_opx
+  H.3b  Run canonical cpx_liq + cpx_only on natural_cpx
+  H.3c  Run canonical twopx on pairs
+  H.3d  OOD via IsolationForest, MC uncertainty
+
+H.4  Cross-mineral convergence
+  H.4a  Per-pair delta_T, delta_P across models
+  H.4b  Fe-Mg equilibrium flag (KD 0.95-1.23)
+  H.4c  twopx vs opx-only+cpx-only averaged, benchmarked on curated
+
+H.5  World maps
+  H.5a  Static (Robinson, tectonic + predicted T panels)
+  H.5b  Interactive (folium clusters)
+  H.5c  Stratify colorbar visually by predicted-P regime (NO RMSE claims)
+
+H.6  Validation vs curated localities
+  H.6a  Per-locality RMSE where n>=20; pooled-setting RMSE otherwise
+  H.6b  Supplementary panel: G.4-corrected vs raw on curated subset
+
+H.7  Phase H self-audit + commit
+```
+
+Sections 2-12 below describe WHAT (data sources, map spec, deliverables);
+this section describes WHEN (the ordered execution plan respecting Phase G).
 
 ---
 
@@ -137,6 +227,14 @@ This is the gold set for validation. Manuscript Table X summarizes it.
 
 ## 4. Natural sample inference workflow
 
+**Phase G collision note (see Section 0, items 1-2):** predictions are
+stored *raw*. The G.4 piecewise P bias correction is NOT applied to
+natural samples in this pass because its correction coefficients were fit
+on train-OOF per *true* P regime, and natural samples have no ground
+truth P. The corrected values appear only as an optional supplementary
+panel on curated localities (Section 3 / H.6b), where literature P
+assigns the regime without circularity.
+
 Per pipeline, per sample in `natural_{mineral}_with_coords.csv`:
 
 1. Build feature vector per model's expected input
@@ -194,6 +292,15 @@ This one big CSV per mineral is the primary artifact. World map reads from it.
 - Colorbar: vertical, with label "Predicted T (°C)" and tick labels
 - Markers: same positions, size constant, alpha 0.6
 - Annotation: point out the 15 curated localities with labels (sample name abbreviated + country code)
+
+**Phase G collision note (see Section 0, item 1):** Panel B colors are a
+*visualization* of predicted T, not a claim. Do NOT partition the map by
+predicted-P regime and report per-regime RMSE: such claims are
+self-referential on natural samples. If a supplementary map stratifies
+by predicted-P regime (e.g. shallow_crustal / deep_crustal_MASH /
+lithospheric_mantle / deeper_mantle), caption must explicitly note "no
+ground truth P on natural samples; predicted-P regime is a visualization
+stratum only."
 
 **File output:**
 - `fig_nb08_{mineral}_world_map_static.pdf`
@@ -340,9 +447,15 @@ def predict_all_models_on_natural(
 
 ## 9. Timeline
 
-Per master plan Phase H + I:
-- Phase H: 2-3 days active + 1 h compute (inference over ~130,000 natural samples across 12 models = ~90 min)
-- Phase I: 2-3 days active (mostly figure polish)
+Per master plan Phase H + I, revised 2026-04-18 to include H.0 prereqs:
+- **H.0**: 1-2 days active + ~30 min compute (Thermobar wiring, canonical
+  cpx/twopx cell selection, optional Chunks A-C replication for cpx_liq,
+  un-defer G.4 ArcPL opx probe)
+- **H.1 - H.7**: 2-3 days active + 1 h compute (inference over ~130,000
+  natural samples across 12 models = ~90 min)
+- **Phase I**: 2-3 days active (mostly figure polish)
+
+Total Phase H: 3-5 days active, ~2 h compute.
 
 ---
 
