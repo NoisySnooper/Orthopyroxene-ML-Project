@@ -135,7 +135,7 @@ once NB03 winners are frozen.
   CatBoost or MLP beats the v9 four, it ships; otherwise ablated with data.
 - **Test-first NB03.** 12 pre-registered tests (T01-T12, plus T13-T14 for
   universal). Each runs per-pipeline; ship/ablate decision logged to
-  `results/v10_nb03_test_log.csv`. See `docs/nb03_test_protocol.md`.
+  `results/v10_nb03_test_log.csv`. See `docs/preregistration/nb03_test_protocol.md`.
 - **4 ensemble methods compared.** Ridge, two-level Ridge, greedy Caruana,
   AutoGluon. Winner ships; others reported as ablation. See
   `docs/ensemble_methods_plan.md`.
@@ -215,7 +215,7 @@ artifact.
 | [`docs/markdown_template.md`](docs/markdown_template.md) | Per-cell markdown template (rigorous format) |
 | [`docs/cleanup_manifest.md`](docs/cleanup_manifest.md) | Fresh-start cleanup file list |
 | [`docs/notebooks_compatibility_audit.md`](docs/notebooks_compatibility_audit.md) | Downstream NB compatibility matrix |
-| [`docs/nb03_test_protocol.md`](docs/nb03_test_protocol.md) | T01-T14 test-first protocol, per-pipeline |
+| [`docs/preregistration/nb03_test_protocol.md`](docs/preregistration/nb03_test_protocol.md) | T01-T14 test-first protocol, per-pipeline |
 | [`docs/cpx_pipeline_plan.md`](docs/cpx_pipeline_plan.md) | Cpx pipeline design |
 | [`docs/twopx_pipeline_plan.md`](docs/twopx_pipeline_plan.md) | Two-pyroxene pipeline design |
 | [`docs/universal_model_exploration.md`](docs/universal_model_exploration.md) | Universal masking model (isolated) |
@@ -239,10 +239,10 @@ artifact.
 
 | Doc | Purpose |
 |---|---|
-| [`docs/v9_outcomes.md`](docs/v9_outcomes.md) | v9 execution log |
-| [`docs/v9_inventory_report.md`](docs/v9_inventory_report.md) | v9 artifact inventory |
-| [`docs/v9_archive_plan.md`](docs/v9_archive_plan.md) | v9 artifact archiving plan |
-| [`docs/v9_deletion_plan.md`](docs/v9_deletion_plan.md) | v9 cleanup plan (superseded by v10_cleanup_manifest) |
+| [`docs/archive_superseded/v9_outcomes.md`](docs/archive_superseded/v9_outcomes.md) | v9 execution log |
+| [`docs/archive_superseded/v9_inventory_report.md`](docs/archive_superseded/v9_inventory_report.md) | v9 artifact inventory |
+| [`docs/archive_superseded/v9_archive_plan.md`](docs/archive_superseded/v9_archive_plan.md) | v9 artifact archiving plan |
+| [`docs/archive_superseded/v9_deletion_plan.md`](docs/archive_superseded/v9_deletion_plan.md) | v9 cleanup plan (superseded by v10_cleanup_manifest) |
 
 ---
 

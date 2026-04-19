@@ -14,8 +14,9 @@
 - Always git tag before any multi-file destructive operation.
 - Never run nbF_figures.ipynb until Phase G (CANONICAL_FIGURES is stale
   until then).
-- Never invoke docs/v9_deletion_plan.md or docs/v9_archive_plan.md
-  directly; both are superseded by docs/cleanup_manifest.md.
+- Never invoke docs/archive_superseded/v9_deletion_plan.md or
+  docs/archive_superseded/v9_archive_plan.md directly; both are superseded
+  by docs/cleanup_manifest.md.
 
 ## User preferences
 - Short, blunt, plain language

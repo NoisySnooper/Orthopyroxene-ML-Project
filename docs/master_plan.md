@@ -318,7 +318,7 @@ Decision tree: T13 fails -> ablate universal architecture, exploration ends. T13
 | T17 | Phase G.7 D2: shipped corrections persist on a majority of 20 SPLIT_SEEDS |
 | T18 | Phase G.7 A4+A5: Form A edge swing and Form B CV-reseed stability within thresholds |
 
-See `docs/nb03_test_protocol.md` Sections 12-13 for full specifications.
+See `docs/preregistration/nb03_test_protocol.md` Sections 12-13 for full specifications.
 
 ---
 

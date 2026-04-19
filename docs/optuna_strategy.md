@@ -223,7 +223,7 @@ No sharing between pipelines. Opx winners do not determine cpx winners.
 
 ### Test T05 gate
 
-Per `docs/nb03_test_protocol.md` T05, winning feature set should be
+Per `docs/preregistration/nb03_test_protocol.md` T05, winning feature set should be
 stable between v9 and v10 for opx at >=10 of 12 (model x target) combos.
 If stable, skip opx Optuna re-run; reuse v9 params. If unstable (<10/12),
 Optuna re-runs for opx with expanded 8-model grid (~2.5 h).
@@ -248,5 +248,5 @@ results/optuna_studies/
 
 - 8-model roster: `docs/master_plan.md` Section 3
 - Per-pipeline independence: `docs/master_plan.md` Section 4
-- Test T05 (feature set stability): `docs/nb03_test_protocol.md`
+- Test T05 (feature set stability): `docs/preregistration/nb03_test_protocol.md`
 - Compute budget detail: `docs/master_plan.md` Section 6

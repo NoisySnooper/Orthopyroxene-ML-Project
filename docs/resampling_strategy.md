@@ -161,7 +161,7 @@ distribution and its own grid occupancy pattern.
 
 ### Per-pipeline re-test via test T03
 
-Per `docs/nb03_test_protocol.md`, test T03 ("resampling vs none") runs
+Per `docs/preregistration/nb03_test_protocol.md`, test T03 ("resampling vs none") runs
 independently for each of opx_only, opx_liq, cpx_only, cpx_liq, twopx, and
 universal. For each pipeline:
 
@@ -194,6 +194,6 @@ is majority of models (>=5/8).
 
 ### Cross-references
 
-- Per-pipeline test definition: `docs/nb03_test_protocol.md` test T03
+- Per-pipeline test definition: `docs/preregistration/nb03_test_protocol.md` test T03
 - 8-model roster: `docs/master_plan.md` Section 3
 - Per-pipeline test log schema: `docs/master_plan.md` Section 7

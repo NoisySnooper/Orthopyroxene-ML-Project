@@ -218,5 +218,5 @@ separately, results never combined with primary pipelines.
 
 - Ensemble method head-to-head spec: `docs/ensemble_methods_plan.md`
 - Where stacking must appear in NB04-NB10: `docs/stacking_propagation_audit.md`
-- Test T02 (ensemble shootout) pass/fail criteria: `docs/nb03_test_protocol.md`
+- Test T02 (ensemble shootout) pass/fail criteria: `docs/preregistration/nb03_test_protocol.md`
 - 8-base-model roster: `docs/master_plan.md` Section 3
