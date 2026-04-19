@@ -14,8 +14,11 @@ Two manuscripts in preparation:
    Wang 2021, Petrelli 2020. Target: 2027.
 
 **Status:** v9 complete (2026-04-16). v10+v11 planning complete (2026-04-16).
-Phase A execution pending user approval. See
-[`docs/master_plan.md`](docs/master_plan.md) for the active plan.
+Phase G.7 bias correction + TabPFN v2 supplementary baseline shipped
+2026-04-19. Repository cleanup (`BASE_ORDER` rename, docs de-`v10_`-prefixed,
+orphan figures archived) committed 2026-04-19. See
+[`docs/master_plan.md`](docs/master_plan.md) for the active plan and
+[`PROJECT_LAYOUT.md`](PROJECT_LAYOUT.md) for the directory tree.
 
 ---
 
@@ -81,53 +84,16 @@ third paper material.
 
 ---
 
-## Pipeline layout (v10 target)
+## Pipeline layout
 
-```
-config.py                                  # single source of truth
-src/
-  features.py                              # raw/alr/pwlr + engineered + augment
-  models.py                                # 8-model factory, predict_median, predict_iqr
-  data.py                                  # loaders for opx/cpx/twopx/universal tracks
-  evaluation.py                            # metrics, LOSO/Cluster/TargetBin/LeaveOneRegion CV
-  external_models.py                       # Agreda/Jorgenson/Wang/Petrelli/Putirka wrappers
-  optuna_search.py                         # TPE with median pruning
-  resampling.py                            # P-T tempered resampling (ablated v9, re-tested v10)
-  stacking.py                              # Ridge meta (+ greedy/two-level/AutoGluon in v10)
-  calibration.py                           # split conformal
-  geotherm.py                              # Hasterok & Chapman 2011
-  io_utils.py                              # save_figure, save_table
-  plot_style.py                            # Okabe-Ito palette, per-figure enforcement
-  universal.py                             # masking architecture (v10 new)
-  georoc_puller.py                         # GEOROC opx + cpx global pull (v10 new)
-  ensemble_alt.py                          # greedy/two-level/AutoGluon stackers (v10 new)
-notebooks/
-  nb01_data_cleaning.ipynb                 # unified opx+cpx+twopx
-  nb02_eda_pca.ipynb                       # unified EDA, per-track clusters
-  nb03_opx_baseline_models.ipynb           # opx test-first rebuild T01-T12
-  nb03_cpx_baseline_models.ipynb           # cpx test-first rebuild T01-T12
-  nb03_twopx_baseline_models.ipynb         # twopx test-first rebuild T01-T12
-  nb03_universal_exploration.ipynb         # universal masking (isolated)
-  nb04_benchmark.ipynb                     # external benchmarks + model heatmaps (merged NB04+NBM)
-  nb05_generalization.ipynb                # LOSO + Cluster + TargetBin + LeaveOneRegion
-  nb06_shap_analysis.ipynb                 # tree-SHAP + linear-SHAP on stack + kernel-SHAP on MLP
-  nb07_bias_correction.ipynb               # merged NB07+NB07b; composition-conditional T correction
-  nb08_natural_samples.ipynb               # merged NB08+NB08b; world maps static + interactive
-  nb09_manuscript_compilation.ipynb        # per-paper table subsets
-  nb10_extended_analyses.ipynb             # OOD, MC uncertainty, H2O sensitivity, twopx benchmark
-  nbF_figures.ipynb                        # per-paper canonical figure regen
-manuscripts/
-  opx_2026/                                # opx paper deliverables
-    figures/
-    tables/
-    text/
-    arxiv_submission/
-  cpx_2026/                                # cpx paper deliverables
-    figures/
-    tables/
-    text/
-docs/                                      # see Documentation map below
-```
+See [PROJECT_LAYOUT.md](PROJECT_LAYOUT.md) for the full tree with
+per-entry one-liners. In brief: `src/` holds library code (features,
+models, evaluation, bias correction, stacking, Thermobar adapter);
+`notebooks/` holds the 4 track-specific `nb03_*_baseline_models.ipynb`
+variants plus nb01/nb02/nb04-nb09/nbF; `scripts/` holds Phase G/H
+drivers and TabPFN wiring (`opx_tb_nb03_*` scripts); `results/` +
+`figures/` + `tables/` hold artifacts; `manuscripts/opx_2026/` holds
+paper deliverables; `docs/master_plan.md` is the active plan.
 
 ---
 
@@ -139,25 +105,26 @@ python -m venv .venv
 pip install -r requirements.txt
 ```
 
-Then notebooks in order:
+Then notebooks in order (or run `python run_all.py`):
 
-1. `nb01_data_cleaning` — ExPetDB + LEPR cleaning for all five tracks
+1. `nb01_data_cleaning` — ExPetDB + LEPR cleaning for all tracks
 2. `nb02_eda_pca` — EDA + per-track chemical clusters
-3. `nb03_opx_baseline_models` — opx_only + opx_liq, test-first, 8 models
-4. `nb03_cpx_baseline_models` — cpx_only + cpx_liq, test-first, 8 models
+3. `nb03_opx_baseline_models` — opx_only + opx_liq, 8 models, T01-T12
+4. `nb03_cpx_baseline_models` — cpx_only + cpx_liq, 8 models
 5. `nb03_twopx_baseline_models` — two-pyroxene, 8 models
 6. `nb03_universal_exploration` — universal masking (isolated side project)
-7. `nb04_benchmark` — ArcPL + Thermobar external benchmarks + model heatmaps
-8. `nb05_generalization` — four grouped-CV strategies
-9. `nb06_shap_analysis` — feature importance across all pipelines
-10. `nb07_bias_correction` — ArcPL bias probes + composition-conditional T
-11. `nb08_natural_samples` — cross-mineral convergence + world maps
-12. `nb10_extended_analyses` — OOD, MC, H2O, twopx benchmark
-13. `nb09_manuscript_compilation` — per-paper table subsets
-14. `nbF_figures` — per-paper canonical figure regen
+7. `nb03_tabpfn_baseline` — TabPFN v2 supplementary baseline (5 seeds, CPU)
+8. `nb04_putirka_benchmark` — ArcPL + Thermobar benchmarks + TabPFN head-to-head
+9. `nb05_loso_validation` — LOSO + Cluster + TargetBin + LeaveOneRegion
+10. `nb06_shap_analysis` — tree-SHAP + linear-SHAP on stack
+11. `nb07_bias_correction` — composition-conditional T (Form A/B)
+12. `nb07b_arcpl_bias_probe` — ArcPL-specific bias probe
+13. `nb08_natural_twopx` — GEOROC world maps + cross-mineral convergence
+14. `nb09_manuscript_compilation` — per-paper table subsets (S8_*, table_4_*, S8_12)
+15. `nbF_figures` — canonical figure regen (fig24–fig35)
 
-NB01-NB03 mandatory for everything downstream. NB04-NB10 parallelizable once
-NB03 winners are frozen.
+NB01-NB03 mandatory for everything downstream. NB04-NBF parallelizable
+once NB03 winners are frozen.
 
 ---
 
