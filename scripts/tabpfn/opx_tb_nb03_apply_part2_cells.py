@@ -53,7 +53,7 @@ def append_cells(nb_path: Path, cells: list[dict]) -> bool:
 # nb04 cell: TabPFN head-to-head against v10 aggregate-best + external best.
 # ---------------------------------------------------------------------------
 NB04_MD = _md_cell([
-    '## TabPFN v2 supplementary baseline (appended 2026-04-19)\n',
+    '## TabPFN v2 baseline \u2014 9th BASE_ORDER family (appended 2026-04-19)\n',
     '\n',
     'Joins `results/tabpfn_multiseed_summary.csv` against the v10 '
     'aggregate-best tuned model per (pipeline, track, target) and the best '
@@ -131,7 +131,7 @@ NB04_CODE = _code_cell([
 NBF_MD = _md_cell([
     '## Fig 35: TabPFN v2 vs v10 vs external best\n',
     '\n',
-    'Grouped-bar comparison of the TabPFN v2 supplementary baseline against '
+    'Grouped-bar comparison of the TabPFN v2 baseline (9th BASE_ORDER family) against '
     'the pre-registered v10 tuned pipeline and the best external reference '
     'per (pipeline, track, target). See `docs/nb03_tabpfn_plan.md` for '
     'the construction and limitations of this baseline.\n',
@@ -189,9 +189,9 @@ NBF_CODE = _code_cell([
     '    caption = ("Fig. 35. TabPFN v2 (Hollmann et al. 2025) versus the v10 "\n',
     '               "pre-registered tuned baseline and the best classical/ML "\n',
     '               "external reference per (pipeline, track, target) "\n',
-    '               "combination. TabPFN error bars show 5-seed ensemble "\n',
-    '               "stability; v10 error bars show 20-seed model-fit "\n',
-    '               "variance. TabPFN receives raw oxide features only (no "\n',
+    '               "combination. TabPFN and v10 error bars both show "\n',
+    '               "20-seed (42-61) model-fit stability; seed protocol is "\n',
+    '               "matched across families. TabPFN receives raw oxide features only (no "\n',
     '               "ALR/PWLR) and is fit with default hyperparameters "\n',
     '               "(n_estimators=8 opx / 4 cpx, device=cpu). Sources: "\n',
     '               "results/tabpfn_multiseed_summary.csv, "\n',
@@ -211,7 +211,7 @@ NBF_CODE = _code_cell([
 # nb09 cell: Table S12 tabpfn_benchmark.
 # ---------------------------------------------------------------------------
 NB09_MD = _md_cell([
-    '## Table S12: TabPFN v2 supplementary baseline\n',
+    '## Table S12: TabPFN v2 baseline (9th BASE_ORDER family)\n',
     '\n',
     'Head-to-head comparison of the TabPFN v2 baseline against the v10 '
     'tuned pipeline and the best classical/ML external reference per '

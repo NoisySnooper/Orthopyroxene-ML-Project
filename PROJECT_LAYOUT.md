@@ -54,7 +54,7 @@ Final Project/
 │   ├── nb03_cpx_baseline_models.ipynb  # cpx_only + cpx_liq, 8 models
 │   ├── nb03_twopx_baseline_models.ipynb # twopx, 8 models
 │   ├── nb03_universal_exploration.ipynb # universal masking (isolated side project)
-│   ├── nb03_tabpfn_baseline.ipynb      # TabPFN v2 supplementary baseline driver
+│   ├── nb03_tabpfn_baseline.ipynb      # TabPFN v2 baseline driver (9th BASE_ORDER family)
 │   ├── nb04_putirka_benchmark.ipynb    # Putirka 2008 + Thermobar benchmarks + head-to-head
 │   ├── nb04_regime_benchmark.ipynb     # Per-regime + cross-pipeline heatmaps
 │   ├── nb05_loso_validation.ipynb      # LOSO + cluster + TargetBinKFold + LeaveOneRegion
