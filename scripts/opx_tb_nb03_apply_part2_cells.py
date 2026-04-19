@@ -57,7 +57,7 @@ NB04_MD = _md_cell([
     '\n',
     'Joins `results/v10_tabpfn_multiseed_summary.csv` against the v10 '
     'aggregate-best tuned model per (pipeline, track, target) and the best '
-    'classical/ML external reference from `results/v10_regime_allmodels.csv`. '
+    'classical/ML external reference from `results/regime_allmodels.csv`. '
     'Writes `results/v10_tabpfn_head_to_head.csv`. Wrapped in try/except so '
     'nb04 still runs if TabPFN outputs are absent. See '
     '`docs/nb03_tabpfn_plan.md`.\n',
@@ -90,7 +90,7 @@ NB04_CODE = _code_cell([
     '\n',
     '    # External best: smallest "rmse" at regime=ALL among '
     'method_family in (putirka, agreda_lopez, jorgenson) for each cell.\n',
-    '    reg = pd.read_csv(RESULTS / "v10_regime_allmodels.csv")\n',
+    '    reg = pd.read_csv(RESULTS / "regime_allmodels.csv")\n',
     '    ext = reg[(reg.regime == "ALL") & \n',
     '              (reg.method_family.isin(["putirka", "agreda_lopez", '
     '"jorgenson"]))].copy()\n',

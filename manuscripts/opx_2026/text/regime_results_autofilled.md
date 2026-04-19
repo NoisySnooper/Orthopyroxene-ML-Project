@@ -60,7 +60,7 @@ Any stronger phrasing elsewhere in the manuscript (e.g. "v10 beats Putirka in th
 - `results/v10_chunkC_perseed_regime_rmse.csv` — 20-seed x per-regime RMSE for the 7 per-regime-best opx_liq cells.
 - `results/v10_chunkC_perseed_predictions.csv` — per-sample per-seed predictions underlying the above.
 - `results/v10_chunkC_perseed_aggregate_rmse.csv` — per-seed aggregate RMSE (cross-check vs existing opx_multiseed_summary.csv; confirmed match to 4 decimals).
-- `results/v10_regime_allmodels.csv` — every (method_family, method, regime) row for opx_liq + other tracks.
+- `results/regime_allmodels.csv` — every (method_family, method, regime) row for opx_liq + other tracks.
 - `results/opx_liq_canonical_residuals_by_regime.csv` — per-sample residuals used in Figure 25.
 - `tables/S8_5_{1,2,3}_regime_*.md` — Chunk B supplementary tables (axis-1 only).
 - `tables/S8_5_4_regime_claims_audit_robust_opx_liq.md` — Chunk C robust audit (axes 1 + 2). **Canonical.**

@@ -7,7 +7,7 @@ feature-set sweep, no stacking, no SHAP. Foundation model on raw features
 only, 5 seeds (42-46) for ensemble stability reporting.
 
 Outputs match schemas of v10_{pipeline}_multiseed_{results,summary}.csv and
-v10_regime_allmodels.csv so downstream notebooks can read them without
+regime_allmodels.csv so downstream notebooks can read them without
 schema conversion.
 
 Reference: Hollmann et al. 2025, Nature 637.
