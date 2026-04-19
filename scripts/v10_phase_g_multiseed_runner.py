@@ -55,69 +55,25 @@ def _log(msg, fh=None):
 
 
 # ---------------------------------------------------------------------------
-# Pipeline-specific prepare_train_test adapters
+# Pipeline dispatch. 2026-04-18 (Phase G.7): the four per-pipeline adapters
+# that used to live here were consolidated into src.prepare_train_test. The
+# parity of the new dispatcher with the old adapters is pinned by
+# tests/test_prepare_train_test_parity.py (34 cells, bit-for-bit).
 # ---------------------------------------------------------------------------
+from functools import partial
 
-def _prep_opx(track, target, feature_set):
-    from src.v10_phase_c_analysis import prepare_train_test
-    return prepare_train_test(track, target, feature_set)
-
-
-def _prep_cpx(track, target, feature_set):
-    from src.cpx_features import build_cpx_feature_matrix
-    from src.data import load_cpx_liq, load_cpx_only, load_splits
-    df = load_cpx_liq() if track == 'cpx_liq' else load_cpx_only()
-    tr_idx, te_idx = load_splits(track)
-    df_tr = df.iloc[tr_idx].reset_index(drop=True)
-    df_te = df.iloc[te_idx].reset_index(drop=True)
-    use_liq = (track == 'cpx_liq')
-    X_tr, feat_names = build_cpx_feature_matrix(df_tr, feature_set, use_liq=use_liq)
-    X_te, _          = build_cpx_feature_matrix(df_te, feature_set, use_liq=use_liq)
-    y_tr = df_tr[target].to_numpy(dtype=float)
-    y_te = df_te[target].to_numpy(dtype=float)
-    return {'X_tr': np.asarray(X_tr, float), 'y_tr': y_tr,
-            'X_te': np.asarray(X_te, float), 'y_te': y_te}
-
-
-def _prep_twopx(track, target, feature_set):
-    from src.twopx_features import build_twopx_feature_matrix
-    from src.data import load_twopx, load_splits
-    df = load_twopx()
-    tr_idx, te_idx = load_splits(track)
-    df_tr = df.iloc[tr_idx].reset_index(drop=True)
-    df_te = df.iloc[te_idx].reset_index(drop=True)
-    X_tr, feat_names = build_twopx_feature_matrix(df_tr, feature_set)
-    X_te, _          = build_twopx_feature_matrix(df_te, feature_set)
-    y_tr = df_tr[target].to_numpy(dtype=float)
-    y_te = df_te[target].to_numpy(dtype=float)
-    return {'X_tr': np.asarray(X_tr, float), 'y_tr': y_tr,
-            'X_te': np.asarray(X_te, float), 'y_te': y_te}
-
-
-def _prep_universal(track, target, feature_set):
-    from src.universal_features import build_universal_matrix
-    from src.data import load_universal, load_splits
-    df = load_universal()
-    tr_idx, te_idx = load_splits('universal')
-    df_tr = df.iloc[tr_idx].reset_index(drop=True)
-    df_te = df.iloc[te_idx].reset_index(drop=True)
-    X_tr, feat_names = build_universal_matrix(df_tr)
-    X_te, _          = build_universal_matrix(df_te)
-    y_tr = df_tr[target].to_numpy(dtype=float)
-    y_te = df_te[target].to_numpy(dtype=float)
-    return {'X_tr': np.asarray(X_tr, float), 'y_tr': y_tr,
-            'X_te': np.asarray(X_te, float), 'y_te': y_te}
+from src.prepare_train_test import prepare_train_test as _prep_unified
 
 
 PIPELINES = {
     'opx':        {'best_json': 'v10_optuna_best_params_opx.json',
-                   'prep': _prep_opx},
+                   'prep': partial(_prep_unified, 'opx')},
     'cpx':        {'best_json': 'v10_optuna_best_params_cpx.json',
-                   'prep': _prep_cpx},
+                   'prep': partial(_prep_unified, 'cpx')},
     'twopx':      {'best_json': 'v10_optuna_best_params_twopx.json',
-                   'prep': _prep_twopx},
+                   'prep': partial(_prep_unified, 'twopx')},
     'universal':  {'best_json': 'v10_optuna_best_params_universal.json',
-                   'prep': _prep_universal},
+                   'prep': partial(_prep_unified, 'universal')},
 }
 
 
