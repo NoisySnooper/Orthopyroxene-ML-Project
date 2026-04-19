@@ -133,3 +133,44 @@ both return HTTP 200. The 503 that paused Phase H.1b is resolved.
 **Action item for after Phase 1.5:** download GEOROC cpx dataset
 manually, re-run `nb08_natural_twopx.ipynb`, produce a cpx counterpart
 to Phase H.5a opx world map. Track as Phase H.1b-recovery.
+
+### C14 nb03 consolidation scope conflict (2026-04-19)
+
+Plan calls for consolidating 4 track-specific baseline notebooks into a
+single papermill-parameterized notebook:
+
+| Notebook | Lines |
+|---|---|
+| `nb03_opx_baseline_models.ipynb` | 1595 |
+| `nb03_cpx_baseline_models.ipynb` | 1586 |
+| `nb03_twopx_baseline_models.ipynb` | 1383 |
+| `nb03_universal_exploration.ipynb` | 1143 |
+
+**Conflict:** Phase 1.5 spec explicitly excludes notebook re-runs during
+cleanup. A papermill parameterization rewrite of this size cannot be
+validated without executing the new unified notebook across all four
+`TRACK` values end-to-end (each notebook is an Optuna + stacking +
+test-set + figure pipeline, hours of runtime per track).
+
+**Disposition:** skip full consolidation in Phase 1.5. Downgrade C14
+scope to a string-only sweep: strip v10 references from the 4 notebooks
+without changing code paths or cell structure. Pytest gate still holds.
+
+**Action item for after Phase 1.5:** design the parameterized
+`nb03_baseline_models.ipynb` in a dedicated phase where notebook
+executions are in scope; track as Phase I consolidation.
+
+**Known C14 residuals after the string sweep (intentional, documented):**
+
+1. `v10_twopx_*.csv` and `v10_universal_*.csv` under `results/` were not
+   renamed in C2-C8 (C3 covered cpx only). The four nb03 notebooks still
+   contain `pd.read_csv(RESULTS / 'v10_twopx_per_cell_results.csv')` etc.
+   Renaming the notebook strings without renaming the files would break
+   the read. Follow-up: extend C3-style rename to twopx+universal as a
+   dedicated post-Phase-1.5 commit.
+2. `from scripts.v10_test_protocol import summarize_tests` appears in
+   all 4 notebooks. The module was archived in C11 alongside other
+   `scripts/v10_*.py` one-offs, but it is actually shared canonical
+   infrastructure used by 4 production notebooks. Post-Phase-1.5
+   action: `git mv archive/.../v10_test_protocol.py src/test_protocol.py`,
+   then update the 4 notebook imports.
