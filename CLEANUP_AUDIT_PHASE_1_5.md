@@ -107,9 +107,9 @@ Expected residuals after C2-C19:
 | C14 | nb03 consolidation (downgraded) | done (5e2f019) |
 | C15 | nb04_v10 + nb07b resolution | done (5798864) |
 | C16 | v9 docs archive + nb03_test_protocol | done (710f9f4) |
-| C17 | PROJECT_LAYOUT + README + autofills | IN PROGRESS |
-| C18 | code integrity validation | pending |
-| C19 | final audit + report | pending |
+| C17 | PROJECT_LAYOUT + README + autofills | done (7bf1801) |
+| C18 | code integrity validation | done (e7664dc) |
+| C19 | final audit + report | done (see `PHASE_1_5_FINAL_REPORT.md`) |
 
 ## Dilemmas log (stopped-and-asked scenarios)
 
