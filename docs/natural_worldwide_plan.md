@@ -31,8 +31,8 @@ are embedded in sections 4, 5, 6 below:
    curated localities (where literature P is known, so regime is
    assignable) shows the correction effect as a sensitivity.
 3. **Canonical cell roster incomplete for cpx and twopx.** Phase G
-   Chunks A-C ran for opx_liq only. `v10_optuna_best_params_cpx.json`
-   and `v10_optuna_best_params_twopx.json` exist from Phase 3.3b but the
+   Chunks A-C ran for opx_liq only. `optuna_best_params_cpx.json`
+   and `optuna_best_params_twopx.json` exist from Phase 3.3b but the
    Chunk A pre-registration and canonical-cell selection have not. H.0
    locks those before inference.
 4. **Two-axis honesty bar only exists for opx_liq.** Manuscript claims

@@ -218,7 +218,7 @@ def test_form_a_matches_archived_opx_liq_elasticnet_TC():
 
     from src.opx_tb_analysis import load_best_params, prepare_train_test
     best = load_best_params(PROJECT_ROOT / 'results'
-                            / 'v10_optuna_best_params_opx.json')
+                            / 'optuna_best_params_opx.json')
     bp = best[('ElasticNet', 'T_C', 'opx_liq', 'raw')]['best_params']
     pt = prepare_train_test('opx_liq', 'T_C', 'raw')
     from src.data import load_opx_liq, load_splits

@@ -1,6 +1,6 @@
 """v10 Phase C analysis: refit, OOF preds, ensembles, tests for opx pipeline.
 
-Consumes `results/v10_optuna_best_params_opx.json` (produced by
+Consumes `results/optuna_best_params_opx.json` (produced by
 `scripts/v10_phase_c_driver.py`) and generates:
   - Final fitted base models on the full training set
   - OOF prediction matrix (8 bases x N_train)
