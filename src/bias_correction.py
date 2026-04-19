@@ -92,17 +92,22 @@ FORM_B_SLOPE_ABS_MAX = 2.0    # pathology guard
 
 def oof_predict(model_name: str, best_params: dict,
                 X: np.ndarray, y: np.ndarray, groups: np.ndarray,
-                seed: int = 42, n_folds: int = 10) -> np.ndarray:
+                seed: int = 42, n_folds: int = 10,
+                cv_seed: Optional[int] = None) -> np.ndarray:
     """10-fold StratifiedGroupKFold OOF predictions stratified on y
     quintiles with Citation (or equivalent) grouping.
 
-    The same `seed` drives both the fold assignment and the model's
-    internal stochasticity, so varying seed perturbs both (matching the
-    multiseed_runner protocol).
+    The `seed` drives the model's internal stochasticity. By default
+    (`cv_seed=None`), the same seed also drives fold assignment -- so
+    varying seed perturbs both, matching the multiseed_runner protocol.
+    Supplying `cv_seed` lets callers decouple fold assignment from
+    model stochasticity (used by A5 Form-B CV-reseed stability, where
+    we want to vary only the fold boundaries).
     """
     y_strat = stratify_labels(y)
+    fold_seed = seed if cv_seed is None else cv_seed
     sgkf = StratifiedGroupKFold(n_splits=n_folds, shuffle=True,
-                                random_state=seed)
+                                random_state=fold_seed)
     oof = np.full_like(y, fill_value=np.nan, dtype=float)
     for tr, va in sgkf.split(X, y_strat, groups=groups):
         est = build_model(model_name, best_params, seed=seed)
