@@ -71,7 +71,7 @@ NB04_CODE = _code_cell([
     '    from config import RESULTS\n',
     '\n',
     '    tab = pd.read_csv(RESULTS / "v10_tabpfn_multiseed_summary.csv")\n',
-    '    opx = pd.read_csv(RESULTS / "v10_opx_multiseed_summary.csv")\n',
+    '    opx = pd.read_csv(RESULTS / "opx_multiseed_summary.csv")\n',
     '    cpx = pd.read_csv(RESULTS / "v10_cpx_multiseed_summary.csv")\n',
     '    v10 = pd.concat([opx, cpx], ignore_index=True)\n',
     '\n',

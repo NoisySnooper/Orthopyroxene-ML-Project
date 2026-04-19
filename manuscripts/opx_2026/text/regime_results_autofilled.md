@@ -1,6 +1,6 @@
 # Regime-stratified results (auto-filled from pre-registered pipeline)
 
-*Generated: 2026-04-18 (Chunk B), revised with two-axis honesty bar 2026-04-18 (Chunk C). Source tables: `tables/S8_5_{1,2,3,4}_regime_*.md` (S8.5.4 is the canonical robust audit). Source figures: `figures/fig24_per_regime_rmse_opx_liq.{pdf,png}`, `figures/fig25_per_regime_residual_violins_opx_liq.{pdf,png}`. Source audits: `results/v10_opx_per_regime_claims_audit.csv` (axis-1 only, Chunk B) and `results/v10_opx_per_regime_claims_audit_robust.csv` (two-axis, Chunk C). Pre-registration doc: `docs/preregistration/p_regime_preregistration.md` (registered 2026-04-17).*
+*Generated: 2026-04-18 (Chunk B), revised with two-axis honesty bar 2026-04-18 (Chunk C). Source tables: `tables/S8_5_{1,2,3,4}_regime_*.md` (S8.5.4 is the canonical robust audit). Source figures: `figures/fig24_per_regime_rmse_opx_liq.{pdf,png}`, `figures/fig25_per_regime_residual_violins_opx_liq.{pdf,png}`. Source audits: `results/opx_per_regime_claims_audit.csv` (axis-1 only, Chunk B) and `results/opx_per_regime_claims_audit_robust.csv` (two-axis, Chunk C). Pre-registration doc: `docs/preregistration/p_regime_preregistration.md` (registered 2026-04-17).*
 
 ## Framing
 
@@ -54,14 +54,14 @@ Any stronger phrasing elsewhere in the manuscript (e.g. "v10 beats Putirka in th
 ## Related artifacts
 
 - `docs/preregistration/p_regime_preregistration.md` — bin edges and honesty bar, registered 2026-04-17.
-- `results/v10_opx_per_regime_benchmark.csv` — long-format headline per (regime, target).
-- `results/v10_opx_per_regime_claims_audit.csv` — axis-1 verdict table (source of Table S8.5.3, Chunk B).
-- `results/v10_opx_per_regime_claims_audit_robust.csv` — **two-axis robust verdict table (Chunk C, canonical), source of Table S8.5.4.**
+- `results/opx_per_regime_benchmark.csv` — long-format headline per (regime, target).
+- `results/opx_per_regime_claims_audit.csv` — axis-1 verdict table (source of Table S8.5.3, Chunk B).
+- `results/opx_per_regime_claims_audit_robust.csv` — **two-axis robust verdict table (Chunk C, canonical), source of Table S8.5.4.**
 - `results/v10_chunkC_perseed_regime_rmse.csv` — 20-seed x per-regime RMSE for the 7 per-regime-best opx_liq cells.
 - `results/v10_chunkC_perseed_predictions.csv` — per-sample per-seed predictions underlying the above.
-- `results/v10_chunkC_perseed_aggregate_rmse.csv` — per-seed aggregate RMSE (cross-check vs existing v10_opx_multiseed_summary.csv; confirmed match to 4 decimals).
+- `results/v10_chunkC_perseed_aggregate_rmse.csv` — per-seed aggregate RMSE (cross-check vs existing opx_multiseed_summary.csv; confirmed match to 4 decimals).
 - `results/v10_regime_allmodels.csv` — every (method_family, method, regime) row for opx_liq + other tracks.
-- `results/v10_opx_liq_canonical_residuals_by_regime.csv` — per-sample residuals used in Figure 25.
+- `results/opx_liq_canonical_residuals_by_regime.csv` — per-sample residuals used in Figure 25.
 - `tables/S8_5_{1,2,3}_regime_*.md` — Chunk B supplementary tables (axis-1 only).
 - `tables/S8_5_4_regime_claims_audit_robust_opx_liq.md` — Chunk C robust audit (axes 1 + 2). **Canonical.**
 - `figures/fig24_per_regime_rmse_opx_liq.{pdf,png}` — pre-registered 4-bin RMSE with CIs.

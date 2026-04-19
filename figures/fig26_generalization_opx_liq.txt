@@ -10,5 +10,5 @@ MORB / mantle_melting / arc_silicic / basalt / primitive_mafic /
 partitioning / metamorphic / other; min_train_fold=50). Produced by
 scripts/v10_phase_g_nb05_generalization.py. n_test pooled across folds
 after min-train-size filtering. Supports T02/T06 (generalization claims).
-Source CSVs: results/v10_opx_liq_generalization.csv and
-results/v10_opx_liq_generalization_predictions.csv.
+Source CSVs: results/opx_liq_generalization.csv and
+results/opx_liq_generalization_predictions.csv.

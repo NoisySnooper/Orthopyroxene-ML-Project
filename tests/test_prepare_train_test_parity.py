@@ -96,11 +96,13 @@ LEGACY = {
 
 def _collect_cells():
     """Enumerate every (pipeline, track, target, feature_set) combination
-    in v10_{pipeline}_multiseed_summary.csv so parity is tested on the
+    in {pipeline}_multiseed_summary.csv so parity is tested on the
     exact configs used downstream."""
     cells = []
     for pipe in LEGACY:
-        p = PROJECT_ROOT / 'results' / f'v10_{pipe}_multiseed_summary.csv'
+        p = PROJECT_ROOT / 'results' / f'{pipe}_multiseed_summary.csv'
+        if not p.exists():
+            p = PROJECT_ROOT / 'results' / f'v10_{pipe}_multiseed_summary.csv'
         if not p.exists():
             continue
         df = pd.read_csv(p)

@@ -12,5 +12,5 @@ ElasticNet/raw (pooled 77.06 to 77.17; shallow_crustal HURT 35.33 to
 54.01), consistent with the v9 finding that train-OOF T bias does not
 transfer to the held-out test set. Produced by
 scripts/v10_phase_g_nb07_bias.py. Supports T09 (bias correction
-effectiveness). Source CSVs: results/v10_opx_liq_bias_correction.csv,
-results/v10_opx_liq_bias_correction_params.csv.
+effectiveness). Source CSVs: results/opx_liq_bias_correction.csv,
+results/opx_liq_bias_correction_params.csv.

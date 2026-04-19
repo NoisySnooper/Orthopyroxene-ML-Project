@@ -10,7 +10,7 @@ Covers:
 3. Ship-decision logic (both rules, tie-breaks).
 4. Regression: full cell run for `ElasticNet/T_C/opx_liq/raw` with
    seed=42 matches the archived Form A params in
-   `results/v10_opx_liq_bias_correction_params.csv` (written by the
+   `results/opx_liq_bias_correction_params.csv` (written by the
    v10 Phase G.4 pilot run on 2026-04-17). This ensures the factored
    module preserves Form A bit-for-bit with the pilot.
 """
@@ -200,7 +200,7 @@ def test_choose_winner_prefers_larger_delta():
 # Regression: match archived v10 Phase G.4 opx_liq Form A params
 # ---------------------------------------------------------------------------
 
-ARCHIVED_PARAMS = PROJECT_ROOT / 'results' / 'v10_opx_liq_bias_correction_params.csv'
+ARCHIVED_PARAMS = PROJECT_ROOT / 'results' / 'opx_liq_bias_correction_params.csv'
 
 
 @pytest.mark.skipif(not ARCHIVED_PARAMS.exists(),
