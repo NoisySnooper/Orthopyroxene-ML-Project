@@ -405,14 +405,14 @@ See `docs/universal_model_exploration.md` Sections 5-7 for full rationale, evalu
 **Hypothesis:** the TabPFN v2 package (pinned `tabpfn>=2.0,<2.5`) is installed in `.venv-tabpfn` and can fit + predict on a 50-row opx_liq slice in under 30 seconds on CPU.
 
 **Pass condition (joint):**
-1. `tabpfn.__version__` reports `2.x` with `x < 5`, verified inside `scripts/opx_tb_nb03_test_tabpfn_smoke.py` before fitting.
+1. `tabpfn.__version__` reports `2.x` with `x < 5`, verified inside `scripts/tabpfn/opx_tb_nb03_test_tabpfn_smoke.py` before fitting.
 2. `TabPFNRegressor` constructed via `create_default_for_version(ModelVersion.V2, ...)` or (fallback in tabpfn 2.0-2.4) `TabPFNRegressor(model_path='auto', ...)`, with the construction path logged.
 3. Fit + predict on 50 opx_liq samples returns finite predictions with RMSE < 1000 kbar (sanity bound, not a performance threshold).
 
-**Rationale:** the TabPFN baseline is a post-hoc supplementary benchmark, not a primary model. The smoke test is a tripwire: if it fails, the full `scripts/opx_tb_nb03_tabpfn_baseline.py` run does not start, so we cannot accidentally report numbers from the wrong model version (v2.5 non-commercial license + unrelated arxiv citation).
+**Rationale:** the TabPFN baseline is a post-hoc supplementary benchmark, not a primary model. The smoke test is a tripwire: if it fails, the full `scripts/tabpfn/opx_tb_nb03_tabpfn_baseline.py` run does not start, so we cannot accidentally report numbers from the wrong model version (v2.5 non-commercial license + unrelated arxiv citation).
 
 **Source of truth:**
-- Construction + version check: `scripts/opx_tb_nb03_test_tabpfn_smoke.py`.
+- Construction + version check: `scripts/tabpfn/opx_tb_nb03_test_tabpfn_smoke.py`.
 - Package pin: `requirements-tabpfn.txt`.
 
-**Execution:** run `.venv-tabpfn/Scripts/python.exe scripts/opx_tb_nb03_test_tabpfn_smoke.py` before the main baseline run. Non-zero exit code blocks `scripts/opx_tb_nb03_tabpfn_baseline.py`.
+**Execution:** run `.venv-tabpfn/Scripts/python.exe scripts/tabpfn/opx_tb_nb03_test_tabpfn_smoke.py` before the main baseline run. Non-zero exit code blocks `scripts/tabpfn/opx_tb_nb03_tabpfn_baseline.py`.

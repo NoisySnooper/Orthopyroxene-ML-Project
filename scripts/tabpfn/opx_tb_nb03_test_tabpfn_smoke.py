@@ -2,7 +2,7 @@
 """D1.6 smoke test: TabPFN install + basic fit on 50 rows of opx_liq.
 
 Run from the tabpfn venv:
-    .venv-tabpfn/Scripts/python.exe scripts/opx_tb_nb03_test_tabpfn_smoke.py
+    .venv-tabpfn/Scripts/python.exe scripts/tabpfn/opx_tb_nb03_test_tabpfn_smoke.py
 
 Exit codes:
     0 = import + fit + finite RMSE within sane bounds (<1000 kbar)
