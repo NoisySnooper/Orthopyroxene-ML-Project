@@ -173,6 +173,22 @@ CANONICAL_FIGURES = [
     {'num': 25, 'stem': 'fig_nb04_per_regime_residual_violins_opx_liq',
      'caption': ('Per-regime residual distributions (opx-liq, T and P) '
                  'across methods; pre-registered bins')},
+    # v10 Phase G.7 additions (bias-correction mini-project)
+    {'num': 30, 'stem': 'fig30_bias_correction_per_regime_rmse',
+     'caption': ('Per-regime test-set RMSE, pre vs Form A vs Form B, '
+                 '20-seed mean with bootstrap CI envelope')},
+    {'num': 31, 'stem': 'fig31_bias_correction_residuals',
+     'caption': ('Residual-vs-predicted at canonical seed 42, shipped form '
+                 'colored by P regime')},
+    {'num': 32, 'stem': 'fig32_bias_correction_form_comparison',
+     'caption': ('Pre vs Form A vs Form B test RMSE at regime=ALL, with '
+                 'per-seed vote split subtitle')},
+    {'num': 33, 'stem': 'fig33_bias_correction_per_seed_stability',
+     'caption': ('Per-seed Delta-RMSE, Form A vs Form B scatter with '
+                 'improve/degrade quadrant shading')},
+    {'num': 34, 'stem': 'fig34_bias_correction_scorecard_delta',
+     'caption': ('v10 post-correction vs best external per regime, '
+                 'diverging heatmap by pipeline')},
 ]
 
 # ---------------------------------------------------------------------------

@@ -1,1 +1,0 @@
-Figure 31. Correction magnitude vs predicted value at the canonical seed. Each panel plots (y_post - y_pre) against y_pre for the shipped correction form (A or B); winner = "none" cells are still included and appear as a flat band at zero. Horizontal dashed line marks zero correction.

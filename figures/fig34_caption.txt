@@ -1,1 +1,0 @@
-Figure 34. Pre vs post RMSE delta per (track, target, regime). Color encodes (post - pre) so negative values (blue) mean the shipped correction helped and positive (red) mean it hurt. Cells with missing corrections appear as blank.

@@ -1,1 +1,0 @@
-Figure 30. Per-regime test-split RMSE for the v10 aggregate-best cell in each of 8 configurations (4 tracks x 2 targets). Bars show pre-correction, Form A (per-regime OLS), and Form B (Agreda-style piecewise). Error bars are bootstrap 95% CIs at the canonical seed (42). Regime labels follow the pre-registered P-bins (docs/v10_p_regime_preregistration.md, 2026-04-17).

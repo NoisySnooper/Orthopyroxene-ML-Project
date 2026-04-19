@@ -1,1 +1,0 @@
-Figure 33. Per-seed Delta RMSE = pre - post (positive = correction helped). One dot per seed for Form A (blue) and Form B (vermillion). Dashed line at zero.
