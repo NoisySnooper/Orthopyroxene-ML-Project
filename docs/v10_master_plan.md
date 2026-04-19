@@ -247,6 +247,7 @@ NB03c (twopx) and NB03d (universal) are NEW. NB03 split from original v9 NB03.
 4. Rebuild NB07 bias correction (merged + composition-conditional T).
 5. Rebuild NB10 extended (fix twopx benchmark).
 6. Build `v10_figure_audit.md` checklist and apply to every figure.
+7. **Phase G.7 bias-correction mini-project (Option C, 2026-04-18).** Unified `src/prepare_train_test.py` dispatcher (A1) + `src/bias_correction.py` module with Form A (per-regime OLS) and Form B (quantile-thresholded piecewise) + ship-if-better decision (overall Delta-RMSE > SHIP_TOL AND no regime degrades). D2 driver runs 8 aggregate-best cells (opx-liq, opx-only, cpx-liq, cpx-only × T/P) × 20 seeds with checkpointing. A4 bin-edge sensitivity (+/-1 kbar on inner edges). A5 Form B CV-reseed stability (5 CV seeds). D3 post-correction scorecards. D3b GEOROC natural opx post-correction inference (regime-from-predicted-P, Agreda-Lopez convention). D4 figures 30-34. D5 tables T4/S9/S10. D7 manuscript autofill (bias_correction_autofilled.md). Registered T16-T18 (Section 13 of test protocol). Twopx and universal pipelines excluded from this mini-project.
 
 ### Phase H — natural worldwide (2-3 days active, ~1 h compute)
 
@@ -307,6 +308,17 @@ Defined in `docs/v10_universal_model_exploration.md`. Run only in `nb03_universa
 | T14 | Universal with all 3 phases beats specialized opx-liq / cpx-liq / twopx models on same sample |
 
 Decision tree: T13 fails -> ablate universal architecture, exploration ends. T13 passes but T14 fails -> keep as honest-negative exploration artifact. Both pass -> universal becomes lead novelty claim in cpx paper.
+
+### Regime claim and bias-correction tests T15-T18
+
+| Test | Hypothesis |
+|---|---|
+| T15 | Pre-registered regime headline claim: at least one regime with n >= 20 shows opx-liq v10-outperforms-Putirka for P_kbar at the two-axis honesty bar |
+| T16 | Phase G.7 D2: at least one cell ships a bias correction (canonical seed=42 winner in {A, B}) |
+| T17 | Phase G.7 D2: shipped corrections persist on a majority of 20 SPLIT_SEEDS |
+| T18 | Phase G.7 A4+A5: Form A edge swing and Form B CV-reseed stability within thresholds |
+
+See `docs/v10_nb03_test_protocol.md` Sections 12-13 for full specifications.
 
 ---
 

@@ -12,6 +12,19 @@ opx models on disk. External benchmarks against Putirka 2008, Agreda-Lopez
 2024, Jorgenson 2022, and Wang 2021 complete on the ArcPL Kd-equilibrated
 subset.
 
+**Phase G.7 bias-correction mini-project (Option C, 2026-04-18).** Unified
+`src/prepare_train_test.py` dispatcher (A1, 34-test parity suite vs the
+archived opx adapters). `src/bias_correction.py` with Form A (per-regime
+OLS) + Form B (quantile-thresholded piecewise) + ship-if-better decision
+on overall Delta-RMSE and no-regime-degrades. D2 driver over 8 aggregate-
+best cells (opx-liq, opx-only, cpx-liq, cpx-only × T_C, P_kbar) × 20
+seeds with per-seed pickle checkpoints. A4 bin-edge sensitivity (+/-1
+kbar on inner edges). A5 Form B CV-reseed stability (5 CV seeds). D3/D3b
+post-correction scorecards and GEOROC natural opx inference. D4 figures
+30-34. D5 tables T4 (main) + S9/S10 (supplementary). D7 manuscript
+autofill. Tests T16-T18 register Phase G.7 decisions in the NB03 test
+log. Twopx and universal pipelines excluded from this mini-project.
+
 **v10+v11 planning complete (2026-04-16).** 13 planning documents written.
 Phase A execution pending user approval. See
 [`docs/v10_master_plan.md`](docs/v10_master_plan.md) for the unified plan
