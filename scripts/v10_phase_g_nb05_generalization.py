@@ -68,7 +68,7 @@ from src.evaluation import (
     target_bin_kfold_splits,
 )
 from src.models import build_model
-from src.v10_phase_c_analysis import load_best_params, prepare_train_test
+from src.opx_tb_analysis import load_best_params, prepare_train_test
 
 warnings.filterwarnings('ignore')
 

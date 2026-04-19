@@ -216,7 +216,7 @@ def test_form_a_matches_archived_opx_liq_elasticnet_TC():
     if sub.empty:
         pytest.skip('no archived params for ElasticNet/T_C/opx_liq/raw')
 
-    from src.v10_phase_c_analysis import load_best_params, prepare_train_test
+    from src.opx_tb_analysis import load_best_params, prepare_train_test
     best = load_best_params(PROJECT_ROOT / 'results'
                             / 'v10_optuna_best_params_opx.json')
     bp = best[('ElasticNet', 'T_C', 'opx_liq', 'raw')]['best_params']

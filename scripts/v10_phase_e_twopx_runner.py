@@ -36,7 +36,7 @@ import pandas as pd
 from config import RESULTS, MODELS, LOGS
 from src.data import load_twopx, load_splits
 from src.twopx_features import build_twopx_feature_matrix
-from src.v10_phase_c_analysis import (
+from src.opx_tb_analysis import (
     V10_BASE_ORDER,
     load_best_params, build_oof_matrix,
     evaluate_all_bases, fit_internal_ensembles,

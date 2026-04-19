@@ -3,7 +3,7 @@
 ## Context sources (read these first, every session)
 1. README.md
 2. PROJECT_OVERVIEW.md
-3. docs/v10_master_plan.md
+3. docs/master_plan.md
 
 ## Hard rules (never violate)
 - models/external/ is read-only. Never write, move, or delete.
@@ -15,7 +15,7 @@
 - Never run nbF_figures.ipynb until Phase G (CANONICAL_FIGURES is stale
   until then).
 - Never invoke docs/v9_deletion_plan.md or docs/v9_archive_plan.md
-  directly; both are superseded by docs/v10_cleanup_manifest.md.
+  directly; both are superseded by docs/cleanup_manifest.md.
 
 ## User preferences
 - Short, blunt, plain language

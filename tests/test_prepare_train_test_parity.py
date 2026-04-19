@@ -33,7 +33,7 @@ from src.prepare_train_test import prepare_train_test  # unified
 # ---------- legacy adapters (copied verbatim from v10_phase_g_multiseed_runner.py)
 
 def _prep_opx_legacy(track, target, feature_set):
-    from src.v10_phase_c_analysis import prepare_train_test as p
+    from src.opx_tb_analysis import prepare_train_test as p
     return p(track, target, feature_set)
 
 

@@ -14,7 +14,7 @@ Return schema (consistent across pipelines):
         'feat_names': list[str],
     }
 
-The opx branch delegates to `src.v10_phase_c_analysis.prepare_train_test`
+The opx branch delegates to `src.opx_tb_analysis.prepare_train_test`
 to preserve bit-for-bit parity with existing opx-pipeline results. cpx,
 twopx, and universal branches mirror the per-pipeline adapters used in
 `scripts/v10_phase_g_multiseed_runner.py` (`_prep_cpx`, `_prep_twopx`,
@@ -46,7 +46,7 @@ def prepare_train_test(pipeline: str, track: str, target: str,
                          f'valid={VALID_PIPELINES}')
 
     if pipeline == 'opx':
-        from src.v10_phase_c_analysis import prepare_train_test as _opx_prep
+        from src.opx_tb_analysis import prepare_train_test as _opx_prep
         return _opx_prep(track, target, feature_set)
 
     from src.data import load_splits

@@ -60,7 +60,7 @@ NB04_MD = _md_cell([
     'classical/ML external reference from `results/v10_regime_allmodels.csv`. '
     'Writes `results/v10_tabpfn_head_to_head.csv`. Wrapped in try/except so '
     'nb04 still runs if TabPFN outputs are absent. See '
-    '`docs/v10_nb03_tabpfn_plan.md`.\n',
+    '`docs/nb03_tabpfn_plan.md`.\n',
 ])
 
 NB04_CODE = _code_cell([
@@ -133,7 +133,7 @@ NBF_MD = _md_cell([
     '\n',
     'Grouped-bar comparison of the TabPFN v2 supplementary baseline against '
     'the pre-registered v10 tuned pipeline and the best external reference '
-    'per (pipeline, track, target). See `docs/v10_nb03_tabpfn_plan.md` for '
+    'per (pipeline, track, target). See `docs/nb03_tabpfn_plan.md` for '
     'the construction and limitations of this baseline.\n',
 ])
 

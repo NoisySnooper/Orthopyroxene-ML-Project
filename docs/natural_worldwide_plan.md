@@ -12,7 +12,7 @@ User priority: world map is visually impressive centerpiece. Natural samples giv
 ## 0. Phase G boundary conditions (added 2026-04-18)
 
 Phase G established a pre-registered per-regime claims framework
-(`docs/v10_p_regime_preregistration.md`) and a two-axis honesty bar
+(`docs/preregistration/p_regime_preregistration.md`) and a two-axis honesty bar
 (test-set bootstrap CI + 20-seed spread) for opx_liq. Phase H inference
 on natural samples collides with that framework in six ways; resolutions
 are embedded in sections 4, 5, 6 below:

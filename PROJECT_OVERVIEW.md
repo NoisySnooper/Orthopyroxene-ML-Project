@@ -3,7 +3,7 @@
 This document sketches the data flow and module topology of the pyroxene ML
 thermobarometer pipeline. For operational instructions (install, run order),
 see [README.md](README.md). For the current active plan, see
-[`docs/v10_master_plan.md`](docs/v10_master_plan.md).
+[`docs/master_plan.md`](docs/master_plan.md).
 
 ## Current status
 
@@ -31,13 +31,13 @@ target) cell. Produces `results/v10_tabpfn_head_to_head.csv`,
 `results/v10_tabpfn_multiseed_{results,summary}.csv`,
 `results/v10_tabpfn_predictions.csv`, `results/v10_tabpfn_regime_rmse.csv`,
 40 per-seed checkpoints, figure 35, table S12, and a manuscript paragraph.
-Deliberately outside `V10_BASE_ORDER` (the pre-registered roster was locked
+Deliberately outside `BASE_ORDER` (the pre-registered roster was locked
 2026-04-17). 8-cell head-to-head: v10 wins 6, TabPFN wins 1, 1 competitive.
-See `docs/v10_nb03_tabpfn_plan.md` and `notebooks/nb03_tabpfn_baseline.ipynb`.
+See `docs/nb03_tabpfn_plan.md` and `notebooks/nb03_tabpfn_baseline.ipynb`.
 
 **v10+v11 planning complete (2026-04-16).** 13 planning documents written.
 Phase A execution pending user approval. See
-[`docs/v10_master_plan.md`](docs/v10_master_plan.md) for the unified plan
+[`docs/master_plan.md`](docs/master_plan.md) for the unified plan
 covering:
 
 - Two-paper ambition: opx paper 2026, cpx paper 2027, one repo
@@ -152,7 +152,7 @@ separate directories (`results/universal/`, `figures/universal/`) and never
 combine with the primary results. This protects the opx and cpx papers from
 contamination by an exploratory architecture while keeping the exploration
 under version control. See
-[`docs/v10_universal_model_exploration.md`](docs/v10_universal_model_exploration.md)
+[`docs/universal_model_exploration.md`](docs/universal_model_exploration.md)
 for the isolation protocol.
 
 ## Module topology
@@ -251,7 +251,7 @@ physicochemical signal. All pipelines receive these checks.
 
 ## What the v9 audit revealed
 
-See [`docs/v10_master_plan.md`](docs/v10_master_plan.md) Section 1.3 for
+See [`docs/master_plan.md`](docs/master_plan.md) Section 1.3 for
 the full list of handoff corrections. Short summary:
 
 1. Stacking won ArcPL but lost test set (alpha endpoint=100 on all 4
@@ -272,7 +272,7 @@ documents.
 
 ## Execution readiness
 
-Approval gate per `docs/v10_master_plan.md` Section 11. Once approved,
+Approval gate per `docs/master_plan.md` Section 11. Once approved,
 Phase A begins: cleanup + external models audit + manuscript directory
 skeletons. Compute estimates are preliminary based on v9 actual timing
 (48 Optuna studies in 2.12 h on i7-1265U); full matrix estimated ~26 h

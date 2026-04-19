@@ -37,7 +37,7 @@ OXIDE_TOTAL_MIN = 95.0
 OXIDE_TOTAL_MAX = 102.0
 
 # --- Pre-registered P-regime bins (locked 2026-04-17) ---
-# Rationale and registration: docs/v10_p_regime_preregistration.md
+# Rationale and registration: docs/preregistration/p_regime_preregistration.md
 # Bins are right-open: P = 5.0 kbar -> 'deep_crustal_MASH'.
 # Any modification MUST be accompanied by a dated entry in the
 # pre-registration document's modification history.
@@ -45,7 +45,7 @@ P_REGIME_BIN_EDGES_KBAR = [0.0, 5.0, 15.0, 30.0, P_CEILING_KBAR]
 P_REGIME_LABELS = ['shallow_crustal', 'deep_crustal_MASH',
                    'lithospheric_mantle', 'deeper_mantle']
 P_REGIME_REGISTERED_DATE = '2026-04-17'
-P_REGIME_RATIONALE_DOC = 'docs/v10_p_regime_preregistration.md'
+P_REGIME_RATIONALE_DOC = 'docs/preregistration/p_regime_preregistration.md'
 P_REGIME_MIN_N_FOR_CLAIMS = 20  # Bins with n < this are flagged sample-size-limited
 
 # Random seeds (centralized for reproducibility)
@@ -169,10 +169,23 @@ CANONICAL_FIGURES = [
     {'num': 24, 'stem': 'fig_nb04_per_regime_rmse_opx_liq',
      'caption': ('Per-regime RMSE for opx-liq with bootstrap 95% CIs under '
                  'the pre-registered pressure partition (0/5/15/30/100 kbar; '
-                 'registered 2026-04-17; see docs/v10_p_regime_preregistration.md)')},
+                 'registered 2026-04-17; see docs/preregistration/p_regime_preregistration.md)')},
     {'num': 25, 'stem': 'fig_nb04_per_regime_residual_violins_opx_liq',
      'caption': ('Per-regime residual distributions (opx-liq, T and P) '
                  'across methods; pre-registered bins')},
+    # NB05 / NB06 / NB07 / NB10 canonical figures (added 2026-04-19 during cleanup)
+    {'num': 26, 'stem': 'fig26_generalization_opx_liq',
+     'caption': ('Opx-liq generalization across LOSO, cluster-based, '
+                 'TargetBinKFold, and LeaveOneRegion CV strategies')},
+    {'num': 27, 'stem': 'fig27_shap_summary_opx_liq',
+     'caption': ('SHAP summary for opx-liq: tree-SHAP on winning base, '
+                 'linear-SHAP on the Ridge stack')},
+    {'num': 28, 'stem': 'fig28_bias_correction_opx_liq',
+     'caption': ('Bias correction scorecard for opx-liq: pre vs Form A '
+                 'vs Form B Delta-RMSE with ship decision')},
+    {'num': 29, 'stem': 'fig29_twopx_benchmark',
+     'caption': ('Two-pyroxene thermobarometer benchmark vs independent '
+                 'opx-only and cpx-only predictions')},
     # v10 Phase G.7 additions (bias-correction mini-project)
     {'num': 30, 'stem': 'fig30_bias_correction_per_regime_rmse',
      'caption': ('Per-regime test-set RMSE, pre vs Form A vs Form B, '

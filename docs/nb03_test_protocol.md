@@ -59,7 +59,7 @@ For each test T0X run in each pipeline:
 
 **Hypothesis.** Among the 4 ensemble methods (Ridge stacking, two-level Ridge, greedy Caruana, AutoGluon), one method dominates on ArcPL T RMSE without catastrophic test T RMSE regression.
 
-**Design.** Fit all 4 ensemble methods on the 8-base-model OOF matrix per `docs/v10_ensemble_methods_plan.md`. Compute test RMSE and ArcPL RMSE per method. Multi-seed (20 splits).
+**Design.** Fit all 4 ensemble methods on the 8-base-model OOF matrix per `docs/ensemble_methods_plan.md`. Compute test RMSE and ArcPL RMSE per method. Multi-seed (20 splits).
 
 **Accept criterion.** Winning method has:
 - ArcPL T RMSE <= best base T RMSE minus 1 C (mean across seeds), AND
@@ -322,7 +322,7 @@ This keeps NB03 focused on training-time decisions and NB04/NB07/NB10 focused on
 
 ## 11. Universal-only tests T13 and T14
 
-The universal masking model has two additional tests that do not apply to the opx/cpx/twopx pipelines because they depend on the masking architecture. Both are fully specified in `docs/v10_universal_model_exploration.md`:
+The universal masking model has two additional tests that do not apply to the opx/cpx/twopx pipelines because they depend on the masking architecture. Both are fully specified in `docs/universal_model_exploration.md`:
 
 | Test | Name | Hypothesis | Pass condition |
 |---|---|---|---|
@@ -337,7 +337,7 @@ Both tests run ONLY in `nb03_universal_exploration.ipynb`. Neither test runs in 
 - If T13 passes but T14 fails: universal model is kept as an exploration artifact with honest negative framing ("tested but specialized models remain superior").
 - If both pass: universal model becomes the lead novelty claim in the cpx paper.
 
-See `docs/v10_universal_model_exploration.md` Sections 5-7 for full rationale, evaluation protocol, and decision tree details.
+See `docs/universal_model_exploration.md` Sections 5-7 for full rationale, evaluation protocol, and decision tree details.
 
 ---
 
@@ -345,7 +345,7 @@ See `docs/v10_universal_model_exploration.md` Sections 5-7 for full rationale, e
 
 **Scope:** opx pipeline only (T15 for primary pipelines; T13 and T14 remain reserved for the universal exploration track — see Section 11).
 
-**Hypothesis:** on the pre-registered four-bin P partition (edges `[0, 5, 15, 30, 100]` kbar, registered 2026-04-17 in `docs/v10_p_regime_preregistration.md`), at least one regime with n ≥ 20 shows a directional v10-outperforms-Putirka claim for the `P_kbar` target at the **two-axis honesty bar** (see v2 below).
+**Hypothesis:** on the pre-registered four-bin P partition (edges `[0, 5, 15, 30, 100]` kbar, registered 2026-04-17 in `docs/preregistration/p_regime_preregistration.md`), at least one regime with n ≥ 20 shows a directional v10-outperforms-Putirka claim for the `P_kbar` target at the **two-axis honesty bar** (see v2 below).
 
 **Rationale:** the opx paper's pre-registered headline claim is that the v10 thermobarometer is better calibrated in at least one geologically meaningful P regime, not globally. Section G.1c-extended produces the all-models regime CSV; the opx-liq subset of that CSV, filtered to the pre-registered bins, drives this test.
 
@@ -405,14 +405,14 @@ See `docs/v10_universal_model_exploration.md` Sections 5-7 for full rationale, e
 **Hypothesis:** the TabPFN v2 package (pinned `tabpfn>=2.0,<2.5`) is installed in `.venv-tabpfn` and can fit + predict on a 50-row opx_liq slice in under 30 seconds on CPU.
 
 **Pass condition (joint):**
-1. `tabpfn.__version__` reports `2.x` with `x < 5`, verified inside `scripts/v10_nb03_test_tabpfn_smoke.py` before fitting.
+1. `tabpfn.__version__` reports `2.x` with `x < 5`, verified inside `scripts/opx_tb_nb03_test_tabpfn_smoke.py` before fitting.
 2. `TabPFNRegressor` constructed via `create_default_for_version(ModelVersion.V2, ...)` or (fallback in tabpfn 2.0-2.4) `TabPFNRegressor(model_path='auto', ...)`, with the construction path logged.
 3. Fit + predict on 50 opx_liq samples returns finite predictions with RMSE < 1000 kbar (sanity bound, not a performance threshold).
 
-**Rationale:** the TabPFN baseline is a post-hoc supplementary benchmark, not a primary model. The smoke test is a tripwire: if it fails, the full `scripts/v10_nb03_tabpfn_baseline.py` run does not start, so we cannot accidentally report numbers from the wrong model version (v2.5 non-commercial license + unrelated arxiv citation).
+**Rationale:** the TabPFN baseline is a post-hoc supplementary benchmark, not a primary model. The smoke test is a tripwire: if it fails, the full `scripts/opx_tb_nb03_tabpfn_baseline.py` run does not start, so we cannot accidentally report numbers from the wrong model version (v2.5 non-commercial license + unrelated arxiv citation).
 
 **Source of truth:**
-- Construction + version check: `scripts/v10_nb03_test_tabpfn_smoke.py`.
+- Construction + version check: `scripts/opx_tb_nb03_test_tabpfn_smoke.py`.
 - Package pin: `requirements-tabpfn.txt`.
 
-**Execution:** run `.venv-tabpfn/Scripts/python.exe scripts/v10_nb03_test_tabpfn_smoke.py` before the main baseline run. Non-zero exit code blocks `scripts/v10_nb03_tabpfn_baseline.py`.
+**Execution:** run `.venv-tabpfn/Scripts/python.exe scripts/opx_tb_nb03_test_tabpfn_smoke.py` before the main baseline run. Non-zero exit code blocks `scripts/opx_tb_nb03_tabpfn_baseline.py`.

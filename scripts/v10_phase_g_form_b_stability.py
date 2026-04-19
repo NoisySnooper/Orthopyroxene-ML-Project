@@ -36,7 +36,7 @@ import pandas as pd
 from config import LOGS, RESULTS
 from src.bias_correction import fit_form_b, oof_predict
 from src.prepare_train_test import prepare_train_test
-from src.v10_phase_c_analysis import load_best_params
+from src.opx_tb_analysis import load_best_params
 
 LOG_PATH = LOGS / 'v10_phase_g_form_b_stability.log'
 OUT_CSV = RESULTS / 'v10_bias_correction_form_b_stability.csv'

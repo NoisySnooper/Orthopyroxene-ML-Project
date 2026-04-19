@@ -176,7 +176,7 @@ and more pipelines (opx + cpx + twopx + isolated universal).
 
 ### Four ensemble methods compared per pipeline
 
-Per `docs/v10_ensemble_methods_plan.md`, four meta-methods run head-to-head
+Per `docs/ensemble_methods_plan.md`, four meta-methods run head-to-head
 for each pipeline independently. Winner ships; others report as ablation.
 
 | Method | Description | Ship condition |
@@ -205,7 +205,7 @@ With 8 bases, Linear-SHAP on the Ridge meta reports which of the 8 base
 models drives each prediction. Previously (4 bases, all trees), Linear-SHAP
 showed redundant base contributions; with 4 trees + 4 non-trees, it will
 distinguish tree-type signal from linear-type signal from NN signal. Added
-to NB06 per `docs/v10_stacking_propagation_audit.md`.
+to NB06 per `docs/stacking_propagation_audit.md`.
 
 ### Per-pipeline independence
 
@@ -216,7 +216,7 @@ separately, results never combined with primary pipelines.
 
 ### Cross-references
 
-- Ensemble method head-to-head spec: `docs/v10_ensemble_methods_plan.md`
-- Where stacking must appear in NB04-NB10: `docs/v10_stacking_propagation_audit.md`
-- Test T02 (ensemble shootout) pass/fail criteria: `docs/v10_nb03_test_protocol.md`
-- 8-base-model roster: `docs/v10_master_plan.md` Section 3
+- Ensemble method head-to-head spec: `docs/ensemble_methods_plan.md`
+- Where stacking must appear in NB04-NB10: `docs/stacking_propagation_audit.md`
+- Test T02 (ensemble shootout) pass/fail criteria: `docs/nb03_test_protocol.md`
+- 8-base-model roster: `docs/master_plan.md` Section 3

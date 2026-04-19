@@ -55,7 +55,7 @@ from config import LOGS, RESULTS, SPLIT_SEEDS
 from src.data import load_opx_liq, load_splits
 from src.evaluation import assign_p_regime
 from src.models import build_model
-from src.v10_phase_c_analysis import load_best_params, prepare_train_test
+from src.opx_tb_analysis import load_best_params, prepare_train_test
 
 warnings.filterwarnings('ignore')
 

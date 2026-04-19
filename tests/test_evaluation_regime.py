@@ -1,6 +1,6 @@
 """Unit tests for pre-registered P-regime helpers in src/evaluation.py.
 
-Registration: docs/v10_p_regime_preregistration.md (locked 2026-04-17).
+Registration: docs/preregistration/p_regime_preregistration.md (locked 2026-04-17).
 These tests pin:
   1. Exact boundary behavior at P = 0, 5, 15, 30, 100 kbar (right-open).
   2. Out-of-range handling (negatives clipped, > ceiling clamped).

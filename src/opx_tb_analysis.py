@@ -30,10 +30,15 @@ from src.features import build_feature_matrix
 from src.models import build_model
 from src.stacking import fit_ridge_meta_model
 
-V10_BASE_ORDER = ('RF', 'ERT', 'XGB', 'GB', 'CatBoost', 'LightGBM', 'ElasticNet', 'MLP')
-V10_TARGETS = ('T_C', 'P_kbar')
-V10_TRACKS = ('opx_only', 'opx_liq')
-V10_FEATURE_SETS = ('raw', 'alr', 'pwlr')
+BASE_ORDER = ('RF', 'ERT', 'XGB', 'GB', 'CatBoost', 'LightGBM', 'ElasticNet', 'MLP')
+TARGETS = ('T_C', 'P_kbar')
+TRACKS = ('opx_only', 'opx_liq')
+FEATURE_SETS = ('raw', 'alr', 'pwlr')
+
+V10_BASE_ORDER = BASE_ORDER
+V10_TARGETS = TARGETS
+V10_TRACKS = TRACKS
+V10_FEATURE_SETS = FEATURE_SETS
 
 
 # ---------------------------------------------------------------------------
@@ -107,7 +112,7 @@ def generate_oof_vector(model_name, best_params, X_tr, y_tr, groups_tr,
 
 
 def build_oof_matrix(best_params_block, X_tr, y_tr, groups_tr,
-                     base_order=V10_BASE_ORDER, target=None, track=None,
+                     base_order=BASE_ORDER, target=None, track=None,
                      feature_set=None):
     """Stack OOF vectors column-wise for all 8 bases.
 
@@ -136,7 +141,7 @@ def evaluate_model(est, X_te, y_te):
     return {'rmse': rmse, 'r2': r2, 'y_hat': y_hat}
 
 
-def evaluate_all_bases(best_params_block, splits, base_order=V10_BASE_ORDER,
+def evaluate_all_bases(best_params_block, splits, base_order=BASE_ORDER,
                        target=None, track=None, feature_set=None):
     rows = []
     preds = {}
@@ -162,7 +167,7 @@ def evaluate_all_bases(best_params_block, splits, base_order=V10_BASE_ORDER,
 # ---------------------------------------------------------------------------
 
 def fit_internal_ensembles(oof_matrix, y_tr, groups_tr,
-                           base_order=V10_BASE_ORDER, seed=42):
+                           base_order=BASE_ORDER, seed=42):
     """Fit Ridge stack, two-level stack, Caruana greedy on OOF matrix."""
     ridge_meta = fit_ridge_meta_model(oof_matrix, y_tr)
     two_level  = fit_two_level_stack(oof_matrix, y_tr, groups_tr, base_order,
@@ -172,7 +177,7 @@ def fit_internal_ensembles(oof_matrix, y_tr, groups_tr,
 
 
 def ensemble_predict_on_test(ensembles, base_test_preds,
-                             base_order=V10_BASE_ORDER):
+                             base_order=BASE_ORDER):
     """Run each ensemble on the test-set base preds dict."""
     # Ridge meta takes an (N, K) matrix in base_order.
     X_meta = np.column_stack([base_test_preds[k] for k in base_order])

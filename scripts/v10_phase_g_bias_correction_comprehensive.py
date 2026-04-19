@@ -58,7 +58,7 @@ from src.data import (
     load_cpx_liq, load_cpx_only, load_opx_liq, load_opx_only, load_splits,
 )
 from src.prepare_train_test import prepare_train_test
-from src.v10_phase_c_analysis import load_best_params
+from src.opx_tb_analysis import load_best_params
 
 warnings.filterwarnings('ignore')
 

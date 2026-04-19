@@ -12,7 +12,7 @@ Outputs:
   results/v10_optuna_best_params_opx_partial.json      (incremental)
   logs/v10_phase_c_driver.log                           (progress + errors)
 
-Companion to: docs/v10_master_plan.md Section 6 (Phase C).
+Companion to: docs/master_plan.md Section 6 (Phase C).
 Author: NQTa (with Claude)
 Date: 2026-04-16
 """

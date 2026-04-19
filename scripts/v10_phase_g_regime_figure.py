@@ -10,7 +10,7 @@ Emits four figure variants, each in PDF + PNG (300 dpi):
 
 Universal model excluded 2026-04-18: scope limited to cpx/opx/twopx for
 the current paper; universal is a later project (see
-docs/v10_universal_model_exploration.md for historical context).
+docs/universal_model_exploration.md for historical context).
 
 Each panel shows per-regime RMSE with bootstrap 95% CIs, for:
   - v10 cell spread (grey band: min/max across all Optuna cells)

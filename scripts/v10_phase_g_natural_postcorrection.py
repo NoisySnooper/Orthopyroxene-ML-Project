@@ -58,7 +58,7 @@ from src.features import (
 )
 from src.models import build_model
 from src.prepare_train_test import prepare_train_test
-from src.v10_phase_c_analysis import load_best_params
+from src.opx_tb_analysis import load_best_params
 
 LOG_PATH = LOGS / 'v10_phase_g_natural_postcorrection.log'
 CKPT_DIR = RESULTS / 'v10_bias_correction' / 'checkpoints'

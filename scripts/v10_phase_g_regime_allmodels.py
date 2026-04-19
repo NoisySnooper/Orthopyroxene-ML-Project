@@ -61,7 +61,7 @@ BOOT_SEED = 20260418
 # Source: config.P_REGIME_BIN_EDGES_KBAR = [0, 5, 15, 30, 100].
 # Labels:  shallow_crustal / deep_crustal_MASH / lithospheric_mantle /
 #          deeper_mantle. Any modification requires a dated entry in
-#          docs/v10_p_regime_preregistration.md. Upper ceiling is the
+#          docs/preregistration/p_regime_preregistration.md. Upper ceiling is the
 #          ExPetDB training ceiling; widen to 1000 here only so any
 #          stray out-of-range rows are captured rather than silently
 #          dropped (physical guard rails handled elsewhere).

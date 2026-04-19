@@ -1,7 +1,7 @@
 # Manuscript + SI additions: P-regime calibration-domain characterization
 
 **Companion to:** `opx_paper_draft_v1.md`, `opx_paper_SI_outline_v0.md`
-**Source of numerical parameters:** `docs/v10_p_regime_preregistration.md` (pre-registered 2026-04-17)
+**Source of numerical parameters:** `docs/preregistration/p_regime_preregistration.md` (pre-registered 2026-04-17)
 **Instructions:** Drop Section 2.5.1 into main text after the existing 2.5. Add Section 4.X placeholder for results. Add Supplementary Section S8.5 entry.
 
 ---
@@ -23,7 +23,7 @@ Insert immediately after Section 2.5 ("ArcPL natural-sample benchmark") in `draf
 > | Lithospheric mantle | 15-30 | Spinel-to-garnet peridotite stability (Klemme and O'Neill, 2000) |
 > | Deeper mantle | >30 | Asthenospheric and below |
 >
-> Bin edges are pre-registered and locked prior to computation of any per-regime metric; the full registration document, including petrological justification, is archived in the reproducibility repository (`docs/v10_p_regime_preregistration.md`, registered 2026-04-17). The configuration constant `P_REGIME_BIN_EDGES_KBAR` in the released code is set to `[0, 5, 15, 30, 100]` kbar (where 100 kbar is the training-set ceiling `P_CEILING_KBAR`).
+> Bin edges are pre-registered and locked prior to computation of any per-regime metric; the full registration document, including petrological justification, is archived in the reproducibility repository (`docs/preregistration/p_regime_preregistration.md`, registered 2026-04-17). The configuration constant `P_REGIME_BIN_EDGES_KBAR` in the released code is set to `[0, 5, 15, 30, 100]` kbar (where 100 kbar is the training-set ceiling `P_CEILING_KBAR`).
 >
 > Within each regime, for each benchmarked method, we report sample size, RMSE with bootstrap 95% confidence intervals (B = 1000 resamples), T bias, P bias, and 90% prediction-interval coverage fraction. Bins with fewer than 20 ArcPL samples are explicitly flagged as sample-size-limited; we do not merge bins post-hoc or drop bins with few samples. Within-bin method comparisons are reported honestly when bootstrap confidence intervals overlap: we do not interpret overlapping CIs as ranking information. This analysis is **calibration-domain characterization**, not a performance ranking. Methods that perform well in one regime and poorly in another reflect different training-data distributions and calibration strategies, not intrinsic methodological superiority.
 >

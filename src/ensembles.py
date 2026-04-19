@@ -1,6 +1,6 @@
 """v10 ensemble strategies beyond Ridge stacking.
 
-Four ensemble methods compete in v10 Phase C (see docs/v10_master_plan.md
+Four ensemble methods compete in v10 Phase C (see docs/master_plan.md
 Section 3):
 
 1. Ridge stacking -- existing, via src/stacking.py (kept as baseline).

@@ -3,7 +3,7 @@
 pressure head, two-axis honesty bar.
 
 Reads  results/v10_opx_per_regime_claims_audit_robust.csv (Chunk C)
-Checks Section 12 of docs/v10_nb03_test_protocol.md pass condition (v2):
+Checks Section 12 of docs/nb03_test_protocol.md pass condition (v2):
     at least one row with target='P_kbar' AND n >= 20 AND
     axis1_nonoverlap=True AND axis2_nonoverlap=True
     (equivalently robust_outperforms=True).

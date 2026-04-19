@@ -38,7 +38,7 @@ import pandas as pd
 
 from config import FIGURES, LOGS, RESULTS, SEED_BOOTSTRAP
 from src.models import build_model
-from src.v10_phase_c_analysis import load_best_params, prepare_train_test
+from src.opx_tb_analysis import load_best_params, prepare_train_test
 
 warnings.filterwarnings('ignore')
 

@@ -300,7 +300,7 @@ Each test runs per pipeline. Results logged to `results/v10_nb03_test_log.csv` w
 
 ### Universal-only tests T13-T14 (isolated)
 
-Defined in `docs/v10_universal_model_exploration.md`. Run only in `nb03_universal_exploration.ipynb`. Logged to separate `results/universal/v10_nb03_test_log.csv`. Never combined with primary pipeline results.
+Defined in `docs/universal_model_exploration.md`. Run only in `nb03_universal_exploration.ipynb`. Logged to separate `results/universal/v10_nb03_test_log.csv`. Never combined with primary pipeline results.
 
 | Test | Hypothesis |
 |---|---|
@@ -318,7 +318,7 @@ Decision tree: T13 fails -> ablate universal architecture, exploration ends. T13
 | T17 | Phase G.7 D2: shipped corrections persist on a majority of 20 SPLIT_SEEDS |
 | T18 | Phase G.7 A4+A5: Form A edge swing and Form B CV-reseed stability within thresholds |
 
-See `docs/v10_nb03_test_protocol.md` Sections 12-13 for full specifications.
+See `docs/nb03_test_protocol.md` Sections 12-13 for full specifications.
 
 ---
 

@@ -70,7 +70,7 @@ def build_Xy(df, pipeline, track, feature_set, target):
     """Construct the v10 feature matrix + target vector for one pipeline
     cell. Uses the canonical per-pipeline feature builders."""
     if pipeline == 'opx':
-        from src.v10_phase_c_analysis import prepare_train_test
+        from src.opx_tb_analysis import prepare_train_test
         # Rebuild without split: generate full X/y by concatenating.
         # prepare_train_test returns train+test. We want a full-matrix
         # re-do, so call the underlying feature builder directly.

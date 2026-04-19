@@ -228,7 +228,7 @@ def oof_rf(X, y, groups, params, seed, n_folds=10):
 
 
 # --- Pre-registered P-regime analysis ---------------------------------------
-# Registration: docs/v10_p_regime_preregistration.md (locked 2026-04-17).
+# Registration: docs/preregistration/p_regime_preregistration.md (locked 2026-04-17).
 # Bin edges and labels come from config.py; do not hardcode here.
 
 def assign_p_regime(p_kbar):

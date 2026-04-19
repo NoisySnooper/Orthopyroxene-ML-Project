@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """v10 T01-T12 test protocol logger (primary pipelines).
 
-Per docs/v10_master_plan.md Section 7 and docs/v10_nb03_test_protocol.md.
+Per docs/master_plan.md Section 7 and docs/nb03_test_protocol.md.
 
 Each primary pipeline (opx, cpx, twopx) runs tests T01-T12. Results go
 to a shared CSV keyed by (pipeline, test_id, target). The logger is
@@ -15,7 +15,7 @@ Public API:
   summarize_tests(pipeline=None) -> pd.DataFrame
   test_catalog() -> pd.DataFrame
 
-Companion to: docs/v10_master_plan.md Section 7.
+Companion to: docs/master_plan.md Section 7.
 Author: NQTa (with Claude)
 Date: 2026-04-16
 """

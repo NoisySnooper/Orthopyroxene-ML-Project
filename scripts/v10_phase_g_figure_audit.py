@@ -2,7 +2,7 @@
 """Phase G.6: figure audit checker for Phase G deliverables.
 
 Validates the fig24-fig29 family (the Phase G2-G5 artifacts for the opx-liq
-track) against the checklist in docs/v10_figure_audit.md section 3:
+track) against the checklist in docs/figure_audit.md section 3:
 
   * PDF + PNG both produced
   * TXT caption present

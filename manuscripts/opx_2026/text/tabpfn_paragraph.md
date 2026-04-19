@@ -1,6 +1,6 @@
 # TabPFN v2 supplementary baseline (drop-in for Section 5 Discussion)
 
-*Auto-filled from `results/v10_tabpfn_head_to_head.csv` and `results/v10_tabpfn_multiseed_summary.csv`. Numbers are rendered to 2 dp for kbar and 1 dp for C. Regenerate with `python scripts/v10_nb03_fill_tabpfn_paragraph.py` after any baseline rerun.*
+*Auto-filled from `results/v10_tabpfn_head_to_head.csv` and `results/v10_tabpfn_multiseed_summary.csv`. Numbers are rendered to 2 dp for kbar and 1 dp for C. Regenerate with `python scripts/opx_tb_nb03_fill_tabpfn_paragraph.py` after any baseline rerun.*
 
 ## Paragraph 1 — framing
 

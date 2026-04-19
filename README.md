@@ -15,7 +15,7 @@ Two manuscripts in preparation:
 
 **Status:** v9 complete (2026-04-16). v10+v11 planning complete (2026-04-16).
 Phase A execution pending user approval. See
-[`docs/v10_master_plan.md`](docs/v10_master_plan.md) for the active plan.
+[`docs/master_plan.md`](docs/master_plan.md) for the active plan.
 
 ---
 
@@ -51,7 +51,7 @@ to cpx-specific models (Agreda-Lopez, Jorgenson) which benefit from cpx's
 intrinsically higher P-T sensitivity. Opx paper claim is "first opx-specific
 ML thermobarometer with formal OOD uncertainty quantification", not a claim
 to beat cpx models. Cpx paper will claim parity or better vs cpx ML models
-per the three-gate criterion (see `docs/v10_master_plan.md` Section 8).
+per the three-gate criterion (see `docs/master_plan.md` Section 8).
 
 ---
 
@@ -72,7 +72,7 @@ executed in one repo. Concretely:
 **Model roster (8 total, all pipelines):** RandomForest, ExtraTrees, XGBoost,
 GradientBoosting, CatBoost, LightGBM, ElasticNet, MLPRegressor. Plus 4
 ensemble methods compared (Ridge stacking, two-level, greedy Caruana 2004,
-AutoGluon) per `docs/v10_ensemble_methods_plan.md`.
+AutoGluon) per `docs/ensemble_methods_plan.md`.
 
 **Universal model is intentionally isolated.** Separate notebook, separate
 diagnostics directory (`results/universal/`, `figures/universal/`). Never
@@ -168,18 +168,18 @@ NB03 winners are frozen.
   CatBoost or MLP beats the v9 four, it ships; otherwise ablated with data.
 - **Test-first NB03.** 12 pre-registered tests (T01-T12, plus T13-T14 for
   universal). Each runs per-pipeline; ship/ablate decision logged to
-  `results/v10_nb03_test_log.csv`. See `docs/v10_nb03_test_protocol.md`.
+  `results/v10_nb03_test_log.csv`. See `docs/nb03_test_protocol.md`.
 - **4 ensemble methods compared.** Ridge, two-level Ridge, greedy Caruana,
   AutoGluon. Winner ships; others reported as ablation. See
-  `docs/v10_ensemble_methods_plan.md`.
+  `docs/ensemble_methods_plan.md`.
 - **Stacking propagates everywhere.** Every downstream benchmark figure
   (NB04-NB10) includes stacked alongside base models. Enforced per
-  `docs/v10_stacking_propagation_audit.md`.
+  `docs/stacking_propagation_audit.md`.
 - **Markdown discipline.** Every code cell gets a rigorous markdown block:
   Input / Output / Method / Connection / Why. Template in
-  `docs/v10_markdown_template.md`.
+  `docs/markdown_template.md`.
 - **Figure rigor.** Every figure passes the checklist in
-  `docs/v10_figure_audit.md`: all methods plotted, on-figure metrics
+  `docs/figure_audit.md`: all methods plotted, on-figure metrics
   (R^2, RMSE, slope, intercept), Okabe-Ito palette, label-collision check,
   JGR-MLC dimension compliance, PDF + PNG + TXT caption.
 - **World maps.** Two panels per mineral (opx, cpx, twopx): tectonic setting
@@ -195,12 +195,12 @@ NB03 winners are frozen.
 - **TabPFN v2 supplementary baseline.** Hollmann et al. 2025 (*Nature* 637,
   doi:10.1038/s41586-024-08328-6) pretrained foundation model run as a
   drop-in reference against every (pipeline, track, target) cell. Deliberately
-  outside `V10_BASE_ORDER`; 5 seeds, CPU inference, raw oxide features only,
+  outside `BASE_ORDER` (the pre-registered roster); 5 seeds, CPU inference, raw oxide features only,
   no Optuna, no stacking, no SHAP. Outputs: `results/v10_tabpfn_*.csv`,
   `figures/fig35_tabpfn_vs_v10`, `tables/S8_12_tabpfn_benchmark.{csv,md,tex}`,
   `manuscripts/opx_2026/text/tabpfn_paragraph.md`. Head-to-head across 8
   cells: v10 wins 6, TabPFN wins 1 (cpx_liq T_C), 1 competitive. See
-  `docs/v10_nb03_tabpfn_plan.md`.
+  `docs/nb03_tabpfn_plan.md`.
 
 ---
 
@@ -223,7 +223,7 @@ NB03 winners are frozen.
 - **Wang et al. 2021** — cpx-liq.
 - **Petrelli et al. 2020** — cpx-liq baseline ML.
 
-See `docs/v10_external_models_audit.md` for publicly-released training data
+See `docs/external_models_audit.md` for publicly-released training data
 status per model. Where training data is public, we re-run their models on
 our ArcPL subset for head-to-head. Where not, we use their published model
 artifact.
@@ -234,7 +234,7 @@ artifact.
   with lat/lon and tectonic setting metadata. Driving the opx world map.
 - **GEOROC 2024-12 cpx** — TO BE PULLED in Phase H. Expected similar size.
 - **Curated localities (experimental T/P only, literature)** — TBD in Phase H
-  per `docs/v10_natural_worldwide_plan.md`.
+  per `docs/natural_worldwide_plan.md`.
 
 ---
 
@@ -244,19 +244,19 @@ artifact.
 
 | Doc | Purpose |
 |---|---|
-| [`docs/v10_master_plan.md`](docs/v10_master_plan.md) | **Start here.** Unified v10+v11 plan. |
-| [`docs/v10_markdown_template.md`](docs/v10_markdown_template.md) | Per-cell markdown template (rigorous format) |
-| [`docs/v10_cleanup_manifest.md`](docs/v10_cleanup_manifest.md) | Fresh-start cleanup file list |
-| [`docs/v10_notebooks_compatibility_audit.md`](docs/v10_notebooks_compatibility_audit.md) | Downstream NB compatibility matrix |
-| [`docs/v10_nb03_test_protocol.md`](docs/v10_nb03_test_protocol.md) | T01-T14 test-first protocol, per-pipeline |
-| [`docs/v10_cpx_pipeline_plan.md`](docs/v10_cpx_pipeline_plan.md) | Cpx pipeline design |
-| [`docs/v10_twopx_pipeline_plan.md`](docs/v10_twopx_pipeline_plan.md) | Two-pyroxene pipeline design |
-| [`docs/v10_universal_model_exploration.md`](docs/v10_universal_model_exploration.md) | Universal masking model (isolated) |
-| [`docs/v10_ensemble_methods_plan.md`](docs/v10_ensemble_methods_plan.md) | 4-method ensemble comparison |
-| [`docs/v10_stacking_propagation_audit.md`](docs/v10_stacking_propagation_audit.md) | Where stacking must appear in NB04-NB10 |
-| [`docs/v10_figure_audit.md`](docs/v10_figure_audit.md) | ~308 figure per-spec checklist |
-| [`docs/v10_natural_worldwide_plan.md`](docs/v10_natural_worldwide_plan.md) | GEOROC re-integration + world map |
-| [`docs/v10_external_models_audit.md`](docs/v10_external_models_audit.md) | External model training data verification |
+| [`docs/master_plan.md`](docs/master_plan.md) | **Start here.** Unified v10+v11 plan. |
+| [`docs/markdown_template.md`](docs/markdown_template.md) | Per-cell markdown template (rigorous format) |
+| [`docs/cleanup_manifest.md`](docs/cleanup_manifest.md) | Fresh-start cleanup file list |
+| [`docs/notebooks_compatibility_audit.md`](docs/notebooks_compatibility_audit.md) | Downstream NB compatibility matrix |
+| [`docs/nb03_test_protocol.md`](docs/nb03_test_protocol.md) | T01-T14 test-first protocol, per-pipeline |
+| [`docs/cpx_pipeline_plan.md`](docs/cpx_pipeline_plan.md) | Cpx pipeline design |
+| [`docs/twopx_pipeline_plan.md`](docs/twopx_pipeline_plan.md) | Two-pyroxene pipeline design |
+| [`docs/universal_model_exploration.md`](docs/universal_model_exploration.md) | Universal masking model (isolated) |
+| [`docs/ensemble_methods_plan.md`](docs/ensemble_methods_plan.md) | 4-method ensemble comparison |
+| [`docs/stacking_propagation_audit.md`](docs/stacking_propagation_audit.md) | Where stacking must appear in NB04-NB10 |
+| [`docs/figure_audit.md`](docs/figure_audit.md) | ~308 figure per-spec checklist |
+| [`docs/natural_worldwide_plan.md`](docs/natural_worldwide_plan.md) | GEOROC re-integration + world map |
+| [`docs/external_models_audit.md`](docs/external_models_audit.md) | External model training data verification |
 
 ### Background methodology (with v10 re-evaluation blocks)
 
