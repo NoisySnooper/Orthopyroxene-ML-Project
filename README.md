@@ -192,6 +192,15 @@ NB03 winners are frozen.
   per test T04. Re-tested per pipeline in v10; ship/ablate per result.
 - **Canonical splits preserved.** `config.SEED_SPLIT=42`. Test indices in
   `data/splits/test_indices_{track}.npy`.
+- **TabPFN v2 supplementary baseline.** Hollmann et al. 2025 (*Nature* 637,
+  doi:10.1038/s41586-024-08328-6) pretrained foundation model run as a
+  drop-in reference against every (pipeline, track, target) cell. Deliberately
+  outside `V10_BASE_ORDER`; 5 seeds, CPU inference, raw oxide features only,
+  no Optuna, no stacking, no SHAP. Outputs: `results/v10_tabpfn_*.csv`,
+  `figures/fig35_tabpfn_vs_v10`, `tables/S8_12_tabpfn_benchmark.{csv,md,tex}`,
+  `manuscripts/opx_2026/text/tabpfn_paragraph.md`. Head-to-head across 8
+  cells: v10 wins 6, TabPFN wins 1 (cpx_liq T_C), 1 competitive. See
+  `docs/v10_nb03_tabpfn_plan.md`.
 
 ---
 

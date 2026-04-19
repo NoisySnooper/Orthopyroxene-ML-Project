@@ -398,3 +398,21 @@ See `docs/v10_universal_model_exploration.md` Sections 5-7 for full rationale, e
 - T18: `scripts/v10_phase_g_edge_sensitivity.py` + `scripts/v10_phase_g_form_b_stability.py` outputs.
 
 **Execution:** tests are evaluated once the Phase G.7 D2/A4/A5 scripts have run end-to-end. Decision logic is recorded in `results/v10_nb03_test_log.csv` via `scripts/v10_nb03_test_t16_t18.py`.
+
+
+### T19: TabPFN v2 supplementary baseline smoke test
+
+**Hypothesis:** the TabPFN v2 package (pinned `tabpfn>=2.0,<2.5`) is installed in `.venv-tabpfn` and can fit + predict on a 50-row opx_liq slice in under 30 seconds on CPU.
+
+**Pass condition (joint):**
+1. `tabpfn.__version__` reports `2.x` with `x < 5`, verified inside `scripts/v10_nb03_test_tabpfn_smoke.py` before fitting.
+2. `TabPFNRegressor` constructed via `create_default_for_version(ModelVersion.V2, ...)` or (fallback in tabpfn 2.0-2.4) `TabPFNRegressor(model_path='auto', ...)`, with the construction path logged.
+3. Fit + predict on 50 opx_liq samples returns finite predictions with RMSE < 1000 kbar (sanity bound, not a performance threshold).
+
+**Rationale:** the TabPFN baseline is a post-hoc supplementary benchmark, not a primary model. The smoke test is a tripwire: if it fails, the full `scripts/v10_nb03_tabpfn_baseline.py` run does not start, so we cannot accidentally report numbers from the wrong model version (v2.5 non-commercial license + unrelated arxiv citation).
+
+**Source of truth:**
+- Construction + version check: `scripts/v10_nb03_test_tabpfn_smoke.py`.
+- Package pin: `requirements-tabpfn.txt`.
+
+**Execution:** run `.venv-tabpfn/Scripts/python.exe scripts/v10_nb03_test_tabpfn_smoke.py` before the main baseline run. Non-zero exit code blocks `scripts/v10_nb03_tabpfn_baseline.py`.
