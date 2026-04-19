@@ -14,9 +14,9 @@ Two manuscripts in preparation:
    Wang 2021, Petrelli 2020. Target: 2027.
 
 **Status:** v9 complete (2026-04-16). v10+v11 planning complete (2026-04-16).
-Phase G.7 bias correction + TabPFN v2 supplementary baseline shipped
-2026-04-19. Repository cleanup (`BASE_ORDER` rename, docs de-`v10_`-prefixed,
-orphan figures archived) committed 2026-04-19. See
+Phase G.7 bias correction + TabPFN v2 baseline shipped 2026-04-19.
+Phase 1.5 cleanup (`BASE_ORDER` rename, `V10_BASE_ORDER` alias removed,
+most `v10_*` paths renamed, v9 docs archived) committed 2026-04-19. See
 [`docs/master_plan.md`](docs/master_plan.md) for the active plan and
 [`PROJECT_LAYOUT.md`](PROJECT_LAYOUT.md) for the directory tree.
 
@@ -113,7 +113,7 @@ Then notebooks in order (or run `python run_all.py`):
 4. `nb03_cpx_baseline_models` — cpx_only + cpx_liq, 8 models
 5. `nb03_twopx_baseline_models` — two-pyroxene, 8 models
 6. `nb03_universal_exploration` — universal masking (isolated side project)
-7. `nb03_tabpfn_baseline` — TabPFN v2 supplementary baseline (5 seeds, CPU)
+7. `nb03_tabpfn_baseline` — TabPFN v2 baseline (20 seeds, CPU)
 8. `nb04_putirka_benchmark` — ArcPL + Thermobar benchmarks + TabPFN head-to-head
 9. `nb05_loso_validation` — LOSO + Cluster + TargetBin + LeaveOneRegion
 10. `nb06_shap_analysis` — tree-SHAP + linear-SHAP on stack
@@ -135,7 +135,7 @@ once NB03 winners are frozen.
   CatBoost or MLP beats the v9 four, it ships; otherwise ablated with data.
 - **Test-first NB03.** 12 pre-registered tests (T01-T12, plus T13-T14 for
   universal). Each runs per-pipeline; ship/ablate decision logged to
-  `results/v10_nb03_test_log.csv`. See `docs/preregistration/nb03_test_protocol.md`.
+  `results/nb03_test_log.csv`. See `docs/preregistration/nb03_test_protocol.md`.
 - **4 ensemble methods compared.** Ridge, two-level Ridge, greedy Caruana,
   AutoGluon. Winner ships; others reported as ablation. See
   `docs/ensemble_methods_plan.md`.
@@ -159,14 +159,15 @@ once NB03 winners are frozen.
   per test T04. Re-tested per pipeline in v10; ship/ablate per result.
 - **Canonical splits preserved.** `config.SEED_SPLIT=42`. Test indices in
   `data/splits/test_indices_{track}.npy`.
-- **TabPFN v2 supplementary baseline.** Hollmann et al. 2025 (*Nature* 637,
+- **TabPFN v2 baseline.** Hollmann et al. 2025 (*Nature* 637,
   doi:10.1038/s41586-024-08328-6) pretrained foundation model run as a
-  drop-in reference against every (pipeline, track, target) cell. Deliberately
-  outside `BASE_ORDER` (the pre-registered roster); 5 seeds, CPU inference, raw oxide features only,
-  no Optuna, no stacking, no SHAP. Outputs: `results/v10_tabpfn_*.csv`,
-  `figures/fig35_tabpfn_vs_v10`, `tables/S8_12_tabpfn_benchmark.{csv,md,tex}`,
+  reference against every (pipeline, track, target) cell. Currently
+  outside `BASE_ORDER` (the pre-registered roster); 20 seeds (matching
+  other families), CPU inference, raw oxide features only, no Optuna, no
+  stacking, no SHAP. Outputs: `results/tabpfn_*.csv`,
+  `figures/fig35_tabpfn_vs_opx_tb`, `tables/S8_12_tabpfn_benchmark.{csv,md,tex}`,
   `manuscripts/opx_2026/text/tabpfn_paragraph.md`. Head-to-head across 8
-  cells: v10 wins 6, TabPFN wins 1 (cpx_liq T_C), 1 competitive. See
+  cells: opx_tb wins 6, TabPFN wins 1 (cpx_liq T_C), 1 competitive. See
   `docs/nb03_tabpfn_plan.md`.
 
 ---

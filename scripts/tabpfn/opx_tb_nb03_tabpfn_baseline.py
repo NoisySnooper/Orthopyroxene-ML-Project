@@ -4,7 +4,7 @@
 Fits TabPFNRegressor on the 8 (pipeline, track, target) combinations using
 the existing citation-grouped train/test splits. No Optuna tuning, no
 feature-set sweep, no stacking, no SHAP. Foundation model on raw features
-only, 5 seeds (42-46) for ensemble stability reporting.
+only, 20 seeds (42-61) matching the tuned-family multiseed protocol.
 
 Outputs match schemas of v10_{pipeline}_multiseed_{results,summary}.csv and
 regime_allmodels.csv so downstream notebooks can read them without
@@ -387,8 +387,9 @@ def main():
                    choices=['all', 'opx', 'cpx'])
     p.add_argument('--dry-run', action='store_true',
                    help='fit on 50 train rows; output pipeline tagged _dryrun')
-    p.add_argument('--seeds', default='42,43,44,45,46',
-                   help='comma-separated seeds')
+    p.add_argument('--seeds',
+                   default=','.join(str(s) for s in range(42, 62)),
+                   help='comma-separated seeds (default: 20 seeds 42-61)')
     p.add_argument('--force-rerun', action='store_true',
                    help='ignore existing checkpoints')
     args = p.parse_args()

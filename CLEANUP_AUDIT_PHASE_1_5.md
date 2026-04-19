@@ -91,23 +91,23 @@ Expected residuals after C2-C19:
 
 | Step | Planned | Status |
 |---|---|---|
-| C1 | Safety tag + this audit | IN PROGRESS |
-| C2 | opx multiseed rename | pending |
-| C3 | cpx multiseed rename | pending |
-| C4 | regime/external/natural rename | pending |
-| C5 | bias correction rename | pending |
-| C6 | tabpfn rename + fig35 | pending |
-| C7 | optuna best-params rename | pending |
-| C8 | optuna_studies reconcile | pending |
-| C9 | V10_ alias removal | pending |
-| C10 | config.py caption cleanup | pending |
-| C11 | archive v10_phase_* | pending |
-| C12 | scripts/ subdirs | pending |
-| C13 | run_all.py cleanup | pending |
-| C14 | nb03 consolidation | pending |
-| C15 | nb04_v10 + nb07b resolution | pending |
-| C16 | v9 docs archive + nb03_test_protocol | pending |
-| C17 | PROJECT_LAYOUT + README + autofills | pending |
+| C1 | Safety tag + this audit | done (8d6bc53) |
+| C2 | opx multiseed rename | done (ed7d6d6) |
+| C3 | cpx multiseed rename | done (fde27a6) |
+| C4 | regime/external/natural rename | done (b8cea6f) |
+| C5 | bias correction rename | done (89f5138) |
+| C6 | tabpfn rename + fig35 | done (e85fd8b) |
+| C7 | optuna best-params rename | done (edf9ac6) |
+| C8 | optuna_studies reconcile | done (ae6bd71) |
+| C9 | V10_ alias removal | done (135b0c8) |
+| C10 | config.py caption cleanup | done (4f18492) |
+| C11 | archive v10_phase_* | done (904abe4) |
+| C12 | scripts/ subdirs | done (2f494df) |
+| C13 | run_all.py cleanup | done (a44febd) |
+| C14 | nb03 consolidation (downgraded) | done (5e2f019) |
+| C15 | nb04_v10 + nb07b resolution | done (5798864) |
+| C16 | v9 docs archive + nb03_test_protocol | done (710f9f4) |
+| C17 | PROJECT_LAYOUT + README + autofills | IN PROGRESS |
 | C18 | code integrity validation | pending |
 | C19 | final audit + report | pending |
 
@@ -174,3 +174,22 @@ executions are in scope; track as Phase I consolidation.
    infrastructure used by 4 production notebooks. Post-Phase-1.5
    action: `git mv archive/.../v10_test_protocol.py src/test_protocol.py`,
    then update the 4 notebook imports.
+
+### TabPFN seed count change (2026-04-19, during C17)
+
+User instructed: "I did a change where tabpfn do not run on just 5 seed
+but 20 like all the others." Script default updated at C17 from 5 seeds
+(42-46) to 20 seeds (42-61) in
+`scripts/tabpfn/opx_tb_nb03_tabpfn_baseline.py`. Docstring,
+`docs/nb03_tabpfn_plan.md`, `manuscripts/opx_2026/text/tabpfn_paragraph.md`,
+and README all updated to reflect 20-seed protocol parity with the tuned
+families.
+
+**Important residual:** the underlying `results/tabpfn_multiseed_{results,summary}.csv`,
+`tabpfn_regime_rmse.csv`, and `tabpfn_predictions.csv` on disk still
+contain 5-seed data (rows shape 40, 8; etc.). The 20-seed rerun is
+deferred to the start of the upcoming TabPFN Option B integration work
+(C1 safety-tag + regeneration), because Option B requires 20-seed rows
+for the C3 merge into opx/cpx multiseed canonical CSVs. The autofill
+table in `tabpfn_paragraph.md` (+/- standard deviations) will regenerate
+automatically when the 20-seed CSVs land.

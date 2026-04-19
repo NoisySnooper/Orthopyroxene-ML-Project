@@ -38,7 +38,7 @@ Final Project/
 │   ├── io_utils.py                     # save_figure, save_table
 │   ├── models.py                       # 8-model factory + predict_median/iqr
 │   ├── optuna_search.py                # TPE + median pruning
-│   ├── opx_tb_analysis.py              # BASE_ORDER + helpers (was v10_phase_c_analysis)
+│   ├── opx_tb_analysis.py              # BASE_ORDER + helpers
 │   ├── plot_style.py                   # Okabe-Ito palette + save_figure wrapper
 │   ├── prepare_train_test.py           # unified dispatcher for opx/cpx/twopx/universal
 │   ├── resampling.py                   # P-T tempered resampling
@@ -66,21 +66,15 @@ Final Project/
 │   └── nbF_figures.ipynb               # canonical figure regen (CANONICAL_FIGURES 1-35)
 │
 ├── scripts/
-│   ├── opx_tb_nb03_tabpfn_baseline.py       # TabPFN multi-seed driver (was v10_nb03_*)
-│   ├── opx_tb_nb03_fill_tabpfn_paragraph.py # manuscript paragraph auto-fill
-│   ├── opx_tb_nb03_apply_part2_cells.py     # nbF/nb04/nb09 TabPFN cell applicator
-│   ├── opx_tb_nb03_test_tabpfn_smoke.py     # smoke test for TabPFN wiring
-│   ├── v10_phase_g_*.py                     # bias-correction mini-project drivers (Phase G)
-│   ├── v10_phase_h*.py                      # Phase H natural-samples drivers
-│   ├── v10_phase_c_driver.py / opx_runner.py # opx baseline runners
-│   ├── v10_phase_d_cpx_*.py                 # cpx baseline drivers
-│   ├── v10_phase_e_twopx_*.py               # twopx baseline drivers
-│   ├── v10_phase_f_universal_*.py           # universal baseline drivers
-│   ├── v10_pull_georoc_cpx.py               # GEOROC cpx download (pending GRO 503)
-│   ├── v10_georoc_cpx_schema_diff.py        # cpx/opx header diff diagnostic
-│   ├── v10_external_models_audit.py         # external-model training-data audit
-│   ├── v10_test_protocol.py / v10_audit.py  # test orchestration / repo audit
-│   └── v10_nb03_test_t{15,16_18}.py         # T15-T18 tests for Phase G + TabPFN
+│   ├── tabpfn/                              # TabPFN multi-seed driver + helpers
+│   │   ├── opx_tb_nb03_tabpfn_baseline.py       # 20-seed TabPFN driver
+│   │   ├── opx_tb_nb03_fill_tabpfn_paragraph.py # manuscript paragraph auto-fill
+│   │   ├── opx_tb_nb03_apply_part2_cells.py     # nbF/nb04/nb09 TabPFN cell applicator
+│   │   └── opx_tb_nb03_test_tabpfn_smoke.py     # smoke test for TabPFN wiring
+│   ├── audits/                              # repo + external-model audits (placeholder)
+│   ├── benchmarks/                          # benchmark drivers (placeholder)
+│   ├── data_prep/                           # data cleaning + GEOROC pulls (placeholder)
+│   └── figures/                             # canonical figure regen helpers (placeholder)
 │
 ├── tests/                              # pytest: 55 tests
 │   ├── test_bias_correction.py
@@ -88,14 +82,14 @@ Final Project/
 │   └── test_prepare_train_test_parity.py
 │
 ├── results/                            # CSVs/JSONs consumed by notebooks
-│   ├── v10_opx_*                       # opx multiseed, per-regime, generalization
-│   ├── v10_cpx_* / v10_twopx_* / v10_universal_*
-│   ├── v10_tabpfn_*                    # TabPFN multiseed, predictions, head-to-head
-│   ├── v10_tabpfn_checkpoints/         # 40 per-seed pickled TabPFN fits
-│   ├── v10_bias_correction/            # Phase G.7 per-seed checkpoints
-│   ├── v10_optuna_studies/             # Optuna study joblibs
-│   ├── v10_regime_*                    # pre-/post-correction scorecards
-│   └── v10_natural_opx_*               # Phase H opx inference + uncertainty
+│   ├── opx_* / cpx_*                   # opx/cpx multiseed, per-regime, generalization
+│   ├── v10_twopx_* / v10_universal_*   # twopx + universal (rename deferred post-Phase-1.5)
+│   ├── tabpfn_*                        # TabPFN multiseed, predictions, head-to-head
+│   ├── tabpfn_checkpoints/             # per-seed pickled TabPFN fits
+│   ├── bias_correction/                # Phase G.7 per-seed checkpoints
+│   ├── optuna_studies/                 # Optuna study joblibs
+│   ├── regime_*                        # pre-/post-correction scorecards
+│   └── natural_opx_*                   # Phase H opx inference + uncertainty
 │
 ├── figures/                            # PDF + PNG + TXT sidecar per entry
 │   ├── fig24-fig35                     # canonical (registered in CANONICAL_FIGURES)
@@ -128,21 +122,20 @@ Final Project/
 ├── logs/                               # per-phase execution logs
 │
 ├── docs/
-│   ├── master_plan.md                  # unified v10+v11 plan (was v10_master_plan)
+│   ├── master_plan.md                  # unified v10+v11 plan
 │   ├── cleanup_manifest.md             # cleanup file list
 │   ├── figure_audit.md                 # per-figure spec + checklist
 │   ├── cpx_pipeline_plan.md / twopx_pipeline_plan.md / universal_model_exploration.md
 │   ├── ensemble_methods_plan.md / stacking_propagation_audit.md
 │   ├── external_models_audit.md / markdown_template.md
-│   ├── nb03_test_protocol.md           # T01-T18 tests
-│   ├── nb03_tabpfn_plan.md             # TabPFN integration plan (was v10_nb03_tabpfn_plan)
+│   ├── nb03_tabpfn_plan.md             # TabPFN integration plan
 │   ├── natural_worldwide_plan.md       # GEOROC re-integration plan
 │   ├── notebooks_compatibility_audit.md
 │   ├── optuna_strategy.md / resampling_strategy.md / stacking_strategy.md
 │   ├── opx_paper_regime_additions_v1.md / codebase_consistency_audit_optionB.md
-│   ├── preregistration/                # sealed: p_regime_preregistration.md
-│   ├── archive_superseded/             # v9_* + optionB preflight + v10_implementation_plan
-│   └── v9_* / putirka_inconsistency_audit / putirka_kd_filter_lookup
+│   ├── preregistration/                # sealed: p_regime_preregistration, nb03_test_protocol
+│   ├── archive_superseded/             # v9_* planning docs + optionB preflight + v10_implementation_plan
+│   └── putirka_inconsistency_audit / putirka_kd_filter_lookup
 │
 └── archive/
     ├── pre_consolidation_2026_04_18/   # 2026-04-19 cleanup archive
@@ -176,8 +169,9 @@ nb09 (tables) + nbF (figures) → manuscripts/opx_2026/
   `SPLIT_SEEDS = list(range(42, 62))` (20 seeds).
 - **Figure registry.** `CANONICAL_FIGURES` in `config.py` is the source
   of truth; entries 1-35. Orphans live in `archive/`.
-- **Symbol naming.** `BASE_ORDER` is canonical; `V10_BASE_ORDER` is a
-  deprecated alias kept one release for backward compat.
+- **Symbol naming.** `BASE_ORDER` is canonical (8 families). The legacy
+  `V10_BASE_ORDER` alias was removed in Phase 1.5 C9.
 - **Filename prefix.** New artifacts use `opx_tb_` (opx thermobarometer).
-  Existing `v10_*` result-file names retained until a coordinated pass
-  renames producers and consumers together.
+  Most `v10_*` results/ files were renamed in Phase 1.5 C2-C8; remaining
+  `v10_twopx_*` and `v10_universal_*` files are tracked as a post-Phase-1.5
+  coordinated rename.
