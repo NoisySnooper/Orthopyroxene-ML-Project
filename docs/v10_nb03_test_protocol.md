@@ -358,3 +358,43 @@ See `docs/v10_universal_model_exploration.md` Sections 5-7 for full rationale, e
 **Log format:** results appended to `results/v10_nb03_test_log.csv` with `test_id=T15`, `pipeline=opx`, `target=P_kbar`, `track=opx_liq`. The `details` JSON field carries the winning regime, its v10 and Putirka RMSEs with CIs, seed-axis CI, and n.
 
 **Execution:** `scripts/v10_nb03_test_t15.py` (see Appendix). One-shot script; no side effects beyond appending one row to the test log. After Chunk C the script reads the robust audit CSV.
+
+---
+
+## 13. T16-T18: Phase G.7 bias-correction tests
+
+**Numbering note.** Original task-list terminology referenced "T13-T15" for the new bias-correction tests, but those IDs were already allocated (T13 and T14 to the universal exploration track in Section 11; T15 to the regime-stratified headline claim in Section 12). The Phase G.7 bias-correction work therefore registers as **T16, T17, T18**.
+
+**Scope:** opx and cpx pipelines. Bias-correction is run on the eight aggregate-best cells of the multiseed summary (opx-liq T and P, opx-only T and P, cpx-liq T and P, cpx-only T and P). Universal and two-pyroxene pipelines are excluded (universal: scope blocked by T13/T14 decision gate; twopx: deferred to future work).
+
+### T16: At least one cell ships a bias correction
+
+**Hypothesis:** on the 8 aggregate-best cells, at least one cell's canonical-seed (seed=42) run selects a winning form (A or B) that passes the ship criterion (`overall Delta-RMSE > SHIP_TOL` AND `max per-regime degradation <= SHIP_TOL`).
+
+**Pass condition:** `results/v10_bias_correction_shipped.csv` has at least one row with `winner in {'A', 'B'}`.
+
+**Rationale:** if no cell ships a correction, the manuscript reports bias-correction as null-result and recommends against deployment. A passing T16 unlocks the "applied the correction and confirmed it helps" headline.
+
+### T17: Shipped corrections are stable across seeds (majority rule)
+
+**Hypothesis:** for every cell whose canonical-seed winner is not 'none', the same form ships on a **majority** (>10 of 20) of `SPLIT_SEEDS`. This guards against correction decisions that are artifacts of one favourable seed.
+
+**Pass condition:** for each `(track, target)` with canonical winner `w in {'A', 'B'}`, `results/v10_bias_correction_per_seed.csv` has `n_seeds_ship_w = count(form == w AND regime == 'ALL' AND ships == True) > 10`. All cells that pass T16 must also pass T17 (joint).
+
+**Log format:** one row per (pipeline, track, target) with `test_id=T17`, `value = n_seeds_ship`, `threshold = 10`.
+
+### T18: Form A and Form B parameter stability
+
+**Hypothesis:** neither form's fitted parameters are artefacts of one particular fold split or bin-edge choice.
+
+**Pass condition (joint):**
+1. Form A edge sensitivity: `results/v10_bias_correction_edge_sensitivity.csv` shows for every cell the **maximum |Delta-RMSE swing|** across the three bin-edge sets `(base, inner_m1, inner_p1)` is < 0.5 kbar (P targets) or < 5 degrees C (T targets).
+2. Form B stability: `results/v10_bias_correction_form_b_stability.csv` shows for every cell whose winner is 'B' (or where Form B fits successfully) the CV-reseed standard deviation of `alpha_L` and `alpha_R` is < 0.1 (quantile units).
+
+**Rationale:** the manuscript must not recommend a correction that relies on a coincidental fold/edge choice. Thresholds are conservative by design.
+
+**Source of truth:**
+- T16, T17: `scripts/v10_phase_g_bias_correction_comprehensive.py` aggregation outputs.
+- T18: `scripts/v10_phase_g_edge_sensitivity.py` + `scripts/v10_phase_g_form_b_stability.py` outputs.
+
+**Execution:** tests are evaluated once the Phase G.7 D2/A4/A5 scripts have run end-to-end. Decision logic is recorded in `results/v10_nb03_test_log.csv` via `scripts/v10_nb03_test_t16_t18.py`.
