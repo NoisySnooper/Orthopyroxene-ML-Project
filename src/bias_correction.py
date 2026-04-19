@@ -54,7 +54,7 @@ seeds.
 from __future__ import annotations
 
 from dataclasses import dataclass, field
-from typing import Literal, Optional
+from typing import Optional
 
 import numpy as np
 from sklearn.linear_model import LinearRegression
@@ -436,7 +436,13 @@ def evaluate_pre_post(y_true_te: np.ndarray,
 
 @dataclass
 class BiasCorrectionResult:
-    """All artefacts from fitting + evaluating one (cell, seed)."""
+    """All artefacts from fitting + evaluating one (cell, seed).
+
+    The OOF prediction and test prediction arrays are stored in the
+    checkpoint so downstream analyses (A4 regime-edge sensitivity,
+    A5 Form B CV-seed stability, D3 ExPetDB post-correction inference)
+    can reuse them without re-running the expensive 10-fold OOF.
+    """
     pipeline: str
     track: str
     target: str
@@ -451,6 +457,10 @@ class BiasCorrectionResult:
     ship_a: dict
     ship_b: dict
     winner: str                       # 'A', 'B', or 'none'
+    oof_tr: np.ndarray = field(default_factory=lambda: np.empty(0))
+    y_pred_te: np.ndarray = field(default_factory=lambda: np.empty(0))
+    y_corr_a_te: np.ndarray = field(default_factory=lambda: np.empty(0))
+    y_corr_b_te: np.ndarray = field(default_factory=lambda: np.empty(0))
 
     def to_summary_rows(self) -> list[dict]:
         """Flatten to a long-format list of dicts, one per
@@ -557,4 +567,8 @@ def run_bias_correction_for_cell(
         ship_a=ship_a.to_dict(),
         ship_b=ship_b.to_dict(),
         winner=winner,
+        oof_tr=oof_tr.astype(np.float32),
+        y_pred_te=np.asarray(y_pred_te, dtype=np.float32),
+        y_corr_a_te=y_corr_a_te.astype(np.float32),
+        y_corr_b_te=y_corr_b_te.astype(np.float32),
     )
