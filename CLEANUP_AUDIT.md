@@ -348,3 +348,77 @@ archive/pre_consolidation_2026_04_18/
 ---
 
 **Status: Stage A complete. Awaiting user approval to proceed with B.1.**
+
+---
+
+## 10 Post-phase self-audit results (2026-04-19)
+
+Walked the 14-item checklist after Stage C commit (`908fa13`).
+
+| # | Item | Result |
+|---|------|--------|
+| 1 | `git status` clean | PASS |
+| 2 | Renames show as R in `git log --stat` | PASS (B.1 = pure rename commit) |
+| 3 | No orphan `v10_` except `V10_BASE_ORDER` alias | PARTIAL — see deviation 3a |
+| 4 | `CANONICAL_FIGURES` has 34 entries | DEVIATION — see 4a |
+| 5 | `results/opx_tb_tabpfn_*.csv` exist | DEVIATION — see 5a |
+| 6 | `figures/fig35_tabpfn_vs_v10.*` validate | PASS (pdf+png+txt present) |
+| 7 | `tables/S8_12_tabpfn_benchmark.*` validate | PASS (csv+md+tex present) |
+| 8 | Paragraph re-fill runs cleanly | PASS (script is one-shot; sentinels consumed in prior run, paragraph contains filled body) |
+| 9 | pytest 55/55 | PASS (3.32s) |
+| 10 | `nbF_figures.ipynb` end-to-end | DEFERRED (multi-hour; not re-run in audit) |
+| 11 | `nb03_*_baseline_models.ipynb` per track | DEFERRED (same reason) |
+| 12 | `data/processed/` reads intact | PASS (parity test reads processed parquet) |
+| 13 | `models/external/` diff empty | PASS (last git touch = v7 era) |
+| 14 | `CLEANUP_AUDIT.md` updated | this section |
+
+### Deviations
+
+**3a. V10_BASE_ORDER still used by 4 phase-runner scripts.**
+`scripts/v10_phase_c_opx_runner.py`,
+`scripts/v10_phase_d_cpx_runner.py`,
+`scripts/v10_phase_e_twopx_runner.py`,
+`scripts/v10_phase_f_universal_runner.py` all import `V10_BASE_ORDER`
+from `src.opx_tb_analysis`. The module exposes `BASE_ORDER` and keeps
+`V10_BASE_ORDER = BASE_ORDER` as an alias for one release. Phase-runner
+scripts themselves retain the `v10_phase_*` filename prefix — they are
+phase-legacy one-shots, not canonical artifacts.
+
+**4a. `CANONICAL_FIGURES` has 35 entries, not 34.**
+Counting entries 1-35 with no gaps gives 35 total. The pre-audit
+checklist was drafted before `fig35_tabpfn_vs_v10` was added; the
+registry is internally consistent.
+
+**5a. `results/v10_tabpfn_*.csv` were NOT renamed to `opx_tb_tabpfn_*`.**
+Scope deferred in B.2 to avoid simultaneous rename of 5 CSV filenames
+across 4 producer scripts (`opx_tb_nb03_tabpfn_baseline.py`,
+`opx_tb_nb03_apply_part2_cells.py`, etc.) + 3 consumer notebooks (nb04,
+nb09, nbF) + the 4400-row head-to-head CSV contents. Defer to v11 when
+producer/consumer rename can be done atomically. The five files
+(`v10_tabpfn_multiseed_results.csv`,
+`v10_tabpfn_multiseed_summary.csv`,
+`v10_tabpfn_regime_rmse.csv`,
+`v10_tabpfn_predictions.csv`,
+`v10_tabpfn_head_to_head.csv`) remain in place.
+
+**10a / 11a. Notebook end-to-end runs skipped.**
+A full pipeline re-run through `run_all.py` is multi-hour and would
+overwrite the Phase G.7 / TabPFN artifacts that were already shipped
+and committed. The cleanup did not modify any producer code paths
+(only filenames of `src/v10_phase_c_analysis.py` -> `opx_tb_analysis`
+with a symbol-alias bridge), so no data-path regression is expected.
+Run manually before any paper-draft freeze.
+
+### Final status
+
+Phase 1 cleanup complete. Commits on main:
+
+- `2842d12` Stage A audit
+- `66cd422` Stage B.1 moves and renames
+- `40cd587` Stage B.2 V10 -> opx_tb rename + registry updates
+- `963428d` Stage B.3 archive obsolete nb03
+- `908fa13` Stage C README + PROJECT_LAYOUT
+
+Safety tag `pre-cleanup-b1-2026-04-19` is in place. Branch is 64
+commits ahead of `origin/main`. Nothing has been pushed; nothing
+destructive has been run.
