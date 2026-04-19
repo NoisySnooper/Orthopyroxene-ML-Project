@@ -1,6 +1,6 @@
 # TabPFN v2 supplementary baseline (drop-in for Section 5 Discussion)
 
-*Auto-filled from `results/v10_tabpfn_head_to_head.csv` and `results/v10_tabpfn_multiseed_summary.csv`. Numbers are rendered to 2 dp for kbar and 1 dp for C. Regenerate with `python scripts/opx_tb_nb03_fill_tabpfn_paragraph.py` after any baseline rerun.*
+*Auto-filled from `results/tabpfn_head_to_head.csv` and `results/tabpfn_multiseed_summary.csv`. Numbers are rendered to 2 dp for kbar and 1 dp for C. Regenerate with `python scripts/opx_tb_nb03_fill_tabpfn_paragraph.py` after any baseline rerun.*
 
 ## Paragraph 1 — framing
 
@@ -29,5 +29,5 @@ Across the 8 cells, TabPFN wins 1, v10 wins 6, 1 are competitive within 0.5 stan
 ## Caveats (for internal use; not for the paper body)
 
 - TabPFN is deliberately outside `V10_BASE_ORDER`; the pre-registered model roster was locked 2026-04-17 and adding TabPFN would break registration discipline.
-- Regime-stratified results for TabPFN are in `results/v10_tabpfn_regime_rmse.csv` but are not spliced into the main scorecard because that scorecard tests the v10 tuned pipeline specifically.
-- The full sample-by-sample test predictions (one row per test sample per seed) are in `results/v10_tabpfn_predictions.csv` for independent re-analysis, but are not referenced from any nb04/nbF/nb09 cell.
+- Regime-stratified results for TabPFN are in `results/tabpfn_regime_rmse.csv` but are not spliced into the main scorecard because that scorecard tests the v10 tuned pipeline specifically.
+- The full sample-by-sample test predictions (one row per test sample per seed) are in `results/tabpfn_predictions.csv` for independent re-analysis, but are not referenced from any nb04/nbF/nb09 cell.

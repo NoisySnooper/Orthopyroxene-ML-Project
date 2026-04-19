@@ -54,13 +54,13 @@ COMBOS = [
 # cpx gets smaller ensemble to control CPU runtime (spec option 3b).
 N_ESTIMATORS = {'opx': 8, 'cpx': 4}
 
-CKPT_DIR = RESULTS / 'v10_tabpfn_checkpoints'
+CKPT_DIR = RESULTS / 'tabpfn_checkpoints'
 LOG_PATH = LOGS / 'v10_nb03_tabpfn.log'
 
-OUT_RESULTS = RESULTS / 'v10_tabpfn_multiseed_results.csv'
-OUT_SUMMARY = RESULTS / 'v10_tabpfn_multiseed_summary.csv'
-OUT_REGIME  = RESULTS / 'v10_tabpfn_regime_rmse.csv'
-OUT_PRED    = RESULTS / 'v10_tabpfn_predictions.csv'
+OUT_RESULTS = RESULTS / 'tabpfn_multiseed_results.csv'
+OUT_SUMMARY = RESULTS / 'tabpfn_multiseed_summary.csv'
+OUT_REGIME  = RESULTS / 'tabpfn_regime_rmse.csv'
+OUT_PRED    = RESULTS / 'tabpfn_predictions.csv'
 
 
 def _log(fh, msg: str) -> None:

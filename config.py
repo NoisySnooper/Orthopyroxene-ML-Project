@@ -202,12 +202,13 @@ CANONICAL_FIGURES = [
     {'num': 34, 'stem': 'fig34_bias_correction_scorecard_delta',
      'caption': ('v10 post-correction vs best external per regime, '
                  'diverging heatmap by pipeline')},
-    {'num': 35, 'stem': 'fig35_tabpfn_vs_v10',
+    {'num': 35, 'stem': 'fig35_tabpfn_vs_opx_tb',
      'caption': ('TabPFN v2 supplementary baseline (Hollmann et al. 2025) '
-                 'versus the v10 pre-registered tuned pipeline and the best '
+                 'versus our pre-registered tuned pipeline and the best '
                  'classical/ML external reference per (pipeline, track, '
                  'target) combination. TabPFN error bars show 5-seed ensemble '
-                 'stability; v10 error bars show 20-seed model-fit variance.')},
+                 'stability; our pipeline error bars show 20-seed model-fit '
+                 'variance.')},
 ]
 
 # ---------------------------------------------------------------------------

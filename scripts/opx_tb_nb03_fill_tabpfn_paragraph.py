@@ -2,8 +2,8 @@
 """Fill the auto-fill blocks in manuscripts/opx_2026/text/tabpfn_paragraph.md.
 
 Reads:
-    results/v10_tabpfn_head_to_head.csv
-    results/v10_tabpfn_multiseed_summary.csv
+    results/tabpfn_head_to_head.csv
+    results/tabpfn_multiseed_summary.csv
 
 Rewrites the [AUTO-FILL block ...] placeholders in-place while preserving
 framing prose around them. Verdict selection for Paragraph 3 is determined
@@ -113,7 +113,7 @@ def build_para3(h2h: pd.DataFrame) -> str:
 
 
 def main() -> int:
-    h2h_path = RESULTS / 'v10_tabpfn_head_to_head.csv'
+    h2h_path = RESULTS / 'tabpfn_head_to_head.csv'
     if not h2h_path.exists():
         print(f'[error] {h2h_path} not found; run nb04 head-to-head cell first',
               file=sys.stderr)

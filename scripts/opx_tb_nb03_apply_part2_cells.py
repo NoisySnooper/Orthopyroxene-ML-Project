@@ -55,10 +55,10 @@ def append_cells(nb_path: Path, cells: list[dict]) -> bool:
 NB04_MD = _md_cell([
     '## TabPFN v2 supplementary baseline (appended 2026-04-19)\n',
     '\n',
-    'Joins `results/v10_tabpfn_multiseed_summary.csv` against the v10 '
+    'Joins `results/tabpfn_multiseed_summary.csv` against the v10 '
     'aggregate-best tuned model per (pipeline, track, target) and the best '
     'classical/ML external reference from `results/regime_allmodels.csv`. '
-    'Writes `results/v10_tabpfn_head_to_head.csv`. Wrapped in try/except so '
+    'Writes `results/tabpfn_head_to_head.csv`. Wrapped in try/except so '
     'nb04 still runs if TabPFN outputs are absent. See '
     '`docs/nb03_tabpfn_plan.md`.\n',
 ])
@@ -70,7 +70,7 @@ NB04_CODE = _code_cell([
     '    from pathlib import Path\n',
     '    from config import RESULTS\n',
     '\n',
-    '    tab = pd.read_csv(RESULTS / "v10_tabpfn_multiseed_summary.csv")\n',
+    '    tab = pd.read_csv(RESULTS / "tabpfn_multiseed_summary.csv")\n',
     '    opx = pd.read_csv(RESULTS / "opx_multiseed_summary.csv")\n',
     '    cpx = pd.read_csv(RESULTS / "cpx_multiseed_summary.csv")\n',
     '    v10 = pd.concat([opx, cpx], ignore_index=True)\n',
@@ -116,8 +116,8 @@ NB04_CODE = _code_cell([
     '        return "competitive"\n',
     '    h2h["verdict"] = h2h.apply(_verdict, axis=1)\n',
     '\n',
-    '    h2h.to_csv(RESULTS / "v10_tabpfn_head_to_head.csv", index=False)\n',
-    '    print(f"wrote {RESULTS}/v10_tabpfn_head_to_head.csv ({len(h2h)} rows)")\n',
+    '    h2h.to_csv(RESULTS / "tabpfn_head_to_head.csv", index=False)\n',
+    '    print(f"wrote {RESULTS}/tabpfn_head_to_head.csv ({len(h2h)} rows)")\n',
     '    print(h2h.to_string(index=False))\n',
     'except FileNotFoundError as e:\n',
     '    print(f"[skip] TabPFN head-to-head: {e}")\n',
@@ -126,7 +126,7 @@ NB04_CODE = _code_cell([
 ])
 
 # ---------------------------------------------------------------------------
-# nbF cell: fig35_tabpfn_vs_v10 — 2x4 grouped-bar grid with verdict annotation.
+# nbF cell: fig35_tabpfn_vs_opx_tb — 2x4 grouped-bar grid with verdict annotation.
 # ---------------------------------------------------------------------------
 NBF_MD = _md_cell([
     '## Fig 35: TabPFN v2 vs v10 vs external best\n',
@@ -147,7 +147,7 @@ NBF_CODE = _code_cell([
     '    from config import RESULTS, FIGURES\n',
     '    from src.plot_style import FAMILY_COLORS, save_both\n',
     '\n',
-    '    h2h = pd.read_csv(RESULTS / "v10_tabpfn_head_to_head.csv")\n',
+    '    h2h = pd.read_csv(RESULTS / "tabpfn_head_to_head.csv")\n',
     '    tracks = ["opx_liq", "opx_only", "cpx_liq", "cpx_only"]\n',
     '    targets = ["T_C", "P_kbar"]\n',
     '    UNITS = {"T_C": "C", "P_kbar": "kbar"}\n',
@@ -194,13 +194,13 @@ NBF_CODE = _code_cell([
     '               "variance. TabPFN receives raw oxide features only (no "\n',
     '               "ALR/PWLR) and is fit with default hyperparameters "\n',
     '               "(n_estimators=8 opx / 4 cpx, device=cpu). Sources: "\n',
-    '               "results/v10_tabpfn_multiseed_summary.csv, "\n',
-    '               "results/v10_tabpfn_head_to_head.csv, "\n',
+    '               "results/tabpfn_multiseed_summary.csv, "\n',
+    '               "results/tabpfn_head_to_head.csv, "\n',
     '               "results/v10_{opx,cpx}_multiseed_summary.csv.")\n',
-    '    save_both(fig, FIGURES / "fig35_tabpfn_vs_v10", caption=caption,\n',
+    '    save_both(fig, FIGURES / "fig35_tabpfn_vs_opx_tb", caption=caption,\n',
     '              dpi=300)\n',
     '    plt.show()\n',
-    '    print("wrote fig35_tabpfn_vs_v10.{pdf,png,txt}")\n',
+    '    print("wrote fig35_tabpfn_vs_opx_tb.{pdf,png,txt}")\n',
     'except FileNotFoundError as e:\n',
     '    print(f"[skip] fig35: {e}")\n',
     'except Exception as e:\n',
@@ -226,7 +226,7 @@ NB09_CODE = _code_cell([
     '    from pathlib import Path\n',
     '    from config import RESULTS\n',
     '\n',
-    '    h2h = pd.read_csv(RESULTS / "v10_tabpfn_head_to_head.csv")\n',
+    '    h2h = pd.read_csv(RESULTS / "tabpfn_head_to_head.csv")\n',
     '    def _fmt(m, s, prec=2):\n',
     '        if pd.isna(m): return "--"\n',
     '        if pd.isna(s) or s == 0: return f"{m:.{prec}f}"\n',
