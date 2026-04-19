@@ -54,7 +54,7 @@ def main() -> int:
     OUT_DIR.mkdir(parents=True, exist_ok=True)
     LOG_DIR.mkdir(parents=True, exist_ok=True)
     run_id = datetime.now().strftime("%Y%m%d_%H%M%S")
-    log_path = LOG_DIR / f"pipeline_run_v7_{run_id}.log"
+    log_path = LOG_DIR / f"pipeline_run_{run_id}.log"
 
     start_idx = 0
     if args.resume_from:
@@ -66,7 +66,7 @@ def main() -> int:
             return 3
 
     with log_path.open("w", encoding="utf-8") as log:
-        log.write(f"v7 pipeline run started at {datetime.now().isoformat()}\n")
+        log.write(f"Pipeline run started at {datetime.now().isoformat()}\n")
         log.write(f"Run ID: {run_id}\n")
         log.write(f"Notebooks (in order): {NOTEBOOKS}\n")
         log.write(f"Starting from: {NOTEBOOKS[start_idx]} (index {start_idx})\n")
@@ -90,7 +90,7 @@ def main() -> int:
                 miss_log = LOG_DIR / f"MISSING_{nb}.log"
                 miss_log.write_text(
                     f"{nb} not found at {nb_in}\n"
-                    f"Check v7 Part J execution order.\n",
+                    f"Check pipeline execution order in run_all.py.\n",
                     encoding="utf-8",
                 )
                 return 3
@@ -124,13 +124,13 @@ def main() -> int:
             ts = datetime.now().strftime("%H:%M:%S")
 
             if proc.returncode != 0:
-                fail_log = LOG_DIR / f"FAILURE_v7_{nb}.log"
+                fail_log = LOG_DIR / f"FAILURE_{nb}.log"
                 fail_log.write_text(
                     f"{nb} failed with returncode {proc.returncode} "
                     f"at {datetime.now().isoformat()}\n"
                     f"Full run log: {log_path}\n"
                     f"Resume command after fix: "
-                    f"python run_all_v7.py --resume-from {nb}\n",
+                    f"python run_all.py --resume-from {nb}\n",
                     encoding="utf-8",
                 )
                 msg = f"[{ts}] FAILED {nb} rc={proc.returncode}\n"
@@ -139,7 +139,7 @@ def main() -> int:
                 return 1
 
             if decision_triggered:
-                halt_log = LOG_DIR / f"HALT_v7_{nb}.log"
+                halt_log = LOG_DIR / f"HALT_{nb}.log"
                 next_idx = NOTEBOOKS.index(nb) + 1
                 next_nb = NOTEBOOKS[next_idx] if next_idx < len(NOTEBOOKS) else "(no more)"
                 halt_log.write_text(
@@ -148,7 +148,7 @@ def main() -> int:
                     f"Review the notebook output for the decision context.\n"
                     f"Full run log: {log_path}\n"
                     f"Resume command after decision: "
-                    f"python run_all_v7.py --resume-from {next_nb}\n",
+                    f"python run_all.py --resume-from {next_nb}\n",
                     encoding="utf-8",
                 )
                 msg = (
@@ -164,7 +164,7 @@ def main() -> int:
             log.write(ok)
             log.flush()
 
-        done = f"\n[{datetime.now():%H:%M:%S}] v7 full pipeline complete\n"
+        done = f"\n[{datetime.now():%H:%M:%S}] full pipeline complete\n"
         print(done.strip())
         log.write(done)
 
