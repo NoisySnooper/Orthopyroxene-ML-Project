@@ -203,12 +203,14 @@ CANONICAL_FIGURES = [
      'caption': ('Post-correction vs best external per regime, '
                  'diverging heatmap by pipeline')},
     {'num': 35, 'stem': 'fig35_tabpfn_vs_opx_tb',
-     'caption': ('TabPFN v2 supplementary baseline (Hollmann et al. 2025) '
-                 'versus our pre-registered tuned pipeline and the best '
+     'caption': ('TabPFN v2 (Hollmann et al. 2025), promoted to the 9th '
+                 'BASE_ORDER family on 2026-04-19, versus our pre-registered '
+                 'Optuna-tuned pipeline (best of TUNED_BASES) and the best '
                  'classical/ML external reference per (pipeline, track, '
-                 'target) combination. TabPFN error bars show 5-seed ensemble '
-                 'stability; our pipeline error bars show 20-seed model-fit '
-                 'variance.')},
+                 'target) combination. TabPFN and pipeline error bars both '
+                 'show 20-seed (42-61) stability; seed protocol is matched '
+                 'across families so standard deviations are on equal '
+                 'footing.')},
 ]
 
 # ---------------------------------------------------------------------------
