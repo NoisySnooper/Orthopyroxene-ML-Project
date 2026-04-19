@@ -113,4 +113,23 @@ Expected residuals after C2-C19:
 
 ## Dilemmas log (stopped-and-asked scenarios)
 
-*(none yet)*
+### GEOROC cpx server reachable (2026-04-19)
+
+`curl -I https://georoc.eu/` and `https://georoc.mpch-mainz.gwdg.de/`
+both return HTTP 200. The 503 that paused Phase H.1b is resolved.
+
+**Disposition:** not actioned in this cleanup. Reasons:
+
+1. `scripts/v10_pull_georoc_cpx.py` is a manual-download stub: it only
+   prints instructions to visit the web UI, filter by Phase =
+   Clinopyroxene, and export CSV. No programmatic API.
+2. Even with a fresh CSV in `data/natural/`, running the cpx natural-
+   sample inference pipeline is a multi-hour notebook chain (nb08 +
+   Phase H.3b/H.3d scripts). The Phase 1.5 spec explicitly excludes
+   notebook re-runs during cleanup.
+3. Existing `results/v10_cpx_*.csv` training artifacts are in place and
+   get renamed in C3.
+
+**Action item for after Phase 1.5:** download GEOROC cpx dataset
+manually, re-run `nb08_natural_twopx.ipynb`, produce a cpx counterpart
+to Phase H.5a opx world map. Track as Phase H.1b-recovery.
