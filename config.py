@@ -186,7 +186,7 @@ CANONICAL_FIGURES = [
     {'num': 29, 'stem': 'fig29_twopx_benchmark',
      'caption': ('Two-pyroxene thermobarometer benchmark vs independent '
                  'opx-only and cpx-only predictions')},
-    # v10 Phase G.7 additions (bias-correction mini-project)
+    # Bias-correction scorecard panels
     {'num': 30, 'stem': 'fig30_bias_correction_per_regime_rmse',
      'caption': ('Per-regime test-set RMSE, pre vs Form A vs Form B, '
                  '20-seed mean with bootstrap CI envelope')},
@@ -200,7 +200,7 @@ CANONICAL_FIGURES = [
      'caption': ('Per-seed Delta-RMSE, Form A vs Form B scatter with '
                  'improve/degrade quadrant shading')},
     {'num': 34, 'stem': 'fig34_bias_correction_scorecard_delta',
-     'caption': ('v10 post-correction vs best external per regime, '
+     'caption': ('Post-correction vs best external per regime, '
                  'diverging heatmap by pipeline')},
     {'num': 35, 'stem': 'fig35_tabpfn_vs_opx_tb',
      'caption': ('TabPFN v2 supplementary baseline (Hollmann et al. 2025) '
