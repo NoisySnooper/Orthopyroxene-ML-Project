@@ -28,6 +28,13 @@ NOTEBOOKS = [
     "nb03_opx_baseline_models",
     "nb03_cpx_baseline_models",
     "nb03_twopx_baseline_models",
+    # nb03_tabpfn_baseline runs the TabPFN v2 foundation-model baseline
+    # (9th BASE_ORDER family post-Option-B). The notebook kernel is the
+    # main .venv; the notebook itself shells out to .venv-tabpfn via
+    # subprocess, so papermill here does not need tabpfn installed. Must
+    # run before nb04 (nb04 consumes tabpfn_multiseed_summary for the
+    # head-to-head merge) and before nb07 (TabPFN is excluded from bias
+    # correction, so nb07 only processes the 8 tuned families).
     "nb03_tabpfn_baseline",
     "nb04_putirka_benchmark",
     "nb05_loso_validation",
