@@ -43,7 +43,7 @@ The 4 output CSVs match the schemas of the pre-registered multiseed and regime t
 
 These feed into:
 
-- `nb04_v10_benchmark`: additive cell that joins `v10_tabpfn_multiseed_summary.csv` against v10 aggregate-best and writes `results/v10_tabpfn_head_to_head.csv`.
+- `nb04_regime_benchmark`: additive cell that joins `v10_tabpfn_multiseed_summary.csv` against v10 aggregate-best and writes `results/v10_tabpfn_head_to_head.csv`.
 - `nbF_figures`: new `fig35_tabpfn_vs_v10` (registered as `CANONICAL_FIGURES` entry 35).
 - `nb09_manuscript_compilation`: new `Table S12` (`tables/S8_12_tabpfn_benchmark.{csv,md,tex}`).
 - `manuscripts/opx_2026/text/tabpfn_paragraph.md`: drop-in discussion paragraph.

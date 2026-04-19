@@ -56,7 +56,7 @@ Final Project/
 │   ├── nb03_universal_exploration.ipynb # universal masking (isolated side project)
 │   ├── nb03_tabpfn_baseline.ipynb      # TabPFN v2 supplementary baseline driver
 │   ├── nb04_putirka_benchmark.ipynb    # Putirka 2008 + Thermobar benchmarks + head-to-head
-│   ├── nb04_v10_benchmark.ipynb        # v10 per-regime + cross-pipeline heatmaps
+│   ├── nb04_regime_benchmark.ipynb     # Per-regime + cross-pipeline heatmaps
 │   ├── nb05_loso_validation.ipynb      # LOSO + cluster + TargetBinKFold + LeaveOneRegion
 │   ├── nb06_shap_analysis.ipynb        # tree-SHAP + linear-SHAP on stack
 │   ├── nb07_bias_correction.ipynb      # composition-conditional T correction (Form A/B)
