@@ -1,6 +1,6 @@
 # Bias correction numbers for draft_v1 -> v2 update
 
-Auto-generated from results/v10_bias_correction_*.csv on 2026-04-19. Canonical seed 42. 20-seed mean used at regime=ALL where applicable. All RMSE in native units (kbar for P, C for T). % reduction defined as 100*(pre - post)/pre.
+Auto-generated from results/bias_correction_*.csv on 2026-04-19. Canonical seed 42. 20-seed mean used at regime=ALL where applicable. All RMSE in native units (kbar for P, C for T). % reduction defined as 100*(pre - post)/pre.
 
 ## For Section 1 (Introduction / headline claim)
 

@@ -1,6 +1,6 @@
 # Bias-correction prose (auto-filled drop-in for Section 3.5 and Section 4.3)
 
-*Generated 2026-04-19 from results/v10_bias_correction_{per_seed,summary,shipped,form_b_stability,edge_sensitivity}.csv and results/cpx_replication_scorecard_with_correction.csv. Canonical seed 42 where noted. 20-seed mean used at regime=ALL otherwise. Numbers are formatted for drop-in: 2 decimal places for kbar, 1 decimal place for C and percent.*
+*Generated 2026-04-19 from results/bias_correction_{per_seed,summary,shipped,form_b_stability,edge_sensitivity}.csv and results/cpx_replication_scorecard_with_correction.csv. Canonical seed 42 where noted. 20-seed mean used at regime=ALL otherwise. Numbers are formatted for drop-in: 2 decimal places for kbar, 1 decimal place for C and percent.*
 
 ## Section 3.5 -- Post-hoc bias correction (Methods)
 
