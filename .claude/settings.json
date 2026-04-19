@@ -92,7 +92,19 @@
       "Bash(python scripts/v10_audit.py)",
       "Bash(python scripts/v10_phase_a_cleanup.py)",
       "Bash(python scripts/v10_external_models_audit.py)",
-      "Bash(python scripts/v10_phase_b_nb_audit.py)"
+      "Bash(python scripts/v10_phase_b_nb_audit.py)",
+      "Bash(.venv/Scripts/python.exe -m pip install catboost lightgbm)",
+      "Bash(.venv/Scripts/python.exe -c \"from src.models import BASE_MODELS, build_model; print\\('OK', list\\(BASE_MODELS.keys\\(\\)\\)\\)\")",
+      "Bash(.venv/Scripts/python.exe -c \"from src.optuna_search import optuna_search, _SUGGEST, _build_estimator; print\\('OK', list\\(_SUGGEST.keys\\(\\)\\)\\)\")",
+      "Bash(.venv/Scripts/python.exe scripts/v10_phase_c_driver.py --n-trials 3 --models RF CatBoost LightGBM ElasticNet MLP --targets T_C --tracks opx_only --feature-sets raw)",
+      "Bash(rm -f results/v10_optuna_best_params_opx.json results/v10_optuna_best_params_opx_partial.json logs/v10_phase_c_driver.log)",
+      "Bash(rm -rf results/v10_optuna_studies/opx)",
+      "Bash(.venv/Scripts/python.exe scripts/v10_test_protocol.py catalog)",
+      "Bash(.venv/Scripts/python.exe scripts/v10_phase_c_driver.py --n-trials 50 --skip-existing)",
+      "Bash(.venv/Scripts/python.exe scripts/v10_phase_d_cpx_prep.py)",
+      "Bash(git add *)",
+      "Bash(git commit -m ' *)",
+      "Bash(.venv/Scripts/python.exe scripts/v10_phase_d_cpx_driver.py --n-trials 3 --models RF --targets T_C --tracks cpx_only --feature-sets raw)"
     ]
   }
 }
