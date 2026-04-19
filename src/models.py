@@ -52,6 +52,24 @@ def _make_mlp():
     ])
 
 
+def _make_tabpfn():
+    # Lazy import: tabpfn lives in .venv-tabpfn. Main-venv code that
+    # iterates BASE_MODELS without invoking this factory is unaffected.
+    from tabpfn import TabPFNRegressor
+    return TabPFNRegressor(
+        device='cpu', n_estimators=8, random_state=SEED_MODEL,
+        model_path='auto', ignore_pretraining_limits=True,
+    )
+
+
+class _TabPFNProxy:
+    # Registry placeholder for MODEL_CLASSES. Instantiation triggers the
+    # lazy tabpfn import; mere presence in the dict does not.
+    def __new__(cls, **kwargs):
+        from tabpfn import TabPFNRegressor
+        return TabPFNRegressor(**kwargs)
+
+
 BASE_MODELS = {
     'RF':  lambda: RandomForestRegressor(random_state=SEED_MODEL, n_jobs=ESTIMATOR_NJOBS),
     'ERT': lambda: ExtraTreesRegressor(random_state=SEED_MODEL, n_jobs=ESTIMATOR_NJOBS),
@@ -70,6 +88,7 @@ BASE_MODELS = {
                                       verbose=-1),
     'ElasticNet': _make_elasticnet,
     'MLP': _make_mlp,
+    'TabPFN': _make_tabpfn,
 }
 
 
@@ -105,6 +124,7 @@ PARAM_GRIDS = {
         'l2_regularization': [0.0, 0.1, 1.0],
         'max_leaf_nodes': [15, 31, 63],
     },
+    'TabPFN': {},
 }
 
 
@@ -117,6 +137,7 @@ MODEL_CLASSES = {
     'LightGBM': LGBMRegressor,
     'ElasticNet': ElasticNet,
     'MLP': MLPRegressor,
+    'TabPFN': _TabPFNProxy,
 }
 
 
@@ -148,6 +169,13 @@ def build_model(model_name, params, seed=SEED_MODEL):
     """
     nj = int(os.environ.get('V10_MAX_JOBS', '-1'))
     p = dict(params)
+    if model_name == 'TabPFN':
+        from tabpfn import TabPFNRegressor
+        p.setdefault('device', 'cpu')
+        p.setdefault('n_estimators', 8)
+        p.setdefault('model_path', 'auto')
+        p.setdefault('ignore_pretraining_limits', True)
+        return TabPFNRegressor(**p, random_state=seed)
     if model_name == 'GB':
         return HistGradientBoostingRegressor(**p, random_state=seed)
     if model_name == 'XGB':
