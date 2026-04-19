@@ -7,7 +7,7 @@ Exit codes:
     3 - a required notebook file is missing from notebooks/
 
 Usage:
-    .venv\\Scripts\\python.exe run_all_v7.py [--resume-from NOTEBOOK_NAME]
+    .venv\\Scripts\\python.exe run_all.py [--resume-from NOTEBOOK_NAME]
 """
 from __future__ import annotations
 
@@ -25,7 +25,10 @@ LOG_DIR = ROOT / "logs"
 NOTEBOOKS = [
     "nb01_data_cleaning",
     "nb02_eda_pca",
-    "nb03_baseline_models",
+    "nb03_opx_baseline_models",
+    "nb03_cpx_baseline_models",
+    "nb03_twopx_baseline_models",
+    "nb03_tabpfn_baseline",
     "nb04_putirka_benchmark",
     "nb05_loso_validation",
     "nb06_shap_analysis",
