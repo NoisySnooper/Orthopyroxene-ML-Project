@@ -169,8 +169,13 @@ nb09 (tables) + nbF (figures) → manuscripts/opx_2026/
   `SPLIT_SEEDS = list(range(42, 62))` (20 seeds).
 - **Figure registry.** `CANONICAL_FIGURES` in `config.py` is the source
   of truth; entries 1-35. Orphans live in `archive/`.
-- **Symbol naming.** `BASE_ORDER` is canonical (8 families). The legacy
-  `V10_BASE_ORDER` alias was removed in Phase 1.5 C9.
+- **Symbol naming.** `BASE_ORDER` is canonical (9 families: 8 Optuna-tuned
+  + TabPFN v2 pretrained foundation model). `TUNED_BASES = BASE_ORDER[:-1]`
+  is the 8-family subset used by Optuna-pipeline consumers
+  (`build_oof_matrix`, `evaluate_all_bases`, `fit_internal_ensembles`,
+  `ensemble_predict_on_test`). `STACKING_BASE_ORDER` stays at 4
+  (`'RF','ERT','XGB','GB'`) — TabPFN is deliberately excluded from
+  stacking. The legacy `V10_BASE_ORDER` alias was removed in Phase 1.5 C9.
 - **Filename prefix.** New artifacts use `opx_tb_` (opx thermobarometer).
   Most `v10_*` results/ files were renamed in Phase 1.5 C2-C8; remaining
   `v10_twopx_*` and `v10_universal_*` files are tracked as a post-Phase-1.5

@@ -1,6 +1,12 @@
-# v10 nb03 supplementary: TabPFN v2 baseline plan
+# nb03 TabPFN v2 baseline plan
 
-**Status.** Post-hoc supplementary benchmark. Not in the pre-registered model roster; the roster was locked 2026-04-17 and TabPFN is evaluated after the fact.
+**Status.** Post-hoc benchmark promoted to the 9th `BASE_ORDER` family on
+2026-04-19 (TabPFN Option B). The pre-registered tuned roster
+(`TUNED_BASES`, 8 families) was locked 2026-04-17; TabPFN was added as a
+distinct 9th entry afterward without modifying the 8-family registration
+discipline. TabPFN is deliberately excluded from `STACKING_BASE_ORDER`
+(stays 4) and from bias correction (no OOF residuals in an in-context
+model).
 
 **Reference.** Hollmann, N., Müller, S., Purucker, L., Krishnakumar, A., Körfer, M., Hoo, S. B., Schirrmeister, R. T., and Hutter, F. (2025). Accurate predictions on small data with a tabular foundation model. *Nature* 637, 319-326. doi:10.1038/s41586-024-08328-6.
 
@@ -52,8 +58,9 @@ These feed into:
 
 - **CPU inference only.** For cpx combinations the wall-clock is sensitive; we drop `n_estimators` to 4 to compensate. If future runs have GPU access, `n_estimators=8` with `device='cuda'` should be preferred for both pipelines.
 - **TabPFN version scope.** This baseline uses TabPFN v2 (Hollmann et al. 2025, Nature 637, doi:10.1038/s41586-024-08328-6), not the more recent TabPFN-2.5 release (Grinsztajn et al. 2025, arXiv:2511.08667). The Nature v2 release is explicitly citable, has a permissive Apache 2.0 license with attribution, and is the model referenced in methods comparisons across the tabular-foundation-model literature as of Q2 2026. TabPFN-2.5 offers larger context support (50,000 samples vs 10,000) and marginal performance improvements, but is distributed under a more restrictive non-commercial license and is not yet peer-reviewed. Future work may evaluate TabPFN-2.5 on larger cpx databases where the v2 sample-size ceiling becomes binding; in the current opx/cpx training sets (n <= 2,385) this is not a concern. Pip pin `tabpfn>=2.0,<2.5` enforces this at install time, and the baseline script asserts the package version at the first fit.
-- **No regime-stratified scorecard entry.** TabPFN is not in `BASE_ORDER` or the pre-registered scorecard; the post-correction scorecard is a head-to-head of the v10 tuned pipeline vs Putirka, Agreda-Lopez, and Jorgenson baselines, and mixing in a foundation model would change what that scorecard tests (domain tuning, not raw predictive power).
-- **Not included in `BASE_ORDER`.** The pre-registered roster was locked 2026-04-17; amending it would violate the registration discipline. TabPFN's role here is explicitly supplementary.
+- **Scorecard framing.** TabPFN is now in `BASE_ORDER` as the 9th family but NOT in `TUNED_BASES`. The pre-registered scorecard tests the v10 tuned pipeline vs Putirka, Agreda-Lopez, and Jorgenson baselines; TabPFN columns are reported side by side for a head-to-head comparison without modifying the tuned-pipeline scorecard's decision logic.
+- **Excluded from stacking.** `STACKING_BASE_ORDER` remains `('RF','ERT','XGB','GB')`. Adding TabPFN to the Ridge meta-learner would require a compliant OOF prediction path that TabPFN's in-context architecture does not provide.
+- **Excluded from bias correction.** TabPFN produces a single in-context forward pass; there are no OOF residuals to fit regime-piecewise or sigmoid-blend corrections on. See row 8-16 of `results/bias_correction_shipped.csv` with `winner='excluded'`.
 
 ## What ships
 

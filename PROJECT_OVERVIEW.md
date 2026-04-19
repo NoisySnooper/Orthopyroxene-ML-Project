@@ -25,17 +25,17 @@ post-correction scorecards and GEOROC natural opx inference. D4 figures
 autofill. Tests T16-T18 register Phase G.7 decisions in the NB03 test
 log. Twopx and universal pipelines excluded from this mini-project.
 
-**TabPFN v2 baseline (2026-04-19).** Hollmann et al. 2025 foundation model
-added as a drop-in reference at every (pipeline, track, target) cell.
-Produces `results/tabpfn_head_to_head.csv`,
-`results/tabpfn_multiseed_{results,summary}.csv`,
-`results/tabpfn_predictions.csv`, `results/tabpfn_regime_rmse.csv`,
-per-seed checkpoints, figure 35, table S12, and a manuscript paragraph.
-Currently outside `BASE_ORDER` (the pre-registered roster was locked
-2026-04-17); TabPFN Option B integration to promote it to 9th family is
-queued post-Phase-1.5. 8-cell head-to-head: v10 wins 6, TabPFN wins 1,
-1 competitive. See `docs/nb03_tabpfn_plan.md` and
-`notebooks/nb03_tabpfn_baseline.ipynb`.
+**TabPFN v2 as 9th `BASE_ORDER` family (2026-04-19, Option B).** Hollmann
+et al. 2025 foundation model promoted from supplementary baseline to the
+9th first-class model family after the Phase 1.5 cleanup. `BASE_ORDER`
+is now 9 entries (8 Optuna-tuned in `TUNED_BASES` + TabPFN); 20-seed
+protocol (42-61) matches other families. CPU inference, raw oxide
+features only, no Optuna, no stacking, no SHAP. Excluded from
+`STACKING_BASE_ORDER` (stays 4) and from bias correction (no OOF
+residuals). Outputs: `results/tabpfn_*.csv`, `figures/fig35_tabpfn_vs_opx_tb`,
+`tables/S8_12_tabpfn_benchmark.{csv,md,tex}`, `manuscripts/opx_2026/text/tabpfn_paragraph.md`.
+8-cell head-to-head: opx_tb wins 6, TabPFN wins 1, 1 competitive. See
+`docs/nb03_tabpfn_plan.md` and `notebooks/nb03_tabpfn_baseline.ipynb`.
 
 **v10+v11 planning complete (2026-04-16).** 13 planning documents written.
 Phase A execution pending user approval. See

@@ -16,7 +16,9 @@ Two manuscripts in preparation:
 **Status:** v9 complete (2026-04-16). v10+v11 planning complete (2026-04-16).
 Phase G.7 bias correction + TabPFN v2 baseline shipped 2026-04-19.
 Phase 1.5 cleanup (`BASE_ORDER` rename, `V10_BASE_ORDER` alias removed,
-most `v10_*` paths renamed, v9 docs archived) committed 2026-04-19. See
+most `v10_*` paths renamed, v9 docs archived) committed 2026-04-19.
+TabPFN Option B promoted TabPFN to 9th `BASE_ORDER` family (8 tuned +
+TabPFN pretrained), 20-seed protocol across all families, 2026-04-19. See
 [`docs/master_plan.md`](docs/master_plan.md) for the active plan and
 [`PROJECT_LAYOUT.md`](PROJECT_LAYOUT.md) for the directory tree.
 
@@ -159,12 +161,17 @@ once NB03 winners are frozen.
   per test T04. Re-tested per pipeline in v10; ship/ablate per result.
 - **Canonical splits preserved.** `config.SEED_SPLIT=42`. Test indices in
   `data/splits/test_indices_{track}.npy`.
-- **TabPFN v2 baseline.** Hollmann et al. 2025 (*Nature* 637,
-  doi:10.1038/s41586-024-08328-6) pretrained foundation model run as a
-  reference against every (pipeline, track, target) cell. Currently
-  outside `BASE_ORDER` (the pre-registered roster); 20 seeds (matching
-  other families), CPU inference, raw oxide features only, no Optuna, no
-  stacking, no SHAP. Outputs: `results/tabpfn_*.csv`,
+- **TabPFN v2 family (9th in `BASE_ORDER`).** Hollmann et al. 2025
+  (*Nature* 637, doi:10.1038/s41586-024-08328-6) pretrained foundation
+  model promoted to the 9th first-class model family post-Phase-1.5
+  (TabPFN Option B, 2026-04-19). `BASE_ORDER` now 9 entries: 8
+  Optuna-tuned families + TabPFN last. `TUNED_BASES = BASE_ORDER[:-1]`
+  for Optuna-pipeline consumers. 20 seeds (42-61, matching other
+  families), CPU inference, raw oxide features only, no Optuna, no
+  stacking, no SHAP. **Excluded from bias correction** (no OOF residuals
+  available: in-context foundation model with a single forward pass).
+  `STACKING_BASE_ORDER` stays 4 (RF/ERT/XGB/GB) — TabPFN deliberately
+  not a stacking base. Outputs: `results/tabpfn_*.csv`,
   `figures/fig35_tabpfn_vs_opx_tb`, `tables/S8_12_tabpfn_benchmark.{csv,md,tex}`,
   `manuscripts/opx_2026/text/tabpfn_paragraph.md`. Head-to-head across 8
   cells: opx_tb wins 6, TabPFN wins 1 (cpx_liq T_C), 1 competitive. See
