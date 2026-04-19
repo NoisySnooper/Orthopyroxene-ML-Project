@@ -1,0 +1,19 @@
+\begin{table}[tbp]
+\centering
+\caption{Shipped bias-correction summary (Phase G.7, Table 4). Each row is the aggregate-best (model, feature set) cell of the multiseed summary. Form A is piecewise-linear per pre-registered P regime; Form B is a single quantile-thresholded piecewise correction (shared across regimes). ships\_majority=True means the winning form reduced test-set RMSE without inflating any regime on strictly more than half of the 20 seeds.}
+\label{tab:bc_shipped}
+\begin{tabular}{llllr r r l}
+\toprule
+track & target & model & feat.\ set & form & $\Delta$RMSE & max reg.\ deg.\ & ships (maj.) \\
+\midrule
+cpx-liq & P (kbar) & LightGBM & pwlr & none & -- & -- & no \\
+cpx-only & P (kbar) & MLP & alr & A & 2.334 & -0.676 & yes \\
+opx-liq & P (kbar) & MLP & raw & none & -- & -- & no \\
+opx-only & P (kbar) & RF & pwlr & A & 4.337 & -4.228 & yes \\
+cpx-liq & T (C) & ERT & pwlr & none & -- & -- & no \\
+cpx-only & T (C) & ERT & pwlr & none & -- & -- & no \\
+opx-liq & T (C) & ElasticNet & raw & none & -- & -- & no \\
+opx-only & T (C) & LightGBM & alr & none & -- & -- & no \\
+\bottomrule
+\end{tabular}
+\end{table}

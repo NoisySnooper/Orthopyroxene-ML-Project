@@ -1,0 +1,21 @@
+\begin{longtable}{lllllrrrrrrrrr}
+\caption{Bias-correction stability and bin-edge sensitivity (Phase G.7, Table S10). Form A $\Delta$RMSE is reported at the base edges plus the maximum $|\Delta|$ swing across $\pm 1$ kbar perturbations of the inner edges. Form B parameters are mean / std across 5 CV reseeds at fixed model seed 42.} \label{tab:bc_stability} \\
+\toprule
+pipeline & track & target & A\_delta\_base & A\_delta\_edge\_max\_swing & B\_alpha\_L\_mean & B\_alpha\_L\_std & B\_alpha\_R\_mean & B\_alpha\_R\_std & B\_s\_L\_mean & B\_s\_L\_std & B\_s\_R\_mean & B\_s\_R\_std & B\_n\_seeds \\
+\midrule
+\endfirsthead
+\toprule
+pipeline & track & target & A\_delta\_base & A\_delta\_edge\_max\_swing & B\_alpha\_L\_mean & B\_alpha\_L\_std & B\_alpha\_R\_mean & B\_alpha\_R\_std & B\_s\_L\_mean & B\_s\_L\_std & B\_s\_R\_mean & B\_s\_R\_std & B\_n\_seeds \\
+\midrule
+\endhead
+\bottomrule
+\endfoot
+cpx & cpx\_liq & P\_kbar & 0.809 & 0.280 & 0.450 & 0.000 & 0.950 & 0.000 & -0.064 & 0.010 & 0.186 & 0.084 & 5 \\
+cpx & cpx\_only & P\_kbar & 2.411 & 0.405 & 0.138 & 0.016 & 0.950 & 0.000 & 1.453 & 0.242 & 0.245 & 0.075 & 5 \\
+opx & opx\_liq & P\_kbar & 1.233 & 0.251 & 0.202 & 0.125 & 0.630 & 0.160 & 0.418 & 0.145 & -0.003 & 0.254 & 5 \\
+opx & opx\_only & P\_kbar & 4.296 & 0.878 & 0.306 & 0.041 & 0.854 & 0.048 & -0.126 & 0.027 & 0.611 & 0.076 & 5 \\
+cpx & cpx\_liq & T\_C & 3.549 & 1.409 & 0.450 & 0.000 & 0.806 & 0.060 & -0.072 & 0.011 & -0.149 & 0.055 & 5 \\
+cpx & cpx\_only & T\_C & -12.023 & 5.916 & 0.258 & 0.106 & 0.566 & 0.020 & 0.008 & 0.089 & 0.418 & 0.049 & 5 \\
+opx & opx\_liq & T\_C & -0.107 & 0.251 & 0.050 & 0.000 & 0.846 & 0.020 & 0.475 & 0.093 & -0.204 & 0.025 & 5 \\
+opx & opx\_only & T\_C & 24.564 & 3.789 & 0.130 & 0.000 & 0.550 & 0.000 & -0.100 & 0.011 & 0.122 & 0.013 & 5 \\
+\end{longtable}

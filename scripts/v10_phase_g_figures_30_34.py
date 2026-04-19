@@ -220,7 +220,7 @@ def figure_f32(per_seed_df, out_stem, fh):
             a_rmses = sub[sub.form == 'A']['post_rmse'].dropna().values
             b_rmses = sub[sub.form == 'B']['post_rmse'].dropna().values
             data = [pre_rmses, a_rmses, b_rmses]
-            bp = ax.boxplot(data, labels=['pre', 'Form A', 'Form B'],
+            bp = ax.boxplot(data, tick_labels=['pre', 'Form A', 'Form B'],
                             widths=0.6, patch_artist=True)
             for patch, c in zip(bp['boxes'], [COL_PRE, COL_A, COL_B]):
                 patch.set_facecolor(c)

@@ -1,0 +1,9 @@
+track,target,model,feature_set,form,overall_delta_rmse_mean,max_regime_degradation_mean,n_seeds_ship,n_seeds_total,ships_majority
+cpx-liq,P (kbar),LightGBM,pwlr,none,,,0,0,False
+cpx-only,P (kbar),MLP,alr,A,2.334451761042688,-0.6759098212659289,19,20,True
+opx-liq,P (kbar),MLP,raw,none,,,0,0,False
+opx-only,P (kbar),RF,pwlr,A,4.336538164781337,-4.227872064906295,20,20,True
+cpx-liq,T (C),ERT,pwlr,none,,,0,0,False
+cpx-only,T (C),ERT,pwlr,none,,,0,0,False
+opx-liq,T (C),ElasticNet,raw,none,,,0,0,False
+opx-only,T (C),LightGBM,alr,none,,,0,0,False

@@ -1,0 +1,13 @@
+[2026-04-18 21:49:57] D4: figures 30-34
+[2026-04-18 21:49:57] loaded C:\Users\NQTa\Documents\MLCourse\Final Project\results\v10_bias_correction_per_seed.csv  rows=1600
+[2026-04-18 21:50:01] F30: wrote (WindowsPath('C:/Users/NQTa/Documents/MLCourse/Final Project/figures/fig30_regime_rmse_bars.png'), WindowsPath('C:/Users/NQTa/Documents/MLCourse/Final Project/figures/fig30_regime_rmse_bars.pdf'))
+[2026-04-18 21:50:09] F31: wrote (WindowsPath('C:/Users/NQTa/Documents/MLCourse/Final Project/figures/fig31_correction_vs_predicted.png'), WindowsPath('C:/Users/NQTa/Documents/MLCourse/Final Project/figures/fig31_correction_vs_predicted.pdf'))
+[2026-04-18 21:50:12] F32: wrote (WindowsPath('C:/Users/NQTa/Documents/MLCourse/Final Project/figures/fig32_seed_boxplots.png'), WindowsPath('C:/Users/NQTa/Documents/MLCourse/Final Project/figures/fig32_seed_boxplots.pdf'))
+[2026-04-18 21:50:18] F33: wrote (WindowsPath('C:/Users/NQTa/Documents/MLCourse/Final Project/figures/fig33_delta_rmse_scatter.png'), WindowsPath('C:/Users/NQTa/Documents/MLCourse/Final Project/figures/fig33_delta_rmse_scatter.pdf'))
+[2026-04-18 21:50:21] F34: wrote (WindowsPath('C:/Users/NQTa/Documents/MLCourse/Final Project/figures/fig34_scorecard_heatmap.png'), WindowsPath('C:/Users/NQTa/Documents/MLCourse/Final Project/figures/fig34_scorecard_heatmap.pdf'))
+[2026-04-18 21:50:21] wrote C:\Users\NQTa\Documents\MLCourse\Final Project\figures\fig30_caption.txt
+[2026-04-18 21:50:21] wrote C:\Users\NQTa\Documents\MLCourse\Final Project\figures\fig31_caption.txt
+[2026-04-18 21:50:21] wrote C:\Users\NQTa\Documents\MLCourse\Final Project\figures\fig32_caption.txt
+[2026-04-18 21:50:21] wrote C:\Users\NQTa\Documents\MLCourse\Final Project\figures\fig33_caption.txt
+[2026-04-18 21:50:21] wrote C:\Users\NQTa\Documents\MLCourse\Final Project\figures\fig34_caption.txt
+[2026-04-18 21:50:21] D4 DONE

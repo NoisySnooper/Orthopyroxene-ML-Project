@@ -142,7 +142,7 @@ def main():
                     (pseed.track == r['track']) & (pseed.target == r['target'])
                     & (pseed.form == win) & (pseed.regime == 'ALL')
                 ]
-                n_ship = int(ps['ships'].sum()) if 'ships' in ps.columns else 0
+                n_ship = int((ps['winner'] == win).sum())
                 n_tot = len(ps)
                 maj = 'yes' if n_ship > n_tot / 2 else 'no'
             else:
@@ -177,16 +177,17 @@ def main():
             lines.append('')
             lines.append('| track | target | $\\Delta$RMSE base | max $|\\Delta|$ swing |')
             lines.append('|---|---|---|---|')
-            for k, g in edge.groupby(['pipeline', 'track', 'target']):
-                base = g[g.edge_set == 'base']
+            ecell = edge.drop_duplicates(['pipeline', 'track', 'target', 'perturbation'])
+            for k, g in ecell.groupby(['pipeline', 'track', 'target']):
+                base = g[g.perturbation == 'base']
                 if base.empty:
                     continue
-                b_delta = float(base['overall_delta_rmse'].mean())
+                b_delta = float(base['overall_delta'].iloc[0])
                 swings = []
                 for es in ('inner_m1', 'inner_p1'):
-                    ss = g[g.edge_set == es]
+                    ss = g[g.perturbation == es]
                     if not ss.empty:
-                        swings.append(abs(float(ss['overall_delta_rmse'].mean()) - b_delta))
+                        swings.append(abs(float(ss['overall_delta'].iloc[0]) - b_delta))
                 swing = max(swings) if swings else np.nan
                 lines.append(
                     f"| {TRACK_LABEL.get(k[1], k[1])} | {k[2]} "

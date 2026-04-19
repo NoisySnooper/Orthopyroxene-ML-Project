@@ -1,0 +1,20 @@
+[2026-04-18 21:55:48] T16: 2 cell(s) ship -> passed=True
+[2026-04-18 21:55:48] T17 opx_only/P_kbar form=A: 20/20 seeds pick A -> passed=True
+[2026-04-18 21:55:48] T17 cpx_only/P_kbar form=A: 19/20 seeds pick A -> passed=True
+[2026-04-18 21:55:48] T18a(edge) cpx_liq/P_kbar: swing=0.280 threshold=0.50 -> passed=True
+[2026-04-18 21:55:48] T18a(edge) cpx_liq/T_C: swing=1.409 threshold=5.00 -> passed=True
+[2026-04-18 21:55:48] T18a(edge) cpx_only/P_kbar: swing=0.405 threshold=0.50 -> passed=True
+[2026-04-18 21:55:48] T18a(edge) cpx_only/T_C: swing=5.916 threshold=5.00 -> passed=False
+[2026-04-18 21:55:48] T18a(edge) opx_liq/P_kbar: swing=0.251 threshold=0.50 -> passed=True
+[2026-04-18 21:55:48] T18a(edge) opx_liq/T_C: swing=0.251 threshold=5.00 -> passed=True
+[2026-04-18 21:55:48] T18a(edge) opx_only/P_kbar: swing=0.878 threshold=0.50 -> passed=False
+[2026-04-18 21:55:48] T18a(edge) opx_only/T_C: swing=3.789 threshold=5.00 -> passed=True
+[2026-04-18 21:55:48] T18b(stab) cpx_liq/P_kbar: max alpha std=0.000 -> passed=True
+[2026-04-18 21:55:48] T18b(stab) cpx_liq/T_C: max alpha std=0.060 -> passed=True
+[2026-04-18 21:55:48] T18b(stab) cpx_only/P_kbar: max alpha std=0.016 -> passed=True
+[2026-04-18 21:55:48] T18b(stab) cpx_only/T_C: max alpha std=0.106 -> passed=False
+[2026-04-18 21:55:48] T18b(stab) opx_liq/P_kbar: max alpha std=0.160 -> passed=False
+[2026-04-18 21:55:48] T18b(stab) opx_liq/T_C: max alpha std=0.020 -> passed=True
+[2026-04-18 21:55:48] T18b(stab) opx_only/P_kbar: max alpha std=0.048 -> passed=True
+[2026-04-18 21:55:48] T18b(stab) opx_only/T_C: max alpha std=0.000 -> passed=True
+[2026-04-18 21:55:48] appended 19 row(s) to C:\Users\NQTa\Documents\MLCourse\Final Project\results\v10_nb03_test_log.csv

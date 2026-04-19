@@ -1,0 +1,17 @@
+[2026-04-18 21:45:57] D3: post-correction tables
+[2026-04-18 21:45:57] loaded C:\Users\NQTa\Documents\MLCourse\Final Project\results\v10_regime_allmodels.csv  rows=4769
+[2026-04-18 21:45:57]   cpx_cpx_liq_P_kbar_LightGBM_pwlr_s42.pkl: winner=none rows=5
+[2026-04-18 21:45:57]   cpx_cpx_liq_T_C_ERT_pwlr_s42.pkl: winner=none rows=5
+[2026-04-18 21:45:57]   cpx_cpx_only_P_kbar_MLP_alr_s42.pkl: winner=A rows=5
+[2026-04-18 21:45:58]   cpx_cpx_only_T_C_ERT_pwlr_s42.pkl: winner=none rows=5
+[2026-04-18 21:45:58]   opx_opx_liq_P_kbar_MLP_raw_s42.pkl: winner=none rows=5
+[2026-04-18 21:45:58]   opx_opx_liq_T_C_ElasticNet_raw_s42.pkl: winner=none rows=5
+[2026-04-18 21:45:58]   opx_opx_only_P_kbar_RF_pwlr_s42.pkl: winner=A rows=5
+[2026-04-18 21:45:58]   opx_opx_only_T_C_LightGBM_alr_s42.pkl: winner=none rows=5
+[2026-04-18 21:45:58] corrected rows=40
+[2026-04-18 21:45:58] wrote C:\Users\NQTa\Documents\MLCourse\Final Project\results\v10_regime_allmodels_postcorrection.csv  rows=4809
+[2026-04-18 21:45:58] wrote C:\Users\NQTa\Documents\MLCourse\Final Project\results\v10_preregistered_scorecard_postcorrection.csv  rows=40
+[2026-04-18 21:45:58] scorecard winner counts:
+[2026-04-18 21:45:58]   external: 19
+[2026-04-18 21:45:58]   v10_pre: 11
+[2026-04-18 21:45:58]   v10_corrected: 10

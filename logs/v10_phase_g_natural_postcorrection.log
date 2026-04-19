@@ -1,0 +1,12 @@
+[2026-04-18 21:48:10] D3b: GEOROC natural opx post-correction inference
+[2026-04-18 21:48:10] natural samples: n=53050
+[2026-04-18 21:48:10]   T_C: LightGBM/alr winner=none
+[2026-04-18 21:48:10]   P_kbar: RF/pwlr winner=A
+[2026-04-18 21:48:11]   T_C: predicted 53050 natural samples (pre-correction)
+[2026-04-18 21:48:15]   P_kbar: predicted 53050 natural samples (pre-correction)
+[2026-04-18 21:48:50] wrote C:\Users\NQTa\Documents\MLCourse\Final Project\results\v10_natural_opx_post_correction_inference.csv  rows=53050
+[2026-04-18 21:48:50] regime distribution pre vs post (from predicted P_kbar):
+[2026-04-18 21:48:50]   deep_crustal_MASH    pre= 13177  post= 13177
+[2026-04-18 21:48:50]   deeper_mantle        pre=  2688  post=  2688
+[2026-04-18 21:48:50]   lithospheric_mantle  pre= 11138  post= 11138
+[2026-04-18 21:48:50]   shallow_crustal      pre= 26047  post= 26047

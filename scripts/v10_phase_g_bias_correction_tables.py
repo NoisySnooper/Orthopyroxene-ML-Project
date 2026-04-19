@@ -88,8 +88,6 @@ def build_table_4(shipped_csv: Path, summary_csv: Path,
     keys = ['pipeline', 'track', 'target', 'model', 'feature_set']
     cell_keys = summ[keys].drop_duplicates().to_dict('records')
     ship_map = {(r['track'], r['target']): r for _, r in ship.iterrows()}
-    n_total_seeds = pseed[pseed.regime == 'ALL'].groupby(
-        ['track', 'target', 'form']).size().to_dict()
 
     for k in cell_keys:
         tk = (k['track'], k['target'])
@@ -111,12 +109,14 @@ def build_table_4(shipped_csv: Path, summary_csv: Path,
                 reg_deg = np.nan
 
             # Per-seed majority ship at winning form.
+            # Per_seed CSV has no 'ships' column; winner column already
+            # encodes per-seed shipping outcome.
             ps = pseed[
                 (pseed.track == k['track']) & (pseed.target == k['target'])
                 & (pseed.form == winner) & (pseed.regime == 'ALL')
             ]
-            n_ship = int(ps['ships'].sum()) if 'ships' in ps.columns else 0
-            n_seeds = int(n_total_seeds.get((k['track'], k['target'], winner), 0))
+            n_ship = int((ps['winner'] == winner).sum())
+            n_seeds = len(ps)
             ships_majority = n_ship > (n_seeds / 2.0) if n_seeds > 0 else False
         else:
             delta_mean = np.nan
@@ -181,9 +181,13 @@ def build_table_s9(per_seed_csv: Path) -> pd.DataFrame:
     # Some drivers emit per-regime rows; we want the 'ALL' roll-up.
     if 'regime' in df.columns:
         df = df[df.regime == 'ALL']
+    # Per_seed CSV has no 'ships' column; synthesize per-row "wins"
+    # flag from `winner == form`.
+    df = df.copy()
+    df['wins'] = (df['winner'] == df['form']).astype(int)
     cols = ['pipeline', 'track', 'target', 'model', 'feature_set',
             'seed', 'form', 'pre_rmse', 'post_rmse', 'delta_rmse',
-            'ships']
+            'wins']
     have = [c for c in cols if c in df.columns]
     return df[have].copy().sort_values(
         ['target', 'track', 'form', 'seed']).reset_index(drop=True)
@@ -229,17 +233,20 @@ def build_table_s10(edge_csv: Path, stab_csv: Path) -> pd.DataFrame:
     edge_rows = []
     if edge_csv.exists():
         e = pd.read_csv(edge_csv)
+        # Collapse to one row per (cell, perturbation) -- overall_delta is
+        # repeated across the 5 regime rows within a cell x perturbation.
+        ecell = e.drop_duplicates(['pipeline', 'track', 'target', 'perturbation'])
         keys = ['pipeline', 'track', 'target']
-        for k, g in e.groupby(keys):
-            base = g[g.edge_set == 'base']
+        for k, g in ecell.groupby(keys):
+            base = g[g.perturbation == 'base']
             if base.empty:
                 continue
-            b_delta = float(base['overall_delta_rmse'].mean())
+            b_delta = float(base['overall_delta'].iloc[0])
             swings = []
             for es in ('inner_m1', 'inner_p1'):
-                ss = g[g.edge_set == es]
+                ss = g[g.perturbation == es]
                 if not ss.empty:
-                    swings.append(abs(float(ss['overall_delta_rmse'].mean()) - b_delta))
+                    swings.append(abs(float(ss['overall_delta'].iloc[0]) - b_delta))
             edge_rows.append({
                 'pipeline': k[0], 'track': k[1], 'target': k[2],
                 'A_delta_base': b_delta,
@@ -307,8 +314,9 @@ def main():
             write_longtable_tex(s9, TABLES_DIR / 'S9_bias_correction_per_seed.tex',
                                 caption=('Per-seed detailed bias-correction results'
                                          ' (Phase G.7, Table S9). One row per (cell,'
-                                         ' seed, form); regime = ALL. "ships" column'
-                                         ' is the per-seed decision.'),
+                                         ' seed, form); regime = ALL. "wins" is 1'
+                                         ' when that form was chosen as the per-seed'
+                                         ' shipping winner, 0 otherwise.'),
                                 label='tab:bc_per_seed')
             _log(f'  S9 wrote {len(s9)} rows', fh)
         else:

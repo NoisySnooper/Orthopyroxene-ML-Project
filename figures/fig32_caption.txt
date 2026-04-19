@@ -1,0 +1,1 @@
+Figure 32. Distribution of overall test RMSE across 20 seeds. Each box shows the IQR of test RMSE for pre-correction, Form A, and Form B for one cell. Stability across seeds (narrow box) is a stronger basis for shipping than seed-42 alone.

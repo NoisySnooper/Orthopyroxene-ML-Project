@@ -78,20 +78,24 @@ def test_t16(ship: pd.DataFrame, fh) -> dict:
 
 
 def test_t17(ship: pd.DataFrame, pseed: pd.DataFrame, fh) -> list[dict]:
+    """Count seeds whose winner matches the canonical shipping form.
+
+    The per_seed CSV does not carry an explicit `ships` column. Winner
+    per seed is already the output of ship_decision + choose_winner, so
+    `winner == canonical_form` is the correct per-seed ship signal."""
     rows = []
+    ps_all = pseed[pseed.regime == 'ALL'].drop_duplicates(
+        ['pipeline', 'track', 'target', 'seed'])
     for _, r in ship.iterrows():
         w = r['winner']
         if w not in ('A', 'B'):
             continue
-        ps = pseed[
-            (pseed.track == r['track']) & (pseed.target == r['target'])
-            & (pseed.form == w) & (pseed.regime == 'ALL')
-        ]
-        n_ship = int(ps['ships'].sum()) if 'ships' in ps.columns else 0
+        ps = ps_all[(ps_all.track == r['track']) & (ps_all.target == r['target'])]
+        n_ship = int((ps['winner'] == w).sum())
         n_tot = len(ps)
         passed = n_ship > (n_tot / 2.0) if n_tot > 0 else False
         _log(f'T17 {r["track"]}/{r["target"]} form={w}: '
-             f'{n_ship}/{n_tot} ships -> passed={passed}', fh)
+             f'{n_ship}/{n_tot} seeds pick {w} -> passed={passed}', fh)
         rows.append({
             'timestamp': _now(),
             'pipeline': r['pipeline'] if 'pipeline' in r else 'all',
@@ -110,16 +114,18 @@ def test_t18(edge: pd.DataFrame | None, stab: pd.DataFrame | None,
     rows = []
     # T18a: Form A edge sensitivity.
     if edge is not None:
-        for k, g in edge.groupby(['pipeline', 'track', 'target']):
-            base = g[g.edge_set == 'base']
+        ecell = edge.drop_duplicates(
+            ['pipeline', 'track', 'target', 'perturbation'])
+        for k, g in ecell.groupby(['pipeline', 'track', 'target']):
+            base = g[g.perturbation == 'base']
             if base.empty:
                 continue
-            b_delta = float(base['overall_delta_rmse'].mean())
+            b_delta = float(base['overall_delta'].iloc[0])
             swings = []
             for es in ('inner_m1', 'inner_p1'):
-                ss = g[g.edge_set == es]
+                ss = g[g.perturbation == es]
                 if not ss.empty:
-                    swings.append(abs(float(ss['overall_delta_rmse'].mean()) - b_delta))
+                    swings.append(abs(float(ss['overall_delta'].iloc[0]) - b_delta))
             max_swing = max(swings) if swings else np.nan
             threshold = T18_EDGE_THRESH_P if k[2] == 'P_kbar' else T18_EDGE_THRESH_T
             passed = bool(np.isfinite(max_swing) and max_swing < threshold)
