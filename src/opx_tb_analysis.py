@@ -1,7 +1,8 @@
-"""v10 Phase C analysis: refit, OOF preds, ensembles, tests for opx pipeline.
+"""Core analysis helpers for the opx thermobarometer pipeline: refit,
+OOF preds, ensembles, tests.
 
-Consumes `results/optuna_best_params_opx.json` (produced by
-`scripts/v10_phase_c_driver.py`) and generates:
+Consumes `results/optuna_best_params_opx.json` (produced by the opx
+Optuna driver) and generates:
   - Final fitted base models on the full training set
   - OOF prediction matrix (8 bases x N_train)
   - 3 internal ensembles (Ridge stack, two-level stack, Caruana greedy)
@@ -34,11 +35,6 @@ BASE_ORDER = ('RF', 'ERT', 'XGB', 'GB', 'CatBoost', 'LightGBM', 'ElasticNet', 'M
 TARGETS = ('T_C', 'P_kbar')
 TRACKS = ('opx_only', 'opx_liq')
 FEATURE_SETS = ('raw', 'alr', 'pwlr')
-
-V10_BASE_ORDER = BASE_ORDER
-V10_TARGETS = TARGETS
-V10_TRACKS = TRACKS
-V10_FEATURE_SETS = FEATURE_SETS
 
 
 # ---------------------------------------------------------------------------
