@@ -76,14 +76,14 @@ Auto-generated from results/bias_correction_*.csv on 2026-04-19. Canonical seed 
 | cpx-only | T_C | ERT/pwlr | none | overall delta -12.02 <= tol 1e-06 | overall delta -7.589 <= tol 1e-06 |
 | cpx-only | P_kbar | MLP/alr | A | ships: overall improves, no regime degrades | regime worst degradation +0.2531 > tol 1e-06 |
 
-**opx-only P per-regime pre/post (ships A, unanimous over 20 seeds):**
+**opx-only P per-regime pre/post (accepts Form A, unanimous over 20 seeds):**
 - shallow_crustal n=48: pre=7.19 kbar, post=1.13 kbar, external best=2.20 kbar (Putirka 29c), winner=post-correction
 - deep_crustal_MASH n=76: pre=5.21 kbar, post=1.97 kbar, external best=4.68 kbar (Putirka 29c), winner=post-correction
 - lithospheric_mantle n=37: pre=4.03 kbar, post=3.34 kbar, external best=5.07 kbar (Putirka 29c), winner=post-correction
 - deeper_mantle n=29: pre=19.65 kbar, post=14.55 kbar, external best=30.92 kbar (Putirka 29c), winner=post-correction
 - ALL n=190: pre=10.33 kbar, post=6.03 kbar, external best=13.34 kbar (Putirka 29c), winner=post-correction
 
-**cpx-only P per-regime pre/post (ships A at canonical, 19/20 seeds):**
+**cpx-only P per-regime pre/post (accepts Form A at canonical, 19/20 seeds):**
 - shallow_crustal n=236: pre=8.33 kbar, post=1.16 kbar, external best=2.84 kbar (Putirka 32b), winner=post-correction
 - deep_crustal_MASH n=193: pre=3.28 kbar, post=1.70 kbar, external best=1.39 kbar (Jorgenson 2022), winner=external
 - lithospheric_mantle n=213: pre=8.19 kbar, post=3.88 kbar, external best=3.83 kbar (Jorgenson 2022), winner=external

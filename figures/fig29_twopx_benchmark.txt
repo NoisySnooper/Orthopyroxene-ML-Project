@@ -4,12 +4,12 @@ twopx Citation-grouped held-out test split. Bars show single-seed test
 RMSE for the best base model (blue, ElasticNet/raw for T_C; XGB/alr
 for P_kbar) and best stacked ensemble (orange, greedy/pwlr for both
 targets). Whiskers on the base-model bars show the 20-seed RMSE
-spread (min to max) from the Phase G.1c multiseed refit. The Putirka
+spread (min to max) from the final phase multiseed refit. The Putirka
 2008 two-pyroxene equations (eq36/37/38/39) are DEFERRED because the
 call requires paired opx-cpx Thermobar invocation that is not wired
 into the tuned ML baseline; the deferred row is retained in the CSV with NaN RMSE so
 downstream consumers (NB09 manuscript, NBF figures) flag the gap
-explicitly. Fixes the v9 empty nb10_two_pyroxene_benchmark.csv
+explicitly. Fixes the earlier empty nb10_two_pyroxene_benchmark.csv
 regression. Produced by scripts/v10_phase_g_nb10_twopx_benchmark.py.
 Source CSVs: results/v10_twopx_benchmark_final.csv and
 tables/S8_9_twopx_benchmark.{md,csv}.
