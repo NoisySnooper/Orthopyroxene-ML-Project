@@ -1,4 +1,4 @@
-Fig. 26. v10 out-of-fold generalization diagnostics for the three canonical
+Fig. 26. the tuned ML baseline out-of-fold generalization diagnostics for the three canonical
 opx-liq cells (ElasticNet/raw/T_C aggregate winner; MLP/raw/P_kbar
 aggregate winner; ElasticNet/raw/P_kbar shallow-crustal robust winner).
 Each panel plots pooled held-out RMSE (95% bootstrap CI whiskers) across

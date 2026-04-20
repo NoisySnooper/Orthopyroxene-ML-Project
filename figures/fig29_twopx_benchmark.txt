@@ -1,4 +1,4 @@
-Fig. 29. v10 two-pyroxene (twopx) benchmark, consolidating the per-cell
+Fig. 29. the tuned ML baseline two-pyroxene (twopx) benchmark, consolidating the per-cell
 (single seed), 20-seed multiseed, and stacked-ensemble results on the
 twopx Citation-grouped held-out test split. Bars show single-seed test
 RMSE for the best base model (blue, ElasticNet/raw for T_C; XGB/alr
@@ -7,7 +7,7 @@ targets). Whiskers on the base-model bars show the 20-seed RMSE
 spread (min to max) from the Phase G.1c multiseed refit. The Putirka
 2008 two-pyroxene equations (eq36/37/38/39) are DEFERRED because the
 call requires paired opx-cpx Thermobar invocation that is not wired
-into v10; the deferred row is retained in the CSV with NaN RMSE so
+into the tuned ML baseline; the deferred row is retained in the CSV with NaN RMSE so
 downstream consumers (NB09 manuscript, NBF figures) flag the gap
 explicitly. Fixes the v9 empty nb10_two_pyroxene_benchmark.csv
 regression. Produced by scripts/v10_phase_g_nb10_twopx_benchmark.py.
