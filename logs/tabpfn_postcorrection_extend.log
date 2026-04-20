@@ -1,0 +1,6 @@
+=== C3: extend postcorrection CSVs with TabPFN ===
+  shipping combos @ seed=42: {('opx', 'opx_only', 'T_C'), ('opx', 'opx_only', 'P_kbar')}
+regime_allmodels_postcorrection: 4809 -> 4839 rows (+20 tabpfn +10 tabpfn_corrected)
+scorecard: 40 rows; winners={'external': 19, 'v10_pre': 7, 'tabpfn_corrected': 7, 'v10_corrected': 6, 'tabpfn': 1}
+tabpfn_correction_form counts: {'none': 30, 'A': 10}
+done.
