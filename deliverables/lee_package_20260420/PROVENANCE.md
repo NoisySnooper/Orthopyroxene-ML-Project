@@ -1,16 +1,16 @@
 # Provenance
 
 Built: 2026-04-20
-Git SHA: `5bd8a252e721c46277107d6359f7b1f68b0245cf`
+Git SHA: `bd1e768f08b80a844a4e6726c138d32eb5ed6e98`
 
 ## Last 5 commits
 
 ```
+bd1e768 Advisor package: Lee review bundle 20260420
 5bd8a25 Phase 3: terminology cleanup across manuscripts and caption sidecars
 2b7e9fe Phase 4: natural-sample pipeline refresh (nb08 re-executed)
 86fa8c1 Phase 2: TabPFN post-correction headline figures
 8afc976 Phase 1: TabPFN full bias-correction integration
-a9d2d97 [nb04b] Augmentation ablation: hypothesis not supported, aug degrades opx on all 4 combos
 ```
 
 ## CSV inventory
