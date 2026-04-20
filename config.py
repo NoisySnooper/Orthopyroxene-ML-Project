@@ -235,6 +235,20 @@ CANONICAL_FIGURES = [
                  'clustering indicates stable Form B fits; scatter across '
                  'the quantile grid indicates the fit drifts with data '
                  'draws and explains Form B ship failures.')},
+    {'num': 44, 'stem': 'fig44_tabpfn_bias_scoreboard_opx',
+     'caption': ('TabPFN v2 bias-correction scoreboard on 4 opx combos. '
+                 'Panel A: mean test RMSE pre/Form A/Form B over 5 seeds '
+                 'with winner verdict under the conservative ship-if-better '
+                 'rule. Panel B: per-seed ship stability heatmap. Form A '
+                 'ships on opx_only/T_C and opx_only/P_kbar; Form B ships '
+                 'nothing, consistent with the 0/8 tuned-family pattern.')},
+    {'num': 45, 'stem': 'fig45_opx_only_P_headline',
+     'caption': ('Per-regime RMSE on opx_only/P_kbar across 5 candidates '
+                 '(v10 pre/post, Putirka 29c, TabPFN pre/post). TabPFN '
+                 'post-correction wins 3 of 5 regimes, demonstrating that '
+                 'the in-context predictions carry systematic deeper-regime '
+                 'bias that can be removed with a regime-piecewise linear '
+                 'transform.')},
 ]
 
 # ---------------------------------------------------------------------------
