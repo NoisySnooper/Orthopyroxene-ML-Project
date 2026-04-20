@@ -1,0 +1,85 @@
+{
+  "forest_family": {
+    "opx_only_T_C": {
+      "model_name": "RF",
+      "feature_set": "pwlr",
+      "filename": "canonical/opx/base_RF_T_C_opx_only_pwlr.joblib",
+      "rmse_test_mean": 151.68787608918848,
+      "rmse_test_std": 0.9294097175271602,
+      "r2_test_mean": null,
+      "r2_test_std": null
+    },
+    "opx_only_P_kbar": {
+      "model_name": "RF",
+      "feature_set": "pwlr",
+      "filename": "canonical/opx/base_RF_P_kbar_opx_only_pwlr.joblib",
+      "rmse_test_mean": 10.34735487584552,
+      "rmse_test_std": 0.0428612996817353,
+      "r2_test_mean": null,
+      "r2_test_std": null
+    },
+    "opx_liq_T_C": {
+      "model_name": "RF",
+      "feature_set": "pwlr",
+      "filename": "canonical/opx/base_RF_T_C_opx_liq_pwlr.joblib",
+      "rmse_test_mean": 84.88324605980044,
+      "rmse_test_std": 0.2479338893628926,
+      "r2_test_mean": null,
+      "r2_test_std": null
+    },
+    "opx_liq_P_kbar": {
+      "model_name": "RF",
+      "feature_set": "alr",
+      "filename": "canonical/opx/base_RF_P_kbar_opx_liq_alr.joblib",
+      "rmse_test_mean": 5.050547820305052,
+      "rmse_test_std": 0.0554510642647083,
+      "r2_test_mean": null,
+      "r2_test_std": null
+    }
+  },
+  "boosted_family": {
+    "opx_only_T_C": {
+      "model_name": "LightGBM",
+      "feature_set": "alr",
+      "filename": "canonical/opx/base_LightGBM_T_C_opx_only_alr.joblib",
+      "rmse_test_mean": 146.6274772463645,
+      "rmse_test_std": 0.5877074458934813,
+      "r2_test_mean": null,
+      "r2_test_std": null
+    },
+    "opx_only_P_kbar": {
+      "model_name": "XGB",
+      "feature_set": "pwlr",
+      "filename": "canonical/opx/base_XGB_P_kbar_opx_only_pwlr.joblib",
+      "rmse_test_mean": 10.417800865828228,
+      "rmse_test_std": 0.2799821136859783,
+      "r2_test_mean": null,
+      "r2_test_std": null
+    },
+    "opx_liq_T_C": {
+      "model_name": "GB",
+      "feature_set": "raw",
+      "filename": "canonical/opx/base_GB_T_C_opx_liq_raw.joblib",
+      "rmse_test_mean": 86.18018609793371,
+      "rmse_test_std": 0.0,
+      "r2_test_mean": null,
+      "r2_test_std": null
+    },
+    "opx_liq_P_kbar": {
+      "model_name": "GB",
+      "feature_set": "raw",
+      "filename": "canonical/opx/base_GB_P_kbar_opx_liq_raw.joblib",
+      "rmse_test_mean": 4.756658215332069,
+      "rmse_test_std": 0.0,
+      "r2_test_mean": null,
+      "r2_test_std": null
+    }
+  },
+  "tiebreaker_rule": "when means within 1 std, prefer RF over ERT (forest); prefer XGB over GB/LightGBM/CatBoost by std (boosted). Reconstructed from opx_multiseed_summary.csv by argmin(mean) then argmin(std) then alphabetical model name.",
+  "selection_metadata": {
+    "n_seeds": 20,
+    "source": "opx_multiseed_summary.csv",
+    "rebuilt_by": "scripts/data_prep/build_per_family_winners.py",
+    "note": "Rebuilt 2026-04-20 because nb03 Phase 3.5 was not present in the post-consolidation notebook layout. Identical schema to archive/pre_v10_rebuild_2026_04_16/results/nb03_per_family_winners.json."
+  }
+}

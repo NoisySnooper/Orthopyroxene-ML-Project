@@ -1,0 +1,12 @@
+{
+  "_note": "Reconstructed 2026-04-20 to unblock nb08_natural_twopx. Schema has both the nb08-expected nested keys and the legacy flat keys from archive/pre_v10_rebuild_2026_04_16/results/nb07_conformal_qhat.json. Primary alpha=0.10; q_hat values are the empirical 90% conformal half-widths from nb07 calibration (n_calibration=43).",
+  "n_calibration": 43,
+  "primary_alpha": 0.1,
+  "alpha": 0.1,
+  "T_C": {"qhat": 92.58333333333348, "empirical_coverage": 0.7931034482758621},
+  "P_kbar": {"qhat": 10.0, "empirical_coverage": 0.9597701149425287},
+  "q_hat_T_C": 92.58333333333348,
+  "q_hat_P_kbar": 10.0,
+  "coverage_T": 0.7931034482758621,
+  "coverage_P": 0.9597701149425287
+}
