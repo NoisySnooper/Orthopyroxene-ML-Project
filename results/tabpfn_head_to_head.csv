@@ -1,4 +1,4 @@
-track,target,v10_best_model,v10_best_fs,v10_best_rmse,v10_best_std,tabpfn_rmse,tabpfn_std,external_best_rmse,external_best_method,external_best_family,verdict
+track,target,tuned_best_model,tuned_best_fs,tuned_best_rmse,tuned_best_std,tabpfn_rmse,tabpfn_std,external_best_rmse,external_best_method,external_best_family,verdict
 cpx_liq,P_kbar,LightGBM,pwlr,6.545968996153412,0.0502244766506223,7.513427279555941,0.1287131753783942,,,,v10_wins
 cpx_liq,T_C,ERT,pwlr,72.47571867909348,0.2086548516552918,70.0638316853421,1.0434243289105252,,,,tabpfn_wins
 cpx_only,P_kbar,MLP,alr,13.663503031715866,0.283172686692653,13.414022946724216,0.5804442388672593,,,,competitive

@@ -58,8 +58,8 @@ def build_para2(h2h: pd.DataFrame) -> str:
         ext_cell = f"{ext_m} ({ext_r} {unit})" if ext_m != '--' else '--'
         lines.append(
             f"| {r['track']} | {r['target']} | "
-            f"{_s(r.get('v10_best_model'))}/{_s(r.get('v10_best_fs'))} | "
-            f"{_fmt_pair(r.get('v10_best_rmse'), r.get('v10_best_std'), prec)} {unit} | "
+            f"{_s(r.get('tuned_best_model'))}/{_s(r.get('tuned_best_fs'))} | "
+            f"{_fmt_pair(r.get('tuned_best_rmse'), r.get('tuned_best_std'), prec)} {unit} | "
             f"{_fmt_pair(r.get('tabpfn_rmse'), r.get('tabpfn_std'), prec)} {unit} | "
             f"{ext_cell} | "
             f"{_s(r.get('verdict'))} |"
