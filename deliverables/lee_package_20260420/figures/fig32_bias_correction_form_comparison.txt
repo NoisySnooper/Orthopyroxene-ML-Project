@@ -1,0 +1,1 @@
+Fig. 32. Test-set RMSE at regime=ALL comparing pre-correction with Form A and Form B post-correction for the 8 Phase-G.7 cells (20-seed mean). Shipped form (if any) is drawn with a bold border. Panel subtitle reports the Phase-G.7 shipping decision and the per-seed vote split across 20 model seeds. Source CSVs: results/bias_correction_{summary,per_seed,shipped}.csv.
