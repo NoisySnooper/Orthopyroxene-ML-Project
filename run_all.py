@@ -37,6 +37,15 @@ NOTEBOOKS = [
     # correction, so nb07 only processes the 8 tuned families).
     "nb03_tabpfn_baseline",
     "nb04_putirka_benchmark",
+    # nb04b_aug_test is an optional augmentation ablation on 4 opx
+    # combinations (Section 5.3 sensitivity probe; added 2026-04-19).
+    # Not on the critical path to Section 4 results: the pre-registered
+    # verdict stands regardless of nb04b's outcome. Heavy compute
+    # (~3.3h for 1920 fits + ~30 min for OOF/bias) is delegated to
+    # scripts/ablations/run_augmentation_ablation_opx.py and
+    # scripts/ablations/run_augmentation_oof_bias.py, which must run
+    # before papermilling the notebook so the CSVs exist.
+    "nb04b_aug_test",
     "nb05_loso_validation",
     "nb06_shap_analysis",
     "nb07_bias_correction",

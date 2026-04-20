@@ -211,6 +211,30 @@ CANONICAL_FIGURES = [
                  'show 20-seed (42-61) stability; seed protocol is matched '
                  'across families so standard deviations are on equal '
                  'footing.')},
+    # nb04b augmentation ablation (2026-04-19): four opx combinations,
+    # 3% relative Gaussian noise, 15x oversampling, citation-grouped.
+    {'num': 40, 'stem': 'fig_aug01_ship_verdict_comparison',
+     'caption': ('Ship-if-better verdict under the Agreda-Lopez (2024) '
+                 '15x augmentation protocol versus the non-augmented '
+                 'baseline, across the four opx combinations (track x target). '
+                 'Bars show Form A / Form B / none ship counts across 20 '
+                 'seeds per condition.')},
+    {'num': 41, 'stem': 'fig_aug02_aggregate_rmse_delta',
+     'caption': ('Aggregate test RMSE under the non-augmented baseline '
+                 'versus the 15x augmented condition per opx combination. '
+                 'Error bars are 20-seed standard deviation. Putirka '
+                 'classical reference is overlaid where available.')},
+    {'num': 42, 'stem': 'fig_aug03_residual_structure_per_regime',
+     'caption': ('OOF residual distributions by pressure regime for '
+                 'opx-only P_kbar, non-augmented (top row) versus 15x '
+                 'augmented (bottom row). Violin plots show Form A and '
+                 'Form B fit substrate under each protocol.')},
+    {'num': 43, 'stem': 'fig_aug04_form_b_breakpoint_stability',
+     'caption': ('Form B breakpoint positions (alpha_L, alpha_R) per seed '
+                 'for opx-only P_kbar under 15x augmentation. Tight '
+                 'clustering indicates stable Form B fits; scatter across '
+                 'the quantile grid indicates the fit drifts with data '
+                 'draws and explains Form B ship failures.')},
 ]
 
 # ---------------------------------------------------------------------------
