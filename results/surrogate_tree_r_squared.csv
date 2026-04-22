@@ -1,0 +1,5 @@
+pipeline,track,target,winner_family,winner_feature_set,surrogate_r_squared,surrogate_r_squared_ci_lo,surrogate_r_squared_ci_hi,n_leaves,interpretation
+opx,opx_liq,T_C,ElasticNet,raw,0.8845205354281802,0.8473500117540749,0.9119431507557961,8,ML prediction well-approximated by a depth-4 decision tree (R^2=0.88); the ML can be read as a flowchart
+opx,opx_liq,P_kbar,MLP,raw,0.8123854686489519,0.7676184859812449,0.8581253049853622,8,surrogate tree approximates ML prediction with moderate fidelity (R^2=0.81); tree remains a useful approximate explanation but smooth/interaction effects are lost
+opx,opx_only,T_C,LightGBM,alr,0.8826446864592586,0.8444840972098806,0.9152666924458251,12,ML prediction well-approximated by a depth-4 decision tree (R^2=0.88); the ML can be read as a flowchart
+opx,opx_only,P_kbar,RF,pwlr,0.8921292819914084,0.8312489355812513,0.9318056022338325,8,ML prediction well-approximated by a depth-4 decision tree (R^2=0.89); the ML can be read as a flowchart
