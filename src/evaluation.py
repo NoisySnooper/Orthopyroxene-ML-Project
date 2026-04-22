@@ -79,6 +79,43 @@ def qcut_with_warning(y, q=5, **kwargs):
     return result, bin_edges
 
 
+def bootstrap_rmse_ci(y_true, y_pred, n_boot=500, alpha=0.05,
+                      random_state=42):
+    """Bootstrap 95% CI on paired-residual RMSE.
+
+    Works for deterministic models (ElasticNet) and stochastic models
+    alike. Returns (rmse_point, ci_lo, ci_hi).
+    """
+    rng = np.random.default_rng(random_state)
+    y_true = np.asarray(y_true, dtype=float)
+    y_pred = np.asarray(y_pred, dtype=float)
+    n = len(y_true)
+    boot_rmse = np.empty(n_boot, dtype=float)
+    for b in range(n_boot):
+        idx = rng.integers(0, n, n)
+        boot_rmse[b] = float(np.sqrt(np.mean((y_true[idx] - y_pred[idx]) ** 2)))
+    rmse_point = float(np.sqrt(np.mean((y_true - y_pred) ** 2)))
+    lo, hi = np.percentile(boot_rmse, [100 * alpha / 2, 100 * (1 - alpha / 2)])
+    return rmse_point, float(lo), float(hi)
+
+
+def bootstrap_rmse_ci_aggregated_over_seeds(per_seed_yt_yp, n_boot=500,
+                                            alpha=0.05, random_state=42):
+    """Aggregate bootstrap CIs across a set of (y_true, y_pred) arrays.
+
+    per_seed_yt_yp : iterable of (y_true, y_pred) tuples, one per seed.
+    Returns (median_rmse_point, median_ci_lo, median_ci_hi).
+    """
+    rows = []
+    for yt, yp in per_seed_yt_yp:
+        rows.append(bootstrap_rmse_ci(
+            yt, yp, n_boot=n_boot, alpha=alpha, random_state=random_state))
+    arr = np.asarray(rows, dtype=float)
+    return (float(np.median(arr[:, 0])),
+            float(np.median(arr[:, 1])),
+            float(np.median(arr[:, 2])))
+
+
 def compute_metrics(y_true, y_pred):
     """Standard regression diagnostics plus mean bias."""
     y_true = np.asarray(y_true, dtype=float)

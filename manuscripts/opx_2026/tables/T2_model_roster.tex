@@ -1,0 +1,19 @@
+\begin{table}[t]
+\centering
+\caption{Model roster with 95\% bootstrap CIs. Winner is lowest test RMSE across eight tuned families x three feature sets plus TabPFN, 25 candidates per cell. CI computed by bootstrap resampling (n\_boot=500) of test-set residuals at canonical seed=42; replaces seed-variance std as primary uncertainty estimate.}
+\label{tab:T2_model_roster}
+\begin{tabular}{lllllllll}
+\toprule
+Pipeline & Track & Target & Winner & FS & RMSE [CI] & Runner-up [CI] & TabPFN rank & TabPFN [CI] \\
+\midrule
+cpx & cpx_liq & P_kbar & LightGBM & pwlr & 6.55 [4.45, 8.98] & XGB/pwlr 6.93 [4.88, 9.78] & 15 & 7.42 [4.91, 10.32] \\
+cpx & cpx_liq & T_C & TabPFN & raw & 69.96 [55.11, 82.41] & ERT/pwlr 72.48 [58.28, 88.07] & 1 & 69.96 [55.11, 82.41] \\
+cpx & cpx_only & P_kbar & TabPFN & raw & 13.42 [11.12, 15.54] & MLP/alr 13.66 [11.33, 15.48] & 1 & 13.42 [11.12, 15.54] \\
+cpx & cpx_only & T_C & ERT & pwlr & 127.02 [116.14, 139.28] & TabPFN/raw 131.40 [115.55, 140.93] & 2 & 131.40 [115.55, 140.93] \\
+opx & opx_liq & P_kbar & MLP & raw & 4.40 [3.08, 4.54] & GB/raw 4.76 [4.13, 5.41] & 16 & 5.48 [4.62, 5.99] \\
+opx & opx_liq & T_C & ElasticNet & raw & 77.06 [61.81, 92.73] & RF/pwlr 84.88 [69.65, 99.71] & 3 & 84.88 [69.07, 101.24] \\
+opx & opx_only & P_kbar & RF & pwlr & 10.35 [6.90, 13.92] & XGB/pwlr 10.42 [7.05, 13.44] & 21 & 12.52 [9.97, 15.47] \\
+opx & opx_only & T_C & LightGBM & alr & 146.63 [121.19, 170.00] & XGB/alr 147.35 [122.21, 173.62] & 4 & 150.17 [122.18, 181.91] \\
+\bottomrule
+\end{tabular}
+\end{table}
