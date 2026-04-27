@@ -19,8 +19,7 @@ from docx.shared import Inches, Pt, RGBColor
 
 PROJECT_ROOT = Path(__file__).resolve().parents[2]
 SECTIONS_DIR = PROJECT_ROOT / 'manuscripts' / 'opx_2026' / 'text' / 'draft' / 'sections'
-FIGURES_CORE = PROJECT_ROOT / 'figures' / 'core'
-FIGURES_SI = PROJECT_ROOT / 'figures' / 'SI'
+FIGURES_DIR = PROJECT_ROOT / 'figures' / 'opx_only'
 TABLES_DIR = PROJECT_ROOT / 'tables'
 RESULTS_DIR = PROJECT_ROOT / 'results'
 PREREG_DIR = PROJECT_ROOT / 'docs' / 'preregistration'
@@ -286,34 +285,22 @@ def add_csv_table(doc: Document, csv_path: Path, max_rows: int | None = None,
 # ---------------------------------------------------------------------------
 
 MAIN_FIGURES = [
-    ('Figure 1',  'Core_01_fig_dataset_map.png'),
-    ('Figure 2',  'Core_03_fig_methods_flowchart.png'),
-    ('Figure 3',  'Core_04_fig_nb04_cross_pipeline_heatmap.png'),
-    ('Figure 4',  'Core_05_fig30_bias_correction_per_regime_rmse.png'),
-    ('Figure 5',  'Core_06_fig31_bias_correction_residuals.png'),
-    ('Figure 6',  'Core_07_fig34_bias_correction_scorecard_delta.png'),
-    ('Figure 7',  'Core_08_fig45_opx_headline.png'),
-    ('Figure 8a', 'Core_09a_fig_opx_regime_families.png'),
-    ('Figure 8b', 'Core_09b_fig_opx_overall_families.png'),
-    ('Figure 9',  'Core_10_fig_best_vs_putirka.png'),
-    ('Figure 10', 'Core_12_fig_shap_winners.png'),
-    ('Figure 11', 'Core_15_fig_feature_concordance.png'),
-    ('Figure 12', 'Core_16_fig_classical_equivalence.png'),
-    ('Figure 13', 'Core_17_fig_partial_dependence.png'),
-    ('Figure 14', 'Core_18_fig_surrogate_trees.png'),
+    ('Figure 1',  'main_fig_1.png'),
+    ('Figure 2',  'main_fig_2.png'),
+    ('Figure 3',  'main_fig_3.png'),
+    ('Figure 4',  'main_fig_4.png'),
+    ('Figure 5',  'main_fig_5.png'),
+    ('Figure 6',  'main_fig_6.png'),
+    ('Figure 7',  'main_fig_7.png'),
+    ('Figure 8a', 'main_fig_8a.png'),
+    ('Figure 8b', 'main_fig_8b.png'),
+    ('Figure 9',  'main_fig_9.png'),
+    ('Figure 10', 'main_fig_10.png'),
+    ('Figure 11', 'main_fig_11.png'),
+    ('Figure 12', 'main_fig_12.png'),
+    ('Figure 13', 'main_fig_13.png'),
+    ('Figure 14', 'main_fig_14.png'),
 ]
-
-CORE_SUPPLEMENT_FIGS: list[str] = []
-
-EXCLUDE_FROM_SI = {
-    'fig_h5ac_opx_world_map.png',
-    'fig_nb04_cross_pipeline_heatmap.png',
-    'fig_nb04_ensemble_lift.png',
-    'fig_nb04_winning_base_histogram.png',
-    'fig_nb08_twopx_1to1.png',
-    'fig35_tabpfn_vs_opx_tb.png',
-    'fig44_tabpfn_bias_scoreboard_opx.png',
-}
 
 PREREG_FILES = [
     ('S3.1 Pressure regime pre-registration', 'p_regime_preregistration.md'),
@@ -352,9 +339,9 @@ def main() -> None:
     doc.add_heading('Figures and Tables (Main Text)', level=1)
 
     for label, fname in MAIN_FIGURES:
-        path = FIGURES_CORE / fname
+        path = FIGURES_DIR / fname
         sidecar = read_caption_sidecar(path)
-        caption = f'{label}. {sidecar}' if sidecar else label
+        caption = sidecar if sidecar else label
         add_figure(doc, path, caption)
 
     doc.add_heading('Tables', level=2)
@@ -396,20 +383,18 @@ def main() -> None:
     doc.add_paragraph()
 
     doc.add_heading('S1. Supplementary Figures', level=2)
-    si_idx = 1
-    si_figs = sorted(p for p in FIGURES_SI.glob('*.png')
-                     if p.name not in EXCLUDE_FROM_SI)
-    for path in si_figs:
+
+    def _supp_idx(path: Path) -> int:
+        stem = path.stem
+        # supp_fig_8a / supp_fig_10 -> integer ordering
+        num_part = stem.replace('supp_fig_', '')
+        digits = ''.join(ch for ch in num_part if ch.isdigit())
+        return int(digits) if digits else 999
+
+    supp_figs = sorted(FIGURES_DIR.glob('supp_fig_*.png'), key=_supp_idx)
+    for path in supp_figs:
         caption = read_caption_sidecar(path) or path.stem.replace('_', ' ')
-        add_figure(doc, path, f'Figure S{si_idx}. {caption}')
-        si_idx += 1
-    for fname in CORE_SUPPLEMENT_FIGS:
-        path = FIGURES_CORE / fname
-        if not path.exists():
-            continue
-        caption = read_caption_sidecar(path) or path.stem.replace('_', ' ')
-        add_figure(doc, path, f'Figure S{si_idx}. {caption}')
-        si_idx += 1
+        add_figure(doc, path, caption)
 
     add_page_break(doc)
 
