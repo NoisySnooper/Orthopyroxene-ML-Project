@@ -159,7 +159,7 @@ Tie-breaking between Form A and Form B: if both ship, the form with the larger `
 
 The tolerance `max(tol_abs, T_REL × pre_r)` is deliberately constructed from two independent rationales:
 
-#### 6.4.1 `tol_abs` — measurement-uncertainty floor
+#### 6.4.1 `tol_abs`: measurement-uncertainty floor
 
 For opx thermobarometry, the experimental-petrology literature reports the following RMSE floors on the same ExPetDB corpus class (Putirka 2008, Table 4.1, and Neave & Putirka 2017):
 
@@ -168,7 +168,7 @@ For opx thermobarometry, the experimental-petrology literature reports the follo
 
 The floor therefore cannot ship a correction that worsens a regime by more than experimental noise would allow anyway.
 
-#### 6.4.2 `T_REL = 0.10` — relative guard
+#### 6.4.2 `T_REL = 0.10`: relative guard
 
 On high-difficulty regimes (e.g., `deeper_mantle` with pre-RMSE of 200-300 °C or 4-6 kbar) the absolute floor becomes loose. The **10 % of pre-regime RMSE** guard scales with regime difficulty so that a high-variance bin cannot be "improved" by a correction that silently worsens it by 20 % while the absolute-floor clause looks the other way. The 10 % value is the smallest round-number threshold that satisfies `max(T_ABS, T_REL × pre_r) == T_REL × pre_r` for the two regimes where the relative clause needs to engage (deeper_mantle T pre ≥ 100 °C, deeper_mantle P pre ≥ 10 kbar).
 
@@ -197,14 +197,14 @@ Per-regime veto threshold is `max(tol, degradation_tol_abs, degradation_tol_rel 
 
 `tests/test_preregistration.py` asserts:
 
-- **T15** — `ship_decision` with default tolerances reproduces a pre-tolerance baseline byte-for-byte (verifies backward compatibility of the API).
-- **T16** — A regime with `n < N_MIN_FOR_VETO` that degrades does not block shipping when the rule is engaged.
-- **T17** — `N_MIN_FOR_VETO == 20` is hard-coded in the rescore script and matches this document.
-- **T18** — TabPFN ship verdicts in the canonical CSV match the pre-tolerance baseline byte-for-byte (verifies TabPFN exclusion).
-- **T19** — `ship_decision` with `degradation_tol_abs=0` and `degradation_tol_rel=0` reproduces the pre-tolerance baseline (verifies the tolerance is opt-in).
-- **T20** — Under canonical tolerances, a high-n regime whose degradation is at or below `max(SHIP_TOL, T_ABS, T_REL * pre_r)` does NOT veto; high-n regimes that degrade by more than the tolerance still veto.
-- **T21** — The constants `T_ABS_T = 10.0`, `T_ABS_P = 1.0`, `T_REL = 0.10` are hard-coded in `scripts/bias_correction/rescore_under_v3_rule.py` and match this document.
-- **T22** — Every opx non-TabPFN row in `results/preregistered_scorecard_postcorrection.csv` is internally consistent with `ship_decision` and the constants in this document.
+- **T15**: `ship_decision` with default tolerances reproduces a pre-tolerance baseline byte-for-byte (verifies backward compatibility of the API).
+- **T16**: A regime with `n < N_MIN_FOR_VETO` that degrades does not block shipping when the rule is engaged.
+- **T17**: `N_MIN_FOR_VETO == 20` is hard-coded in the rescore script and matches this document.
+- **T18**: TabPFN ship verdicts in the canonical CSV match the pre-tolerance baseline byte-for-byte (verifies TabPFN exclusion).
+- **T19**: `ship_decision` with `degradation_tol_abs=0` and `degradation_tol_rel=0` reproduces the pre-tolerance baseline (verifies the tolerance is opt-in).
+- **T20**: Under canonical tolerances, a high-n regime whose degradation is at or below `max(SHIP_TOL, T_ABS, T_REL * pre_r)` does NOT veto; high-n regimes that degrade by more than the tolerance still veto.
+- **T21**: The constants `T_ABS_T = 10.0`, `T_ABS_P = 1.0`, `T_REL = 0.10` are hard-coded in `scripts/bias_correction/rescore_under_v3_rule.py` and match this document.
+- **T22**: Every opx non-TabPFN row in `results/preregistered_scorecard_postcorrection.csv` is internally consistent with `ship_decision` and the constants in this document.
 
 ## 7. Manuscript treatment
 
@@ -218,7 +218,7 @@ Supplementary Section S8 presents the full per-bin table and full bootstrap CIs.
 
 ## 8. Modification history
 
-**2026-04-17 — Initial registration.** Bins fixed at 0/5/15/30/100 kbar. Bias-correction ship rule with `N_MIN_FOR_VETO = 20`, `T_ABS_T = 10.0`, `T_ABS_P = 1.0`, `T_REL = 0.10`. No per-bin results exist at this timestamp (training in progress). Constants are final.
+**2026-04-17: Initial registration.** Bins fixed at 0/5/15/30/100 kbar. Bias-correction ship rule with `N_MIN_FOR_VETO = 20`, `T_ABS_T = 10.0`, `T_ABS_P = 1.0`, `T_REL = 0.10`. No per-bin results exist at this timestamp (training in progress). Constants are final.
 
 *Any future modification requires a dated entry in this section with a written rationale and a new test case. Undocumented edits to the constants in Section 5.1 or Section 6.1 should be treated as a methodological red flag.*
 
