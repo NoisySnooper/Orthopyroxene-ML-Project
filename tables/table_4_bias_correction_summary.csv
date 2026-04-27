@@ -1,9 +1,5 @@
-pipeline,track,target,model,shipped_form,pre_RMSE_test,post_RMSE_test,delta_RMSE,pct_reduction,seed_vote,n_seeds
-opx,opx-liq,T_C,ElasticNet/raw,none,77.06189003628756,,,,0/0/20,20
-opx,opx-liq,P_kbar,MLP/raw,none,4.404284713402804,,,,8/0/12,20
-opx,opx-only,T_C,LightGBM/alr,none,146.6274772463645,,,,0/0/20,20
-opx,opx-only,P_kbar,RF/pwlr,A,10.34735487584552,6.010816711064183,4.336538164781337,41.90963020804853,20/0/0,20
-cpx,cpx-liq,T_C,ERT/pwlr,none,72.47571867909348,,,,1/0/19,20
-cpx,cpx-liq,P_kbar,LightGBM/pwlr,none,6.545968996153412,,,,2/0/18,20
-cpx,cpx-only,T_C,ERT/pwlr,none,127.0219367725089,,,,0/0/20,20
-cpx,cpx-only,P_kbar,MLP/alr,A,13.663503031715866,11.329051270673176,2.33445176104269,17.085309350200575,19/0/1,20
+pipeline,track,target,model,shipped_form,pre_RMSE_test,post_RMSE_test,delta_RMSE,pct_reduction
+opx,opx-liq,T_C,ElasticNet/raw,B,77.062,76.417,0.645,0.84
+opx,opx-liq,P_kbar,MLP/raw,A,4.404,3.171,1.233,28.00
+opx,opx-only,T_C,LightGBM/alr,A,146.627,122.064,24.564,16.75
+opx,opx-only,P_kbar,RF/pwlr,A,10.347,6.051,4.296,41.52
