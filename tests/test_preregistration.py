@@ -1,50 +1,51 @@
-"""Preregistration tests T15-T22 (Phase 6, Amendments 1 and 2).
+"""Preregistration tests T15-T22 covering the bias-correction ship rule.
 
 These tests verify behavioral invariants registered in:
-  - docs/preregistration/AMENDMENT_1_acceptance_rule.md (tiered v2 rule)
-  - docs/preregistration/AMENDMENT_2_veto_tolerance.md (v3 tolerance rule)
-  - docs/master_plan.md
+  - docs/preregistration/p_regime_preregistration.md (Sections 4.1, 6.1-6.6)
   - Pre-existing preregistration tests T1-T14 (covered elsewhere).
 
 T15. Backward compatibility: `ship_decision` with `n_min_for_veto=0`
-     reproduces v1 pre-amendment verdicts on synthetic fixtures (no
+     reproduces the pre-tolerance baseline on synthetic fixtures (no
      silent behavior change for historical callers).
 
-T16. Tiered gate semantics: a regime with n < N_MIN that degrades is
-     logged to `low_n_degradations` but does NOT veto a global-improving
-     correction under v2.
+T16. Tiered gate semantics: a regime with n < N_MIN_FOR_VETO that
+     degrades is logged to `low_n_degradations` but does NOT veto a
+     global-improving correction.
 
-T17. N_MIN threshold boundary: the v2 amendment fixes `N_MIN=20`.
-     Regimes with exactly 20 samples DO veto (threshold is inclusive
-     on the veto side, `n >= n_min_for_veto`), while regimes with 19
-     samples do not.
+T17. N_MIN_FOR_VETO threshold boundary: the registered constant is
+     fixed at 20. Regimes with exactly 20 samples DO veto (threshold
+     is inclusive on the veto side, `n >= n_min_for_veto`), while
+     regimes with 19 samples do not.
 
 T18. TabPFN bias-correction exclusion: the shipped CSV preserves
-     TabPFN's v1 verdicts verbatim under the v2 rescore (TabPFN has no
-     OOF residuals; the v2 rule cannot change a decision that was
-     never fit).
+     TabPFN's pre-tolerance verdicts verbatim under the canonical
+     rescore (TabPFN has no OOF residuals; the rule cannot change a
+     decision that was never fit).
 
-T19. V3 backward compatibility: `ship_decision` with `degradation_tol_abs=0`
-     and `degradation_tol_rel=0` reproduces v2 verdicts byte-for-byte on
-     synthetic fixtures. The absolute/relative tolerance parameters
-     default to zero so historical v1/v2 callers are unchanged.
+T19. Tolerance backward compatibility: `ship_decision` with
+     `degradation_tol_abs=0` and `degradation_tol_rel=0` reproduces
+     the pre-tolerance baseline byte-for-byte on synthetic fixtures.
+     The absolute/relative tolerance parameters default to zero so
+     historical callers are unchanged.
 
-T20. V3 tolerance semantics: a high-n regime whose degradation is at or
+T20. Tolerance semantics: a high-n regime whose degradation is at or
      below `max(SHIP_TOL, T_ABS, T_REL * pre_r)` does NOT veto a
-     global-improving correction. The same degradation under v2 (tol
-     parameters = 0) would veto.
+     global-improving correction. The same degradation with tolerance
+     parameters = 0 would veto.
 
-T21. V3 max rule: when `T_REL * pre_r > T_ABS`, the relative tolerance
-     is what binds. The rescore script must use the per-target absolute
+T21. Max rule: when `T_REL * pre_r > T_ABS`, the relative tolerance
+     is what binds. The rescore script uses the per-target absolute
      tolerance (10 degC for T, 1 kbar for P) alongside T_REL=0.10 and
-     N_MIN=20, matching Amendment 2.
+     N_MIN_FOR_VETO=20, matching the registered constants in
+     Section 6.1.
 
-T22. V3 shipped CSV integrity: every opx non-TabPFN row in
+T22. Canonical shipped CSV integrity: every opx non-TabPFN row in
      bias_correction_shipped_v3.csv carries a decoded `ship_a_v3` and
      `ship_b_v3` JSON blob, the recorded `winner_v3` is consistent with
      those two decisions under `choose_winner`, and the tolerance
      parameters (n_min_for_veto, degradation_tol_abs,
-     degradation_tol_rel) match the Amendment 2 constants.
+     degradation_tol_rel) match the registered constants in
+     Section 6.1.
 """
 from __future__ import annotations
 
