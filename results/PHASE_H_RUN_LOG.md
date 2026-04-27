@@ -136,3 +136,70 @@ End of run log.
   ARCHEAN CRATON (INCLUDING GREENSTONE BELTS): 36
   SEAMOUNT: 35
   COMPLEX VOLCANIC SETTINGS: 18
+- 2026-04-27T00:16:26Z (H.3) caveman: H.3 inference start
+- 2026-04-27T00:16:26Z (H.3) caveman: opx natural inference start
+- 2026-04-27T00:16:26Z (H.3) caveman: opx loaded n=53050
+- 2026-04-27T00:16:27Z (H.3) caveman: opx_only_T pred mean=1084.43
+- 2026-04-27T00:16:28Z (H.3) caveman: opx_only_P pred mean=10.52
+- 2026-04-27T00:16:28Z (H.3) caveman: Putirka opx columns appended: []
+- 2026-04-27T00:16:29Z (H.3) caveman: wrote nb08_natural_predictions_opx.csv n=53050 SHA[:12]=37af73f7fc14
+- 2026-04-27T00:16:29Z (H.3) caveman: cpx natural inference start
+- 2026-04-27T00:16:29Z (H.3) caveman: cpx loaded n=93163
+- 2026-04-27T00:16:31Z (H.3) caveman: cpx_only_T pred mean=1125.90
+- 2026-04-27T00:16:31Z (H.3) caveman: cpx_only_P pred mean=14.66
+- 2026-04-27T00:16:31Z (H.3) caveman: Putirka cpx columns appended: ['T_putirka_cpx_only_eq32d', 'P_putirka_cpx_only_eq32a']
+- 2026-04-27T00:16:33Z (H.3) caveman: wrote nb08_natural_predictions_cpx.csv n=93163 SHA[:12]=ac14734c477d
+- 2026-04-27T00:16:33Z (H.3) caveman: twopx natural inference start
+- 2026-04-27T00:16:33Z (H.3) caveman: twopx loaded n=6234
+- 2026-04-27T00:16:33Z (H.3) caveman: twopx_T pred mean=1014.10
+- 2026-04-27T00:16:33Z (H.3) caveman: twopx_P pred mean=10.81
+- 2026-04-27T00:16:33Z (H.3) caveman: Putirka twopx columns appended: 7
+- 2026-04-27T00:16:33Z (H.3) caveman: KD equilibrium n=2490/6234 (39.9%)
+- 2026-04-27T00:16:33Z (H.3) caveman: wrote nb08_natural_predictions_twopx.csv n=6234 SHA[:12]=67374cab9e3c
+- 2026-04-27T00:16:33Z (H.3) caveman: H.3 inference done
+- 2026-04-27T00:16:59Z (H.3) caveman: H.3 inference start
+- 2026-04-27T00:16:59Z (H.3) caveman: opx natural inference start
+- 2026-04-27T00:16:59Z (H.3) caveman: opx loaded n=53050
+- 2026-04-27T00:16:59Z (H.3) caveman: opx_only_T pred mean=1084.43
+- 2026-04-27T00:17:00Z (H.3) caveman: opx_only_P pred mean=10.52
+- 2026-04-27T00:17:00Z (H.3) caveman: Putirka opx columns appended: ['P_putirka_opx_only_eq29c']
+- 2026-04-27T00:17:01Z (H.3) caveman: wrote nb08_natural_predictions_opx.csv n=53050 SHA[:12]=cb498fd8e261
+- 2026-04-27T00:17:01Z (H.3) caveman: cpx natural inference start
+- 2026-04-27T00:17:01Z (H.3) caveman: cpx loaded n=93163
+- 2026-04-27T00:17:02Z (H.3) caveman: cpx_only_T pred mean=1125.90
+- 2026-04-27T00:17:02Z (H.3) caveman: cpx_only_P pred mean=14.66
+- 2026-04-27T00:17:03Z (H.3) caveman: Putirka cpx columns appended: ['T_putirka_cpx_only_eq32d', 'P_putirka_cpx_only_eq32a']
+- 2026-04-27T00:17:04Z (H.3) caveman: wrote nb08_natural_predictions_cpx.csv n=93163 SHA[:12]=b39d7ebca006
+- 2026-04-27T00:17:04Z (H.3) caveman: twopx natural inference start
+- 2026-04-27T00:17:04Z (H.3) caveman: twopx loaded n=6234
+- 2026-04-27T00:17:05Z (H.3) caveman: twopx_T pred mean=1014.10
+- 2026-04-27T00:17:05Z (H.3) caveman: twopx_P pred mean=10.81
+- 2026-04-27T00:17:05Z (H.3) caveman: Putirka twopx columns appended: 7
+- 2026-04-27T00:17:05Z (H.3) caveman: KD equilibrium n=2490/6234 (39.9%)
+- 2026-04-27T00:17:05Z (H.3) caveman: wrote nb08_natural_predictions_twopx.csv n=6234 SHA[:12]=67374cab9e3c
+- 2026-04-27T00:17:05Z (H.3) caveman: H.3 inference done
+- 2026-04-27T00:17:42Z (H.4) caveman: H.4 cross-mineral convergence start
+- 2026-04-27T00:17:42Z (H.4) caveman: loaded twopx predictions n=6234
+- 2026-04-27T00:17:42Z (H.4) caveman: wrote nb08_cross_mineral_agreement.csv n=6234
+- 2026-04-27T00:17:42Z (H.4) caveman: wrote nb08_cross_mineral_summary.csv n=18
+- 2026-04-27T00:17:42Z (H.4) caveman: top headline rows (equilibrium-only):
+- 2026-04-27T00:17:42Z (H.4)   ours_P_vs_putirka_opxonly_eq29c (n=2490): median_abs=6.72, rmse=9.95
+- 2026-04-27T00:17:42Z (H.4)   ours_vs_putirka_twopx_eq36 (n=2490): median_abs=50.95, rmse=67.16
+- 2026-04-27T00:17:42Z (H.4)   ours_vs_putirka_twopx_eq37 (n=2490): median_abs=53.08, rmse=73.07
+- 2026-04-27T00:17:42Z (H.4)   ours_T_vs_putirka_cpxonly_eq32d (n=2489): median_abs=152.35, rmse=158.57
+- 2026-04-27T00:17:42Z (H.4)   ours_vs_putirka_twopx_eq38 (n=2490): median_abs=2.14, rmse=1171.37
+- 2026-04-27T00:17:42Z (H.4)   ours_vs_putirka_twopx_eq39 (n=2490): median_abs=2.98, rmse=1634.18
+- 2026-04-27T00:18:44Z (H.5) caveman: H.5 world maps start
+- 2026-04-27T00:18:45Z (H.5) caveman: loaded opx=53050 cpx=93163 twopx=6234
+- 2026-04-27T00:18:45Z (H.5) caveman: opx static map: 53023 samples with lat/lon
+- 2026-04-27T00:18:56Z (H.5) caveman: wrote Core_19a_fig_world_map_opx.pdf and .png
+- 2026-04-27T00:18:56Z (H.5) caveman: cpx static map: 93125 samples with lat/lon
+- 2026-04-27T00:19:07Z (H.5) caveman: wrote Core_19b_fig_world_map_cpx.pdf and .png
+- 2026-04-27T00:19:07Z (H.5) caveman: twopx static map: 6234 samples with lat/lon
+- 2026-04-27T00:19:12Z (H.5) caveman: wrote Core_19c_fig_world_map_twopx.pdf and .png
+- 2026-04-27T00:19:13Z (H.5) caveman: opx interactive map subsampled to 8000 markers
+- 2026-04-27T00:19:19Z (H.5) caveman: wrote world_map_opx.html
+- 2026-04-27T00:19:20Z (H.5) caveman: cpx interactive map subsampled to 8000 markers
+- 2026-04-27T00:19:26Z (H.5) caveman: wrote world_map_cpx.html
+- 2026-04-27T00:19:31Z (H.5) caveman: wrote world_map_twopx.html
+- 2026-04-27T00:19:31Z (H.5) caveman: H.5 world maps done
