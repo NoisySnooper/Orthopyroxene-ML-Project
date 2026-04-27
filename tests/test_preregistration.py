@@ -40,7 +40,7 @@ T21. Max rule: when `T_REL * pre_r > T_ABS`, the relative tolerance
      Section 6.1.
 
 T22. Canonical shipped CSV integrity: every opx non-TabPFN row in
-     bias_correction_shipped_v3.csv carries a decoded `ship_a_v3` and
+     bias_correction_shipped.csv carries a decoded `ship_a_v3` and
      `ship_b_v3` JSON blob, the recorded `winner_v3` is consistent with
      those two decisions under `choose_winner`, and the tolerance
      parameters (n_min_for_veto, degradation_tol_abs,
@@ -174,15 +174,17 @@ def test_T17_n_just_below_threshold_does_not_veto():
 
 
 def test_T17_n_min_value_matches_amendment():
-    """Amendment 1 fixes N_MIN=20. The rescore script must use this
-    value; if someone edits it silently, this test flags it."""
+    """Section 6.1 of the prereg doc fixes N_MIN_FOR_VETO=20. The
+    canonical rescore script must use this value; if someone edits
+    it silently, this test flags it."""
     script = (PROJECT_ROOT
-              / 'scripts/bias_correction/rescore_under_tiered_rule.py')
+              / 'scripts/bias_correction/rescore_under_v3_rule.py')
     assert script.exists(), 'rescore script missing'
     text = script.read_text(encoding='utf-8')
     assert 'N_MIN = 20' in text, (
-        'Amendment 1 fixes N_MIN=20 in the rescore script; an edit has '
-        'drifted from the preregistered threshold.')
+        'Section 6.1 of the prereg doc fixes N_MIN_FOR_VETO=20 in the '
+        'rescore script; an edit has drifted from the registered '
+        'threshold.')
 
 
 # -------------------------------------------------------------------------
@@ -317,14 +319,14 @@ def test_T21_v3_constants_match_amendment():
 # -------------------------------------------------------------------------
 
 @pytest.mark.skipif(
-    not (PROJECT_ROOT / 'results/bias_correction_shipped_v3.csv').exists(),
+    not (PROJECT_ROOT / 'results/bias_correction_shipped.csv').exists(),
     reason='v3 shipped CSV not yet generated')
 def test_T22_v3_ship_csv_integrity():
-    """Every opx non-TabPFN row in bias_correction_shipped_v3.csv must
+    """Every opx non-TabPFN row in bias_correction_shipped.csv must
     carry decodable ship_a_v3 / ship_b_v3 JSON, a winner_v3 consistent
     with `choose_winner`, and tolerance parameters that match
     Amendment 2 (N_MIN=20; T_ABS=10 for T_C, 1 for P_kbar; T_REL=0.10)."""
-    ship_v3 = pd.read_csv('results/bias_correction_shipped_v3.csv')
+    ship_v3 = pd.read_csv('results/bias_correction_shipped.csv')
     opx = ship_v3[(ship_v3.pipeline == 'opx')
                   & (ship_v3.model != 'TabPFN')].copy()
     assert len(opx) > 0, 'no opx non-TabPFN rows in v3 shipped CSV'

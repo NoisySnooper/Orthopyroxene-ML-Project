@@ -145,18 +145,8 @@ def _panel(ax, pseed, ship_final, track, target, unit, title):
 
 def main():
     pseed = pd.read_csv('results/bias_correction_per_seed.csv')
-    ship_v3_path = Path('results/bias_correction_shipped_v3.csv')
-    ship_v2_path = Path('results/bias_correction_shipped_v2.csv')
-    ship_v1_path = Path('results/bias_correction_shipped.csv')
-    if ship_v3_path.exists():
-        ship_final = pd.read_csv(ship_v3_path).rename(
-            columns={'winner_v3': 'winner_final'})
-    elif ship_v2_path.exists():
-        ship_final = pd.read_csv(ship_v2_path).rename(
-            columns={'winner_v2': 'winner_final'})
-    else:
-        ship_final = pd.read_csv(ship_v1_path).rename(
-            columns={'winner': 'winner_final'})
+    ship_final = pd.read_csv('results/bias_correction_shipped.csv').rename(
+        columns={'winner_v3': 'winner_final'})
 
     fig, axes = plt.subplots(2, 2, figsize=(14, 9))
     for ax, (track, target, title, unit) in zip(axes.ravel(), PANELS):
@@ -212,7 +202,7 @@ def main():
         'pipelines are intentionally excluded; this paper centers the opx '
         'ML thermobarometer. Source CSVs: '
         'results/bias_correction_per_seed.csv, '
-        'results/bias_correction_shipped_v3.csv.'
+        'results/bias_correction_shipped.csv.'
     )
     (OUT_DIR / 'Core_05_fig30_bias_correction_per_regime_rmse.txt').write_text(
         caption, encoding='utf-8')

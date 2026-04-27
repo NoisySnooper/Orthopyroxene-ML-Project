@@ -1,23 +1,22 @@
 #!/usr/bin/env python3
-"""Rescore bias-correction ship decisions under the v3 tolerance rule.
-
-See docs/preregistration/AMENDMENT_2_veto_tolerance.md.
+"""Generate the canonical bias-correction scorecard under the locked
+ship rule registered in docs/preregistration/p_regime_preregistration.md.
 
 Reads:
   - results/bias_correction_per_seed.csv
-  - results/bias_correction_shipped.csv          (v1 reference)
-  - results/bias_correction_shipped_v2.csv       (v2 reference)
-  - results/preregistered_scorecard_postcorrection.csv   (v1 scorecard)
-  - results/preregistered_scorecard_postcorrection_v2.csv (v2 scorecard)
 
 Writes:
-  - results/bias_correction_shipped_v3.csv
-  - results/preregistered_scorecard_postcorrection_v3.csv
+  - results/bias_correction_shipped.csv
+  - results/preregistered_scorecard_postcorrection.csv
 
-Rule v3 = v2 (n_min_for_veto=20) plus per-regime tolerance envelope:
+Rule (Section 6 of the prereg doc): a correction form ships iff overall
+RMSE improves by more than SHIP_TOL and no well-populated regime
+(n >= N_MIN_FOR_VETO) degrades by more than the tolerance envelope:
+
     veto_tol_r = max(SHIP_TOL, T_ABS, T_REL * pre_r)
-Constants are pre-registered in AMENDMENT_2 and hard-coded below; edits
-to these constants will break test T21.
+
+Constants below are the registered values; edits to these constants
+will break test T21.
 """
 from __future__ import annotations
 
@@ -247,12 +246,12 @@ def main():
     sc_v2 = pd.read_csv(sc_v2_path)
 
     shipped_v3 = rescore_shipped(pseed, shipped_v1, shipped_v2)
-    out_ship = Path('results/bias_correction_shipped_v3.csv')
+    out_ship = Path('results/bias_correction_shipped.csv')
     shipped_v3.to_csv(out_ship, index=False)
     print(f'wrote {out_ship}: {len(shipped_v3)} rows')
 
     sc_v3 = rescore_scorecard(sc_v2, shipped_v3, pseed)
-    out_sc = Path('results/preregistered_scorecard_postcorrection_v3.csv')
+    out_sc = Path('results/preregistered_scorecard_postcorrection.csv')
     sc_v3.to_csv(out_sc, index=False)
     print(f'wrote {out_sc}: {len(sc_v3)} rows')
 

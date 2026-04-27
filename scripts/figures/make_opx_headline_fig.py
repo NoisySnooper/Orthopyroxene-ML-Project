@@ -122,17 +122,7 @@ WIN_COLOR = {
 
 
 def main():
-    # Prefer v3 scorecard (tolerance-based ship rule, Amendment 2
-    # 2026-04-20). Fall back to v2 (Amendment 1) then v1.
-    sc_v3_path = Path('results/preregistered_scorecard_postcorrection_v3.csv')
-    sc_v2_path = Path('results/preregistered_scorecard_postcorrection_v2.csv')
-    sc_v1 = pd.read_csv('results/preregistered_scorecard_postcorrection.csv')
-    if sc_v3_path.exists():
-        sc = pd.read_csv(sc_v3_path)
-    elif sc_v2_path.exists():
-        sc = pd.read_csv(sc_v2_path)
-    else:
-        sc = sc_v1
+    sc = pd.read_csv('results/preregistered_scorecard_postcorrection.csv')
 
     fig, axes = plt.subplots(2, 2, figsize=(14, 10))
     all_handles = None
@@ -222,7 +212,7 @@ def main():
         'machinery as the tuned baseline; cpx TabPFN has no OOF pass and is '
         'excluded from post-correction. Opx-only T (panel c) has no Putirka '
         'opx-only thermometer in Thermobar, so the red bar is absent. '
-        'Source: results/preregistered_scorecard_postcorrection_v3.csv '
+        'Source: results/preregistered_scorecard_postcorrection.csv '
         '(with v2/v1 fallbacks).'
     )
     (OUT_DIR / 'Core_08_fig45_opx_headline.txt').write_text(

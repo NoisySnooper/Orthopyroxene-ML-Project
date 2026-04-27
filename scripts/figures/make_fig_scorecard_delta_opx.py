@@ -61,26 +61,16 @@ TARGET_UNIT = {'T_C': 'C', 'P_kbar': 'kbar'}
 
 def main():
     sc = pd.read_csv('results/preregistered_scorecard_postcorrection.csv')
-    sc_v2_path = Path('results/preregistered_scorecard_postcorrection_v2.csv')
-    sc_v3_path = Path('results/preregistered_scorecard_postcorrection_v3.csv')
-    sc_v2 = pd.read_csv(sc_v2_path) if sc_v2_path.exists() else sc.copy()
-    sc_v3 = pd.read_csv(sc_v3_path) if sc_v3_path.exists() else sc_v2.copy()
 
     n_rows = len(REGIME_ORDER)
     n_cols = len(COLS)
     arr = np.full((n_rows, n_cols), np.nan)
     labels = np.full((n_rows, n_cols), '', dtype=object)
 
-    # Prefer v3 scorecard for post-RMSE (tolerance-based rule, Amendment 2).
-    # Flag cells whose post-RMSE moved relative to v2 (or to v1 if v2 matched).
     for i, reg in enumerate(REGIME_ORDER):
         for j, (track, target, _) in enumerate(COLS):
-            r = sc_v3[(sc_v3.track == track) & (sc_v3.target == target)
-                      & (sc_v3.regime == reg)]
-            r_v2 = sc_v2[(sc_v2.track == track) & (sc_v2.target == target)
-                         & (sc_v2.regime == reg)]
-            r_v1 = sc[(sc.track == track) & (sc.target == target)
-                      & (sc.regime == reg)]
+            r = sc[(sc.track == track) & (sc.target == target)
+                   & (sc.regime == reg)]
             if r.empty:
                 labels[i, j] = 'N/A'
                 continue
@@ -90,25 +80,14 @@ def main():
             v10_method = r['v10_post_method'] if isinstance(
                 r['v10_post_method'], str) else ''
             unit = TARGET_UNIT[target]
-            # Flag cells whose post-RMSE moved under v3 relative to v2 or v1.
-            flipped = False
-            if not r_v2.empty:
-                post_v2 = r_v2.iloc[0]['v10_post_rmse']
-                if np.isfinite(post) and np.isfinite(post_v2) and abs(post - post_v2) > 1e-6:
-                    flipped = True
-            if (not flipped) and (not r_v1.empty):
-                post_v1 = r_v1.iloc[0]['v10_post_rmse']
-                if np.isfinite(post) and np.isfinite(post_v1) and abs(post - post_v1) > 1e-6:
-                    flipped = True
-            flag = ' *' if flipped else ''
             if not np.isfinite(ext):
-                labels[i, j] = (f'{v10_method}{flag}\nno Putirka\n'
+                labels[i, j] = (f'{v10_method}\nno Putirka\n'
                                 f'post {post:.2f} {unit}')
                 continue
             pct = (ext - post) / ext
             arr[i, j] = pct
             delta_abs = ext - post
-            labels[i, j] = f'{v10_method}{flag}\n{delta_abs:+.2f} {unit}'
+            labels[i, j] = f'{v10_method}\n{delta_abs:+.2f} {unit}'
 
     vmax = np.nanmax(np.abs(arr)) if np.isfinite(np.nanmax(np.abs(arr))) else 0.5
     vmax = max(vmax, 0.05)
