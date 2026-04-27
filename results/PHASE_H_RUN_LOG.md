@@ -89,3 +89,50 @@ Branch state at halt is self-consistent: H.0 prerequisites complete, halt artifa
 
 End of run log.
 
+- 2026-04-27T00:05:15Z (H.1b) caveman: H.1b start (Dataverse Native API). target dataset=doi:10.25625/SGFTFN
+- 2026-04-27T00:05:15Z (H.1b) caveman: GET https://data.goettingen-research-online.de/api/datasets/:persistentId/?persistentId=doi:10.25625/SGFTFN
+- 2026-04-27T00:05:16Z (H.1b) caveman: target file_id=118288 name='2024-12-SGFTFN_CLINOPYROXENES.csv' size=338.4 MB
+- 2026-04-27T00:05:16Z (H.1b) caveman: stream-GET https://data.goettingen-research-online.de/api/access/datafile/118288 (expect ~338.4 MB)
+- 2026-04-27T00:07:18Z (H.1b) caveman: download done. 338.4 MB in 54138 chunks. SHA256[:12]=5598c3bd0b92
+- 2026-04-27T00:07:18Z (H.1b) caveman: read raw CSV (338.4 MB)
+- 2026-04-27T00:07:26Z (H.1b) caveman: raw row count = 216809
+- 2026-04-27T00:07:27Z (H.1b) caveman: rows after CLINOPYROXENE filter: 207031 (from 216809)
+- 2026-04-27T00:07:28Z (H.1b) caveman: rows with all 9 oxides: 129279
+- 2026-04-27T00:07:28Z (H.1b) caveman: rows after oxide total in [99,101]: 99063
+- 2026-04-27T00:07:28Z (H.1b) caveman: rows after Mg# in [0.5,0.95]: 93899
+- 2026-04-27T00:07:28Z (H.1b) caveman: rows after Wo > 20: 93163
+- 2026-04-27T00:07:28Z (H.1b) caveman: cleaned row count = 93163
+- 2026-04-27T00:07:29Z (H.1b) caveman: wrote natural_cpx_with_coords.csv (93163 rows, SHA256[:12]=31e608dc7f75)
+- 2026-04-27T00:07:29Z (H.1b) caveman: cleaned n 93163 outside expected band [40000, 80000]; soft warning, not a halt
+- 2026-04-27T00:09:12Z (H.1d) caveman: H.1d start. join opx + cpx natural sets
+- 2026-04-27T00:09:13Z (H.1d) caveman: loaded opx=53050 cpx=93163
+- 2026-04-27T00:09:13Z (H.1d) caveman: keyed opx=53050 cpx=93163
+- 2026-04-27T00:09:13Z (H.1d) caveman: post-merge n_pre_filter=1521399
+- 2026-04-27T00:09:15Z (H.1d) caveman: after lat/lon filter (0.01 deg): 1513457
+- 2026-04-27T00:09:18Z (H.1d) caveman: after rock-name consistency: 1513160
+- 2026-04-27T00:09:35Z (H.1d) caveman: wrote natural_twopx_pairs.csv (1513160 pairs, SHA256[:12]=4313c9c2351b)
+- 2026-04-27T00:09:35Z (H.1d) caveman: top tectonic settings in pairs:
+  CONVERGENT MARGIN: 1351780
+  INTRAPLATE VOLCANICS: 64024
+  OCEAN ISLAND: 47778
+  RIFT VOLCANICS: 24166
+  CONTINENTAL FLOOD BASALT: 17026
+  SEAMOUNT: 5449
+  ARCHEAN CRATON (INCLUDING GREENSTONE BELTS): 2788
+  COMPLEX VOLCANIC SETTINGS: 121
+- 2026-04-27T00:10:09Z (H.1d) caveman: H.1d start. join opx + cpx natural sets
+- 2026-04-27T00:10:10Z (H.1d) caveman: loaded opx=53050 cpx=93163 (grain level)
+- 2026-04-27T00:10:10Z (H.1d) caveman: keyed (per-sample medians) opx=11202 cpx=20278
+- 2026-04-27T00:10:10Z (H.1d) caveman: post-merge n_pre_filter=6965
+- 2026-04-27T00:10:10Z (H.1d) caveman: after lat/lon filter (0.01 deg): 6244
+- 2026-04-27T00:10:10Z (H.1d) caveman: after rock-name consistency: 6234
+- 2026-04-27T00:10:10Z (H.1d) caveman: wrote natural_twopx_pairs.csv (6234 pairs, SHA256[:12]=92dfcc09d833)
+- 2026-04-27T00:10:10Z (H.1d) caveman: top tectonic settings in pairs:
+  INTRAPLATE VOLCANICS: 3894
+  CONVERGENT MARGIN: 1129
+  RIFT VOLCANICS: 482
+  CONTINENTAL FLOOD BASALT: 341
+  OCEAN ISLAND: 294
+  ARCHEAN CRATON (INCLUDING GREENSTONE BELTS): 36
+  SEAMOUNT: 35
+  COMPLEX VOLCANIC SETTINGS: 18
