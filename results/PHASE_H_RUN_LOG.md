@@ -203,3 +203,18 @@ End of run log.
 - 2026-04-27T00:19:26Z (H.5) caveman: wrote world_map_cpx.html
 - 2026-04-27T00:19:31Z (H.5) caveman: wrote world_map_twopx.html
 - 2026-04-27T00:19:31Z (H.5) caveman: H.5 world maps done
+- 2026-04-27T00:21:21Z (H.6) caveman: H.6 locality validation start
+- 2026-04-27T00:21:21Z (H.6) caveman: 15 curated localities loaded
+- 2026-04-27T00:21:21Z (H.6) caveman: opx=53050 cpx=93163 twopx=6234
+- 2026-04-27T00:21:21Z (H.6) caveman: ArcPL archive loaded n=197
+- 2026-04-27T00:21:21Z (H.6) caveman: wrote nb08_locality_stratified.csv n=38
+- 2026-04-27T00:21:21Z (H.6) caveman: 33 of 38 locality-pipeline rows are claims-eligible (n>=20)
+- 2026-04-27T00:21:22Z (H.6) caveman: top eligible localities by n:
+- 2026-04-27T00:21:22Z (H.6)   Iceland | cpx_only | n=2944 | T_med=1124 (expect [1100,1250]) | in_range=74.52%
+- 2026-04-27T00:21:22Z (H.6)   Kaapvaal craton | opx_only | n=2583 | T_med=1230 (expect [900,1450]) | in_range=100.00%
+- 2026-04-27T00:21:22Z (H.6)   Siberian craton | cpx_only | n=2382 | T_med=1229 (expect [900,1400]) | in_range=99.58%
+- 2026-04-27T00:21:22Z (H.6)   Kaapvaal craton | cpx_only | n=2107 | T_med=1218 (expect [900,1450]) | in_range=99.43%
+- 2026-04-27T00:21:22Z (H.6)   Lesser Antilles | cpx_only | n=1199 | T_med=1068 (expect [950,1100]) | in_range=83.15%
+- 2026-04-27T00:21:22Z (H.6)   Siberian craton | opx_only | n=1049 | T_med=1274 (expect [900,1400]) | in_range=99.90%
+- 2026-04-27T00:21:22Z (H.6)   Aegean | opx_only | n=1015 | T_med=915 (expect [850,1050]) | in_range=73.20%
+- 2026-04-27T00:21:22Z (H.6)   Central Andes | cpx_only | n=738 | T_med=1100 (expect [900,1200]) | in_range=100.00%
