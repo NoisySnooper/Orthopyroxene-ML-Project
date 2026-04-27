@@ -118,12 +118,21 @@ Interactive (folium + MarkerCluster, popups with sample metadata):
 - figures/interactive/world_map_cpx.html — 8000-marker subsample
 - figures/interactive/world_map_twopx.html — full 6,234 markers
 
-Core_20 (G.4 sensitivity on curated subset) is **deferred**. The
-G.4 piecewise correction requires regime assignment from literature P;
-the existing curated_localities.csv has expected_P_kbar ranges per
-locality, not per-sample literature P. A future pass with per-sample
-P-T from primary citations can populate Core_20 without reshaping
-the H.6 output schema.
+Per-locality performance figures (added 2026-04-29 per Phase H performance follow-up):
+- figures/core/Core_20_fig_locality_performance.{pdf, png} — 3-panel horizontal-bar T-in-range fraction by pipeline (opx_only n_eligible=11, cpx_only n_eligible=14, twopx n_eligible=7); cratonic-twopx P shallow-bias and Iceland opx_only T cool-bias visible as zero-fraction bars
+- figures/core/Core_21_fig_opx_showcase.{pdf, png} — 4-panel opx_only natural-sample showcase: 1:1 T, 1:1 P, T residual histogram, P residual histogram across 11 claims-eligible curated localities
+- figures/core/Core_22_fig_cpx_showcase.{pdf, png} — 4-panel cpx_only counterpart across 14 claims-eligible localities; Kaapvaal P_med 57.5 kbar (64.7% in range) and Siberia 59.6 kbar (45.5% in range) validate the cpx_only barometer for deep-mantle settings
+- figures/core/Core_23_fig_cross_pipeline_disagreement.{pdf, png} — 2-panel cross-pipeline T and P disagreement per locality where two or more pipelines have n>=20; Iceland T disagreement 192 °C is the largest single-locality cross-pipeline gap
+
+Core_20-23 use the canonical Okabe-Ito tectonic-setting palette
+(scripts/figures/_model_palette.py) for cross-figure consistency.
+
+The originally specified Core_20 (G.4 sensitivity on curated subset)
+is **deferred** under a different name pending per-sample literature
+P. The locality-performance Core_20 here addresses the manuscript
+need for a per-locality summary figure; the G.4 sensitivity panel
+can be added as Core_20b if and when the per-sample literature P
+data is staged.
 
 ### 17.6 Pre-registration boundary enforcement
 
