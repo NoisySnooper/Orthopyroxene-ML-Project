@@ -1,182 +1,124 @@
 # Project layout
 
-Single-page tree view of the opx ML thermobarometer repository, with a
-one-line purpose per entry. For operating instructions, see
-[README.md](README.md). For the active plan, see
-[docs/master_plan.md](docs/master_plan.md).
+Directory tree and module topology for the opx ML thermobarometer repository, regenerated at the close of the pre-submission audit.
+
+## Top level
 
 ```
 Final Project/
-├── README.md                           # install, run order, design decisions, TabPFN baseline
-├── PROJECT_OVERVIEW.md                 # status log + mermaid data flow + module topology
-├── PROJECT_LAYOUT.md                   # this file
-├── CLAUDE.md                           # session guardrails for Claude Code
-├── CLEANUP_AUDIT.md                    # 2026-04-19 cleanup audit (Stage A artifact)
-├── config.py                           # single source of truth: paths, seeds, figure registry
-├── run_all.py                          # papermill pipeline driver (nb01 → nbF)
-├── requirements.txt                    # core dependencies
-├── requirements-tabpfn.txt             # TabPFN v2 add-on
+├── README.md                            # install, run order, design decisions
+├── PROJECT_OVERVIEW.md                  # status log + module topology
+├── PROJECT_LAYOUT.md                    # this file
+├── config.py                            # paths, seeds, pre-registered constants
+├── run_all.py                           # papermill pipeline driver
+├── requirements.txt                     # core dependencies
+├── requirements-tabpfn.txt              # TabPFN v2 add-on (separate venv)
+├── .gitignore
 │
-├── data/                               # read-only; CLAUDE.md hard rule
-│   ├── raw/                            # ExPetDB, LEPR, external train sets
-│   ├── processed/                      # cleaned per-track parquet files
-│   ├── splits/                         # canonical test-index NPYs
-│   ├── external/                       # Agreda, Jorgenson, Wang artifacts
-│   └── natural/                        # GEOROC 2024-12 SGFTFN opx + cpx
+├── data/                                # read-only training and natural-sample data
+│   ├── raw/                             # ExPetDB, LEPR, external train sets
+│   ├── processed/                       # cleaned per-track parquet files
+│   ├── splits/                          # canonical test-index NPYs
+│   ├── external/                        # Agreda, Jorgenson, Wang artifacts
+│   ├── natural/                         # ArcPL natural-sample inputs
+│   ├── optuna_studies/                  # Optuna hyperparameter-search DBs
+│   └── hashes.json                      # SHA256 manifest cited in §7
 │
-├── src/
-│   ├── __init__.py
-│   ├── bias_correction.py              # Form A (per-regime OLS) + Form B (piecewise)
-│   ├── calibration.py                  # split conformal
-│   ├── cpx_features.py                 # cpx feature construction
-│   ├── data.py                         # per-track loaders
-│   ├── ensembles.py                    # greedy Caruana, two-level, AutoGluon wrappers
-│   ├── evaluation.py                   # metrics, LOSO/Cluster/TargetBin CV
-│   ├── external_models.py              # Putirka/Agreda/Jorgenson/Wang wrappers
-│   ├── features.py                     # raw/alr/pwlr + engineered + EPMA augment
-│   ├── geotherm.py                     # Hasterok & Chapman 2011
-│   ├── io_utils.py                     # save_figure, save_table
-│   ├── models.py                       # 8-model factory + predict_median/iqr
-│   ├── optuna_search.py                # TPE + median pruning
-│   ├── opx_tb_analysis.py              # BASE_ORDER + helpers
-│   ├── plot_style.py                   # Okabe-Ito palette + save_figure wrapper
-│   ├── prepare_train_test.py           # unified dispatcher for opx/cpx/twopx/universal
-│   ├── resampling.py                   # P-T tempered resampling
-│   ├── stacking.py                     # Ridge meta-model
-│   ├── thermobar_adapter.py            # Thermobar 1.0.70 API bridge
-│   ├── twopx_features.py               # two-pyroxene features
-│   └── universal_features.py           # masking-architecture features
+├── src/                                 # library code
+│   ├── bias_correction.py               # Form A and Form B + ship_decision
+│   ├── calibration.py                   # split conformal
+│   ├── data.py                          # per-track loaders
+│   ├── ensembles.py                     # Ridge stacking
+│   ├── evaluation.py                    # bootstrap CIs, regime assignment
+│   ├── external_models.py               # Putirka, Agreda, Jorgenson, Wang wrappers
+│   ├── features.py                      # opx feature construction
+│   ├── geotherm.py                      # equilibrium-flag helpers
+│   ├── io_utils.py                      # CSV, JSON, joblib helpers
+│   ├── models.py                        # 8 tuned families + TabPFN
+│   ├── opx_tb_analysis.py               # opx-side benchmark utilities
+│   ├── plot_style.py                    # Okabe-Ito palette + figure defaults
+│   ├── prepare_train_test.py            # citation-grouped split builder
+│   ├── resampling.py                    # tempered class resampling
+│   ├── stacking.py                      # Ridge meta-learner
+│   ├── thermobar_adapter.py             # Thermobar v1.0.70 K to C contract
+│   ├── ablations/                       # ablation experiments
+│   └── external/                        # external-model adapters (ArcPL etc.)
 │
-├── notebooks/
-│   ├── nb01_data_cleaning.ipynb        # ExPetDB + LEPR cleaning for all tracks
-│   ├── nb02_eda_pca.ipynb              # PCA + per-track k-means clusters
-│   ├── nb03_opx_baseline_models.ipynb  # opx_only + opx_liq, 8 models, T01-T12
-│   ├── nb03_cpx_baseline_models.ipynb  # cpx_only + cpx_liq, 8 models
-│   ├── nb03_twopx_baseline_models.ipynb # twopx, 8 models
-│   ├── nb03_universal_exploration.ipynb # universal masking (isolated side project)
-│   ├── nb03_tabpfn_baseline.ipynb      # TabPFN v2 baseline driver (9th BASE_ORDER family)
-│   ├── nb04_putirka_benchmark.ipynb    # Putirka 2008 + Thermobar benchmarks + head-to-head
-│   ├── nb04_regime_benchmark.ipynb     # Per-regime + cross-pipeline heatmaps
-│   ├── nb05_loso_validation.ipynb      # LOSO + cluster + TargetBinKFold + LeaveOneRegion
-│   ├── nb06_shap_analysis.ipynb        # tree-SHAP + linear-SHAP on stack
-│   ├── nb07_bias_correction.ipynb      # composition-conditional T correction (Form A/B)
-│   ├── nb07b_arcpl_bias_probe.ipynb    # ArcPL bias probe
-│   ├── nb08_natural_twopx.ipynb        # GEOROC world maps + cross-mineral convergence
-│   ├── nb09_manuscript_compilation.ipynb # per-paper table subsets (S8_* + table_4_*)
-│   └── nbF_figures.ipynb               # canonical figure regen (CANONICAL_FIGURES 1-35)
+├── scripts/                             # pipeline scripts
+│   ├── ablations/                       # feature ablation drivers
+│   ├── audits/                          # repo audit utilities
+│   ├── benchmarks/                      # benchmark runners
+│   ├── bias_correction/                 # Form A/B fitting + canonical rescore
+│   ├── data_prep/                       # cleaning drivers
+│   ├── evaluation/                      # multi-seed eval, scorecard build
+│   ├── external_eval/                   # external-method evaluation
+│   ├── figures/                         # core and SI figure builders
+│   ├── interpretability/                # SHAP, classical-equivalence regression
+│   ├── manuscript/                      # docx build, citation linking
+│   ├── pairing/                         # LEPR pairing-matrix scripts
+│   ├── shap/                            # SHAP attribution drivers
+│   └── tabpfn/                          # TabPFN inference drivers
 │
-├── scripts/
-│   ├── tabpfn/                              # TabPFN multi-seed driver + helpers
-│   │   ├── opx_tb_nb03_tabpfn_baseline.py       # 20-seed TabPFN driver
-│   │   ├── opx_tb_nb03_fill_tabpfn_paragraph.py # manuscript paragraph auto-fill
-│   │   ├── opx_tb_nb03_apply_part2_cells.py     # nbF/nb04/nb09 TabPFN cell applicator
-│   │   └── opx_tb_nb03_test_tabpfn_smoke.py     # smoke test for TabPFN wiring
-│   ├── audits/                              # repo + external-model audits (placeholder)
-│   ├── benchmarks/                          # benchmark drivers (placeholder)
-│   ├── data_prep/                           # data cleaning + GEOROC pulls (placeholder)
-│   └── figures/                             # canonical figure regen helpers (placeholder)
+├── notebooks/                           # papermill-driven analysis notebooks
+│   ├── nb01_data_cleaning.ipynb
+│   ├── nb02_eda_pca.ipynb
+│   ├── nb03_opx_baseline_models.ipynb
+│   ├── nb03_tabpfn_baseline.ipynb
+│   ├── nb04_putirka_benchmark.ipynb
+│   ├── nb04_regime_benchmark.ipynb
+│   ├── nb04b_aug_test.ipynb
+│   ├── nb05_loso_validation.ipynb
+│   ├── nb06_shap_analysis.ipynb
+│   ├── nb07_bias_correction.ipynb
+│   ├── nb07b_arcpl_bias_probe.ipynb
+│   ├── nb09_manuscript_compilation.ipynb
+│   └── nbF_figures.ipynb
 │
-├── tests/                              # pytest: 55 tests
-│   ├── test_bias_correction.py
-│   ├── test_evaluation_regime.py
-│   └── test_prepare_train_test_parity.py
+├── tests/                               # reviewer-runnable test suite
+│   ├── test_preregistration.py          # T1-T22 ship rule + constants
+│   └── ...
 │
-├── results/                            # CSVs/JSONs consumed by notebooks
-│   ├── opx_* / cpx_*                   # opx/cpx multiseed, per-regime, generalization
-│   ├── v10_twopx_* / v10_universal_*   # twopx + universal (rename deferred post-Phase-1.5)
-│   ├── tabpfn_*                        # TabPFN multiseed, predictions, head-to-head
-│   ├── tabpfn_checkpoints/             # per-seed pickled TabPFN fits
-│   ├── bias_correction/                # Phase G.7 per-seed checkpoints
-│   ├── optuna_studies/                 # Optuna study joblibs
-│   ├── regime_*                        # pre-/post-correction scorecards
-│   └── natural_opx_*                   # Phase H opx inference + uncertainty
+├── models/                              # canonical model joblibs
+│   ├── canonical/opx/                   # 8 families x 4 cells (T/P x liq/only) joblibs
+│   ├── ablation/                        # ablation checkpoints
+│   └── external/                        # third-party model artifacts
 │
-├── figures/                            # PDF + PNG + TXT sidecar per entry
-│   ├── fig24-fig35                     # canonical (registered in CANONICAL_FIGURES)
-│   ├── fig_nb02_* / fig_nb03_* / fig_nb04_* # legacy registered figures
-│   ├── fig_h5ac_opx_world_map.png      # Phase H.5a static world map
-│   └── fig_h5b_opx_interactive.html    # Phase H.5b folium interactive
+├── results/                             # canonical CSVs and JSONs
+│   ├── bias_correction_shipped.csv      # canonical ship verdicts
+│   ├── preregistered_scorecard_postcorrection.csv  # canonical scorecard
+│   ├── opx_multiseed_*.csv              # 20-seed RMSE statistics
+│   ├── pairing_matrix_22rows.csv        # LEPR pairing comparisons
+│   └── ...
 │
-├── tables/
-│   ├── S8_5_*, S8_6_*, S8_7_*, S8_8_*, S8_9_* # supplementary tables
-│   ├── S8_10_*, S8_11_*                # bias-correction supplementary
-│   ├── S8_12_tabpfn_benchmark.{csv,md,tex}   # TabPFN head-to-head
-│   └── table_4_bias_correction_summary.*     # main-body table
+├── figures/
+│   ├── core/                            # manuscript-bound figures + AUDIT.md
+│   ├── SI/                              # supplementary figures
+│   └── (no interactive maps post-audit)
+│
+├── tables/                              # manuscript tables (Tables 1, S8 etc.)
 │
 ├── manuscripts/
-│   └── opx_2026/
-│       ├── figures/                    # selected canonical figures
-│       ├── tables/                     # selected canonical tables
-│       ├── text/                       # paragraph auto-fills + draft
-│       │   ├── bias_correction_autofilled.md
-│       │   ├── bias_correction_numbers.md
-│       │   ├── regime_results_autofilled.md
-│       │   └── tabpfn_paragraph.md     # auto-filled via opx_tb_nb03_fill_tabpfn_paragraph
-│       └── arxiv_submission/
+│   └── opx_2026/                        # JGR:MLC submission
+│       ├── text/draft/sections/         # 00a-09 manuscript prose
+│       ├── figures/                     # publication-bound figure copies
+│       ├── tables/                      # publication-bound tables
+│       ├── arxiv_submission/            # built docx + arXiv tarball
+│       └── SUBMISSION_CHECKLIST.md
 │
-├── models/                             # 1.5 GB; models/external/ is read-only
-│   ├── canonical/                      # opx, cpx, twopx, universal winners
-│   ├── ablation/                       # resampled ablation fits
-│   └── external/                       # Agreda/Jorgenson/Wang ONNX + joblib + json
+├── docs/preregistration/                # locked methodological documents
+│   ├── p_regime_preregistration.md      # bin edges + ship rule
+│   └── nb03_test_protocol.md
 │
-├── logs/                               # per-phase execution logs
+├── archive/                             # one retained snapshot
+│   ├── README.md
+│   └── pre_v10_rebuild_2026_04_16/      # nb07 q_hat_P re-derivation source
 │
-├── docs/
-│   ├── master_plan.md                  # unified v10+v11 plan
-│   ├── cleanup_manifest.md             # cleanup file list
-│   ├── figure_audit.md                 # per-figure spec + checklist
-│   ├── cpx_pipeline_plan.md / twopx_pipeline_plan.md / universal_model_exploration.md
-│   ├── ensemble_methods_plan.md / stacking_propagation_audit.md
-│   ├── external_models_audit.md / markdown_template.md
-│   ├── nb03_tabpfn_plan.md             # TabPFN integration plan
-│   ├── natural_worldwide_plan.md       # GEOROC re-integration plan
-│   ├── notebooks_compatibility_audit.md
-│   ├── optuna_strategy.md / resampling_strategy.md / stacking_strategy.md
-│   ├── opx_paper_regime_additions_v1.md / codebase_consistency_audit_optionB.md
-│   ├── preregistration/                # sealed: p_regime_preregistration, nb03_test_protocol
-│   ├── archive_superseded/             # v9_* planning docs + optionB preflight + v10_implementation_plan
-│   └── putirka_inconsistency_audit / putirka_kd_filter_lookup
-│
-└── archive/
-    ├── pre_consolidation_2026_04_18/   # 2026-04-19 cleanup archive
-    │   ├── figures/                    # orphan v10_regime_* + fig_nb04_per_regime dups
-    │   ├── notebooks/                  # nb03_baseline_models_pre_v10 (pre-track-split)
-    │   ├── scripts/phase_legacy/       # audit_*, run_phase*
-    │   └── logs/
-    ├── pipeline_v1_legacy/             # very early notebooks
-    ├── pre_v9_rebuild_2026_04_15/      # pre-v9 snapshot
-    ├── pre_v10_rebuild_2026_04_16/     # pre-v10 snapshot
-    ├── v5_reports/                     # historical audit reports
-    └── v7_preparation_20260414_164844/ # v7 staging
+└── logs/                                # per-run execution logs (gitignored content)
+    └── .gitkeep
 ```
 
-## Data flow at a glance
+## Module topology
 
-```
-raw/processed → nb01 → per-track parquet
-per-track parquet + natural → nb02 clusters → nb03_{opx,cpx,twopx,universal}_baseline_models
-                                            → nb03_tabpfn_baseline (supplementary)
-8-model winners → nb04 (Putirka + ArcPL) → nb05 (LOSO/Cluster/TargetBin) →
-nb06 (SHAP) → nb07 (bias correction) → nb08 (natural/world maps) →
-nb09 (tables) + nbF (figures) → manuscripts/opx_2026/
-```
+The training pipeline runs in a single direction: `data/processed/` is consumed by `src/prepare_train_test.py` to produce citation-grouped splits, which feed the eight tuned families in `src/models.py` plus TabPFN v2 (loaded externally). Per-seed RMSE statistics flow into `results/opx_multiseed_summary.csv`. Bias correction (`src/bias_correction.py`) consumes the per-seed table to produce per-cell winners under the locked ship rule, written to `results/bias_correction_shipped.csv` and the canonical scorecard `results/preregistered_scorecard_postcorrection.csv`. Figures are built from the canonical CSVs by scripts in `scripts/figures/`; manuscript prose is compiled by `scripts/manuscript/build_manuscript_docx.py` into `manuscripts/opx_2026/arxiv_submission/manuscript.docx`.
 
-## Conventions
-
-- **Paths.** Import from `config.py` only. Never hardcode.
-- **Seeds.** `SEED_SPLIT`, `SEED_MODEL`, `SEED_NOISE_AUG`, `SEED_KMEANS`,
-  `SEED_BOOTSTRAP` all default to 42; multi-seed protocol uses
-  `SPLIT_SEEDS = list(range(42, 62))` (20 seeds).
-- **Figure registry.** `CANONICAL_FIGURES` in `config.py` is the source
-  of truth; entries 1-35. Orphans live in `archive/`.
-- **Symbol naming.** `BASE_ORDER` is canonical (9 families: 8 Optuna-tuned
-  + TabPFN v2 pretrained foundation model). `TUNED_BASES = BASE_ORDER[:-1]`
-  is the 8-family subset used by Optuna-pipeline consumers
-  (`build_oof_matrix`, `evaluate_all_bases`, `fit_internal_ensembles`,
-  `ensemble_predict_on_test`). `STACKING_BASE_ORDER` stays at 4
-  (`'RF','ERT','XGB','GB'`) — TabPFN is deliberately excluded from
-  stacking. The legacy `V10_BASE_ORDER` alias was removed in Phase 1.5 C9.
-- **Filename prefix.** New artifacts use `opx_tb_` (opx thermobarometer).
-  Most `v10_*` results/ files were renamed in Phase 1.5 C2-C8; remaining
-  `v10_twopx_*` and `v10_universal_*` files are tracked as a post-Phase-1.5
-  coordinated rename.
+The pre-registered constants (ship rule, regime edges, sample-size floor) live in `config.py` and `docs/preregistration/p_regime_preregistration.md`. The reviewer-runnable test suite at `tests/test_preregistration.py` asserts the constants and CSV integrity against the locked document.
