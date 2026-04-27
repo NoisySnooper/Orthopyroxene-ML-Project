@@ -1,5 +1,5 @@
 pipeline,track,target,model,shipped_form,pre_RMSE_test,post_RMSE_test,delta_RMSE,pct_reduction
 opx,opx-liq,T_C,ElasticNet/raw,B,77.062,76.417,0.645,0.84
-opx,opx-liq,P_kbar,MLP/raw,A,4.404,3.171,1.233,28.00
+opx,opx-liq,P_kbar,MLP/raw,A,4.404,3.171,1.233,28.0
 opx,opx-only,T_C,LightGBM/alr,A,146.627,122.064,24.564,16.75
 opx,opx-only,P_kbar,RF/pwlr,A,10.347,6.051,4.296,41.52

@@ -4,7 +4,7 @@ Cells: `RMSE [bootstrap 95% CI]`. Winner per regime bold.
 
 ### twopx · P_kbar (binned by T)
 
-| Regime | n | v10 best |
+| Regime | n | our_best |
 | --- | --- | --- |
 | 800<=T<1000 | 1 | **0.86 (MLP/twopx_components)** |
 | 1000<=T<1200 | 30 | **3.56 [2.34, 4.83] (CatBoost/pwlr)** |

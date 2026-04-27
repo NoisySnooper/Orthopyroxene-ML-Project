@@ -29,6 +29,17 @@ OUTPUT = (PROJECT_ROOT / 'manuscripts' / 'opx_2026' / 'arxiv_submission'
           / 'manuscript.docx')
 
 
+def _final_output_path() -> Path:
+    """If `manuscript.docx` is locked by Word, fall back to a side path."""
+    try:
+        with OUTPUT.open('a+b'):
+            pass
+        return OUTPUT
+    except (PermissionError, OSError):
+        alt = OUTPUT.with_name('manuscript_v2.docx')
+        return alt
+
+
 # ---------------------------------------------------------------------------
 # Document setup
 # ---------------------------------------------------------------------------
@@ -276,33 +287,36 @@ def add_csv_table(doc: Document, csv_path: Path, max_rows: int | None = None,
 
 MAIN_FIGURES = [
     ('Figure 1',  'Core_01_fig_dataset_map.png'),
-    ('Figure 2',  'Core_02_fig_citation_split.png'),
-    ('Figure 3',  'Core_03_fig_methods_flowchart.png'),
-    ('Figure 4',  'Core_04_fig_nb04_cross_pipeline_heatmap.png'),
-    ('Figure 5',  'Core_05_fig30_bias_correction_per_regime_rmse.png'),
-    ('Figure 6',  'Core_06_fig31_bias_correction_residuals.png'),
-    ('Figure 7',  'Core_07_fig34_bias_correction_scorecard_delta.png'),
-    ('Figure 8',  'Core_08_fig45_opx_headline.png'),
-    ('Figure 9a', 'Core_09a_fig_opx_regime_families.png'),
-    ('Figure 9b', 'Core_09b_fig_opx_overall_families.png'),
-    ('Figure 10', 'Core_10_fig_best_vs_putirka.png'),
-    ('Figure 12', 'Core_12_fig_shap_winners.png'),
-    ('Figure 15', 'Core_15_fig_feature_concordance.png'),
-    ('Figure 16', 'Core_16_fig_classical_equivalence.png'),
-    ('Figure 17', 'Core_17_fig_partial_dependence.png'),
-    ('Figure 18', 'Core_18_fig_surrogate_trees.png'),
+    ('Figure 2',  'Core_03_fig_methods_flowchart.png'),
+    ('Figure 3',  'Core_04_fig_nb04_cross_pipeline_heatmap.png'),
+    ('Figure 4',  'Core_05_fig30_bias_correction_per_regime_rmse.png'),
+    ('Figure 5',  'Core_06_fig31_bias_correction_residuals.png'),
+    ('Figure 6',  'Core_07_fig34_bias_correction_scorecard_delta.png'),
+    ('Figure 7',  'Core_08_fig45_opx_headline.png'),
+    ('Figure 8a', 'Core_09a_fig_opx_regime_families.png'),
+    ('Figure 8b', 'Core_09b_fig_opx_overall_families.png'),
+    ('Figure 9',  'Core_10_fig_best_vs_putirka.png'),
+    ('Figure 10', 'Core_12_fig_shap_winners.png'),
+    ('Figure 11', 'Core_15_fig_feature_concordance.png'),
+    ('Figure 12', 'Core_16_fig_classical_equivalence.png'),
+    ('Figure 13', 'Core_17_fig_partial_dependence.png'),
+    ('Figure 14', 'Core_18_fig_surrogate_trees.png'),
 ]
 
-CORE_SUPPLEMENT_FIGS = [
-    'Core_01b_fig_dataset_map_holdout.png',
-    'Core_10b_fig_arcpl_bias_corrected_vs_putirka.png',
-    'Core_10c_fig_shipped_vs_putirka_expetdb.png',
-    'Core_10d_fig_shipped_vs_putirka_arcpl.png',
-]
+CORE_SUPPLEMENT_FIGS: list[str] = []
+
+EXCLUDE_FROM_SI = {
+    'fig_h5ac_opx_world_map.png',
+    'fig_nb04_cross_pipeline_heatmap.png',
+    'fig_nb04_ensemble_lift.png',
+    'fig_nb04_winning_base_histogram.png',
+    'fig_nb08_twopx_1to1.png',
+    'fig35_tabpfn_vs_opx_tb.png',
+    'fig44_tabpfn_bias_scoreboard_opx.png',
+}
 
 PREREG_FILES = [
     ('S3.1 Pressure regime pre-registration', 'p_regime_preregistration.md'),
-    ('S3.2 nb03 test protocol',                'nb03_test_protocol.md'),
 ]
 
 
@@ -372,12 +386,8 @@ def main() -> None:
         caption=('Table 2. Per-cell winning model, feature set, and '
                  'aggregate test RMSE with 95% bootstrap confidence intervals.'))
     add_csv_table(
-        doc, RESULTS_DIR / 'tabpfn_head_to_head.csv',
-        caption=('Table 3. TabPFN v2 vs tuned-family head-to-head per '
-                 '(track, target) cell. Verdict in last column.'))
-    add_csv_table(
         doc, TABLES_DIR / 'table_4_bias_correction_summary.csv',
-        caption=('Table 4. Bias-correction shipped form, pre/post RMSE, '
+        caption=('Table 3. Bias-correction shipped form, pre/post RMSE, '
                  'percent reduction.'))
 
     add_page_break(doc)
@@ -387,7 +397,8 @@ def main() -> None:
 
     doc.add_heading('S1. Supplementary Figures', level=2)
     si_idx = 1
-    si_figs = sorted(p for p in FIGURES_SI.glob('*.png'))
+    si_figs = sorted(p for p in FIGURES_SI.glob('*.png')
+                     if p.name not in EXCLUDE_FROM_SI)
     for path in si_figs:
         caption = read_caption_sidecar(path) or path.stem.replace('_', ' ')
         add_figure(doc, path, f'Figure S{si_idx}. {caption}')
@@ -461,8 +472,11 @@ def main() -> None:
         doc.add_paragraph('[data/hashes.json not found]')
 
     OUTPUT.parent.mkdir(parents=True, exist_ok=True)
-    doc.save(str(OUTPUT))
-    print(f'Manuscript built: {OUTPUT}')
+    out = _final_output_path()
+    doc.save(str(out))
+    print(f'Manuscript built: {out}')
+    if out != OUTPUT:
+        print(f'NOTE: {OUTPUT.name} was locked. Wrote to {out.name} instead.')
 
 
 if __name__ == '__main__':

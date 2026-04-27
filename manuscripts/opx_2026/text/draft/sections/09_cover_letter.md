@@ -8,19 +8,17 @@ American Geophysical Union
 
 Dear Dr. [Editor Name],
 
-We are pleased to submit our manuscript entitled "A Pre-Registered Machine-Learning Thermobarometer for Orthopyroxene: Regime-Stratified Evaluation, Regime-Piecewise Bias Correction, and a Foundation-Model Baseline" for consideration at JGR: Machine Learning and Computation.
+We are pleased to submit our manuscript entitled "A Pre-Registered Machine-Learning Thermobarometer for Orthopyroxene: Regime-Stratified Evaluation and Regime-Piecewise Bias Correction" for consideration at JGR: Machine Learning and Computation.
 
-The manuscript reports the first machine-learning thermobarometer trained specifically on orthopyroxene and evaluated under a pre-registered regime-stratified protocol. The principal finding is a 41.9 % aggregate RMSE reduction on opx-only pressure (10.35 to 6.05 kbar) against the best available classical barometer (Putirka 2008 equation 29c), unanimous across 20 random-seed train/test splits and winning every pre-registered pressure regime. The pipeline also integrates TabPFN v2 (Hollmann et al., 2025, Nature) as a ninth model family, reports its within-spread post-correction win on opx-only P, and discusses the explainability gap created by TabPFN's lack of an efficient SHAP pathway.
+The manuscript reports the first machine-learning thermobarometer trained specifically on orthopyroxene and evaluated under a pre-registered regime-stratified protocol. The principal finding is a 41.9 % aggregate RMSE reduction on opx-only pressure (10.35 to 6.05 kbar) against the best available classical barometer (Putirka 2008 equation 29c), unanimous across 20 random-seed train/test splits and winning every pre-registered pressure regime. The pipeline evaluates nine model families including TabPFN v2 (Hollmann et al., 2025) as a pretrained foundation-model peer.
 
-Four features of this work make it a natural fit for JGR:MLC rather than for a traditional petrology venue.
+Three features of this work make it a natural fit for JGR:MLC rather than for a traditional petrology venue.
 
-First, the full evaluation framework is pre-registered in version-controlled documents committed before any post-hoc correction was fit. Pre-registration in petrology ML is rare, and we believe reviewer-visible pre-registration discipline is essential for the field to mature beyond the garden-of-forking-paths concerns that have accompanied the rapid expansion of ML thermobarometer papers over the past four years.
+First, the full evaluation framework is pre-registered in version-controlled documents committed before any post-hoc correction was fit. Pre-registration is rare in ML thermobarometry; we adopt it here as an explicit, reviewer-visible discipline to make every analytical decision auditable, and we believe it complements the methodological progress of the past four years of ML-in-petrology work.
 
-Second, the manuscript directly addresses the regression-to-the-mean bias problem identified by Agreda-Lopez et al. (2024, Computers & Geosciences) for clinopyroxene and evaluates whether their quantile-thresholded piecewise correction transfers to orthopyroxene. It does not: Form B accepts on one of four opx cells at canonical seed only and is not rescued by the 15x Gaussian augmentation protocol that enables it on cpx. We present a regime-piecewise linear correction (Form A, motivated by Zhang and Lu, 2012) that accepts on three of four opx cells under a pre-registered tolerance-band rule. The head-to-head of Form A against Form B is a substantive methodological contribution to ML-in-petrology.
+Second, the manuscript builds on the regression-to-the-mean bias correction introduced by Agreda-Lopez et al. (2024, Computers & Geosciences) for clinopyroxene and tests whether their quantile-thresholded piecewise correction transfers to orthopyroxene. We find that it does not transfer cleanly at opx sample sizes: Form B accepts on one of four opx cells at canonical seed only and is not rescued by the 15× Gaussian augmentation protocol that enables it on cpx. We present a regime-piecewise linear correction (Form A, motivated by Zhang and Lu, 2012) that accepts on three of four opx cells under a pre-registered tolerance-band rule. The head-to-head of Form A against Form B is a substantive methodological contribution to ML-in-petrology.
 
-Third, the nine-family model sweep with TabPFN v2 as the ninth family is the first evaluation of a pretrained tabular foundation model in an experimental-petrology ML thermobarometer paper. Our finding is honest: TabPFN loses on all four opx cells pre-correction and delivers the within-spread scorecard-winning post-correction result on opx-only P (5.94 vs tuned RF/pwlr-corrected 6.05 kbar) where the tuned-family margin is narrow. We retain TabPFN in the main-text roster and recommend future ML thermobarometer papers adopt the same first-class-peer treatment, while flagging the real explainability gap it creates.
-
-Fourth, the manuscript reports an unusually extensive set of honest nulls. Opx-liq temperature is effectively a null against the classical Putirka 28a thermometer. Form B does not transfer to opx data under any reasonable tolerance. Opx-liq deeper-mantle (n = 8) fails the pre-registered n ≥ 20 honesty bar and is reported with no directional claim. We position these nulls as findings in their own right and believe they strengthen the defensibility of the shipped claims.
+Third, the manuscript reports an extensive set of honest nulls. Opx-liq temperature is effectively a null against the classical Putirka 28a thermometer. Form B does not transfer to opx data under any reasonable tolerance. Opx-liq deeper-mantle (n = 8) fails the pre-registered n ≥ 20 honesty bar and is reported with no directional claim. We position these nulls as findings in their own right and believe they strengthen the defensibility of the shipped claims.
 
 The work is ready for peer review. The evaluation framework (pre-registration, 20-seed per-cell results, SHA256 dataset hashes, trained model joblibs) is archived at a tagged commit and deposited at Zenodo for reviewer verification. Reviewers can clone the repository and run `python -m pytest tests/test_preregistration.py` to verify that the pre-registered acceptance-rule constants are consistent across all source files.
 
@@ -36,6 +34,7 @@ Thank you for your consideration.
 
 Sincerely,
 
+________________________________________
 NQTa
 Lead author and corresponding author
 United States Coast Guard Academy, New London, CT

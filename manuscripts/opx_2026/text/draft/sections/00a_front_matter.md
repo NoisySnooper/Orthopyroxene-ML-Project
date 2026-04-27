@@ -1,7 +1,7 @@
 # Front matter: authors, affiliations, ORCIDs
 
 **Title**
-A Pre-Registered Machine-Learning Thermobarometer for Orthopyroxene: Regime-Stratified Evaluation, Regime-Piecewise Bias Correction, and a Foundation-Model Baseline
+A Pre-Registered Machine-Learning Thermobarometer for Orthopyroxene: Regime-Stratified Evaluation and Regime-Piecewise Bias Correction
 
 **Short title (running head)**
 Machine-Learning Thermobarometer for Orthopyroxene

@@ -4,7 +4,7 @@ Cells: `RMSE [bootstrap 95% CI]`. Winner per regime bold.
 
 ### opx_liq · P_kbar (binned by T)
 
-| Regime | n | v10 best | Putirka |
+| Regime | n | our_best | Putirka |
 | --- | --- | --- | --- |
 | 800<=T<1000 | 4 | **0.18 [0.07, 0.28] (RF/pwlr)** | 4.74 [2.90, 6.04] (Putirka 29a) |
 | 1000<=T<1200 | 31 | **2.85 [2.34, 3.33] (RF/alr)** | 3.85 [2.17, 5.30] (Putirka 29a) |
@@ -14,7 +14,7 @@ Cells: `RMSE [bootstrap 95% CI]`. Winner per regime bold.
 
 ### opx_only · P_kbar (binned by T)
 
-| Regime | n | v10 best | Putirka |
+| Regime | n | our_best | Putirka |
 | --- | --- | --- | --- |
 | 800<=T<1000 | 22 | 5.87 [4.68, 7.10] (CatBoost/alr) | **2.79 [1.70, 3.79] (Putirka 29c)** |
 | 1000<=T<1200 | 78 | 7.13 [5.85, 8.29] (XGB/alr) | **4.68 [3.74, 5.53] (Putirka 29c)** |
@@ -24,7 +24,7 @@ Cells: `RMSE [bootstrap 95% CI]`. Winner per regime bold.
 
 ### cpx_liq · P_kbar (binned by T)
 
-| Regime | n | v10 best | Putirka | Agreda | Jorgenson | Wang |
+| Regime | n | our_best | Putirka | Agreda | Jorgenson | Wang |
 | --- | --- | --- | --- | --- | --- | --- |
 | T<800 | 7 | **2.94 (ElasticNet/alr)** | 6.82 [0.61, 11.35] (Putirka 30) | 4.62 [3.17, 5.62] (Agreda 2024) | 6.26 [4.53, 8.20] (Jorgenson 2022) | 13.96 [5.95, 20.30] (Wang 2021) |
 | 800<=T<1000 | 52 | 3.28 [2.63, 3.96] (XGB/alr) | 6.36 [5.48, 7.23] (Putirka 30) | 3.18 [1.83, 4.26] (Agreda 2024) | **3.13 [2.20, 3.97] (Jorgenson 2022)** | 9.47 [6.08, 12.96] (Wang 2021) |
@@ -35,7 +35,7 @@ Cells: `RMSE [bootstrap 95% CI]`. Winner per regime bold.
 
 ### cpx_only · P_kbar (binned by T)
 
-| Regime | n | v10 best | Putirka | Agreda | Jorgenson |
+| Regime | n | our_best | Putirka | Agreda | Jorgenson |
 | --- | --- | --- | --- | --- | --- |
 | T<800 | 14 | 25.70 [18.82, 31.67] (GB/raw) | 13.97 [9.79, 17.07] (Putirka 32b) | 6.96 [4.85, 8.69] (Agreda 2024) | **6.25 [4.86, 7.41] (Jorgenson 2022)** |
 | 800<=T<1000 | 93 | **9.08 [5.68, 12.80] (XGB/raw)** | 10.25 [6.09, 14.26] (Putirka 32a) | 13.04 [8.71, 16.89] (Agreda 2024) | 13.11 [8.80, 16.94] (Jorgenson 2022) |
@@ -46,7 +46,7 @@ Cells: `RMSE [bootstrap 95% CI]`. Winner per regime bold.
 
 ### twopx · P_kbar (binned by T)
 
-| Regime | n | v10 best |
+| Regime | n | our_best |
 | --- | --- | --- |
 | 800<=T<1000 | 1 | **0.86 (MLP/twopx_components)** |
 | 1000<=T<1200 | 30 | **3.56 [2.34, 4.83] (CatBoost/pwlr)** |

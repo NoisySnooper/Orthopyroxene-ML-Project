@@ -1,0 +1,7 @@
+target,method_class,model,feature_set,track,single_seed_rmse,single_seed_r2,seed_rmse_mean,seed_rmse_std,seed_rmse_min,seed_rmse_max,notes
+T_C,our_best_base,ElasticNet,raw,twopx,79.536,0.465,79.536,0.0,79.536,79.536,20-seed spread from opx_multiseed_summary.csv
+T_C,our_best_ensemble,greedy,pwlr,twopx,81.04,,,,,,"stacked ensemble, single fit per training pipeline"
+T_C,putirka_twopx,Putirka 2008 eq36/37/38/39,,twopx,,,,,,,"DEFERRED: requires paired opx-cpx Thermobar call, not executed in this study"
+P_kbar,our_best_base,XGB,alr,twopx,4.263,0.43,4.261,0.029,4.218,4.32,20-seed spread from opx_multiseed_summary.csv
+P_kbar,our_best_ensemble,greedy,pwlr,twopx,4.514,,,,,,"stacked ensemble, single fit per training pipeline"
+P_kbar,putirka_twopx,Putirka 2008 eq36/37/38/39,,twopx,,,,,,,"DEFERRED: requires paired opx-cpx Thermobar call, not executed in this study"

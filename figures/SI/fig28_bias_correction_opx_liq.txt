@@ -11,6 +11,6 @@ to 3.05 kbar). T_C correction is a neutral-to-negative wash on
 ElasticNet/raw (pooled 77.06 to 77.17; shallow_crustal HURT 35.33 to
 54.01), consistent with the earlier finding that train-OOF T bias does not
 transfer to the held-out test set. Produced by
-scripts/v10_phase_g_nb07_bias.py. Supports T09 (bias correction
+scripts/bias_correction/nb07_bias.py. Supports T09 (bias correction
 effectiveness). Source CSVs: results/opx_liq_bias_correction.csv,
 results/opx_liq_bias_correction_params.csv.

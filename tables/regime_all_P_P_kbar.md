@@ -4,7 +4,7 @@ Cells: `RMSE [bootstrap 95% CI]`. Winner per regime bold.
 
 ### opx_liq · P_kbar (binned by P)
 
-| Regime | n | v10 best | Putirka |
+| Regime | n | our_best | Putirka |
 | --- | --- | --- | --- |
 | shallow_crustal | 47 | **2.66 [2.25, 3.13] (ElasticNet/raw)** | 3.89 [3.24, 4.47] (Putirka 29a) |
 | deep_crustal_MASH | 61 | **2.08 [1.62, 2.54] (MLP/raw)** | 2.31 [1.72, 2.85] (Putirka 29a) |
@@ -20,7 +20,7 @@ Cells: `RMSE [bootstrap 95% CI]`. Winner per regime bold.
 
 ### opx_only · P_kbar (binned by P)
 
-| Regime | n | v10 best | Putirka |
+| Regime | n | our_best | Putirka |
 | --- | --- | --- | --- |
 | shallow_crustal | 48 | 7.19 [5.67, 8.76] (ERT/raw) | **2.20 [1.69, 2.72] (Putirka 29c)** |
 | deep_crustal_MASH | 76 | 5.21 [4.48, 5.80] (CatBoost/alr) | **4.68 [3.92, 5.36] (Putirka 29c)** |
@@ -36,7 +36,7 @@ Cells: `RMSE [bootstrap 95% CI]`. Winner per regime bold.
 
 ### cpx_liq · P_kbar (binned by P)
 
-| Regime | n | v10 best | Putirka | Agreda | Jorgenson | Wang |
+| Regime | n | our_best | Putirka | Agreda | Jorgenson | Wang |
 | --- | --- | --- | --- | --- | --- | --- |
 | shallow_crustal | 268 | 4.97 [4.24, 5.68] (LightGBM/pwlr) | **4.18 [3.90, 4.44] (Putirka 30)** | 4.44 [3.90, 4.95] (Agreda 2024) | 4.66 [4.20, 5.10] (Jorgenson 2022) | 6.73 [5.76, 7.77] (Wang 2021) |
 | deep_crustal_MASH | 187 | 2.78 [2.32, 3.28] (LightGBM/pwlr) | 2.93 [2.61, 3.29] (Putirka 31) | **1.99 [1.73, 2.26] (Agreda 2024)** | 2.08 [1.88, 2.28] (Jorgenson 2022) | 3.66 [2.97, 4.39] (Wang 2021) |
@@ -52,7 +52,7 @@ Cells: `RMSE [bootstrap 95% CI]`. Winner per regime bold.
 
 ### cpx_only · P_kbar (binned by P)
 
-| Regime | n | v10 best | Putirka | Agreda | Jorgenson |
+| Regime | n | our_best | Putirka | Agreda | Jorgenson |
 | --- | --- | --- | --- | --- | --- |
 | shallow_crustal | 236 | 8.33 [7.08, 9.55] (CatBoost/raw) | **2.84 [2.50, 3.22] (Putirka 32b)** | 3.84 [3.32, 4.26] (Agreda 2024) | 3.19 [2.76, 3.53] (Jorgenson 2022) |
 | deep_crustal_MASH | 193 | 3.28 [2.05, 4.73] (ElasticNet/alr) | 2.42 [2.14, 2.68] (Putirka 32a) | 2.35 [1.91, 2.70] (Agreda 2024) | **1.39 [1.05, 1.67] (Jorgenson 2022)** |
@@ -68,7 +68,7 @@ Cells: `RMSE [bootstrap 95% CI]`. Winner per regime bold.
 
 ### twopx · P_kbar (binned by P)
 
-| Regime | n | v10 best |
+| Regime | n | our_best |
 | --- | --- | --- |
 | shallow_crustal | 9 | **4.93 [2.53, 7.44] (XGB/alr)** |
 | deep_crustal_MASH | 30 | **2.38 [2.04, 2.72] (ElasticNet/raw)** |
