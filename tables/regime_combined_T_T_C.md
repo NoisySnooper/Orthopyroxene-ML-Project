@@ -4,7 +4,7 @@ Cells: `RMSE [bootstrap 95% CI]`. Winner per regime bold.
 
 ### twopx · T_C (binned by T)
 
-| Regime | n | v10 best |
+| Regime | n | our_best |
 | --- | --- | --- |
 | 800<=T<1000 | 1 | **0.14 (ElasticNet/twopx_components)** |
 | 1000<=T<1200 | 30 | **89.58 [68.83, 107.62] (ElasticNet/raw)** |

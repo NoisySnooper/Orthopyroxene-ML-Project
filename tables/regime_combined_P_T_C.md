@@ -4,7 +4,7 @@ Cells: `RMSE [bootstrap 95% CI]`. Winner per regime bold.
 
 ### twopx · T_C (binned by P)
 
-| Regime | n | v10 best |
+| Regime | n | our_best |
 | --- | --- | --- |
 | shallow_crustal | 9 | **72.22 [27.99, 109.34] (CatBoost/pwlr)** |
 | deep_crustal_MASH | 30 | **82.75 [59.66, 102.34] (ElasticNet/alr)** |

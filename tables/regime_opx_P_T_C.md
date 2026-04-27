@@ -4,7 +4,7 @@ Cells: `RMSE [bootstrap 95% CI]`. Winner per regime bold.
 
 ### opx_liq · T_C (binned by P)
 
-| Regime | n | v10 best | Putirka |
+| Regime | n | our_best | Putirka |
 | --- | --- | --- | --- |
 | shallow_crustal | 47 | **23.47 [15.89, 30.40] (ERT/pwlr)** | 25.52 [16.32, 33.87] (Putirka 28a) |
 | deep_crustal_MASH | 61 | **78.46 [29.85, 113.07] (ElasticNet/raw)** | 87.48 [34.61, 120.83] (Putirka 28a) |
@@ -20,7 +20,7 @@ Cells: `RMSE [bootstrap 95% CI]`. Winner per regime bold.
 
 ### opx_only · T_C (binned by P)
 
-| Regime | n | v10 best |
+| Regime | n | our_best |
 | --- | --- | --- |
 | shallow_crustal | 48 | **108.26 [90.90, 122.97] (GB/raw)** |
 | deep_crustal_MASH | 76 | **109.47 [86.56, 132.73] (LightGBM/pwlr)** |

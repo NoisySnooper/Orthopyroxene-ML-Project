@@ -1,4 +1,4 @@
-# Table S8.10: Phase G.7 bias-correction per-regime results
+# Table S8.10: bias-correction per-regime results
 
 Each row is one regime x form for one cell. Pre/post RMSE in native units at regime n. Bootstrap 95% CI averaged across 20 seeds. Delta = pre - post (positive = correction helps). `cell ships?` = Y when the cell-level ship decision at canonical seed 42 selects this form.
 

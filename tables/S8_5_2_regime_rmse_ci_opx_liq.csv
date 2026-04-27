@@ -1,5 +1,5 @@
-target,P_kbar,P_kbar,T_C,T_C
-method_family,Putirka,v10,Putirka,v10
+target,P_kbar,P_kbar.1,T_C,T_C.1
+method_family,Putirka,our_method,Putirka,our_method
 regime,,,,
 shallow_crustal,"3.89 [3.24, 4.47]","2.66 [2.25, 3.13]","25.52 [16.32, 33.87]","23.47 [15.89, 30.40]"
 deep_crustal_MASH,"2.31 [1.72, 2.85]","2.08 [1.62, 2.54]","87.48 [34.61, 120.83]","78.46 [29.85, 113.07]"

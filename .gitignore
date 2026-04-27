@@ -44,3 +44,4 @@ logs/_*.ipynb
 /data/natural/2024-*-GEOROC_*.csv
 /data/natural/2024-*-SGFTFN_*.csv
 /data/natural/georoc_cache/
+~$*.docx

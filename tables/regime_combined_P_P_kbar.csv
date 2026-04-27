@@ -1,11 +1,11 @@
-track,target,regime_type,regime,n,v10 best_rmse,v10 best_rmse_lo,v10 best_rmse_hi,winner
-twopx,P_kbar,P,shallow_crustal,9,4.927732865905283,2.5344420157270195,7.441335648183919,v10 best
-twopx,P_kbar,P,deep_crustal_MASH,30,2.3806607042917456,2.039958496493869,2.722804907061485,v10 best
-twopx,P_kbar,P,lithospheric_mantle,8,3.4175003283855165,1.4704341306930346,5.219727832452023,v10 best
-twopx,P_kbar,P,deeper_mantle,1,9.180512312371128,,,v10 best
-twopx,P_kbar,P,P<5,9,4.927732865905283,2.5344420157270195,7.441335648183919,v10 best
-twopx,P_kbar,P,5<=P<10,4,2.859756334568498,1.4670577127043367,3.9004526092233136,v10 best
-twopx,P_kbar,P,10<=P<20,33,2.595242683106091,2.2494134807449626,2.93936643602986,v10 best
-twopx,P_kbar,P,20<=P<40,2,8.939210878500017,,,v10 best
-twopx,P_kbar,P,P<20 (Agreda range),46,3.400694344085426,2.5415662266018164,4.223632535939796,v10 best
-twopx,P_kbar,P,ALL,48,4.270601483978543,3.0042314861703474,5.302694643099959,v10 best
+track,target,regime_type,regime,n,our_best_rmse,our_best_rmse_lo,our_best_rmse_hi,winner
+twopx,P_kbar,P,shallow_crustal,9,4.928,2.534,7.441,our_best
+twopx,P_kbar,P,deep_crustal_MASH,30,2.381,2.04,2.723,our_best
+twopx,P_kbar,P,lithospheric_mantle,8,3.418,1.47,5.22,our_best
+twopx,P_kbar,P,deeper_mantle,1,9.181,,,our_best
+twopx,P_kbar,P,P<5,9,4.928,2.534,7.441,our_best
+twopx,P_kbar,P,5<=P<10,4,2.86,1.467,3.9,our_best
+twopx,P_kbar,P,10<=P<20,33,2.595,2.249,2.939,our_best
+twopx,P_kbar,P,20<=P<40,2,8.939,,,our_best
+twopx,P_kbar,P,P<20 (Agreda range),46,3.401,2.542,4.224,our_best
+twopx,P_kbar,P,ALL,48,4.271,3.004,5.303,our_best

@@ -4,7 +4,7 @@ Cells: `RMSE [bootstrap 95% CI]`. Winner per regime bold.
 
 ### opx_liq · T_C (binned by T)
 
-| Regime | n | v10 best | Putirka |
+| Regime | n | our_best | Putirka |
 | --- | --- | --- | --- |
 | 800<=T<1000 | 4 | **188.99 [57.44, 261.03] (MLP/pwlr)** | 259.23 [86.77, 356.19] (Putirka 28a) |
 | 1000<=T<1200 | 31 | **89.57 [48.44, 124.07] (ElasticNet/alr)** | 98.28 [57.51, 132.27] (Putirka 28a) |
@@ -14,7 +14,7 @@ Cells: `RMSE [bootstrap 95% CI]`. Winner per regime bold.
 
 ### opx_only · T_C (binned by T)
 
-| Regime | n | v10 best |
+| Regime | n | our_best |
 | --- | --- | --- |
 | 800<=T<1000 | 22 | **165.56 [128.60, 203.92] (GB/raw)** |
 | 1000<=T<1200 | 78 | **107.34 [92.17, 121.21] (XGB/raw)** |
@@ -24,7 +24,7 @@ Cells: `RMSE [bootstrap 95% CI]`. Winner per regime bold.
 
 ### cpx_liq · T_C (binned by T)
 
-| Regime | n | v10 best | Putirka | Agreda | Jorgenson | Wang |
+| Regime | n | our_best | Putirka | Agreda | Jorgenson | Wang |
 | --- | --- | --- | --- | --- | --- | --- |
 | T<800 | 7 | 129.35 [31.58, 195.15] (ElasticNet/pwlr) | 114.11 [28.18, 189.38] (Putirka 34) | **63.07 [17.24, 100.89] (Agreda 2024)** | 126.37 [96.05, 158.64] (Jorgenson 2022) | 473.65 [361.10, 603.38] (Wang 2021) |
 | 800<=T<1000 | 52 | 59.21 [45.32, 71.22] (LightGBM/alr) | 108.06 [94.68, 119.88] (Putirka 33) | **31.83 [25.80, 37.34] (Agreda 2024)** | 35.88 [27.97, 44.58] (Jorgenson 2022) | 329.83 [287.45, 373.96] (Wang 2021) |
@@ -35,7 +35,7 @@ Cells: `RMSE [bootstrap 95% CI]`. Winner per regime bold.
 
 ### cpx_only · T_C (binned by T)
 
-| Regime | n | v10 best | Putirka | Agreda | Jorgenson |
+| Regime | n | our_best | Putirka | Agreda | Jorgenson |
 | --- | --- | --- | --- | --- | --- |
 | T<800 | 14 | **353.75 [305.65, 392.69] (MLP/alr)** | 520.39 [430.73, 585.71] (Putirka 32d) | 356.89 [299.13, 399.07] (Agreda 2024) | 380.63 [330.96, 417.60] (Jorgenson 2022) |
 | 800<=T<1000 | 93 | 157.66 [143.64, 173.35] (MLP/pwlr) | 338.24 [304.60, 374.85] (Putirka 32d) | **110.66 [97.21, 122.57] (Agreda 2024)** | 116.64 [101.33, 132.20] (Jorgenson 2022) |
@@ -46,7 +46,7 @@ Cells: `RMSE [bootstrap 95% CI]`. Winner per regime bold.
 
 ### twopx · T_C (binned by T)
 
-| Regime | n | v10 best |
+| Regime | n | our_best |
 | --- | --- | --- |
 | 800<=T<1000 | 1 | **0.14 (ElasticNet/twopx_components)** |
 | 1000<=T<1200 | 30 | **89.58 [68.83, 107.62] (ElasticNet/raw)** |

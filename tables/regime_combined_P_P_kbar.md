@@ -4,7 +4,7 @@ Cells: `RMSE [bootstrap 95% CI]`. Winner per regime bold.
 
 ### twopx · P_kbar (binned by P)
 
-| Regime | n | v10 best |
+| Regime | n | our_best |
 | --- | --- | --- |
 | shallow_crustal | 9 | **4.93 [2.53, 7.44] (XGB/alr)** |
 | deep_crustal_MASH | 30 | **2.38 [2.04, 2.72] (ElasticNet/raw)** |

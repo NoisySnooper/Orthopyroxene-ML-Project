@@ -4,7 +4,7 @@ Cells: `RMSE [bootstrap 95% CI]`. Winner per regime bold.
 
 ### opx_liq · T_C (binned by T)
 
-| Regime | n | v10 best | Putirka |
+| Regime | n | our_best | Putirka |
 | --- | --- | --- | --- |
 | 800<=T<1000 | 4 | **188.99 [57.44, 261.03] (MLP/pwlr)** | 259.23 [86.77, 356.19] (Putirka 28a) |
 | 1000<=T<1200 | 31 | **89.57 [48.44, 124.07] (ElasticNet/alr)** | 98.28 [57.51, 132.27] (Putirka 28a) |
@@ -14,7 +14,7 @@ Cells: `RMSE [bootstrap 95% CI]`. Winner per regime bold.
 
 ### opx_only · T_C (binned by T)
 
-| Regime | n | v10 best |
+| Regime | n | our_best |
 | --- | --- | --- |
 | 800<=T<1000 | 22 | **165.56 [128.60, 203.92] (GB/raw)** |
 | 1000<=T<1200 | 78 | **107.34 [92.17, 121.21] (XGB/raw)** |

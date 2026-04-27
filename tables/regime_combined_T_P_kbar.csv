@@ -1,6 +1,6 @@
-track,target,regime_type,regime,n,v10 best_rmse,v10 best_rmse_lo,v10 best_rmse_hi,winner
-twopx,P_kbar,T,800<=T<1000,1,0.8550865177865572,,,v10 best
-twopx,P_kbar,T,1000<=T<1200,30,3.5585388752025384,2.344371766018674,4.826982949837458,v10 best
-twopx,P_kbar,T,1200<=T<1400,15,2.470672568226392,1.5035226302100366,3.308960143913928,v10 best
-twopx,P_kbar,T,T>=1400,2,8.939210878500017,,,v10 best
-twopx,P_kbar,T,ALL,48,4.270601483978543,3.0042314861703474,5.302694643099959,v10 best
+track,target,regime_type,regime,n,our_best_rmse,our_best_rmse_lo,our_best_rmse_hi,winner
+twopx,P_kbar,T,800<=T<1000,1,0.855,,,our_best
+twopx,P_kbar,T,1000<=T<1200,30,3.559,2.344,4.827,our_best
+twopx,P_kbar,T,1200<=T<1400,15,2.471,1.504,3.309,our_best
+twopx,P_kbar,T,T>=1400,2,8.939,,,our_best
+twopx,P_kbar,T,ALL,48,4.271,3.004,5.303,our_best

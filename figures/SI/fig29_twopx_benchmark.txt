@@ -10,6 +10,6 @@ call requires paired opx-cpx Thermobar invocation that is not wired
 into the tuned ML baseline; the deferred row is retained in the CSV with NaN RMSE so
 downstream consumers (NB09 manuscript, NBF figures) flag the gap
 explicitly. Fixes the earlier empty nb10_two_pyroxene_benchmark.csv
-regression. Produced by scripts/v10_phase_g_nb10_twopx_benchmark.py.
-Source CSVs: results/v10_twopx_benchmark_final.csv and
+regression. Produced by scripts/benchmarks/nb10_twopx_benchmark.py.
+Source CSVs: results/twopx_benchmark_final.csv and
 tables/S8_9_twopx_benchmark.{md,csv}.

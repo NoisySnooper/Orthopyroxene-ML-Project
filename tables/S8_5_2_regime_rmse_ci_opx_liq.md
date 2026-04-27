@@ -2,7 +2,7 @@
 
 Rows: pre-registered P regimes. Columns: (target, method_family). Cells: `RMSE [lo, hi]`.
 
-| regime              | ('P_kbar', 'Putirka')   | ('P_kbar', 'v10')   | ('T_C', 'Putirka')    | ('T_C', 'v10')         |
+| regime              | ('P_kbar', 'Putirka')   | ('P_kbar', 'our_method')   | ('T_C', 'Putirka')    | ('T_C', 'our_method')         |
 |:--------------------|:------------------------|:--------------------|:----------------------|:-----------------------|
 | shallow_crustal     | 3.89 [3.24, 4.47]       | 2.66 [2.25, 3.13]   | 25.52 [16.32, 33.87]  | 23.47 [15.89, 30.40]   |
 | deep_crustal_MASH   | 2.31 [1.72, 2.85]       | 2.08 [1.62, 2.54]   | 87.48 [34.61, 120.83] | 78.46 [29.85, 113.07]  |
