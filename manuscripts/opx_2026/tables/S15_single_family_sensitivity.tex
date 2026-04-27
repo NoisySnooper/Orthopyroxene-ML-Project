@@ -1,0 +1,21 @@
+\begin{table}[h]
+\centering
+\caption{Single-family sensitivity. Each row reports the RMSE and 95\% CI for one family evaluated on every (track, target) cell (best feature set shown in parentheses). Readers who prefer a single-family pipeline can read any row; the per-cell winner row (bottom) is the headline result used in the main text. RMSE differences between the per-cell winner and any single family are typically under 10\% in relative terms.}
+\label{tab:S15_single_family_sensitivity}
+\begin{tabular}{lcccccccc}
+\toprule
+Family & opx\_liq/T\_C & opx\_liq/P\_kbar & opx\_only/T\_C & opx\_only/P\_kbar & cpx\_liq/T\_C & cpx\_liq/P\_kbar & cpx\_only/T\_C & cpx\_only/P\_kbar \\
+\midrule
+RF & 84.88 [69.65, 99.71] (pwlr) & 5.05 [4.23, 5.90] (alr) & 151.69 [126.82, 175.72] (pwlr) & 10.35 [6.90, 13.92] (pwlr) & 75.22 [58.70, 92.46] (pwlr) & 7.11 [4.73, 9.66] (pwlr) & 139.36 [123.57, 155.33] (pwlr) & 14.33 [11.89, 16.58] (raw) \\
+ERT & 86.87 [70.04, 103.19] (pwlr) & 5.74 [4.69, 6.88] (raw) & 159.35 [131.71, 185.82] (pwlr) & 10.88 [8.10, 13.83] (pwlr) & 72.48 [58.28, 88.07] (pwlr) & 7.33 [4.77, 10.21] (raw) & 127.02 [116.14, 139.28] (pwlr) & 14.08 [12.01, 16.06] (pwlr) \\
+XGB & 87.36 [70.68, 103.33] (raw) & 4.79 [4.02, 5.50] (raw) & 147.35 [122.21, 173.62] (alr) & 10.42 [7.05, 13.44] (pwlr) & 73.27 [60.45, 90.61] (pwlr) & 6.93 [4.88, 9.78] (pwlr) & 134.35 [122.12, 147.12] (pwlr) & 15.13 [12.43, 17.40] (raw) \\
+GB & 86.18 [69.37, 101.91] (raw) & 4.76 [4.13, 5.41] (raw) & 148.44 [121.28, 171.88] (alr) & 11.23 [8.17, 14.62] (pwlr) & 75.47 [60.75, 91.23] (raw) & 7.05 [5.05, 9.90] (pwlr) & 131.59 [118.86, 145.01] (pwlr) & 14.21 [11.98, 16.41] (raw) \\
+CatBoost & 88.72 [71.65, 103.41] (pwlr) & 5.04 [4.28, 5.97] (alr) & 154.66 [126.77, 178.93] (alr) & 11.01 [8.13, 14.08] (pwlr) & 72.78 [58.94, 86.13] (pwlr) & 7.28 [4.99, 10.19] (pwlr) & 134.73 [125.81, 149.08] (pwlr) & 14.32 [11.81, 16.80] (raw) \\
+LightGBM & 87.28 [70.91, 103.42] (raw) & 5.03 [4.35, 5.69] (raw) & 146.63 [121.19, 170.00] (alr) & 10.90 [7.54, 14.63] (pwlr) & 74.55 [60.17, 89.16] (pwlr) & 6.55 [4.45, 8.98] (pwlr) & 133.04 [120.08, 145.86] (pwlr) & 14.37 [12.15, 16.65] (raw) \\
+ElasticNet & 77.06 [61.81, 92.73] (raw) & 5.59 [4.54, 6.74] (raw) & 161.44 [139.87, 182.62] (raw) & 13.15 [10.14, 16.44] (pwlr) & 89.67 [77.85, 105.21] (alr) & 7.71 [5.89, 10.20] (alr) & 151.33 [140.03, 164.70] (pwlr) & 15.78 [13.26, 18.47] (pwlr) \\
+MLP & 112.83 [106.07, 130.63] (alr) & 4.40 [3.08, 4.54] (raw) & 154.74 [129.23, 173.79] (raw) & 11.39 [9.25, 14.25] (pwlr) & 106.77 [87.71, 128.46] (raw) & 7.63 [5.37, 10.09] (pwlr) & 136.45 [120.40, 142.82] (pwlr) & 13.66 [11.33, 15.48] (alr) \\
+TabPFN & 84.88 [69.07, 101.24] (raw) & 5.48 [4.62, 5.99] (raw) & 150.17 [122.18, 181.91] (raw) & 12.52 [9.97, 15.47] (raw) & 69.96 [55.11, 82.41] (raw) & 7.42 [4.91, 10.32] (raw) & 131.40 [115.55, 140.93] (raw) & 13.42 [11.12, 15.54] (raw) \\
+per-cell winner & ElasticNet/raw 77.06 [61.81, 92.73] & MLP/raw 4.40 [3.08, 4.54] & LightGBM/alr 146.63 [121.19, 170.00] & RF/pwlr 10.35 [6.90, 13.92] & TabPFN/raw 69.96 [55.11, 82.41] & LightGBM/pwlr 6.55 [4.45, 8.98] & ERT/pwlr 127.02 [116.14, 139.28] & TabPFN/raw 13.42 [11.12, 15.54] \\
+\bottomrule
+\end{tabular}
+\end{table}

@@ -1,16 +1,16 @@
 # Provenance
 
 Built: 2026-04-20
-Git SHA: `bd1e768f08b80a844a4e6726c138d32eb5ed6e98`
+Git SHA: `a9f102f844682e24e7bfbe9001d766dc6d0ec7ec`
 
 ## Last 5 commits
 
 ```
+a9f102f Core_01 polish: track name + supplementary stats on each panel
+2bda358 Phase 5 Tier 1: 5 missing core figures + Okabe-Ito palette + column rename
+565b48f Advisor package v2: README, CAVEATS, preregistration copy, Section 11
+3bf22ea Phase 3b: terminology cleanup v2 (compound + cosmetic passes)
 bd1e768 Advisor package: Lee review bundle 20260420
-5bd8a25 Phase 3: terminology cleanup across manuscripts and caption sidecars
-2b7e9fe Phase 4: natural-sample pipeline refresh (nb08 re-executed)
-86fa8c1 Phase 2: TabPFN post-correction headline figures
-8afc976 Phase 1: TabPFN full bias-correction integration
 ```
 
 ## CSV inventory

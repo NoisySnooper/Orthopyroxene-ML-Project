@@ -201,7 +201,15 @@
       "Bash(.venv/Scripts/jupyter nbconvert *)",
       "Bash(python -c \"import ast; ast.parse\\(open\\('scripts/v10_phase_g_figures_30_34.py', encoding='utf-8'\\).read\\(\\)\\); print\\('OK'\\)\")",
       "Bash(awk -F, '$3 ~ /T16|T17|T18|T19|T20|T21/' results/v10_nb03_test_log.csv)",
-      "Bash(python -c \"import ast; ast.parse\\(open\\('scripts/v10_phase_g_bias_correction_tables.py', encoding='utf-8'\\).read\\(\\)\\); print\\('OK'\\)\")"
+      "Bash(python -c \"import ast; ast.parse\\(open\\('scripts/v10_phase_g_bias_correction_tables.py', encoding='utf-8'\\).read\\(\\)\\); print\\('OK'\\)\")",
+      "Bash(PYTHONPATH=. .venv/Scripts/python.exe -m pytest tests/ -q)",
+      "Bash(PYTHONPATH=. .venv/Scripts/python.exe -c \"from config import CANONICAL_FIGURES; print\\(len\\(CANONICAL_FIGURES\\), 'figures'\\); print\\(CANONICAL_FIGURES[-1]['caption'][:80]\\)\")",
+      "Bash(PYTHONPATH=. .venv/Scripts/python.exe)",
+      "Bash(PYTHONPATH=. .venv/Scripts/python.exe scripts/tabpfn/_patch_nb04_fig24.py)",
+      "Bash(PYTHONPATH=. .venv/Scripts/python.exe scripts/tabpfn/opx_tb_nb03_merge_tabpfn_canonical.py multiseed)",
+      "Bash(PYTHONPATH=. .venv/Scripts/python.exe scripts/tabpfn/opx_tb_nb03_merge_tabpfn_canonical.py regime)",
+      "Bash(PYTHONPATH=. .venv/Scripts/python.exe scripts/tabpfn/opx_tb_nb03_augment_scorecard.py)",
+      "Bash(PYTHONPATH=. .venv/Scripts/python.exe scripts/tabpfn/_c11_integrity_sweep.py)"
     ]
   }
 }

@@ -306,8 +306,9 @@ class ShipDecision:
     form: str                        # 'A', 'B', or 'none'
     ships: bool
     overall_delta: float             # pre_rmse - post_rmse (positive=better)
-    max_regime_degradation: float    # max over regimes of (post-pre); <=tol to ship
+    max_regime_degradation: float    # max over VETOING regimes of (post-pre)
     reason: str                      # short human-readable reason
+    low_n_degradations: dict = field(default_factory=dict)  # {regime: degradation} for n<n_min bins
 
     def to_dict(self) -> dict:
         return {
@@ -316,47 +317,106 @@ class ShipDecision:
             'overall_delta': self.overall_delta,
             'max_regime_degradation': self.max_regime_degradation,
             'reason': self.reason,
+            'low_n_degradations': dict(self.low_n_degradations),
         }
 
 
 def ship_decision(form: str,
                   pre_overall: float, post_overall: float,
                   per_regime_pre: dict, per_regime_post: dict,
-                  tol: float = SHIP_TOL) -> ShipDecision:
-    """Apply the two-part ship rule:
-       1. overall_delta > tol
-       2. max_regime_degradation <= tol
+                  per_regime_n: dict | None = None,
+                  n_min_for_veto: int = 0,
+                  tol: float = SHIP_TOL,
+                  degradation_tol_abs: float = 0.0,
+                  degradation_tol_rel: float = 0.0) -> ShipDecision:
+    """Apply the tiered + tolerance-based ship rule.
+
+    See docs/preregistration/AMENDMENT_1_acceptance_rule.md and
+    AMENDMENT_2_veto_tolerance.md.
+
+    - `n_min_for_veto` (Amendment 1): regimes with n < this threshold are
+      logged but cannot veto shipment. `0` reproduces v1 behaviour.
+    - `degradation_tol_abs` (Amendment 2): absolute degradation tolerance
+      in target units (e.g. 10.0 degC for T targets, 1.0 kbar for P).
+    - `degradation_tol_rel` (Amendment 2): relative degradation tolerance
+      as a fraction of `per_regime_pre[r]` (e.g. 0.10).
+
+    Per-regime veto threshold:
+        veto_tol_r = max(tol, degradation_tol_abs,
+                         degradation_tol_rel * per_regime_pre[r]).
+
+    Defaults `degradation_tol_abs=0.0, degradation_tol_rel=0.0` reproduce
+    the v1/v2 rule byte-for-byte (the max collapses to `tol=SHIP_TOL`).
     """
     overall_delta = float(pre_overall - post_overall)
-    degradations = []
+    vetoing_items = []  # (regime, degradation, veto_tol)
+    low_n = {}
     for r, post_r in per_regime_post.items():
         pre_r = per_regime_pre.get(r, np.nan)
         if not (np.isfinite(pre_r) and np.isfinite(post_r)):
             continue
-        degradations.append(float(post_r - pre_r))
-    max_degr = max(degradations) if degradations else float('nan')
+        degr = float(post_r - pre_r)
+        n_r = 0
+        if per_regime_n is not None:
+            n_r = int(per_regime_n.get(r, 0))
+        if n_min_for_veto > 0 and n_r < n_min_for_veto:
+            low_n[str(r)] = degr
+            continue
+        veto_tol_r = max(tol,
+                         float(degradation_tol_abs),
+                         float(degradation_tol_rel) * float(pre_r))
+        vetoing_items.append((str(r), degr, veto_tol_r))
+
+    # max_regime_degradation for audit: we report the worst (degr - veto_tol_r)
+    # so downstream consumers can reason about "how much headroom was left".
+    # But for the veto check we compare degr > veto_tol_r element-wise.
+    if vetoing_items:
+        worst = max(vetoing_items, key=lambda t: t[1] - t[2])
+        _, max_degr, worst_tol = worst
+    else:
+        max_degr = float('nan')
+        worst_tol = float('nan')
 
     if not np.isfinite(overall_delta):
         return ShipDecision(form=form, ships=False,
                             overall_delta=overall_delta,
                             max_regime_degradation=max_degr,
-                            reason='non-finite overall RMSE')
+                            reason='non-finite overall RMSE',
+                            low_n_degradations=low_n)
     if overall_delta <= tol:
         return ShipDecision(form=form, ships=False,
                             overall_delta=overall_delta,
                             max_regime_degradation=max_degr,
                             reason=f'overall delta {overall_delta:+.4g} '
-                                   f'<= tol {tol:g}')
-    if np.isfinite(max_degr) and max_degr > tol:
+                                   f'<= tol {tol:g}',
+                            low_n_degradations=low_n)
+
+    vetoed = [(r, d, t) for (r, d, t) in vetoing_items if d > t]
+    if vetoed:
+        worst_vetoed = max(vetoed, key=lambda t: t[1] - t[2])
+        r_name, d_val, t_val = worst_vetoed
         return ShipDecision(form=form, ships=False,
                             overall_delta=overall_delta,
-                            max_regime_degradation=max_degr,
-                            reason=f'regime worst degradation {max_degr:+.4g} '
-                                   f'> tol {tol:g}')
+                            max_regime_degradation=d_val,
+                            reason=(f'regime {r_name} degradation '
+                                    f'{d_val:+.4g} > veto_tol {t_val:.4g} '
+                                    f'(n >= {n_min_for_veto}; '
+                                    f'tol_abs={degradation_tol_abs:g}, '
+                                    f'tol_rel={degradation_tol_rel:g})'),
+                            low_n_degradations=low_n)
+
+    note = ''
+    if low_n:
+        note = f' (low-n non-vetoing: {low_n})'
+    if degradation_tol_abs > 0.0 or degradation_tol_rel > 0.0:
+        note += (f' [tol_abs={degradation_tol_abs:g}, '
+                 f'tol_rel={degradation_tol_rel:g}]')
     return ShipDecision(form=form, ships=True,
                         overall_delta=overall_delta,
                         max_regime_degradation=max_degr,
-                        reason='ships: overall improves, no regime degrades')
+                        reason=f'ships: overall improves, no n>={n_min_for_veto} '
+                               f'regime degrades beyond tolerance' + note,
+                        low_n_degradations=low_n)
 
 
 def choose_winner(decision_a: ShipDecision,

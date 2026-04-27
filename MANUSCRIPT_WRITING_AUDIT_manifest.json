@@ -1,0 +1,191 @@
+{
+  "audit_generated": "2026-04-20",
+  "audit_scope": "read-only manuscript pre-audit for JGR:MLC opx ML thermobarometer submission",
+  "git": {
+    "branch": "main",
+    "sha": "a9f102f844682e24e7bfbe9001d766dc6d0ec7ec",
+    "dirty_files": 356
+  },
+  "environment": {
+    "os": "Windows 11 Pro 10.0.26200",
+    "shell": "bash (MINGW64/git-bash)",
+    "python": "3.13.13",
+    "venv_path": ".venv at project root",
+    "packages": {
+      "pandas": "3.0.2",
+      "scikit-learn": "1.8.0",
+      "xgboost": "3.2.0",
+      "lightgbm": "4.6.0",
+      "catboost": "1.2.10",
+      "shap": "0.51.0",
+      "Thermobar": "1.0.70",
+      "tabpfn": "NOT_INSTALLED_FLAG",
+      "tabpfn_client": "NOT_INSTALLED_FLAG"
+    },
+    "gpu": false
+  },
+  "sources_read": {
+    "preregistration": [
+      "docs/preregistration/p_regime_preregistration.md",
+      "docs/preregistration/nb03_test_protocol.md",
+      "docs/preregistration/AMENDMENT_1_tiered_veto.md",
+      "docs/preregistration/AMENDMENT_2_veto_tolerance.md"
+    ],
+    "bias_correction": [
+      "results/bias_correction_shipped.csv",
+      "results/bias_correction_shipped_v2.csv",
+      "results/bias_correction_shipped_v3.csv",
+      "results/bias_correction_edge_sensitivity.csv",
+      "results/bias_correction_form_b_stability.csv",
+      "results/arcpl_opx_corrected_per_regime.csv"
+    ],
+    "multiseed": [
+      "results/opx_multiseed_summary.csv",
+      "results/cpx_multiseed_summary.csv",
+      "results/tabpfn_multiseed_summary.csv",
+      "results/tabpfn_head_to_head.csv",
+      "results/tabpfn_head_to_head_legend.md"
+    ],
+    "regime": [
+      "results/regime_allmodels.csv",
+      "results/regime_allmodels_postcorrection.csv",
+      "results/opx_per_regime_pivot_n.csv"
+    ],
+    "external": [
+      "results/external_benchmark.csv"
+    ],
+    "shap": [
+      "results/shap_importance_winners.csv",
+      "results/opx_liq_shap_importance.csv"
+    ],
+    "natural": [
+      "results/nb08_natural_predictions.csv",
+      "results/nb08_cross_mineral_agreement.csv",
+      "results/core11_extended_predictions.csv",
+      "results/nb07_conformal_qhat.json"
+    ],
+    "augmentation": [
+      "results/augmentation_ablation_opx_headline.csv"
+    ],
+    "dataset_hashes": "data/hashes.json (date 2026-04-16)",
+    "autofill_prose": [
+      "manuscripts/opx_2026/text/aug_methods_3_9.md",
+      "manuscripts/opx_2026/text/aug_discussion_5_3.md",
+      "manuscripts/opx_2026/text/bias_correction_autofilled.md",
+      "manuscripts/opx_2026/text/bias_correction_numbers.md",
+      "manuscripts/opx_2026/text/regime_results_autofilled.md",
+      "manuscripts/opx_2026/text/tabpfn_paragraph.md"
+    ],
+    "tables": [
+      "manuscripts/opx_2026/tables/T4_bias_correction_shipped.csv",
+      "manuscripts/opx_2026/tables/T4_bias_correction_shipped.tex",
+      "manuscripts/opx_2026/tables/S9_bias_correction_per_seed.csv",
+      "manuscripts/opx_2026/tables/S9_bias_correction_per_seed.tex",
+      "manuscripts/opx_2026/tables/S10_bias_correction_stability.csv",
+      "manuscripts/opx_2026/tables/S10_bias_correction_stability.tex"
+    ],
+    "figures_core": [
+      "figures/core/Core_01_fig_dataset_map.pdf",
+      "figures/core/Core_01b_fig_dataset_map_holdout.pdf",
+      "figures/core/Core_02_fig_citation_split.pdf",
+      "figures/core/Core_03_fig_methods_flowchart.pdf",
+      "figures/core/Core_04_fig_nb04_cross_pipeline_heatmap.pdf",
+      "figures/core/Core_05_fig30_bias_correction_per_regime_rmse.pdf",
+      "figures/core/Core_06_fig31_bias_correction_residuals.pdf",
+      "figures/core/Core_07_fig34_bias_correction_scorecard_delta.pdf",
+      "figures/core/Core_08_fig45_opx_headline.pdf",
+      "figures/core/Core_09a_fig_opx_regime_families.pdf",
+      "figures/core/Core_09b_fig_opx_overall_families.pdf",
+      "figures/core/Core_10_fig_best_vs_putirka.pdf",
+      "figures/core/Core_10b_fig_arcpl_bias_corrected_vs_putirka.pdf",
+      "figures/core/Core_11_fig_nb08_twopx_1to1.pdf",
+      "figures/core/Core_12_fig_shap_winners.pdf"
+    ]
+  },
+  "dataset_inventory": {
+    "opx_liq":  {"n_total": 600,  "n_train": 426,  "n_test": 174, "n_citations": 93,  "P_kbar_p1_p99": [0.00, 40.05], "T_C_p1_p99": [850.0, 1660.1]},
+    "opx_only": {"n_total": 1035, "n_train": 845,  "n_test": 190, "n_citations": 123, "P_kbar_p1_p99": [0.00, 60.00], "T_C_p1_p99": [850.0, 1656.6]},
+    "cpx_liq":  {"n_total": 2385, "n_train": 1731, "n_test": 654, "n_citations": 230, "P_kbar_p1_p99": [0.00, 70.00], "T_C_p1_p99": [850.0, 1725.0]},
+    "cpx_only": {"n_total": 2897, "n_train": 2113, "n_test": 784, "n_citations": 249, "P_kbar_p1_p99": [0.00, 135.0], "T_C_p1_p99": [800.0, 1750.0]}
+  },
+  "opx_per_regime_test_n": {
+    "opx_liq":  {"shallow_crustal": 47, "deep_crustal_MASH": 61, "lithospheric_mantle": 58, "deeper_mantle":  8},
+    "opx_only": {"shallow_crustal": 48, "deep_crustal_MASH": 76, "lithospheric_mantle": 37, "deeper_mantle": 29}
+  },
+  "dataset_hashes_prefix8": {
+    "opx_liq.parquet":  "0c15cc4f",
+    "opx_only.parquet": "c38fa83e",
+    "ExPetDB.xlsx":     "8aebe073",
+    "LEPR.xlsx":        "c96ffea4"
+  },
+  "shipped_v3_winners_non_tabpfn": {
+    "opx_liq_T_C":     {"model": "ElasticNet", "fs": "raw",  "form": "B", "pre_rmse": 77.06, "post_rmse": 76.42, "worst_regime_deg": 1.61},
+    "opx_liq_P_kbar":  {"model": "MLP",        "fs": "raw",  "form": "A", "pre_rmse":  4.40, "post_rmse":  3.17, "worst_regime_deg": -0.13},
+    "opx_only_T_C":    {"model": "LightGBM",   "fs": "alr",  "form": "A", "pre_rmse":147.98, "post_rmse":123.42, "worst_regime_deg": 3.90},
+    "opx_only_P_kbar": {"model": "RF",         "fs": "pwlr", "form": "A", "pre_rmse": 10.35, "post_rmse":  6.05, "worst_regime_deg": -4.15},
+    "cpx_liq_T_C":     {"model": "ERT",        "fs": "pwlr", "form": "A", "pre_rmse": 71.57, "post_rmse": 68.02, "worst_regime_deg": 0.90},
+    "cpx_liq_P_kbar":  {"model": "LightGBM",   "fs": "pwlr", "form": "A", "pre_rmse":  6.54, "post_rmse":  5.73, "worst_regime_deg": 0.92},
+    "cpx_only_P_kbar": {"model": "MLP",        "fs": "alr",  "form": "A", "pre_rmse": 13.66, "post_rmse": 11.25, "worst_regime_deg": -0.85}
+  },
+  "tabpfn_v3_ship_decisions": {
+    "opx_only_T_C":    "A_ships",
+    "opx_only_P_kbar": "A_ships",
+    "opx_liq_T_C":     "none",
+    "opx_liq_P_kbar":  "none",
+    "cpx_liq_T_C":     "excluded_no_oof",
+    "cpx_liq_P_kbar":  "excluded_no_oof",
+    "cpx_only_T_C":    "excluded_no_oof",
+    "cpx_only_P_kbar": "excluded_no_oof"
+  },
+  "ship_counts_non_tabpfn": {"v1": 2, "v2": 3, "v3": 7},
+  "tabpfn_head_to_head_counts": {"tuned_wins": 6, "tabpfn_wins": 1, "competitive": 1},
+  "conformal": {
+    "alpha": 0.1,
+    "n_calibration": 43,
+    "q_hat_T_C": 92.58,
+    "q_hat_P_kbar": 10.0,
+    "coverage_T": 0.793,
+    "coverage_P": 0.960,
+    "source_note": "Reconstructed 2026-04-20 to unblock nb08_natural_twopx; flag for re-derive."
+  },
+  "natural_corpus_cross_mineral": {
+    "n_pairs": 327,
+    "ml_opx_only":       {"T_RMSE_C": 114.94, "T_bias_C":  80.21, "P_RMSE_kbar": 5.53, "P_bias_kbar":  2.46},
+    "jorgenson_cpx":     {"T_RMSE_C":  74.92, "T_bias_C":  42.13, "P_RMSE_kbar": 1.84, "P_bias_kbar":  0.38},
+    "putirka_2px_eq36_39": {"T_RMSE_C": 77.57, "T_bias_C":  36.03, "P_RMSE_kbar": 5.75, "P_bias_kbar": -2.33, "n_T": 323, "n_P": 323}
+  },
+  "augmentation_ablation": {
+    "cells_degraded": 4,
+    "form_b_ships_aug": "4/80 cell-seed decisions",
+    "form_a_ships_aug": "57/80 cell-seed decisions",
+    "interpretation": "augmentation hypothesis not supported"
+  },
+  "autofill_word_counts": {
+    "aug_methods_3_9.md":            225,
+    "aug_discussion_5_3.md":         220,
+    "bias_correction_autofilled.md": 1473,
+    "bias_correction_numbers.md":    1512,
+    "regime_results_autofilled.md":  1299,
+    "tabpfn_paragraph.md":           706,
+    "total":                         5435
+  },
+  "core_figures_count": 15,
+  "tables_autofilled_count": 3,
+  "open_issues_count": 8,
+  "flags": [
+    "AMENDMENT_1 untracked in git",
+    "AMENDMENT_2 untracked in git",
+    "AMENDMENT_2 tolerances set after inspecting residuals; disclose ex-post calibration",
+    "tabpfn + tabpfn_client not installed in live .venv",
+    "nb07 conformal q_hat reconstructed 2026-04-20; re-derive or cite archive",
+    "ML opx-only has +80 C / +2.5 kbar natural-corpus bias (nb08)",
+    "cpx_only T never ships bias correction under any v3 tolerance",
+    "opx_liq deeper_mantle n=8 fails honesty bar, no directional claims",
+    "356 dirty files at audit SHA"
+  ],
+  "output_files": [
+    "MANUSCRIPT_WRITING_AUDIT.md",
+    "MANUSCRIPT_WRITING_AUDIT_manifest.json"
+  ],
+  "writes_performed": "none to results/ src/ scripts/ figures/ manuscripts/ docs/"
+}

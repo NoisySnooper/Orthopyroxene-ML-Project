@@ -1,0 +1,1 @@
+Figure 25. Per-regime residual distributions (predicted minus observed) for the tuned ML baseline canonical opx-liq base models on the test split (T: ElasticNet/raw, P: MLP/raw), in the pre-registered P bin partition. Shaded bins are sample-size-limited (n<20); medians shown as horizontal lines.

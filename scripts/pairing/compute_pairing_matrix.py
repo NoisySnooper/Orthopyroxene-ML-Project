@@ -182,6 +182,8 @@ def main():
          ('T_ml_opx_liq', None), ('T_putirka_opx_liq', None)),
         ('V', 'our ML opx-liq P', 'Putirka 29a opx-liq P',
          (None, 'P_ml_opx_liq'), (None, 'P_putirka_opx_liq')),
+        ('W', 'our ML cpx-liq', 'Putirka 2-px eq36/eq39',
+         ('T_ml_cpx_liq', 'P_ml_cpx_liq'), ('T_putirka_2px', 'P_putirka_2px')),
     ]
 
     records = []

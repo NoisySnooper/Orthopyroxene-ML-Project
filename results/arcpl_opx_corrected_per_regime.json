@@ -1,0 +1,36 @@
+{
+  "source": "src.external.arcpl_opx.load_arcpl_opx_liq",
+  "n_arcpl": 197,
+  "v3_shipped_cells": [
+    {
+      "track": "opx_liq",
+      "target": "T_C",
+      "model": "ElasticNet",
+      "feature_set": "raw",
+      "winner_v3": "B"
+    },
+    {
+      "track": "opx_liq",
+      "target": "P_kbar",
+      "model": "MLP",
+      "feature_set": "raw",
+      "winner_v3": "A"
+    },
+    {
+      "track": "opx_only",
+      "target": "T_C",
+      "model": "LightGBM",
+      "feature_set": "alr",
+      "winner_v3": "A"
+    },
+    {
+      "track": "opx_only",
+      "target": "P_kbar",
+      "model": "RF",
+      "feature_set": "pwlr",
+      "winner_v3": "A"
+    }
+  ],
+  "seed_bootstrap": 42,
+  "n_boot": 2000
+}
