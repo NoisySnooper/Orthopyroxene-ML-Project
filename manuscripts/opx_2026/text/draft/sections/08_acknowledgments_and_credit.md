@@ -1,0 +1,36 @@
+# Acknowledgments, Author Contributions, Conflict of Interest
+
+## Acknowledgments
+
+The lead author thanks Dr. Kanani K. M. Lee (USCGA) for mentorship during the cadet research tenure and Dr. Junjie Dong (Stony Brook University) for agreeing to continue the research program through the incoming PhD appointment. We thank the maintainers of the Experimental Petrology Database (ExPetDB) for open-access distribution of the experimental corpus used in this study, and the developers of Thermobar (P. E. Wieser et al.) for the open-source Python package that underlies our classical-benchmark computations. We thank the authors of TabPFN v2 (Hollmann et al., 2025) for releasing the pretrained model weights and inference code under an open license that permitted our 20-seed peer evaluation. Conversations with Dr. Lee shaped the decision to pre-register the evaluation protocol before running the bias-correction fit. Conversations with Dr. Dong shaped the decision to retain the TabPFN v2 baseline as a ninth family rather than as a supplementary baseline.
+
+This work was performed under the lead author's first-class cadet research project at the United States Coast Guard Academy. Views and conclusions in this manuscript are those of the authors and do not represent the official position of the U.S. Coast Guard or the U.S. Coast Guard Academy.
+
+Computational resources were provided by the lead author's personal workstation (Windows 11 Pro, Python 3.13.13). No GPU was used; all TabPFN v2 inference ran on CPU. The Optuna hyperparameter search for the eight tuned families across four pipelines and three feature sets took approximately 72 CPU-hours total; the 20-seed multiseed refit took approximately 40 CPU-hours; the bias-correction fit and rescore took approximately 2 CPU-hours.
+
+## Author Contributions
+
+Contributions follow the CRediT taxonomy (Brand et al., 2015).
+
+**NQTa (lead author):**
+Conceptualization; Data curation; Formal analysis; Investigation; Methodology; Software; Validation; Visualization; Writing — original draft; Writing — review and editing; Project administration.
+
+**Kanani K. M. Lee:**
+Conceptualization; Funding acquisition (USCGA cadet research support); Methodology (pre-registration discipline); Supervision; Resources; Writing — review and editing.
+
+**Junjie Dong:**
+Methodology (foundation-model evaluation protocol); Validation (bias-correction form selection); Writing — review and editing.
+
+All authors read and approved the final manuscript.
+
+## Conflict of Interest Statement
+
+The authors declare no competing financial or non-financial interests that could have appeared to influence the work reported in this manuscript.
+
+## Funding
+
+This research received no external funding. The lead author's time was supported through the standard USCGA cadet research program. The incoming PhD appointment at Stony Brook University (Fall 2026) is supported through a departmental fellowship disclosed in the lead author's graduate admission offer; the fellowship did not influence the design, execution, or reporting of the work presented here.
+
+## Open Research and Preprint Status
+
+A preprint of this manuscript is deposited on ESSOAr / EarthArXiv concurrent with submission to JGR: Machine Learning and Computation. The preprint DOI will be added to the metadata block upon ESSOAr acceptance. All materials referenced in the Data Availability and Code Availability sections are publicly archived and reviewer-accessible at the time of submission.

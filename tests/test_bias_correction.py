@@ -167,7 +167,7 @@ def test_ship_rule_requires_both_conditions():
     # Case: one regime degrades by 1.0 > tol -> does not ship
     d = ship_decision('A', 15.0, 14.0, pre, post_degrade_one)
     assert not d.ships
-    assert 'regime worst degradation' in d.reason
+    assert 'degradation' in d.reason and 'veto_tol' in d.reason
 
     # Case: overall delta ~= 0 -> does not ship (no net benefit)
     d = ship_decision('A', 15.0, 15.0 - 1e-8, pre, post_tiny_overall)

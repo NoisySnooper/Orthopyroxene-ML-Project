@@ -1,0 +1,11 @@
+Fig. 27. Top-15 mean absolute SHAP values per feature for five canonical
+opx-liq cells, grouped by explainer family. Linear cells use
+shap.LinearExplainer (exact for ElasticNet, pipeline scaler pre-applied
+to background and evaluation matrices). Tree cells (CatBoost/raw/P_kbar,
+XGB/alr/T_C) use shap.TreeExplainer. The MLP/raw/P_kbar cell uses
+shap.KernelExplainer with a k=50 KMeans background and an 80-sample
+random subset of the test set (seed = SEED_BOOTSTRAP, nsamples=100 per
+evaluation); the reported mean|SHAP| averages over the sampled rows only.
+Produced by scripts/v10_phase_g_nb06_shap.py. Supports T08 (feature
+attribution). Source CSV: results/opx_liq_shap_importance.csv;
+per-cell SHAP arrays: results/opx_liq_shap_values.npz.

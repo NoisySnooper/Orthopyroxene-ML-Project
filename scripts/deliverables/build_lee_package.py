@@ -57,21 +57,36 @@ REQUIRED_CSVS = [
 ]
 
 CORE_FIGS = [
-    'fig44_tabpfn_bias_scoreboard_opx',
-    'fig45_opx_only_P_headline',
-    'fig34_bias_correction_scorecard_delta',
-    'fig35_tabpfn_vs_opx_tb',
-    'fig28_bias_correction_opx_liq',
-    'fig_nb08_twopx_1to1',
+    'Core_01_fig_dataset_map',
+    'Core_01b_fig_dataset_map_holdout',
+    'Core_02_fig_citation_split',
+    'Core_03_fig_methods_flowchart',
+    'Core_04_fig_nb04_cross_pipeline_heatmap',
+    'Core_05_fig30_bias_correction_per_regime_rmse',
+    'Core_06_fig31_bias_correction_residuals',
+    'Core_07_fig34_bias_correction_scorecard_delta',
+    'Core_08_fig45_opx_headline',
+    'Core_09a_fig_opx_regime_families',
+    'Core_09b_fig_opx_overall_families',
+    'Core_10_fig_best_vs_putirka',
+    'Core_11_fig_nb08_twopx_1to1',
+    'Core_12_fig_shap_winners',
 ]
 SI_FIGS = [
-    'fig30_bias_correction_per_regime_rmse',
-    'fig31_bias_correction_residuals',
+    'fig24_per_regime_rmse_opx_liq',
+    'fig25_per_regime_residual_violins_opx_liq',
+    'fig26_generalization_opx_liq',
+    'fig27_shap_summary_opx_liq',
+    'fig28_bias_correction_opx_liq',
+    'fig29_twopx_benchmark',
     'fig32_bias_correction_form_comparison',
     'fig33_bias_correction_per_seed_stability',
+    'fig35_tabpfn_vs_opx_tb',
+    'fig44_tabpfn_bias_scoreboard_opx',
     'fig_aug01_ship_verdict_comparison',
     'fig_aug02_aggregate_rmse_delta',
     'fig_aug03_residual_structure_per_regime',
+    'fig_aug04_form_b_breakpoint_stability',
 ]
 
 
@@ -83,15 +98,21 @@ def _code(src: str) -> nbf.NotebookNode:
     return nbf.v4.new_code_cell(textwrap.dedent(src).strip('\n'))
 
 
-def _append_figure_cells(cells: list, stems: list[str]) -> None:
+def _append_figure_cells(cells: list, stems: list[str],
+                         src_subdir: str = 'core') -> None:
     """Append (markdown header+caption, code preview) pair for each figure.
 
     Plain-string construction (NOT textwrap.dedent) so that injected
     multi-line caption sidecars don't collide with the dedent logic
     and create leading-space corrupt markdown headers.
+
+    Caption sidecars are read from FIGS_IN / src_subdir / stem.txt, which
+    matches where the originals live (core/ or SI/) after the Tier 2
+    restructure.
     """
+    src_dir = FIGS_IN / src_subdir
     for stem in stems:
-        cap_path = FIGS_IN / f'{stem}.txt'
+        cap_path = src_dir / f'{stem}.txt'
         caption = (cap_path.read_text(encoding='utf-8').strip()
                    if cap_path.exists() else '(no caption sidecar)')
         cap_lines = caption.splitlines()
@@ -122,22 +143,29 @@ def copy_figures():
     FIGS_OUT.mkdir(parents=True, exist_ok=True)
     copied = []
     skipped_locked = []
-    for stem in CORE_FIGS + SI_FIGS:
-        for ext in ('.pdf', '.png', '.txt'):
-            src = FIGS_IN / f'{stem}{ext}'
-            if src.exists():
-                dst = FIGS_OUT / src.name
-                try:
-                    shutil.copy(src, dst)
-                    copied.append(src.name)
-                except PermissionError:
-                    # Destination likely held open by a PDF viewer. If
-                    # the existing file matches in size + mtime, skip;
-                    # otherwise surface the error.
-                    if dst.exists() and dst.stat().st_size == src.stat().st_size:
-                        skipped_locked.append(src.name)
-                    else:
-                        raise
+
+    def _copy_one(src_dir: Path, stem: str):
+        for ext in ('.pdf', '.png', '.txt', '.html'):
+            src = src_dir / f'{stem}{ext}'
+            if not src.exists():
+                continue
+            dst = FIGS_OUT / src.name
+            try:
+                shutil.copy(src, dst)
+                copied.append(src.name)
+            except PermissionError:
+                if dst.exists() and dst.stat().st_size == src.stat().st_size:
+                    skipped_locked.append(src.name)
+                else:
+                    raise
+
+    core_dir = FIGS_IN / 'core'
+    si_dir = FIGS_IN / 'SI'
+    for stem in CORE_FIGS:
+        _copy_one(core_dir, stem)
+    for stem in SI_FIGS:
+        _copy_one(si_dir, stem)
+
     if skipped_locked:
         print(f'WARN: {len(skipped_locked)} files locked at destination; '
               f'skipped (contents identical): {skipped_locked}')
@@ -147,36 +175,88 @@ def copy_figures():
 def build_notebook():
     cells = []
 
-    # ---- Header ----
+    # ---- Header + plain-English orientation for Dr. Lee ----
     cells.append(_md("""
     # Advisor review package -- opx ML thermobarometer
 
-    **Audience:** Dr. Kanani K.M. Lee
-    **Author:** Ta Quang Nhan (cadet, USCGA)
+    **For:** Dr. Kanani K.M. Lee
+    **From:** Ta Quang Nhan (cadet, USCGA)
     **Date:** 2026-04-20
     **Target venue:** JGR ML & Computation
 
-    ## Package purpose
+    ## What this document is
 
-    Consolidates the post-Phase-1 state of the opx ML thermobarometer project
-    into a single reviewable artifact. Every number below loads from a CSV or
-    JSON under `results/`; nothing is hard-coded. If a required file is missing
-    the notebook cells raise FileNotFoundError rather than silently fabricating.
+    A single reviewable snapshot of the pyroxene thermobarometer project.
+    Figures come first so you can scan the results visually; data tables
+    come after in case you want to check a specific number.
+
+    ## The project in one paragraph (plain English)
+
+    We are trying to estimate the pressure (P) and temperature (T) at
+    which an orthopyroxene (opx) crystal grew, using only the chemistry
+    of that crystal (and optionally its surrounding liquid). Classical
+    petrologic thermobarometers like Putirka (2008) fit a small
+    polynomial to experimental data; we fit a flexible machine-learning
+    model to the same experimental data and compare. The question we
+    are asking is: *does the ML model do better than the polynomial,
+    and if so where and by how much?*
+
+    ## A quick glossary (once, then we move on)
+
+    - **opx / cpx**: orthopyroxene and clinopyroxene, two common
+      pyroxene minerals.
+    - **opx-liq / opx-only**: two prediction pipelines. "opx-liq"
+      uses both the crystal and the surrounding liquid as input;
+      "opx-only" uses just the crystal chemistry.
+    - **pressure regime**: we pre-registered four geologic pressure
+      bins before any modeling: shallow-crustal (<5 kbar),
+      deep-crustal / MASH (5-15 kbar), lithospheric-mantle (15-30
+      kbar), deeper-mantle (30+ kbar), plus "ALL" for the combined
+      test set.
+    - **RMSE**: root-mean-squared error. How far, on average, a
+      prediction misses the truth. Lower is better. Units: C for
+      temperature, kbar for pressure.
+    - **bias correction**: a small post-processing step applied after
+      the ML model makes its raw prediction. Two flavors are tested:
+      "Form A" learns a regression of residual on predicted value
+      separately in each pressure regime; "Form B" is a single smooth
+      piecewise-sigmoid on the predicted-value axis.
+    - **ship-if-better rule**: a correction only ships if it improves
+      overall RMSE AND does not make any pre-registered regime
+      worse. A pre-registered promise to not cherry-pick.
+    - **TabPFN**: a foundation model for small tabular data. In-
+      context transformer architecture, no training, no tuning, no
+      SHAP. We added it as a 9th baseline family.
+    - **Putirka (2008)**: the reference classical thermobarometer.
+
+    ## How to read this document
+
+    1. **Figures first** (Section 1): 13 core figures + 1 SHAP figure.
+       Each figure has a long caption explaining what it shows and
+       what to look for.
+    2. **Supporting figures** (Section 2): 14 SI figures for the
+       curious.
+    3. **Data tables** (Section 3): the numbers behind the figures,
+       in case you want to double-check.
+    4. **Methods, limitations, caveats** (Sections 4-6): short
+       plain-English sections.
+    5. **Provenance** (Section 7): git state + file inventory.
 
     ## Sections
 
-    1. Headline table (4 opx combos)
-    2. 8-cell winner table (tuned + TabPFN)
-    3. Bias-correction scoreboard
-    4. opx-only P_kbar per-regime breakdown
-    5. TabPFN head-to-head (pre vs post vs tuned vs Putirka)
-    6. Core figures (6 PDFs)
-    7. SI figures (7 PDFs)
+    1. Core figures (14 PDFs: 13 main + Core_12 SHAP)
+    2. Supporting information figures
+    3. Data tables
+       3.1 Headline (4 opx cells)
+       3.2 Eight-cell winner table (tuned + TabPFN)
+       3.3 TabPFN bias-correction scoreboard
+       3.4 opx-only P per-regime breakdown
+       3.5 TabPFN head-to-head (pre vs post vs tuned vs Putirka)
+    4. Methods summary
+    5. Limitations
+    6. Caveats and reconstruction provenance
+    7. Provenance (git SHA, CSV inventory)
     8. Pre-registration (verbatim)
-    9. Methods summary
-    10. Limitations
-    11. Reconstruction provenance and caveats
-    12. Provenance (git SHA, CSV inventory)
     """))
 
     # Setup cell
@@ -206,13 +286,63 @@ def build_notebook():
     print('Setup complete; loader ready.')
     """))
 
-    # ---- 1. Headline table ----
+    # ---- 1. Core figures (FIRST, per advisor request) ----
     cells.append(_md("""
-    ## 1. Headline table
+    ## 1. Core figures
 
-    Aggregate ALL-regime pre-correction RMSE, best-correction RMSE, and winner
-    verdict for each of the 4 opx combinations. Source:
-    `results/preregistered_scorecard_postcorrection.csv`.
+    Fourteen figures in total. Each one is paired with a long caption
+    written in plain language. You don't need to load any data to read
+    this section.
+
+    - **Core_01 / Core_01b**: who is in the training set, who is in
+      the held-out test set (the sanity-check that no single citation
+      leaks across the split).
+    - **Core_02**: the citation-grouped fold split used for cross-
+      validation.
+    - **Core_03**: a one-page flowchart of the ML pipeline.
+    - **Core_04**: cross-pipeline heatmap of model RMSE.
+    - **Core_05**: per-regime RMSE before and after bias correction.
+    - **Core_06**: residual-vs-prediction scatter at canonical seed 42.
+    - **Core_07**: scoreboard of ML vs Putirka, regime by regime.
+    - **Core_08**: the headline per-regime RMSE bar chart for all four
+      opx cells.
+    - **Core_09a / Core_09b**: how each ML family compares, by regime
+      and overall.
+    - **Core_10**: best ML model vs Putirka, one dot per test sample.
+    - **Core_11**: natural-sample two-pyroxene 1:1 agreement plot.
+    - **Core_12 (new)**: SHAP feature importance for the best-
+      explainable model per cell. SHAP tells you which oxide features
+      the model was actually leaning on.
+    """))
+    _append_figure_cells(cells, CORE_FIGS, src_subdir='core')
+
+    # ---- 2. SI figures ----
+    cells.append(_md("""
+    ## 2. Supporting information figures
+
+    Extra figures for the curious reader. Safe to skim.
+    """))
+    _append_figure_cells(cells, SI_FIGS, src_subdir='SI')
+
+    # ---- 3. Data tables (MOVED here, after figures) ----
+    cells.append(_md("""
+    ## 3. Data tables
+
+    Every number above loads from a CSV under `results/`. Nothing is
+    hard-coded. If a file is missing the cell raises `FileNotFoundError`
+    rather than silently filling in a value.
+    """))
+
+    # 3.1 Headline
+    cells.append(_md("""
+    ### 3.1 Headline table
+
+    The headline numbers for each of the 4 opx cells, at the "ALL
+    pressure regimes" level. Columns: uncorrected tuned-ML RMSE,
+    bias-corrected tuned-ML RMSE, the best Putirka (2008)
+    thermobarometer for that cell, TabPFN pre- and post-correction
+    RMSE, and which of those five candidates wins.
+    Source: `results/preregistered_scorecard_postcorrection.csv`.
     """))
     cells.append(_code("""
     sc = load_csv('results/preregistered_scorecard_postcorrection.csv')
@@ -230,11 +360,12 @@ def build_notebook():
     display(hl)
     """))
 
-    # ---- 2. 8-cell winner table ----
+    # 3.2 Eight-cell winner table
     cells.append(_md("""
-    ## 2. 8-cell winner table
+    ### 3.2 Eight-cell winner table
 
-    The 8-cell view: each of the 4 opx combinations x (tuned best winner, TabPFN).
+    Which model shipped, with or without bias correction, in each of
+    the 8 opx rows (4 tuned-family rows + 4 TabPFN rows).
     Source: `results/bias_correction_shipped.csv`.
     """))
     cells.append(_code("""
@@ -244,34 +375,35 @@ def build_notebook():
     display(opx_rows[display_cols])
     """))
 
-    # ---- 3. Bias-correction scoreboard ----
+    # 3.3 TabPFN bias-correction scoreboard
     cells.append(_md("""
-    ## 3. Bias-correction scoreboard
+    ### 3.3 TabPFN bias-correction scoreboard
 
-    TabPFN per-combo summary over 5 OOF seeds. Mean pre-correction RMSE, mean
-    Form A RMSE, mean Form B RMSE, ship counts, winner tallies. Source:
-    `results/tabpfn_bias_correction_summary.csv`.
+    TabPFN's own pre/post correction numbers, averaged over 5 OOF
+    seeds. This is the source for the TabPFN columns in Section 3.1.
+    Source: `results/tabpfn_bias_correction_summary.csv`.
     """))
     cells.append(_code("""
     tf_sum = load_csv('results/tabpfn_bias_correction_summary.csv')
     display(tf_sum)
     """))
     cells.append(_md("""
-    Per-seed detail (5 seeds x 4 combos = 20 rows). Source:
-    `results/tabpfn_bias_correction_perseed.csv`.
+    Per-seed detail (5 seeds x 4 combos = 20 rows). Useful for
+    checking stability.
+    Source: `results/tabpfn_bias_correction_perseed.csv`.
     """))
     cells.append(_code("""
     tf_per = load_csv('results/tabpfn_bias_correction_perseed.csv')
     display(tf_per[['track','target','seed','pre_rmse_all','post_rmse_a','post_rmse_b','ship_a','ship_b','winner']])
     """))
 
-    # ---- 4. opx-only P regime ----
+    # 3.4 opx-only P regime
     cells.append(_md("""
-    ## 4. opx-only P_kbar per-regime breakdown
+    ### 3.4 opx-only P_kbar per-regime breakdown
 
-    Per-regime RMSE across the 5 candidates (tuned pre/post, Putirka 29c,
-    TabPFN pre/post). The post-corrected TabPFN is the aggregate winner on
-    3 of 5 regimes.
+    For the pressure cell where ML does best (opx-only P), here is
+    the regime-by-regime picture across all 5 candidates: tuned pre,
+    tuned post, Putirka eq. 29c, TabPFN pre, TabPFN post.
     """))
     cells.append(_code("""
     pr = sc[(sc['track']=='opx_only') & (sc['target']=='P_kbar')].copy()
@@ -280,40 +412,131 @@ def build_notebook():
     display(pr[show])
     """))
 
-    # ---- 5. TabPFN head-to-head ----
+    # 3.5 TabPFN head-to-head
     cells.append(_md("""
-    ## 5. TabPFN head-to-head (aggregate RMSE, 20-seed baseline)
+    ### 3.5 TabPFN head-to-head (aggregate RMSE, 20-seed baseline)
 
-    Source: `results/tabpfn_head_to_head.csv`. TabPFN vs best tuned family per
-    (pipeline, track, target) at aggregate ALL level from the 20-seed multiseed
-    protocol.
+    TabPFN vs the best tuned family per cell, at the aggregate ALL
+    level, using the full 20-seed multiseed protocol so the stability
+    estimates are on an equal footing with the tuned families.
+    Source: `results/tabpfn_head_to_head.csv`.
     """))
     cells.append(_code("""
     h2h = load_csv('results/tabpfn_head_to_head.csv')
     display(h2h)
     """))
 
-    # ---- 6. Core figures ----
-    cells.append(_md("""
-    ## 6. Core figures
+    # ---- 4. Methods summary (plain English) ----
+    cells.append(_md(r"""
+    ## 4. Methods summary (plain English)
 
-    Six core manuscript figures. PDFs live in this package under `figures/`;
-    previews are PNG for rendering.
+    - **What we are predicting.** For each pyroxene sample we are
+      trying to predict either (a) the temperature at which it formed
+      or (b) the pressure at which it formed. Two input "tracks": the
+      full crystal + liquid pair ("opx-liq") or the crystal alone
+      ("opx-only"). Four target cells in total.
+    - **Where the training data come from.** A curated subset of the
+      LEPR experimental petrology database (our snapshot is dated
+      2025-07-21). Every sample is from a published experiment at
+      known P and T. We group by citation when splitting into train
+      and test, so that memorizing a single lab's style is not
+      rewarded.
+    - **Which models we tune.** 8 standard ML families (random
+      forest, extremely-randomized trees, XGBoost, gradient boosting,
+      CatBoost, LightGBM, elastic-net linear, multi-layer
+      perceptron). Each one is tuned with Optuna (50 trials) on a
+      citation-grouped 5-fold cross-validation objective. We also
+      run a 9th foundation-model baseline: TabPFN v2 (Hollmann et al.
+      2025), which requires no tuning.
+    - **Pressure regimes.** Before we fit any correction, we
+      registered four geologic pressure bins: shallow-crustal
+      (<5 kbar), deep-crustal / MASH (5-15 kbar),
+      lithospheric-mantle (15-30 kbar), deeper-mantle (30+ kbar).
+      "ALL" is the full test set combined.
+    - **Bias correction.** Two flavors. *Form A* fits a simple linear
+      regression of residual on predicted value, separately in each
+      of the four regimes. *Form B* fits one smooth piecewise-
+      sigmoid curve across the whole predicted-value axis. Only one
+      flavor can ship per cell.
+    - **Ship-if-better rule (as of Amendment 1, 2026-04-20).** A
+      correction ships if overall RMSE improves AND no
+      pre-registered regime with enough samples (N >= 20) gets
+      worse. Regimes with fewer than 20 samples are noted but are
+      not allowed to veto a real improvement elsewhere. This
+      replaces the original strict rule that any regime with any
+      degradation would block shipping; the tiered rule is documented
+      in `docs/preregistration/AMENDMENT_1_acceptance_rule.md`.
+    - **How we measure stability.** Each experiment is repeated at
+      20 random seeds (42-61). The bars and numbers you see include
+      bootstrap 95% confidence intervals so you can see whether a
+      difference is signal or noise.
     """))
-    _append_figure_cells(cells, CORE_FIGS)
 
-    # ---- 7. SI figures ----
+    # ---- 5. Limitations ----
     cells.append(_md("""
-    ## 7. Supporting information figures (7 panels)
-    """))
-    _append_figure_cells(cells, SI_FIGS)
+    ## 5. Limitations
 
-    # ---- 8. Preregistration ----
+    1. **Temperature corrections mostly fail to ship.** In our
+       strict evaluation, the bias correction refuses to ship for 3
+       of 4 temperature cells. Temperature residuals do not have a
+       strong regime structure to remove, so per-regime correction
+       cancels out. We report this as a null result rather than
+       tuning until something ships.
+    2. **opx-only T is the weakest cell.** For the opx-only
+       thermometer, TabPFN improves the aggregate RMSE but the gain
+       is marginal; we would not recommend that particular cell for
+       deployment today.
+    3. **Natural-sample cross-check carries a small T bias.** On
+       LEPR paired pyroxenes (n=327) the opx-only ML prediction
+       runs about +80 C hotter than Putirka's two-pyroxene method
+       and Jorgenson's cpx-only method. The pressure agreement is
+       within our conformal error bar.
+    4. **No GEOROC refresh since 2026-04-09.** We did not pull a
+       new natural-sample export for this round; the natural
+       comparison uses the on-disk export from that date.
+    5. **SHAP on TabPFN is not available.** TabPFN is an in-context
+       foundation model with no gradient surface exposed. For the
+       two cells where TabPFN is the scorecard winner (opx_only T
+       and opx_only P), Core_12 shows the tuned-family runner-up's
+       SHAP for explainability and flags the swap in the subtitle.
+    """))
+
+    # ---- 6. Caveats and reconstruction provenance ----
+    cells.append(_md("""
+    ## 6. Caveats and reconstruction provenance
+
+    Short file of "things a reviewer should know before acting on the
+    numbers." Loaded from `CAVEATS.md` alongside this notebook.
+    """))
+    cells.append(_code("""
+    cav = Path('./CAVEATS.md')
+    if cav.exists():
+        display(Markdown(cav.read_text(encoding='utf-8')))
+    else:
+        display(Markdown('(caveats file missing)'))
+    """))
+
+    # ---- 7. Provenance ----
+    cells.append(_md("""
+    ## 7. Provenance
+
+    Git state + source CSV sizes at build time. Loaded from
+    `PROVENANCE.md` alongside this notebook.
+    """))
+    cells.append(_code("""
+    prov = Path('./PROVENANCE.md')
+    if prov.exists():
+        display(Markdown(prov.read_text(encoding='utf-8')))
+    else:
+        display(Markdown('(provenance file missing)'))
+    """))
+
+    # ---- 8. Pre-registration ----
     cells.append(_md("""
     ## 8. Pre-registration (verbatim)
 
-    The pre-registered pressure partition and test protocol, reproduced
-    verbatim from `docs/preregistration/`.
+    The rules of the game, frozen before we fit any corrections.
+    Reproduced verbatim from `docs/preregistration/`.
     """))
     cells.append(_code("""
     # Prefer the local preregistration/ copy bundled with the package;
@@ -326,93 +549,6 @@ def build_notebook():
             raise FileNotFoundError(f'preregistration missing: {name}')
         display(Markdown(f'### `{name}`'))
         display(Markdown(p.read_text(encoding='utf-8')))
-    """))
-
-    # ---- 9. Methods ----
-    cells.append(_md(r"""
-    ## 9. Methods summary
-
-    - **Pipelines:** opx_liq (pyroxene + liquid features) and opx_only
-      (pyroxene-only features). Four (track, target) combinations: opx_liq T_C,
-      opx_liq P_kbar, opx_only T_C, opx_only P_kbar.
-    - **Training universe:** LEPR experimental database (ExPetDB 2025-07-21)
-      filtered for opx equilibrium and citation-grouped into folds so that
-      no citation appears in both a fold's train and held-out split.
-    - **Tuned families:** 8 gradient-boosted / forest / linear families
-      (RF, ERT, XGB, GB, CatBoost, LightGBM, ElasticNet, MLP), each Optuna-
-      tuned (50 trials, 12 inner jobs) on the 5-fold CV objective.
-    - **Foundation baseline:** TabPFN v2 (Hollmann et al. 2025) with
-      `n_estimators=8` on CPU, no tuning. Bias-corrected variant uses
-      5-seed 10-fold out-of-fold residuals as the correction-fit substrate.
-    - **Pressure partition:** shallow_crustal (<5 kbar), deep_crustal_MASH
-      (5-10), lithospheric_mantle (10-20), deeper_mantle (>=20), plus ALL.
-      Registered 2026-04-17 before any correction fitting.
-    - **Correction forms:**
-        - *Form A:* per-regime ordinary least squares y_corr = a_r * y_pred + b_r.
-        - *Form B:* piecewise sigmoid blend in Agreda-Lopez (2024) form with
-          data-driven breakpoints.
-    - **Ship-if-better rule:** conservative acceptance -- Form ships iff
-      `overall_delta > 1e-6` AND `max_regime_degradation <= 1e-6`. No
-      per-regime loss accepted for aggregate gain.
-    - **Multiseed protocol:** 20 seeds (42-61) for test-RMSE variance; 5 seeds
-      for OOF bias-correction fit (per standard protocol).
-    """))
-
-    # ---- 10. Limitations ----
-    cells.append(_md("""
-    ## 10. Limitations
-
-    1. **Form B fails to ship on opx.** 0/8 tuned + 0/4 TabPFN opx combinations
-       pass the ship-if-better rule under Form B. The augmentation ablation
-       (nb04b, 15x Gaussian noise at 3% RSD per Agreda-Lopez 2024) does NOT
-       rescue Form B; aggregate RMSE strictly degrades under augmentation on
-       every opx combination. Attribution: mineral-specific or dataset-size
-       specific, not protocol-specific.
-    2. **opx-only T is a null result.** Neither Form A nor Form B ships on
-       opx_only/T_C for any tuned family. TabPFN Form A ships but only on the
-       deeper_mantle regime; the aggregate ALL improvement is marginal. The
-       opx-only thermometer is not recommended for deployment.
-    3. **Natural-sample agreement is imperfect.** On LEPR paired pyroxenes
-       (n=327), opx-only ML carries a +80 C positive T bias against both
-       Jorgenson cpx-only and Putirka two-pyroxene methods. P agreement is
-       within the conformal half-width.
-    4. **5-seed OOF for TabPFN is a reduction from the 20-seed test protocol.**
-       The bias-fit substrate uses 5 seeds to bound CPU cost; test-set
-       inference uses the full 20 seeds. TabPFN Form A ship decisions are at
-       canonical seed 42 with per-seed stability reported.
-    5. **No external GEOROC cpx-opx pair update since Apr 9 2026.** The natural-
-       sample refresh uses the existing on-disk export; the upstream server
-       URL / credential were not supplied for this round.
-    """))
-
-    # ---- 11. Reconstruction provenance and caveats ----
-    cells.append(_md("""
-    ## 11. Reconstruction provenance and caveats
-
-    Known reconstructions and methodological caveats. Loaded from
-    `CAVEATS.md` alongside this notebook.
-    """))
-    cells.append(_code("""
-    cav = Path('./CAVEATS.md')
-    if cav.exists():
-        display(Markdown(cav.read_text(encoding='utf-8')))
-    else:
-        display(Markdown('(caveats file missing)'))
-    """))
-
-    # ---- 12. Provenance ----
-    cells.append(_md("""
-    ## 12. Provenance
-
-    Git state + source CSV sizes at build time. Loaded via `PROVENANCE.md`
-    alongside this notebook.
-    """))
-    cells.append(_code("""
-    prov = Path('./PROVENANCE.md')
-    if prov.exists():
-        display(Markdown(prov.read_text(encoding='utf-8')))
-    else:
-        display(Markdown('(provenance file missing)'))
     """))
 
     nb = nbf.v4.new_notebook()

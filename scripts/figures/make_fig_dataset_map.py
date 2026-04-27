@@ -24,6 +24,9 @@ os.chdir(PROJECT_ROOT)
 sys.path.insert(0, str(PROJECT_ROOT))
 
 from scripts.figures._model_palette import OKABE_ITO  # noqa: E402
+from scripts.figures._style import apply_pub_style  # noqa: E402
+
+apply_pub_style()
 
 OUT_DIR = PROJECT_ROOT / 'figures' / 'core'
 OUT_DIR.mkdir(parents=True, exist_ok=True)
@@ -72,17 +75,34 @@ def load_track(parquet_name: str, split_tag: str):
 
 
 def main():
-    fig = plt.figure(figsize=(15, 12), constrained_layout=False)
-    outer = fig.add_gridspec(2, 2, hspace=0.48, wspace=0.30)
+    fig = plt.figure(figsize=(14, 14), constrained_layout=False)
+    # Tight vertical gap between rows -> near square overall
+    # Reduced hspace so the top-row/bottom-row seam is not obtrusive;
+    # bottom shrunk so the legend sits closer to the bottom panels.
+    outer = fig.add_gridspec(
+        2, 2, hspace=0.02, wspace=0.22,
+        top=0.95, bottom=0.055, left=0.06, right=0.97,
+    )
 
     for (track, pq_name, split_tag, title), cell in zip(PANELS, outer):
         df = load_track(pq_name, split_tag)
-        inner = cell.subgridspec(2, 2, width_ratios=(4, 1),
-                                 height_ratios=(1, 4),
-                                 hspace=0.05, wspace=0.05)
-        ax_scatter = fig.add_subplot(inner[1, 0])
-        ax_histx   = fig.add_subplot(inner[0, 0], sharex=ax_scatter)
-        ax_histy   = fig.add_subplot(inner[1, 1], sharey=ax_scatter)
+        # Outer inner grid: plot area on top, stats block below.
+        # Plot area then splits into histx / (scatter+histy) with tight
+        # hspace so marginal histograms sit flush against the scatter.
+        outer_inner = cell.subgridspec(
+            2, 1, height_ratios=(5, 1.5), hspace=0.18,
+        )
+        plot_area = outer_inner[0].subgridspec(
+            2, 2,
+            width_ratios=(4, 1),
+            height_ratios=(1, 4),
+            hspace=0.05, wspace=0.05,
+        )
+        ax_scatter = fig.add_subplot(plot_area[1, 0])
+        ax_histx   = fig.add_subplot(plot_area[0, 0], sharex=ax_scatter)
+        ax_histy   = fig.add_subplot(plot_area[1, 1], sharey=ax_scatter)
+        ax_stats   = fig.add_subplot(outer_inner[1])
+        ax_stats.axis('off')
 
         for regime in REGIME_NAMES:
             sub = df[df['regime'] == regime]
@@ -98,57 +118,29 @@ def main():
                     alpha=alpha, zorder=2 if split == 'test' else 1,
                 )
 
-        # Regime boundary lines with label at right edge
-        t_max = df['T_C'].max()
+        # Regime boundary lines. The label sits just above each dashed
+        # line at the right edge of the plot box, using the y-axis
+        # transform so x is in axis fraction (always inside the axes no
+        # matter the T range).
         for edge in REGIME_EDGES[1:-1]:
             ax_scatter.axhline(edge, color='0.4', ls='--', lw=0.6, zorder=3)
-            ax_scatter.text(t_max, edge, f' {edge} kbar',
-                            fontsize=7, color='0.3', va='center', ha='left')
+            ax_scatter.text(
+                0.985, edge, f'{edge} kbar',
+                transform=ax_scatter.get_yaxis_transform(),
+                fontsize=7, color='0.3', va='bottom', ha='right',
+                bbox=dict(facecolor='white', edgecolor='none',
+                          alpha=0.7, pad=1),
+                zorder=4,
+            )
 
         ax_scatter.set_xlabel('T (\u00b0C)')
         ax_scatter.set_ylabel('P (kbar)')
 
-        # Prominent track-name title above the joint plot
         ax_histx.set_title(
             f'{title}  |  track = {track}',
             fontsize=13, fontweight='bold', loc='left', pad=6,
         )
 
-        # Supplementary stats block (top-right of scatter)
-        n_total = len(df)
-        n_train = int((df['split'] == 'train').sum())
-        n_test  = int((df['split'] == 'test').sum())
-        n_cit   = int(df['Citation'].nunique()) if 'Citation' in df.columns else 0
-        t_lo, t_hi = df['T_C'].quantile([0.01, 0.99])
-        p_lo, p_hi = df['P_kbar'].quantile([0.01, 0.99])
-        stats_lines = [
-            f'n total  = {n_total}',
-            f'n train  = {n_train}',
-            f'n test   = {n_test}',
-            f'n citations = {n_cit}',
-            f'T range  = {t_lo:.0f}-{t_hi:.0f} \u00b0C',
-            f'P range  = {p_lo:.1f}-{p_hi:.1f} kbar',
-        ]
-        ax_scatter.text(
-            0.98, 0.98, '\n'.join(stats_lines),
-            transform=ax_scatter.transAxes, va='top', ha='right',
-            fontsize=8, family='monospace',
-            bbox=dict(facecolor='white', edgecolor='0.7',
-                      alpha=0.92, pad=3))
-
-        # Per-regime counts block (bottom-left of scatter) with full names
-        regime_lines = ['regime counts:']
-        for r in REGIME_NAMES:
-            cnt = int((df['regime'] == r).sum())
-            regime_lines.append(f'  {r:<20s} {cnt:>4d}')
-        ax_scatter.text(
-            0.02, 0.02, '\n'.join(regime_lines),
-            transform=ax_scatter.transAxes, va='bottom', ha='left',
-            fontsize=7.5, family='monospace',
-            bbox=dict(facecolor='white', edgecolor='0.7',
-                      alpha=0.92, pad=3))
-
-        # Marginal histograms
         ax_histx.hist(df['T_C'].dropna(), bins=40, color='0.6',
                       edgecolor='none')
         ax_histx.set_ylabel('count', fontsize=8)
@@ -158,7 +150,41 @@ def main():
         ax_histy.set_xlabel('count', fontsize=8)
         ax_histy.tick_params(labelleft=False)
 
-    # Shared legend
+        # Per-panel 2-column stats block directly below the scatter.
+        n_total = len(df)
+        n_train = int((df['split'] == 'train').sum())
+        n_test  = int((df['split'] == 'test').sum())
+        n_cit   = int(df['Citation'].nunique()) if 'Citation' in df.columns else 0
+        t_lo, t_hi = df['T_C'].quantile([0.01, 0.99])
+        p_lo, p_hi = df['P_kbar'].quantile([0.01, 0.99])
+
+        left_col = [
+            f"n total       = {n_total}",
+            f"n train       = {n_train}",
+            f"n test        = {n_test}",
+            f"n citations   = {n_cit}",
+            f"T (1-99%)     = {t_lo:.0f}-{t_hi:.0f} \u00b0C",
+            f"P (1-99%)     = {p_lo:.1f}-{p_hi:.1f} kbar",
+        ]
+        right_col = ['regime counts:']
+        for r in REGIME_NAMES:
+            cnt = int((df['regime'] == r).sum())
+            right_col.append(f"  {r:<20s} {cnt:>4d}")
+
+        ax_stats.text(
+            0.02, 0.98, '\n'.join(left_col),
+            transform=ax_stats.transAxes,
+            fontsize=9, family='monospace',
+            va='top', ha='left',
+        )
+        ax_stats.text(
+            0.52, 0.98, '\n'.join(right_col),
+            transform=ax_stats.transAxes,
+            fontsize=9, family='monospace',
+            va='top', ha='left',
+        )
+
+    # Shared regime + split color legend at the very bottom
     handles = []
     for r in REGIME_NAMES:
         handles.append(plt.Line2D([0], [0], marker='o', color='w',
@@ -171,11 +197,14 @@ def main():
                                markerfacecolor='0.6', alpha=0.35,
                                markersize=8, label='train (faded)'))
     fig.legend(handles=handles, loc='lower center', ncol=6,
-               frameon=False, bbox_to_anchor=(0.5, -0.02), fontsize=9)
+               frameon=True, framealpha=0.95, edgecolor='0.6',
+               bbox_to_anchor=(0.5, 0.005), fontsize=10,
+               title='Regime colors and train/test marker key',
+               title_fontsize=10)
     fig.suptitle(
-        'Dataset P-T distribution per pyroxene track, colored by '
-        'pre-registered regime',
-        fontsize=12, y=0.995,
+        'ExPetDB 2025-07-21 training + test corpus: P-T distribution per '
+        'pyroxene track, colored by pre-registered regime',
+        fontsize=13, fontweight='bold', y=0.985,
     )
 
     out_stem = OUT_DIR / 'Core_01_fig_dataset_map'
@@ -195,10 +224,11 @@ def main():
         'the 80/20 citation-grouped train/test split: train points faded, '
         'test points with dark edges. Marginal histograms show the '
         'univariate T and P coverage. Each panel is titled with its track '
-        'name and displays a supplementary-information block (top-right) '
-        'with n_total, n_train, n_test, citation count, and 1st-99th '
-        'percentile T and P ranges. Per-regime counts are shown bottom-left '
-        'with full regime names.'
+        'name. Directly below each scatter, a per-panel two-column '
+        'summary reports n_total, n_train, n_test, citation count, and '
+        '1st-99th percentile T and P ranges on the left, with per-regime '
+        'counts on the right. The regime/split color key is shown as a '
+        'single shared legend at the bottom.'
     )
     (OUT_DIR / 'Core_01_fig_dataset_map.txt').write_text(
         caption, encoding='utf-8')

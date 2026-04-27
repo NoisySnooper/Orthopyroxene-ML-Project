@@ -284,6 +284,105 @@ def predict_putirka_twopx(df: pd.DataFrame, target: Literal['T', 'P'],
     return _extract(out, celsius=False)
 
 
+def predict_putirka_cpx_only(df: pd.DataFrame, target: Literal['T', 'P'],
+                             P_kbar: np.ndarray | None = None,
+                             T_K: np.ndarray | None = None,
+                             which: Literal['eq32a', 'eq32b',
+                                            'eq32c'] = 'eq32a') -> np.ndarray:
+    """Putirka 2008 cpx-only barometer (eq 32a/b/c). T uses eq32d.
+
+    Phase H.0a addition. Required for the natural-sample classical
+    inference wrapper used by H.3 / H.6.
+    """
+    import Thermobar as pt
+    _check_thermobar_version()
+    cpx = df[[c for c in df.columns if c.endswith('_Cpx')]].copy()
+    if target == 'P':
+        out = pt.calculate_cpx_only_press(
+            equationP=f'P_Put2008_{which}', cpx_comps=cpx, T=T_K)
+        return _extract(out, celsius=False)
+    out = pt.calculate_cpx_only_temp(
+        equationT='T_Put2008_eq32d', cpx_comps=cpx, P=P_kbar)
+    return _extract(out, celsius=True)
+
+
+def predict_putirka_classical_natural(
+    df: pd.DataFrame,
+    P_assumed_kbar: float = 5.0,
+    T_assumed_C: float = 1100.0,
+) -> pd.DataFrame:
+    """Run every Putirka 2008 equation supported on natural-sample rows.
+
+    Detects which mineral/liquid phases are present from the column suffix
+    (`_Cpx`, `_Opx`, `_Liq`) and runs only the equations whose required
+    inputs are available. Returns a DataFrame aligned to ``df.index``
+    with columns:
+
+      - T_putirka_cpx_liq_eq33,   P_putirka_cpx_liq_eq30   (cpx + liq)
+      - T_putirka_opx_liq_eq28a,  P_putirka_opx_liq_eq29a  (opx + liq)
+      - P_putirka_opx_only_eq29c                            (opx)
+      - T_putirka_cpx_only_eq32d, P_putirka_cpx_only_eq32a  (cpx)
+      - T_putirka_twopx_eq36,     P_putirka_twopx_eq39     (cpx + opx)
+      - T_putirka_twopx_eq37,     P_putirka_twopx_eq38     (cpx + opx)
+
+    P/T anchor: ``P_assumed_kbar`` and ``T_assumed_C`` provide the
+    iteration anchors that pressure-dependent T equations and
+    temperature-dependent P equations require. Defaults match volcanic-arc
+    conditions (5 kbar, 1100 C). Equations that fail Thermobar internal
+    checks fill with NaN; failures do not raise.
+
+    Phase H.0a single-call wrapper. The activation prompt names this
+    callable as the H.0a deliverable.
+    """
+    n = len(df)
+    out = pd.DataFrame(index=df.index)
+    has_cpx = any(c.endswith('_Cpx') for c in df.columns)
+    has_opx = any(c.endswith('_Opx') for c in df.columns)
+    has_liq = any(c.endswith('_Liq') for c in df.columns)
+
+    P_arr = np.full(n, float(P_assumed_kbar), dtype=float)
+    T_K_arr = np.full(n, float(T_assumed_C) + 273.15, dtype=float)
+
+    def _safe(fn, *args, **kwargs):
+        try:
+            arr = fn(*args, **kwargs)
+            arr = np.asarray(arr, dtype=float)
+            if arr.shape[0] != n:
+                return np.full(n, np.nan, dtype=float)
+            return arr
+        except Exception:
+            return np.full(n, np.nan, dtype=float)
+
+    if has_cpx and has_liq:
+        out['T_putirka_cpx_liq_eq33'] = _safe(
+            predict_putirka_cpx_liq, df, 'T', P_kbar=P_arr)
+        out['P_putirka_cpx_liq_eq30'] = _safe(
+            predict_putirka_cpx_liq, df, 'P', T_K=T_K_arr)
+    if has_opx and has_liq:
+        out['T_putirka_opx_liq_eq28a'] = _safe(
+            predict_putirka_opx_liq, df, 'T', P_kbar=P_arr)
+        out['P_putirka_opx_liq_eq29a'] = _safe(
+            predict_putirka_opx_liq, df, 'P', T_K=T_K_arr)
+    if has_opx:
+        out['P_putirka_opx_only_eq29c'] = _safe(
+            predict_putirka_opx_only, df, 'P', T_K=T_K_arr)
+    if has_cpx:
+        out['T_putirka_cpx_only_eq32d'] = _safe(
+            predict_putirka_cpx_only, df, 'T', P_kbar=P_arr, which='eq32a')
+        out['P_putirka_cpx_only_eq32a'] = _safe(
+            predict_putirka_cpx_only, df, 'P', T_K=T_K_arr, which='eq32a')
+    if has_cpx and has_opx:
+        out['T_putirka_twopx_eq36'] = _safe(
+            predict_putirka_twopx, df, 'T', which='eq36_eq39', P_kbar=P_arr)
+        out['P_putirka_twopx_eq39'] = _safe(
+            predict_putirka_twopx, df, 'P', which='eq36_eq39', T_K=T_K_arr)
+        out['T_putirka_twopx_eq37'] = _safe(
+            predict_putirka_twopx, df, 'T', which='eq37_eq38', P_kbar=P_arr)
+        out['P_putirka_twopx_eq38'] = _safe(
+            predict_putirka_twopx, df, 'P', which='eq37_eq38', T_K=T_K_arr)
+    return out
+
+
 def compute_cpx_opx_kd_femg(df: pd.DataFrame) -> np.ndarray:
     """Fe-Mg exchange coefficient between cpx and opx:
 

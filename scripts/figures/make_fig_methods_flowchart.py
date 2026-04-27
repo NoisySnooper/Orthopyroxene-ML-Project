@@ -1,10 +1,12 @@
 #!/usr/bin/env python3
-"""Core_03: methods flowchart. Pure matplotlib, no external deps.
+"""Core_03: methods flowchart.
 
-Left-to-right pipeline showing: ExPetDB raw -> filters ->
-citation-grouped split -> 9 model families -> Optuna/TabPFN ->
-freeze params -> 20/5-seed refit -> OOF bias fit -> conservative
-acceptance rule -> test eval per regime.
+Three phase panels (DATA -> TRAINING -> EVALUATION) rendered as stacked
+rounded panels. Phase I and Phase III flow left-to-right; Phase II flows
+right-to-left so the inter-phase connectors enter/exit on opposite sides
+(box 3 -> box 4 on the right, box 7 -> box 8 on the left). The two
+between-phase arrows are drawn box-to-box straight through the phase-
+panel boundaries. No crossing arrows.
 """
 from __future__ import annotations
 
@@ -20,125 +22,221 @@ os.chdir(PROJECT_ROOT)
 sys.path.insert(0, str(PROJECT_ROOT))
 
 from scripts.figures._model_palette import OKABE_ITO  # noqa: E402
+from scripts.figures._style import apply_pub_style  # noqa: E402
+
+apply_pub_style()
 
 OUT_DIR = PROJECT_ROOT / 'figures' / 'core'
 OUT_DIR.mkdir(parents=True, exist_ok=True)
 
-DATA_C  = OKABE_ITO['sky_blue']
-PROC_C  = OKABE_ITO['orange']
-MODEL_C = OKABE_ITO['green']
-EVAL_C  = OKABE_ITO['vermillion']
+PHASE_BG = {
+    'data':  '#E8F1F8',
+    'train': '#EAF3EC',
+    'eval':  '#FCEBE3',
+}
+PHASE_BORDER = {
+    'data':  OKABE_ITO['sky_blue'],
+    'train': OKABE_ITO['green'],
+    'eval':  OKABE_ITO['vermillion'],
+}
+
+STAGE_COLOR = {
+    'data':  OKABE_ITO['sky_blue'],
+    'train': OKABE_ITO['green'],
+    'eval':  OKABE_ITO['vermillion'],
+}
 
 
-def box(ax, x, y, w, h, text, color, num=None, fontsize=9):
+def stage_box(ax, x, y, w, h, num, title, body, fill, fontsize=11):
     rect = mpatches.FancyBboxPatch(
         (x, y), w, h,
         boxstyle='round,pad=0.02',
-        linewidth=1.2, facecolor=color, edgecolor='black', alpha=0.85)
+        linewidth=1.1, facecolor=fill, edgecolor='black', alpha=0.92)
     ax.add_patch(rect)
-    if num is not None:
-        ax.text(x + 0.04, y + h - 0.05, f'{num}',
-                fontsize=11, fontweight='bold', color='white',
-                va='top', ha='left',
-                bbox=dict(facecolor='black', edgecolor='none',
-                          boxstyle='round,pad=0.15'))
-    ax.text(x + w / 2, y + h / 2, text,
-            fontsize=fontsize, ha='center', va='center',
-            color='white', fontweight='bold', wrap=True)
-    return x + w / 2, y + h / 2
+    ax.text(x + 0.22, y + h - 0.08, f'{num}',
+            fontsize=12, fontweight='bold', color='white',
+            va='top', ha='center',
+            bbox=dict(facecolor='black', edgecolor='none',
+                      boxstyle='circle,pad=0.25'))
+    # Title sits clear of the number badge; body follows immediately.
+    title_y = y + h - 0.38
+    ax.text(x + w / 2, title_y, title,
+            fontsize=fontsize + 3.0, fontweight='bold',
+            ha='center', va='top', color='white')
+    ax.text(x + w / 2, title_y - 0.45, body,
+            fontsize=fontsize, ha='center', va='top',
+            color='white')
 
 
-def arrow(ax, x0, y0, x1, y1):
+def phase_panel(ax, x, y, w, h, name, subtitle):
+    rect = mpatches.FancyBboxPatch(
+        (x, y), w, h,
+        boxstyle='round,pad=0.03',
+        linewidth=1.8, facecolor=PHASE_BG[name],
+        edgecolor=PHASE_BORDER[name], alpha=1.0)
+    ax.add_patch(rect)
+    # Title centered at the top of the phase panel so it does not
+    # collide with side-entry / side-exit inter-phase connectors.
+    ax.text(x + w / 2, y + h - 0.12,
+            f'{subtitle}',
+            fontsize=14, fontweight='bold', color=PHASE_BORDER[name],
+            va='top', ha='center')
+
+
+def arrow(ax, x0, y0, x1, y1, color='0.2', lw=1.8,
+          connectionstyle='arc3,rad=0'):
     ax.annotate('', xy=(x1, y1), xytext=(x0, y0),
-                arrowprops=dict(arrowstyle='-|>', color='0.15',
-                                lw=1.8, mutation_scale=14))
+                arrowprops=dict(arrowstyle='-|>', color=color,
+                                lw=lw, mutation_scale=16,
+                                connectionstyle=connectionstyle))
 
 
 def main():
-    fig, ax = plt.subplots(figsize=(15, 8))
-    ax.set_xlim(0, 16)
-    ax.set_ylim(0, 9)
+    fig, ax = plt.subplots(figsize=(14, 14))
+    ax.set_xlim(0, 14)
+    ax.set_ylim(0, 14)
     ax.axis('off')
 
-    # Stage 1: Data
-    _, _ = box(ax, 0.2, 7.0, 2.2, 1.2,
-               'ExPetDB raw\n(n=5917 pyroxenes)',
-               DATA_C, num=1)
-    _, _ = box(ax, 0.2, 5.0, 2.2, 1.2,
-               'Filters\nKD window,\nP ceiling, Wo frac',
-               DATA_C, num=2)
-    _, _ = box(ax, 0.2, 3.0, 2.2, 1.2,
-               'Citation-grouped\n10-fold CV\n(StratifiedGroupKFold)',
-               DATA_C, num=3)
+    # ---- Phase I: DATA (top row) -------------------------------------
+    phase_panel(ax, 0.3, 10.7, 13.4, 3.1, 'data',
+                'Phase I. Data preparation')
+    y_row = 10.95
+    h_row = 2.1
+    w_box = 3.9
+    stage_box(ax, 0.8, y_row, w_box, h_row, 1,
+              'ExPetDB raw',
+              'opx n=1635\n'
+              'cpx n=5282\n'
+              'pyroxene core\ncompositions',
+              STAGE_COLOR['data'], fontsize=11)
+    stage_box(ax, 5.05, y_row, w_box, h_row, 2,
+              'Equilibrium + cation filters',
+              'KD(Fe-Mg) 0.23-0.35\n'
+              'Wo \u2264 5 mol% (pigeonite)\n'
+              'P \u2264 100 kbar\n'
+              'cation sum 3.95-4.05',
+              STAGE_COLOR['data'], fontsize=10)
+    stage_box(ax, 9.3, y_row, w_box, h_row, 3,
+              '80/20 citation-grouped split',
+              'held-out test:\n'
+              'opx_liq n=174\n'
+              'opx_only n=190\n'
+              'groups=Citation',
+              STAGE_COLOR['data'], fontsize=10)
+    arrow(ax, 4.7, y_row + h_row / 2, 5.05, y_row + h_row / 2)
+    arrow(ax, 8.95, y_row + h_row / 2, 9.3, y_row + h_row / 2)
 
-    # Stage 2: Training universe
-    box(ax, 3.2, 4.5, 2.6, 3.5,
-        '9 model families:\n\nElasticNet, RF, ERT,\n'
-        'GB, XGB, LightGBM,\nCatBoost, MLP,\nTabPFN',
-        MODEL_C, num=4, fontsize=8.5)
+    # Inter-phase connector: box 3 bottom -> box 4 top, straight vertical
+    # through the phase-panel boundary.
+    arrow(ax, 12.175, 10.95, 12.175, 8.4, color='0.35', lw=2.2)
 
-    # Stage 3: Tuning split
-    box(ax, 6.6, 6.5, 2.6, 1.5,
-        'Optuna tuning\n200 trials, seed 42\n(8 tuned families)',
-        PROC_C, num=5, fontsize=8.5)
-    box(ax, 6.6, 4.5, 2.6, 1.5,
-        'TabPFN default\nn_estimators=8\n(no tuning)',
-        PROC_C, num=5, fontsize=8.5)
+    # ---- Phase II: TRAINING (middle, right-to-left flow) -------------
+    phase_panel(ax, 0.3, 4.9, 13.4, 5.2, 'train',
+                'Phase II. Model training')
+    y_top = 7.6
+    y_bot = 5.4
+    h_box = 1.9
+    w_box = 2.55
+    y_mid = 6.5
+    w_box6 = 2.95
 
-    # Stage 4: Freeze
-    box(ax, 9.8, 5.5, 2.3, 1.5,
-        'Freeze params',
-        PROC_C, num=6, fontsize=9)
+    # Box 4 (entry) -- right edge of Phase II
+    stage_box(ax, 10.9, y_mid, w_box, h_box, 4,
+              '9 models',
+              'ElasticNet, RF, ERT,\n'
+              'GB, XGB, LightGBM,\n'
+              'CatBoost, MLP,\n'
+              'TabPFN v2',
+              STAGE_COLOR['train'], fontsize=10)
+    # Box 5 (two branches) -- middle-right
+    stage_box(ax, 7.7, y_top, w_box, h_box, 5,
+              'Optuna TPE tuning',
+              '200 trials, seed 42\n'
+              'objective: 3-fold\n'
+              'GroupKFold CV RMSE\n(8 tuned families)',
+              STAGE_COLOR['train'], fontsize=10)
+    stage_box(ax, 7.7, y_bot, w_box, h_box, 5,
+              'TabPFN default',
+              'n_estimators=8\n'
+              'no tuning\n(foundation model,\nfrozen weights)',
+              STAGE_COLOR['train'], fontsize=10)
+    # Box 6 (freeze) -- middle-left
+    stage_box(ax, 4.2, y_mid, w_box6, h_box, 6,
+              'Freeze model configs',
+              'tuned: best trial\npersisted to JSON\n'
+              'TabPFN: default\nconfig (no tuning)',
+              STAGE_COLOR['train'], fontsize=10)
+    # Box 7 (exit) -- left edge of Phase II
+    stage_box(ax, 0.55, y_mid, w_box6, h_box, 7,
+              'Multi-seed refit',
+              'tuned: seeds 42-61\n'
+              'TabPFN: 20 seeds\n'
+              'yields 95% CI\n'
+              'whiskers (bootstrap)',
+              STAGE_COLOR['train'], fontsize=10)
 
-    # Stage 5: Refit
-    box(ax, 9.8, 3.0, 2.3, 1.8,
-        '20-seed refit\n(5-seed for TabPFN)\nOOF predictions',
-        PROC_C, num=7, fontsize=8.5)
+    y_mid_c = y_mid + h_box / 2
+    # Box 4 -> 5 Optuna (up-left) and 4 -> 5 TabPFN (down-left)
+    arrow(ax, 10.9, y_mid_c, 10.25, y_top + h_box / 2)
+    arrow(ax, 10.9, y_mid_c, 10.25, y_bot + h_box / 2)
+    # Box 5 Optuna -> 6 (down-left) and 5 TabPFN -> 6 (up-left): V fan-in
+    # mirroring the V fan-out from box 4 to the two box 5 branches.
+    arrow(ax, 7.7, y_top + h_box / 2, 7.15, y_mid_c)
+    arrow(ax, 7.7, y_bot + h_box / 2, 7.15, y_mid_c)
+    # Box 6 -> 7 (horizontal left)
+    arrow(ax, 4.2, y_mid_c, 3.5, y_mid_c)
 
-    # Stage 6: Bias fit
-    box(ax, 12.7, 5.0, 2.8, 2.2,
-        'OOF bias fit:\n\nForm A (per-regime OLS)\nForm B (piecewise\nAgreda sigmoid)',
-        MODEL_C, num=8, fontsize=8.5)
+    # Inter-phase connector: box 7 bottom -> box 8 top, straight vertical.
+    arrow(ax, 2.025, y_mid, 2.025, 3.55, color='0.35', lw=2.2)
 
-    # Stage 7: Ship decision
-    box(ax, 12.7, 2.5, 2.8, 1.8,
-        'Conservative\nacceptance rule\n(ship-if-better,\nno-regime-worsens)',
-        EVAL_C, num=9, fontsize=8.5)
-
-    # Stage 8: Evaluation
-    box(ax, 6.6, 1.0, 5.5, 1.5,
-        'Test evaluation per pre-registered P regime\n'
-        '(shallow <5, MASH 5-15, litho 15-30, deep >=30 kbar)',
-        EVAL_C, num=10, fontsize=9)
-
-    # Arrows
-    arrow(ax, 1.3, 7.0, 1.3, 6.2)   # 1->2
-    arrow(ax, 1.3, 5.0, 1.3, 4.2)   # 2->3
-    arrow(ax, 2.4, 3.6, 3.2, 5.5)   # 3->4 (into models)
-    arrow(ax, 5.8, 7.2, 6.6, 7.2)   # 4->5a (top path, Optuna)
-    arrow(ax, 5.8, 5.3, 6.6, 5.3)   # 4->5b (bottom path, TabPFN)
-    arrow(ax, 9.2, 7.2, 9.8, 6.5)   # 5a->6
-    arrow(ax, 9.2, 5.3, 9.8, 6.2)   # 5b->6
-    arrow(ax, 10.95, 5.5, 10.95, 4.8)  # 6->7
-    arrow(ax, 12.1, 3.9, 12.7, 5.5)   # 7->8
-    arrow(ax, 14.1, 5.0, 14.1, 4.3)  # 8->9
-    arrow(ax, 12.7, 3.4, 12.1, 2.0)  # 9->10
-    arrow(ax, 9.2, 3.9, 9.2, 2.5)    # 7-> eval (direct)
-
-    # Legend
-    handles = [
-        mpatches.Patch(color=DATA_C,  label='Data stage'),
-        mpatches.Patch(color=MODEL_C, label='Model stage'),
-        mpatches.Patch(color=PROC_C,  label='Training procedure'),
-        mpatches.Patch(color=EVAL_C,  label='Evaluation / decision'),
-    ]
-    ax.legend(handles=handles, loc='lower right', ncol=4, frameon=False,
-              bbox_to_anchor=(1.0, -0.02), fontsize=9)
+    # ---- Phase III: EVALUATION (bottom row) --------------------------
+    phase_panel(ax, 0.3, 0.3, 13.4, 4.0, 'eval',
+                'Phase III. Bias correction and evaluation')
+    # y_row lifted + h_row increased so the top gap between the
+    # phase-title bar and the box tops matches Phase I/II (~0.75 u).
+    y_row = 0.55
+    h_row = 3.0
+    w_box = 3.9
+    stage_box(ax, 0.8, y_row, w_box, h_row, 8,
+              'OOF bias fit (per regime)',
+              '10-fold StratifiedGroup-\n'
+              'KFold OOF on training\n'
+              'partition (group=Citation);\n'
+              'tuned: 20 seeds, TabPFN:\n'
+              '5 seeds; test set untouched.\n'
+              'Form A: y_corr = a\u00b7y_pred\n'
+              '+ b per regime (OLS).\n'
+              'Form B: piecewise\n'
+              'Agreda-Lopez sigmoid,\n'
+              '4 breakpoints.',
+              STAGE_COLOR['eval'], fontsize=10)
+    stage_box(ax, 5.05, y_row, w_box, h_row, 9,
+              'Ship-if-better rule',
+              'accept correction only if\n'
+              'overall RMSE drops AND\n'
+              'no regime degrades beyond\n'
+              'tolerance envelope\n'
+              'max(T_ABS, T_REL \u00b7 pre_rmse)\n'
+              'T_ABS = 10 \u00b0C / 1 kbar\n'
+              'T_REL = 0.10',
+              STAGE_COLOR['eval'], fontsize=10)
+    stage_box(ax, 9.3, y_row, w_box, h_row, 10,
+              'Regime test + ArcPL eval',
+              'held-out test:\n'
+              'opx_liq n=174, opx_only n=190\n'
+              'shallow < 5 kbar\n'
+              'MASH 5-15 kbar\n'
+              'litho 15-30 kbar\n'
+              'deep \u2265 30 kbar\n'
+              '+ ArcPL n=197 (OOD)',
+              STAGE_COLOR['eval'], fontsize=10)
+    arrow(ax, 4.7, y_row + h_row / 2, 5.05, y_row + h_row / 2)
+    arrow(ax, 8.95, y_row + h_row / 2, 9.3, y_row + h_row / 2)
 
     ax.set_title(
-        'Methods pipeline: raw data to per-regime evaluation '
-        '(9 model families x 4 tracks x 2 targets)',
-        fontsize=12, pad=14,
+        'Methods pipeline: ExPetDB raw \u2192 train 9 model families '
+        '\u2192 bias-correct and evaluate per regime',
+        fontsize=13, fontweight='bold', pad=14,
     )
 
     out_stem = OUT_DIR / 'Core_03_fig_methods_flowchart'
@@ -147,23 +245,35 @@ def main():
     plt.close(fig)
 
     caption = (
-        'Figure 3. Methods flowchart. The opx ML thermobarometer pipeline, '
-        'stage-by-stage. Raw ExPetDB experiments (stage 1) are filtered '
-        '(KD equilibrium window, P ceiling, Wo fraction; stage 2) and '
-        'citation-grouped into a 10-fold StratifiedGroupKFold split '
-        '(stage 3). Nine model families (stage 4) comprise the baseline '
-        'linear model (ElasticNet), six tree/boosted families (RF, ERT, '
-        'GB, XGB, LightGBM, CatBoost), an MLP, and the TabPFN foundation '
-        'baseline. Eight families are tuned with Optuna (200 trials, seed '
-        '42; stage 5); TabPFN runs at default settings without tuning. '
-        'Best parameters are frozen (stage 6) and refit with 20 seeds '
-        '(5 seeds for TabPFN to bound CPU cost; stage 7) producing '
-        'out-of-fold predictions. Form A (per-regime OLS) and Form B '
-        '(piecewise Agreda-Lopez sigmoid) are fit on the OOF residuals '
-        '(stage 8) and evaluated against the conservative acceptance rule '
-        '(overall_delta > 1e-6 AND max_regime_degradation <= 1e-6; stage 9). '
-        'Final test-set evaluation is reported per pre-registered pressure '
-        'regime (stage 10).'
+        'Figure 3. Methods flowchart. Three phase panels, each with '
+        'numbered stages. Phase I (Data) flows left-to-right: raw ExPetDB '
+        '(stage 1), equilibrium + cation filters (stage 2), and the 80/20 '
+        'citation-grouped train/test split that produces the held-out test '
+        'partitions opx_liq n=174 and opx_only n=190 (stage 3). Phase II '
+        '(Model training) flows right-to-left so the connector from Phase '
+        'I enters at box 4 on the right and the connector to Phase III '
+        'exits from box 7 on the left. The 9 models (stage 4) fan out into '
+        'two tuning routes at stage 5 -- Optuna TPE tuning over 200 trials '
+        'at seed 42 with a 3-fold GroupKFold inner-CV objective for the '
+        'eight tuned families, vs. TabPFN default at n_estimators=8 with '
+        'no tuning -- and both branches fan back in at stage 6, where the '
+        'final model configuration is frozen (Optuna winning trial '
+        'persisted to JSON for the tuned families; TabPFN default config '
+        'carried through unchanged). Stage 7 then runs the multi-seed '
+        'refit: seeds 42-61 for tuned families and 20 seeds for TabPFN, '
+        'producing the 95% CI whiskers (bootstrap) used throughout the '
+        'figure set. Phase III (Evaluation) flows left-to-right: stage 8 '
+        'generates 10-fold StratifiedGroupKFold OOF predictions inside the '
+        'training partition (group=Citation; 20 seeds for tuned families, '
+        '5 seeds for TabPFN) -- the test set remains untouched -- and '
+        'fits Form A (per-regime OLS, y_corr = a.y_pred + b) and Form B '
+        '(piecewise Agreda-Lopez sigmoid, 4 breakpoints) on those OOF '
+        'predictions; stage 9 applies the pre-registered tolerance '
+        'envelope max(T_ABS, T_REL x pre_rmse) with T_ABS = 10 degC for T, '
+        '1 kbar for P, and T_REL = 0.10 (Amendment 2); stage 10 evaluates '
+        'on the held-out ExPetDB test partitions split into four pre-'
+        'registered pressure regimes plus the ArcPL n=197 external-'
+        'validation dataset as an out-of-distribution check.'
     )
     (OUT_DIR / 'Core_03_fig_methods_flowchart.txt').write_text(
         caption, encoding='utf-8')

@@ -37,3 +37,10 @@ logs/_*.ipynb
 
 # Ad-hoc root-level scratch CSVs
 /_*.csv
+
+# Phase H raw GEOROC dumps (regenerable from scripts/v10_pull_georoc_cpx.py
+# via the Dataverse Native API; 339 MB cpx + future glass/inclusions exceed
+# practical git sizes). Cleaned natural_*_with_coords.csv files are kept.
+/data/natural/2024-*-GEOROC_*.csv
+/data/natural/2024-*-SGFTFN_*.csv
+/data/natural/georoc_cache/
