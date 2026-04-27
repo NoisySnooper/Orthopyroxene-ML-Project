@@ -1,7 +1,0 @@
-[2026-04-18 15:43:46] START
-[2026-04-18 15:43:46] per_cell=(64, 7) multiseed=(64, 10) ensemble=(24, 5)
-[2026-04-18 15:43:46] wrote C:\Users\NQTa\Documents\MLCourse\Final Project\results\v10_twopx_benchmark_final.csv rows=6
-[2026-04-18 15:43:47] wrote figures/fig29_twopx_benchmark.{pdf,png}
-[2026-04-18 15:43:47] wrote C:\Users\NQTa\Documents\MLCourse\Final Project\tables\S8_9_twopx_benchmark.md
-[2026-04-18 15:43:47] wrote C:\Users\NQTa\Documents\MLCourse\Final Project\tables\S8_9_twopx_benchmark.csv
-[2026-04-18 15:43:47] DONE

@@ -1,9 +1,0 @@
-[2026-04-16 22:12:04] v10 Phase E twopx data prep START
-[2026-04-16 22:12:04] opx_clean_opx_only: (1035, 238)  cpx_clean_cpx_only: (2897, 31)
-[2026-04-16 22:12:04]   opx projected: (1035, 19)  cpx projected: (2897, 18)
-[2026-04-16 22:12:04]   after inner-join on (Experiment, Citation): n=480
-[2026-04-16 22:12:04]   KD_FeMg filter [0.95,1.23]: 144 / 480
-[2026-04-16 22:12:04]   twopx final n=144  n_citations=46
-[2026-04-16 22:12:04]   wrote C:\Users\NQTa\Documents\MLCourse\Final Project\data\processed\twopx_clean.parquet
-[2026-04-16 22:12:04]   twopx split: train=96 test=48 (train pub=32 / test pub=14)
-[2026-04-16 22:12:04] v10 Phase E twopx data prep DONE

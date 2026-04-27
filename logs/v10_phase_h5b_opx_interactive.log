@@ -1,7 +1,0 @@
-[2026-04-18 19:28:24] START H.5b opx interactive map
-[2026-04-18 19:28:24] loaded 53050 rows
-[2026-04-18 19:28:24] after lat/lon dropna: 53023
-[2026-04-18 19:28:24] subsampled to 20000 markers for browser perf
-[2026-04-18 19:28:25] added 20000 markers
-[2026-04-18 19:28:35] wrote C:\Users\NQTa\Documents\MLCourse\Final Project\figures\fig_h5b_opx_interactive.html
-[2026-04-18 19:28:35] DONE
