@@ -24,7 +24,7 @@ The train/test split is seeded 20 times to characterize the sampling noise intro
 
 ## 2.4 Pre-registered pressure-regime partition
 
-Aggregate RMSE on the held-out test set is the primary benchmark metric but can mask strong regime-dependent performance heterogeneity. We therefore pre-registered a four-bin pressure partition on 2026-04-17 (`docs/preregistration/p_regime_preregistration.md`, commit 2026-04-17 before any bias-correction fitting) with bin edges at 0, 5, 15, 30, and 100 kbar:
+Aggregate RMSE on the held-out test set is the primary benchmark metric but can mask strong regime-dependent performance heterogeneity. We therefore pre-registered a four-bin pressure partition with bin edges at 0, 5, 15, 30, and 100 kbar (`docs/preregistration/p_regime_preregistration.md`, locked before any bias-correction fitting):
 
 | Label | P range (kbar) | Petrological context |
 |---|---|---|
