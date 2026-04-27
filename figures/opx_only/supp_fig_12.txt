@@ -1,0 +1,1 @@
+Supp. Figure 12. Augmentation ablation: aggregate test RMSE delta from N_AUG = 15 vs N_AUG = 1, four opx cells. Augmentation degrades RMSE on every opx cell.

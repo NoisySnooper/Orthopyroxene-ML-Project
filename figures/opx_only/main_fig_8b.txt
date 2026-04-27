@@ -1,0 +1,1 @@
+Figure 8b. Aggregate test RMSE by family across both opx pipelines and both targets, ordered left to right. The four cells share no single dominant family; this is the empirical justification for evaluating nine families and selecting per cell rather than pre-committing to one architecture.

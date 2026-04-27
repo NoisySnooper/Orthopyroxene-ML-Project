@@ -1,0 +1,1 @@
+Figure 11. Feature concordance heatmap. For each of the four opx (track, target) cells, pairwise Spearman rho across the eight tuned-family permutation-importance ranks. High median off-diagonal rho means families agree on what features matter; low rho means families disagree, which weakens any single-family interpretive claim about feature importance.

@@ -1,0 +1,1 @@
+Figure 8a. Per-regime test RMSE by model family, opx pipelines only. Each panel is a (track, target, regime) cell; bar height is mean test RMSE across 20 seeds with one-sigma whiskers. Family colors are consistent across panels (Okabe-Ito palette). The shipped per-cell winner is highlighted in each panel.

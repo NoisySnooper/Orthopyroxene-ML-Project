@@ -1,0 +1,1 @@
+Figure 9. Per-cell best ML method versus the corresponding best-available Putirka equation, on the held-out test partition. Bars are ordered: ML pre-correction, ML post-correction (shipped form), and Putirka. Labels report the absolute aggregate test RMSE in the target unit. The four opx cells all show the ML post-correction below Putirka.

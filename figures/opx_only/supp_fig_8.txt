@@ -1,0 +1,1 @@
+Supp. Figure 8. Form A versus Form B side-by-side on the four opx cells. Form B (Agreda-Lopez quantile-thresholded sigmoid) accepts only marginally on opx-liq T and not at all on the other three opx cells.

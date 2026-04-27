@@ -1,0 +1,1 @@
+Supp. Figure 6. Bias-correction per-regime RMSE table across the four opx cells. Pre and post bars per regime, with the pre-registered tolerance band marked.

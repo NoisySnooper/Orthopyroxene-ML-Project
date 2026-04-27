@@ -1,0 +1,1 @@
+Supp. Figure 1. Per-regime test RMSE for opx-liq, by pre-registered pressure regime, with Wilson 95%% confidence intervals.
