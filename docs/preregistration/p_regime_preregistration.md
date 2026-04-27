@@ -1,9 +1,6 @@
 # Pre-registration: Pressure-regime bins and bias-correction acceptance rule
 
-**Registered:** 2026-04-17
-**Author:** NQTa
-**Status:** Locked. Any modification requires a new registration date and a written justification in Section 8 below.
-**Scope:** Opx-liq thermobarometer benchmark analysis on ArcPL Kd-equilibrated subset (n = 96), the ExPetDB held-out test set, and the bias-correction ship decision used to gate Form A and Form B before the canonical scorecard rewrite.
+**Registered:** 2026-04-17 **Author:** NQTa **Status:** Locked. Any modification requires a new registration date and a written justification in Section 8 below. **Scope:** Opx-liq thermobarometer benchmark analysis on ArcPL Kd-equilibrated subset (n = 96), the ExPetDB held-out test set, and the bias-correction ship decision used to gate Form A and Form B before the canonical scorecard rewrite.
 
 ---
 
@@ -22,12 +19,7 @@ Aggregate RMSE on ArcPL n = 96 remains the **primary** benchmark claim (Section 
 
 Four pressure regimes with edges at 0, 5, 15, 30, and 100 kbar (the last being the ExPetDB training-set pressure ceiling, `P_CEILING_KBAR` in `config.py`):
 
-| Label | P range (kbar) | Petrological context |
-|---|---|---|
-| `shallow_crustal` | 0-5 | Arc storage, upper-crustal magma chambers |
-| `deep_crustal_MASH` | 5-15 | Melting-assimilation-storage-homogenization zone |
-| `lithospheric_mantle` | 15-30 | Spinel to garnet peridotite stability |
-| `deeper_mantle` | >30 | Asthenospheric and below |
+LabelP range (kbar)Petrological context`shallow_crustal`0-5Arc storage, upper-crustal magma chambers`deep_crustal_MASH`5-15Melting-assimilation-storage-homogenization zone`lithospheric_mantle`15-30Spinel to garnet peridotite stability`deeper_mantle`&gt;30Asthenospheric and below
 
 Bin membership is assigned on the **experimentally reported** pressure for ExPetDB test samples and on the **independently constrained** pressure for ArcPL natural samples. Bin edges are right-open (P = 5.0 kbar belongs to `deep_crustal_MASH`, not `shallow_crustal`).
 
@@ -69,7 +61,7 @@ Results from this bin structure are reported as **calibration-domain characteriz
 
 ## 5. Implementation of the regime structure
 
-### 5.1 Config.py variables (locked)
+### 5.1 [Config.py](http://Config.py) variables (locked)
 
 ```python
 P_REGIME_BIN_EDGES_KBAR = [0.0, 5.0, 15.0, 30.0, P_CEILING_KBAR]
@@ -104,6 +96,7 @@ def assign_p_regime(p_kbar):
 ### 5.3 Per-bin metric reporting
 
 For each (method × regime) combination, the benchmark notebook computes:
+
 - n (sample size in bin)
 - RMSE with bootstrap 95% CI (B = 1000 resamples)
 - T bias (mean residual) with bootstrap 95% CI
@@ -134,15 +127,17 @@ Let:
 
 - `overall_delta = pre_overall_rmse - post_overall_rmse`
 - For each pre-registered regime r:
-    - `degradation_r = post_r - pre_r`
-    - `n_r` = number of test samples in r
-    - `pre_r` = pre-correction regime RMSE (in native target units)
+  - `degradation_r = post_r - pre_r`
+  - `n_r` = number of test samples in r
+  - `pre_r` = pre-correction regime RMSE (in native target units)
 - `target_is_T = (target == 'T_C')`, else it is a P target
 - `tol_abs = T_ABS_T if target_is_T else T_ABS_P`
 
 For each regime r, the **veto tolerance** is:
 
-    veto_tol_r = max(SHIP_TOL, tol_abs, T_REL * pre_r)
+```
+veto_tol_r = max(SHIP_TOL, tol_abs, T_REL * pre_r)
+```
 
 A correction form ships iff **all three** of the following hold:
 
@@ -169,7 +164,7 @@ The tolerance `max(tol_abs, T_REL × pre_r)` is deliberately constructed from tw
 For opx thermobarometry, the experimental-petrology literature reports the following RMSE floors on the same ExPetDB corpus class (Putirka 2008, Table 4.1, and Neave & Putirka 2017):
 
 - **Temperature calibrations:** Putirka eq. 28a (opx-liq), eq. 32d (cpx-liq) report SEE = 26-38 °C on their calibration sets. Independent test holdouts (Jorgenson et al. 2022) recover 30-50 °C RMSE. A **10 °C absolute floor** sits comfortably below every reported SEE and is therefore in the "cannot be distinguished from experimental noise" regime.
-- **Pressure calibrations:** Putirka eq. 29a/29b/29c (opx-only, opx-liq) report SEE = 2.5-3.2 kbar; Neave-Putirka 2017 report ~2.8 kbar. A **1 kbar absolute floor** is well below every reported pressure SEE and is *stricter than* the measurement-noise rationale would require; we adopt the conservative choice rather than matching the SEE exactly.
+- **Pressure calibrations:** Putirka eq. 29a/29b/29c (opx-only, opx-liq) report SEE = 2.5-3.2 kbar; Neave-Putirka 2017 report \~2.8 kbar. A **1 kbar absolute floor** is well below every reported pressure SEE and is *stricter than* the measurement-noise rationale would require; we adopt the conservative choice rather than matching the SEE exactly.
 
 The floor therefore cannot ship a correction that worsens a regime by more than experimental noise would allow anyway.
 

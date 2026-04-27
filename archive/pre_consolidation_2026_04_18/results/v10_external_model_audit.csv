@@ -1,6 +1,0 @@
-Model,Source,Training data available,Pre-trained available,Overlap pct,Action,Notes
-Agreda-Lopez 2024,LEPR (per paper),False,False,N/A,Use pre-trained only,0 ONNX files found
-Jorgenson 2022,LEPR (per paper),True,True,90.0,Use via Thermobar API (equationP/T='*_Jorgenson22'),Part of Thermobar package; models callable
-Petrelli 2020,LEPR (per paper),False,True,N/A,Use via Thermobar (equationP/T='*_Petrelli20'),Earlier version of Jorgenson 2022; same lab group
-Wang 2021,LEPR (per paper),False,False,N/A,Implement empirical equations in src/external_models.py,Classical regression; not an ML model
-Putirka 2008,Compilation pre-2008 (overlaps LEPR heavily),False,True,N/A,Use via Thermobar (equationP/T='*_Put2008_*'),Classical multi-parameter regression; via Thermobar calls

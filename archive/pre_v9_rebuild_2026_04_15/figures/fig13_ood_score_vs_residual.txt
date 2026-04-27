@@ -1,1 +1,0 @@
-Figure 13. IsolationForest OOD score against prediction residual for the ArcPL natural samples.

@@ -1,7 +1,0 @@
-stem,pdf_exists,png_exists,txt_exists,pdf_bytes,png_bytes,pdf_is_vector,png_dpi,status,reasons
-fig24_per_regime_rmse_opx_liq,True,True,True,35343,164042,True,300,PASS,
-fig25_per_regime_residual_violins_opx_liq,True,True,True,54644,352674,True,300,PASS,
-fig26_generalization_opx_liq,True,True,True,20155,166999,True,300,PASS,
-fig27_shap_summary_opx_liq,True,True,True,22799,369509,True,300,PASS,
-fig28_bias_correction_opx_liq,True,True,True,21325,174223,True,300,PASS,
-fig29_twopx_benchmark,True,True,True,17849,135038,True,300,PASS,
