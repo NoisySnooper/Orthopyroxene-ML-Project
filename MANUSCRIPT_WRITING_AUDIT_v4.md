@@ -164,7 +164,6 @@ Items intentionally not completed in this autonomous run, with reason:
 | Item | Reason for deferral |
 |---|---|
 | H.1c (GEOROC liquid/glass) | Lower priority per activation prompt; SGFTFN minerals dataset has no glass; dedicated dataset (10.25625/7JW6XU Melt Inclusions or 10.25625/2JETOA Rock Types) requires a separate pull |
-| TabPFN canonical inference (cpx_liq T, cpx_only P) | Multi-hour wall clock per pipeline; substituted second-place models with explicit log entry |
 | Monte Carlo uncertainty (100 reps × 1% noise) | ~10⁸ ops; defer until follow-up |
 | IsolationForest OOD score per sample | Defer; can compute from existing models without re-inference |
 | External Agreda / Wang / Petrelli on natural samples | No natural-sample wrappers wired; defer |
@@ -175,5 +174,14 @@ Items intentionally not completed in this autonomous run, with reason:
 Each of these items has a clear path forward documented in
 results/PHASE_H_RUN_LOG.md and is not blocking submission of the
 core H.3 / H.4 / H.5 results.
+
+### 17.8.1 Resolved with disclosure
+
+Items previously listed as deferred work that are now resolved by
+explicit manuscript disclosure rather than re-running compute:
+
+| Item | Resolution |
+|---|---|
+| TabPFN canonical inference (cpx_only P) | Resolved 2026-04-28 by clarifying §3.11 disclosure; calibration-domain head-to-head verdict for cpx_only P is "competitive" (TabPFN/raw 13.42 kbar [bootstrap CI 11.12, 15.54] vs MLP/alr 13.66 kbar [bootstrap CI 11.33, 15.48], within 0.5σ tolerance band per `results/tabpfn_head_to_head.csv`); substitution does not affect §4.8 cross-mineral or per-locality interpretations. The cpx_liq T canonical-substitution flag is moot because cpx_liq inference requires a coexisting liquid composition and H.1c (liquid/glass pull) is still deferred. |
 
 End of Section 17.

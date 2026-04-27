@@ -218,3 +218,27 @@ End of run log.
 - 2026-04-27T00:21:22Z (H.6)   Siberian craton | opx_only | n=1049 | T_med=1274 (expect [900,1400]) | in_range=99.90%
 - 2026-04-27T00:21:22Z (H.6)   Aegean | opx_only | n=1015 | T_med=915 (expect [850,1050]) | in_range=73.20%
 - 2026-04-27T00:21:22Z (H.6)   Central Andes | cpx_only | n=738 | T_med=1100 (expect [900,1200]) | in_range=100.00%
+- 2026-04-27T02:15:55Z (H.6) caveman: H.6 locality validation start
+- 2026-04-27T02:15:55Z (H.6) caveman: 15 curated localities loaded
+- 2026-04-27T02:15:55Z (H.6) caveman: opx=53050 cpx=93163 twopx=6234
+- 2026-04-27T02:15:55Z (H.6) caveman: ArcPL archive loaded n=197
+- 2026-04-27T02:15:55Z (H.6) caveman: wrote nb08_locality_stratified.csv n=38
+- 2026-04-27T02:15:55Z (H.6) caveman: 33 of 38 locality-pipeline rows are claims-eligible (n>=20)
+- 2026-04-27T02:15:55Z (H.6) caveman: top eligible localities by n:
+- 2026-04-27T02:15:55Z (H.6)   Iceland | cpx_only | n=2944 | T_med=1124 (expect [1100,1250]) | in_range=74.52%
+- 2026-04-27T02:15:55Z (H.6)   Kaapvaal craton | opx_only | n=2583 | T_med=1230 (expect [950,1300]) | in_range=83.08%
+- 2026-04-27T02:15:55Z (H.6)   Siberian craton | cpx_only | n=2382 | T_med=1229 (expect [900,1300]) | in_range=96.10%
+- 2026-04-27T02:15:55Z (H.6)   Kaapvaal craton | cpx_only | n=2107 | T_med=1218 (expect [950,1300]) | in_range=87.19%
+- 2026-04-27T02:15:55Z (H.6)   Lesser Antilles | cpx_only | n=1199 | T_med=1068 (expect [950,1100]) | in_range=83.15%
+- 2026-04-27T02:15:55Z (H.6)   Siberian craton | opx_only | n=1049 | T_med=1274 (expect [900,1300]) | in_range=74.45%
+- 2026-04-27T02:15:55Z (H.6)   Aegean | opx_only | n=1015 | T_med=915 (expect [850,1050]) | in_range=73.20%
+- 2026-04-27T02:15:55Z (H.6)   Central Andes | cpx_only | n=738 | T_med=1100 (expect [900,1200]) | in_range=100.00%
+
+## Phase H follow-up (2026-04-28)
+
+- 2026-04-28T00:00:00Z (followup) Task 1 done: §3.11 TabPFN disclosure paragraph rewritten with bootstrap CIs from results/bootstrap_rmse_cis_all_cells.csv (TabPFN/raw 13.42 [11.12, 15.54], MLP/alr 13.66 [11.33, 15.48], 0.5sigma overlap)
+- 2026-04-28T00:00:01Z (followup) Task 4 done: data/natural/curated_localities.csv tightened cratonic T ranges (Kaapvaal 950-1300, Siberia 900-1300) with tightened_ranges_source citations; H.6 reran; Kaapvaal cpx_only T_in_range fell from 99.43% to 87.19%, Siberia cpx_only fell from 99.58% to 96.10% (above 50% halt floor on both)
+- 2026-04-28T00:00:02Z (followup) Task 2 done: §4.8 cratonic twopx P shallow-bias paragraph appended; numbers verified against nb08_locality_stratified.csv (Kaapvaal twopx n=363 P_med=13.1 0%, cpx_only n=2107 P_med=57.5 64.7%; Siberia twopx n=211 P_med=13.3 0%, cpx_only n=2382 P_med=59.6 45.5%; Kerguelen twopx n=24 P_med=9.8 21%)
+- 2026-04-28T00:00:03Z (followup) Task 3 done: §4.8 Iceland opx_only T cool-bias paragraph appended; n=49 T_med=931 0% in [1100,1250], cpx_only n=2944 T_med=1124 74.5% in range, delta 193 C
+- 2026-04-28T00:00:04Z (followup) Task 5 done (spot-check passed): no figure in figures/core/ or figures/SI/ plots Putirka eq38/eq39 RMSE values from nb08_cross_mineral_summary.csv; the only eq39 mention in figure captions is Core_14b LEPR-corpus pairing (P_rmse 7.74 kbar from compute_pairing_matrix.py, not the natural-corpus blowup); §4.8 paragraph 3 prose correctly uses median |delta| not RMSE
+- 2026-04-28T00:00:05Z (followup) MANUSCRIPT_WRITING_AUDIT_v4.md §17.8.1 Resolved subsection added with TabPFN disclosure entry
