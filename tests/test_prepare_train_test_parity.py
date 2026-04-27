@@ -37,60 +37,8 @@ def _prep_opx_legacy(track, target, feature_set):
     return p(track, target, feature_set)
 
 
-def _prep_cpx_legacy(track, target, feature_set):
-    from src.cpx_features import build_cpx_feature_matrix
-    from src.data import load_cpx_liq, load_cpx_only, load_splits
-    df = load_cpx_liq() if track == 'cpx_liq' else load_cpx_only()
-    tr_idx, te_idx = load_splits(track)
-    df_tr = df.iloc[tr_idx].reset_index(drop=True)
-    df_te = df.iloc[te_idx].reset_index(drop=True)
-    use_liq = (track == 'cpx_liq')
-    X_tr, feat_names = build_cpx_feature_matrix(df_tr, feature_set, use_liq=use_liq)
-    X_te, _ = build_cpx_feature_matrix(df_te, feature_set, use_liq=use_liq)
-    y_tr = df_tr[target].to_numpy(dtype=float)
-    y_te = df_te[target].to_numpy(dtype=float)
-    return {'X_tr': np.asarray(X_tr, float), 'y_tr': y_tr,
-            'X_te': np.asarray(X_te, float), 'y_te': y_te,
-            'feat_names': feat_names}
-
-
-def _prep_twopx_legacy(track, target, feature_set):
-    from src.twopx_features import build_twopx_feature_matrix
-    from src.data import load_twopx, load_splits
-    df = load_twopx()
-    tr_idx, te_idx = load_splits(track)
-    df_tr = df.iloc[tr_idx].reset_index(drop=True)
-    df_te = df.iloc[te_idx].reset_index(drop=True)
-    X_tr, feat_names = build_twopx_feature_matrix(df_tr, feature_set)
-    X_te, _ = build_twopx_feature_matrix(df_te, feature_set)
-    y_tr = df_tr[target].to_numpy(dtype=float)
-    y_te = df_te[target].to_numpy(dtype=float)
-    return {'X_tr': np.asarray(X_tr, float), 'y_tr': y_tr,
-            'X_te': np.asarray(X_te, float), 'y_te': y_te,
-            'feat_names': feat_names}
-
-
-def _prep_universal_legacy(track, target, feature_set):
-    from src.universal_features import build_universal_matrix
-    from src.data import load_universal, load_splits
-    df = load_universal()
-    tr_idx, te_idx = load_splits('universal')
-    df_tr = df.iloc[tr_idx].reset_index(drop=True)
-    df_te = df.iloc[te_idx].reset_index(drop=True)
-    X_tr, feat_names = build_universal_matrix(df_tr)
-    X_te, _ = build_universal_matrix(df_te)
-    y_tr = df_tr[target].to_numpy(dtype=float)
-    y_te = df_te[target].to_numpy(dtype=float)
-    return {'X_tr': np.asarray(X_tr, float), 'y_tr': y_tr,
-            'X_te': np.asarray(X_te, float), 'y_te': y_te,
-            'feat_names': feat_names}
-
-
 LEGACY = {
     'opx':       _prep_opx_legacy,
-    'cpx':       _prep_cpx_legacy,
-    'twopx':     _prep_twopx_legacy,
-    'universal': _prep_universal_legacy,
 }
 
 
