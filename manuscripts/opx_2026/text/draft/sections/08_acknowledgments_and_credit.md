@@ -8,6 +8,10 @@ This work was performed under the lead author's first-class cadet research proje
 
 Computational resources were provided by the lead author's personal workstation (Windows 11 Pro, Python 3.13.13). No GPU was used; all TabPFN v2 inference ran on CPU. The Optuna hyperparameter search for the eight tuned families across four pipelines and three feature sets took approximately 72 CPU-hours total; the 20-seed multiseed refit took approximately 40 CPU-hours; the bias-correction fit and rescore took approximately 2 CPU-hours.
 
+## Use of Generative AI Tools
+
+During the preparation of this manuscript and the accompanying analysis pipeline, the lead author used Anthropic's Claude (claude-opus-4 family) for code generation and refactoring assistance, draft prose generation for selected manuscript sections, and parallel review of analytical decisions. Anthropic's Claude Code (a command-line agentic coding tool built on the Claude API) was used to execute multi-step pipeline modifications under direct authorial supervision. Google Gemini (Gemini 2.5 Pro) was used as an independent parallel reviewer on a subset of methodological decisions including bias-correction form selection and feature-set choice. All AI-generated code was reviewed, executed, and validated against the pre-registered test suite by the lead author before integration into the analysis pipeline. All AI-drafted prose was edited, fact-checked against primary sources, and rewritten as needed by the lead author before inclusion in the manuscript. The authors take full responsibility for the content, methodology, results, and conclusions presented in this work. AI tools are not listed as authors, consistent with the AGU policy on generative AI in manuscripts.
+
 ## Author Contributions
 
 Contributions follow the CRediT taxonomy (Brand et al., 2015).
