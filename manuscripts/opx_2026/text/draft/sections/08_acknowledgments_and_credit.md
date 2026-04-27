@@ -17,10 +17,10 @@ During the preparation of this manuscript and the accompanying analysis pipeline
 Contributions follow the CRediT taxonomy (Brand et al., 2015).
 
 **NQTa (lead author):**
-Conceptualization; Data curation; Formal analysis; Investigation; Methodology; Software; Validation; Visualization; Writing — original draft; Writing — review and editing; Project administration.
+Conceptualization; Data curation; Formal analysis; Investigation; Methodology; Software; Validation; Visualization; Writing (original draft); Writing (review and editing); Project administration.
 
 **Kanani K. M. Lee:**
-Conceptualization; Funding acquisition (USCGA cadet research support); Methodology (pre-registration discipline); Supervision; Resources; Writing — review and editing.
+Conceptualization; Funding acquisition (USCGA cadet research support); Methodology (pre-registration discipline); Supervision; Resources; Writing (review and editing).
 
 All authors read and approved the final manuscript.
 

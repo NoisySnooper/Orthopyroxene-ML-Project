@@ -18,14 +18,14 @@ Users who wish to reproduce our results from scratch may regenerate the preproce
 
 All analysis code, pre-registration documents, 20-seed per-seed results CSVs, trained model joblibs, SHAP value files, and figure-generation scripts are committed to the main branch at the tagged commit `opx-submission-YYYYMMDD` and archived at Zenodo DOI [to be assigned at acceptance]. The repository structure follows a conventional layout:
 
-- `src/` — library code, including `bias_correction.py::ship_decision` (the pre-registered acceptance-rule implementation) and `evaluation.py::assign_p_regime` (the regime-bin assignment helper)
-- `scripts/` — runnable pipeline scripts including preprocessing, Optuna tuning, 20-seed training, bias-correction rescoring, and figure generation
-- `notebooks/` — per-pipeline analysis notebooks (nb01 through nb12)
-- `docs/preregistration/` — pre-registration documents, committed with lock dates visible in git history
-- `results/` — per-seed result CSVs, aggregated summaries, and scorecard files
-- `figures/core/` — the 15 figures referenced in the manuscript (PDF + PNG + caption TXT each)
-- `manuscripts/opx_2026/` — manuscript source files (Markdown), tables (CSV + LaTeX), and supplementary material
-- `tests/` — pre-registration test assertions including T15 (headline claim pass condition) and T19-T22 (bias-correction rule constants)
+- `src/`: library code, including `bias_correction.py::ship_decision` (the pre-registered acceptance-rule implementation) and `evaluation.py::assign_p_regime` (the regime-bin assignment helper)
+- `scripts/`: runnable pipeline scripts including preprocessing, Optuna tuning, 20-seed training, bias-correction rescoring, and figure generation
+- `notebooks/`: per-pipeline analysis notebooks (nb01 through nb12)
+- `docs/preregistration/`: pre-registration documents, committed with lock dates visible in git history
+- `results/`: per-seed result CSVs, aggregated summaries, and scorecard files
+- `figures/opx_only/`: the 15 main figures and 14 supplementary figures referenced in the manuscript (PDF + PNG + caption TXT each)
+- `manuscripts/opx_2026/`: manuscript source files (Markdown), tables (CSV + LaTeX), and supplementary material
+- `tests/`: pre-registration test assertions including T15 (headline claim pass condition) and T19-T22 (bias-correction rule constants)
 
 Key software dependencies and versions are pinned in `requirements.txt` (main Python environment) and `requirements-tabpfn.txt` (TabPFN v2 environment, kept separate to avoid scikit-learn 1.8.0 dependency conflicts). Python 3.13.13, scikit-learn 1.8.0, pandas 3.0.2, XGBoost 3.2.0, LightGBM 4.6.0, CatBoost 1.2.10, SHAP 0.51.0, Thermobar 1.0.70, and TabPFN >= 2.0 < 2.5. Optuna study databases (Bayesian hyperparameter search state) are archived in `data/optuna_studies/` for full reproducibility of the tuning results.
 
