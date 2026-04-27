@@ -1,0 +1,5 @@
+Track,Target,Best model,Feature set,RMSE (point),95% CI,n_test
+opx-liq,T (deg C),ElasticNet,raw,77.06,"[61.81, 92.73]",174
+opx-liq,P (kbar),MLP,raw,4.40,"[3.08, 4.54]",174
+opx-only,T (deg C),LightGBM,alr,146.63,"[121.19, 170.00]",190
+opx-only,P (kbar),RF,pwlr,10.35,"[6.90, 13.92]",190
