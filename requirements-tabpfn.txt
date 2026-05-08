@@ -1,4 +1,8 @@
+# Install in a SEPARATE virtual environment named .venv-tabpfn at the project root.
+# nb03_tabpfn_baseline.ipynb runs in the main .venv kernel and shells out to
+# .venv-tabpfn via subprocess for foundation-model inference.
 tabpfn>=2.0,<2.5
+numpy>=1.24
 pandas>=2.0
 pyarrow>=14.0
 joblib>=1.3

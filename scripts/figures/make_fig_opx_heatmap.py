@@ -1,17 +1,15 @@
 #!/usr/bin/env python3
-"""Core_04: opx performance heatmap, rows = 4 opx combos, cols = 10 candidates.
+"""main_fig_3: opx performance heatmap.
 
-Cell value = overall test-set RMSE (ALL regime). Cell label shows the
-numeric RMSE plus a +/- 95% CI half-width. Cells colored via viridis
-column-normalised so low RMSE per column is lightest.
-
-Rows: (opx_liq, T_C), (opx_liq, P_kbar), (opx_only, T_C), (opx_only, P_kbar)
-Cols: ElasticNet, RF, ERT, GB, XGB, LightGBM, CatBoost, MLP, TabPFN, Putirka
+Rows = 4 opx (track, target) cells.
+Cols = 9 ML families in MODEL_ORDER + Putirka.
+Cell value = canonical-seed-42 test-set RMSE with bootstrap-on-residuals
+95% CI half-width (n_boot=500). The same CI source is used for every
+column (ML + Putirka), so deterministic learners like ElasticNet get a
+real bootstrap CI rather than a spurious ±0.00 from zero seed-variance.
 
 Source:
-  results/opx_multiseed_summary.csv (8 tuned families, 20-seed)
-  results/tabpfn_multiseed_summary.csv (TabPFN, 20-seed)
-  results/preregistered_scorecard_postcorrection.csv (Putirka ALL-row)
+  results/bootstrap_rmse_cis_all_cells.csv   (ML + Putirka bootstrap CIs)
 """
 from __future__ import annotations
 
@@ -20,7 +18,6 @@ import sys
 from pathlib import Path
 
 import matplotlib.patches as mpatches
-import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
 
@@ -29,43 +26,50 @@ os.chdir(PROJECT_ROOT)
 sys.path.insert(0, str(PROJECT_ROOT))
 
 from scripts.figures._model_palette import MODEL_ORDER  # noqa: E402
-from scripts.figures._style import apply_pub_style  # noqa: E402
+from scripts.figures._style import apply_pub_style, make_fig, resolve_out_dir # noqa: E402
+from scripts.figures._labels import TARGET_UNIT  # noqa: E402
 
 apply_pub_style()
 
-OUT_DIR = PROJECT_ROOT / 'figures' / 'core'
-OUT_DIR.mkdir(parents=True, exist_ok=True)
+OUT_DIR = resolve_out_dir(PROJECT_ROOT)
 
 ROWS = [
-    ('opx_liq',  'T_C',    'opx-liq T (C)'),
+    ('opx_liq',  'T_C',    'opx-liq T (°C)'),
     ('opx_liq',  'P_kbar', 'opx-liq P (kbar)'),
-    ('opx_only', 'T_C',    'opx-only T (C)'),
+    ('opx_only', 'T_C',    'opx-only T (°C)'),
     ('opx_only', 'P_kbar', 'opx-only P (kbar)'),
 ]
 
 COLS = list(MODEL_ORDER) + ['Putirka']
 
 
-def fill_row(ms: pd.DataFrame, sc_all: pd.DataFrame,
+def fill_row(boot: pd.DataFrame, sc_all: pd.DataFrame,
              track: str, target: str):
+    """Build (rmses, half_widths) for one heatmap row.
+
+    ML families: best feature_set by `rmse_point` at canonical seed 42,
+    with bootstrap-on-residuals 95% half-width.
+    Putirka: scorecard ALL-row, with half of the scorecard bootstrap CI.
+    """
     rmses, halfs = [], []
-    sub = ms[(ms['track'] == track) & (ms['target'] == target)]
+    sub = boot[(boot['track'] == track) & (boot['target'] == target)]
     for fam in MODEL_ORDER:
         rows = sub[sub['model'] == fam]
         if len(rows) == 0:
             rmses.append(np.nan)
             halfs.append(np.nan)
             continue
-        best = rows.loc[rows['mean'].idxmin()]
-        rmses.append(float(best['mean']))
-        halfs.append(1.96 * float(best['std']))
+        best = rows.loc[rows['rmse_point'].idxmin()]
+        rmses.append(float(best['rmse_point']))
+        halfs.append(float(best['ci_half_width']))
     pu = sc_all[(sc_all['track'] == track) & (sc_all['target'] == target)]
     if len(pu):
         r = pu.iloc[0]
         if pd.notna(r['best_external_rmse']):
             rmses.append(float(r['best_external_rmse']))
             lo, hi = r['best_external_rmse_lo'], r['best_external_rmse_hi']
-            halfs.append(float((hi - lo) / 2.0) if pd.notna(lo) and pd.notna(hi) else np.nan)
+            halfs.append(float((hi - lo) / 2.0)
+                         if pd.notna(lo) and pd.notna(hi) else np.nan)
         else:
             rmses.append(np.nan)
             halfs.append(np.nan)
@@ -76,9 +80,7 @@ def fill_row(ms: pd.DataFrame, sc_all: pd.DataFrame,
 
 
 def main():
-    ms_tuned = pd.read_csv('results/opx_multiseed_summary.csv')
-    ms_tab = pd.read_csv('results/tabpfn_multiseed_summary.csv')
-    ms = pd.concat([ms_tuned, ms_tab], ignore_index=True)
+    boot = pd.read_csv('results/bootstrap_rmse_cis_all_cells.csv')
     sc = pd.read_csv('results/preregistered_scorecard_postcorrection.csv')
     sc_all = sc[sc['regime'] == 'ALL']
 
@@ -86,12 +88,10 @@ def main():
     half_grid = np.full((len(ROWS), len(COLS)), np.nan)
 
     for ri, (track, target, _) in enumerate(ROWS):
-        r, h = fill_row(ms, sc_all, track, target)
+        r, h = fill_row(boot, sc_all, track, target)
         rmse_grid[ri, :] = r
         half_grid[ri, :] = h
 
-    # Row-normalised viridis (each opx combo has its own unit scale, so
-    # normalising per row makes the color scale meaningful).
     normed = np.full_like(rmse_grid, np.nan, dtype=float)
     for ri in range(rmse_grid.shape[0]):
         row = rmse_grid[ri]
@@ -102,94 +102,82 @@ def main():
         else:
             normed[ri] = 0.5
 
-    fig, ax = plt.subplots(figsize=(15, 6.5))
-    im = ax.imshow(normed, cmap='viridis_r', aspect='equal', vmin=0, vmax=1)
+    fig, ax = make_fig('wide')
+    im = ax.imshow(normed, cmap='viridis_r', aspect='auto', vmin=0, vmax=1)
 
     ax.set_xticks(np.arange(len(COLS)))
-    ax.set_xticklabels(COLS, fontsize=11, rotation=0, ha='center')
+    ax.set_xticklabels(COLS, rotation=30, ha='right')
     ax.set_yticks(np.arange(len(ROWS)))
-    ax.set_yticklabels([r[2] for r in ROWS], fontsize=11)
+    ax.set_yticklabels([r[2] for r in ROWS])
 
     for ri in range(rmse_grid.shape[0]):
-        unit = 'C' if ROWS[ri][1] == 'T_C' else 'kbar'
+        unit = TARGET_UNIT[ROWS[ri][1]]
         for ci in range(rmse_grid.shape[1]):
             val = rmse_grid[ri, ci]
             half = half_grid[ri, ci]
             if not np.isfinite(val):
+                # Hatched empty cell with mid-gray fill, dark text — readable
+                # on every background.
                 ax.add_patch(mpatches.Rectangle(
                     (ci - 0.5, ri - 0.5), 1, 1,
-                    facecolor='black', edgecolor='none', zorder=2))
-                ax.text(ci, ri, 'No Model', ha='center', va='center',
-                        fontsize=10, color='white', fontweight='bold',
+                    facecolor='#d8d8d8', edgecolor='#888888',
+                    hatch='///', linewidth=0.5, zorder=2))
+                ax.text(ci, ri, 'N/A', ha='center', va='center',
+                        fontsize=9, color='#333333', fontweight='bold',
                         zorder=3)
                 continue
             if np.isfinite(half):
-                text = f'{val:.2f}\n(\u00b1{half:.2f})\n{unit}'
+                text = f'{val:.2f}\n±{half:.2f}\n{unit}'
             else:
                 text = f'{val:.2f}\n{unit}'
-            color = 'white' if normed[ri, ci] > 0.55 else 'black'
+            color = 'white' if normed[ri, ci] > 0.55 else '#222222'
             ax.text(ci, ri, text, ha='center', va='center',
-                    fontsize=9, color=color, fontweight='bold')
+                    fontsize=8, color=color, fontweight='bold')
 
-        # Highlight the minimum-RMSE cell in this row with a thin red
-        # rectangle so the reader immediately sees the best model per
-        # opx combo. Use a slightly-inset rectangle so the outline
-        # doesn't merge with neighbouring cell edges.
         row_vals = rmse_grid[ri]
         finite = np.where(np.isfinite(row_vals))[0]
         if len(finite):
             best_ci = int(finite[np.argmin(row_vals[finite])])
             ax.add_patch(mpatches.Rectangle(
                 (best_ci - 0.47, ri - 0.47), 0.94, 0.94,
-                fill=False, edgecolor='red', linewidth=1.6,
+                fill=False, edgecolor='#D55E00', linewidth=1.6,
                 zorder=5,
             ))
 
-    # Seamless heatmap: no grid, no spines.
     for spine in ax.spines.values():
         spine.set_visible(False)
     ax.tick_params(which='both', length=0)
 
-    cbar = fig.colorbar(im, ax=ax, shrink=0.65, pad=0.02)
-    cbar.set_label('Row-normalised RMSE (0 = best in row, 1 = worst)',
-                   fontsize=10)
-    cbar.ax.tick_params(labelsize=9)
+    cbar = fig.colorbar(im, ax=ax, shrink=0.7, pad=0.02)
+    cbar.set_label('Row-normalised RMSE (0 = best in row, 1 = worst)')
 
     ax.set_title(
-        'Overall test-set RMSE heatmap -- 4 opx combos x 10 candidates\n'
-        '(cell text = mean RMSE \u00b1 half-width of 95% CI; viridis '
-        'colormap, row-normalised; thin red outline = best per row)',
-        fontsize=12, fontweight='bold', pad=12,
+        'Test-set RMSE: 4 opx cells × 10 candidates\n'
+        'ExPetDB held-out · opx-liq n=174 · opx-only n=190',
+        loc='center',
     )
 
-    plt.tight_layout()
-
-    out_stem = OUT_DIR / 'Core_04_fig_nb04_cross_pipeline_heatmap'
-    fig.savefig(f'{out_stem}.pdf', bbox_inches='tight', dpi=300)
-    fig.savefig(f'{out_stem}.png', bbox_inches='tight', dpi=300)
-    plt.close(fig)
+    stem = OUT_DIR / 'main_fig_3'
+    fig.savefig(f'{stem}.pdf')
+    fig.savefig(f'{stem}.png')
 
     caption = (
-        'Figure 4. Overall test-set RMSE heatmap across the four opx '
-        'track/target combinations (rows) versus ten candidates (columns: '
-        'the nine ML model families in canonical MODEL_ORDER plus the best '
-        'Putirka / Agreda external benchmark). Each cell reports the mean '
-        'RMSE of the 20-seed refit (5 seeds for TabPFN) over the held-out '
-        'test partition, together with the half-width of the 95% '
-        'confidence interval (1.96 * std for the ML families, half the '
-        'bootstrap CI for Putirka). Cells are colored via a row-normalised '
-        'viridis_r colormap so the row minimum (best) is lightest and the '
-        'row maximum (worst) is darkest; absolute values are printed in '
-        'each cell in native units (C for T targets, kbar for P targets). '
-        'Opx-only T has no Putirka opx-only thermometer available in '
-        'Thermobar and is marked N/A. Per-family feature_set choice (raw '
-        '/ alr / pwlr) is the 20-seed best per row. The minimum-RMSE cell '
-        'in each row is outlined in thin red to highlight the best model '
-        'per opx combo.'
+        'Figure 3. Overall test-set RMSE heatmap, four opx (track, target) '
+        'cells (rows) × ten candidates (columns: nine ML families in '
+        'canonical MODEL_ORDER plus best-available Putirka 2008 equation). '
+        'Each cell reports the canonical-seed-42 RMSE with the half-width '
+        'of the 95% bootstrap-on-residuals confidence interval (n_boot=500, '
+        'paired resampling of test residuals). The same CI source is used '
+        'for every column so deterministic learners (e.g. ElasticNet) are '
+        'reported on the same uncertainty footing as stochastic ones. Cells '
+        'are colored on a row-normalised viridis_r colormap so the row '
+        'minimum is lightest. Absolute values are printed in each cell in '
+        'native units (°C for T, kbar for P). Opx-only T has no Putirka '
+        'opx-only thermometer available in Thermobar and is hatched (N/A). '
+        'The minimum-RMSE cell in each row is outlined in vermillion.'
     )
-    (OUT_DIR / 'Core_04_fig_nb04_cross_pipeline_heatmap.txt').write_text(
-        caption, encoding='utf-8')
-    print(f'wrote {out_stem}.(pdf|png|txt)')
+    (OUT_DIR / 'main_fig_3.txt').write_text(caption, encoding='utf-8')
+    print(f'wrote {stem}.(pdf|png|txt)')
 
 
 if __name__ == '__main__':

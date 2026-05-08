@@ -1,14 +1,21 @@
-"""Canonical model order + Okabe-Ito color palette for all 9 families.
+"""Canonical model order, color palette, and role-style helper.
 
-Every figure that plots per-model bars or lines imports from this module
-so the color + order story is consistent across the manuscript.
+One color per entity, locked across every figure. Pre-correction state is
+encoded by alpha + hatch, never by hue.
 
-TabPFN gets the emphasis color (vermillion) because it is the new
-foundation-model entrant contrasted against the 8 tuned families, not
-because it is a separate track.
+- ML families use Okabe-Ito where possible. MLP gets brown (tab10 9th slot)
+  so gray is reserved exclusively for Putirka.
+- TabPFN is a family, not a separate track; vermillion is its locked hue.
+- Putirka is the comparator and is always neutral gray.
+
+Imported by every figure builder. Builders never define their own
+PUTIRKA_C / PRE_C / POST_C / OK_RED constants.
 """
 from __future__ import annotations
 
+import matplotlib.patches as mpatches
+
+# Family display order, used wherever bars or columns are laid out by family.
 MODEL_ORDER = [
     'ElasticNet',
     'RF',
@@ -34,40 +41,29 @@ OKABE_ITO = {
     'pink':       '#CC79A7',
 }
 
+# Locked family color assignments. Reused everywhere a family is named.
 MODEL_COLORS = {
-    'ElasticNet': OKABE_ITO['black'],       # linear baseline, neutral
+    'ElasticNet': OKABE_ITO['black'],
     'RF':         OKABE_ITO['blue'],
     'ERT':        OKABE_ITO['sky_blue'],
     'GB':         OKABE_ITO['green'],
     'XGB':        OKABE_ITO['yellow'],
     'LightGBM':   OKABE_ITO['pink'],
     'CatBoost':   OKABE_ITO['orange'],
-    'MLP':        '#999999',                # gray (9th slot; non-OI)
-    'TabPFN':     OKABE_ITO['vermillion'],  # emphasis color
+    'MLP':        '#8C564B',                # tab10 brown; not OI; reserves gray for Putirka
+    'TabPFN':     OKABE_ITO['vermillion'],
+    'Putirka':    '#666666',                # neutral gray; comparator
 }
 
-# Candidate-level palette for scorecard-style figures.
-# Extends MODEL_COLORS with the comparison baselines.
-CANDIDATE_COLORS = {
-    'tuned_pre':     '#1f77b4',
-    'tuned_post':    '#0072B2',
-    'putirka':       '#666666',
-    'tabpfn_pre':    '#F4A582',
-    'tabpfn_post':   OKABE_ITO['vermillion'],
-    'jorgenson':     OKABE_ITO['sky_blue'],
-    'agreda':        OKABE_ITO['pink'],
-    'wang':          OKABE_ITO['green'],
-}
+PUTIRKA_C = MODEL_COLORS['Putirka']
 
-CANDIDATE_LABELS = {
-    'tuned_pre':   'Tuned (pre)',
-    'tuned_post':  'Tuned (post)',
-    'putirka':     'Putirka',
-    'tabpfn_pre':  'TabPFN (pre)',
-    'tabpfn_post': 'TabPFN (post)',
-    'jorgenson':   'Jorgenson cpx',
-    'agreda':      'Agreda-Lopez',
-    'wang':        'Wang',
+# Locked regime palette (matches dataset_map convention; bias_residuals is
+# updated to follow). Used wherever regime is a color encoding.
+REGIME_COLORS = {
+    'shallow_crustal':     OKABE_ITO['sky_blue'],
+    'deep_crustal_MASH':   OKABE_ITO['green'],
+    'lithospheric_mantle': OKABE_ITO['orange'],
+    'deeper_mantle':       OKABE_ITO['vermillion'],
 }
 
 
@@ -75,5 +71,31 @@ def color_for(model: str, default: str = '#999999') -> str:
     return MODEL_COLORS.get(model, default)
 
 
-def color_for_candidate(key: str, default: str = '#999999') -> str:
-    return CANDIDATE_COLORS.get(key, default)
+def role_style(role: str, family: str | None = None
+               ) -> tuple[str, float, str | None]:
+    """Return (color, alpha, hatch) for any candidate role.
+
+    role ∈ {'pre', 'post', 'putirka'}. For 'pre' / 'post', a family must be
+    supplied; the bar inherits the family color. Pre-correction state uses
+    alpha 0.45 + '///' hatch so the correction-state distinction is
+    grayscale-safe and orthogonal to the hue-encoded family identity.
+    """
+    if role == 'putirka':
+        return (MODEL_COLORS['Putirka'], 1.0, None)
+    if family is None:
+        raise ValueError(f"role {role!r} requires a family")
+    color = MODEL_COLORS.get(family, '#999999')
+    if role == 'pre':
+        return (color, 0.45, '///')
+    if role == 'post':
+        return (color, 1.0, None)
+    raise ValueError(f"unknown role: {role!r}")
+
+
+def family_from_method(method: str) -> str:
+    """Parse 'ElasticNet/raw' or 'TabPFN' into a MODEL_ORDER family."""
+    if not method or method == 'nan':
+        return ''
+    if '/' in method:
+        return method.split('/')[0]
+    return method

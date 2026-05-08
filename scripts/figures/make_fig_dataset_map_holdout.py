@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Core_01b: ExPetDB opx corpora vs ArcPL opx external holdout.
+"""supp_fig_1: ExPetDB opx corpora vs ArcPL opx external holdout.
 
 Top row (ExPetDB, train + internal test): P-T scatter colored by pre-
 registered pressure regime with Core_01's train/test marker alpha
@@ -42,24 +42,18 @@ PROJECT_ROOT = Path(__file__).parent.parent.parent.resolve()
 os.chdir(PROJECT_ROOT)
 sys.path.insert(0, str(PROJECT_ROOT))
 
-from scripts.figures._model_palette import OKABE_ITO  # noqa: E402
-from scripts.figures._style import apply_pub_style  # noqa: E402
+from scripts.figures._model_palette import REGIME_COLORS  # noqa: E402
+from scripts.figures._style import apply_pub_style, resolve_out_dir, jgr_figsize, jgr_top, jgr_bottom # noqa: E402
+from scripts.figures._legend import add_below_legend  # noqa: E402
 from src.external.arcpl_opx import load_arcpl_opx_liq  # noqa: E402
 
 apply_pub_style()
 
-OUT_DIR = PROJECT_ROOT / 'figures' / 'core'
-OUT_DIR.mkdir(parents=True, exist_ok=True)
+OUT_DIR = resolve_out_dir(PROJECT_ROOT)
 
 REGIME_EDGES = [0, 5, 15, 30, 100]
 REGIME_NAMES = ['shallow_crustal', 'deep_crustal_MASH',
                 'lithospheric_mantle', 'deeper_mantle']
-REGIME_COLORS = {
-    'shallow_crustal':     OKABE_ITO['sky_blue'],
-    'deep_crustal_MASH':   OKABE_ITO['green'],
-    'lithospheric_mantle': OKABE_ITO['orange'],
-    'deeper_mantle':       OKABE_ITO['vermillion'],
-}
 
 
 def regime_for(p_kbar: float) -> str:
@@ -237,13 +231,13 @@ def scatter_with_marginals(fig, gs_cell, df, title,
     ax_stats.text(
         0.02, 0.98, '\n'.join(left_col),
         transform=ax_stats.transAxes,
-        fontsize=9, family='monospace',
+        fontsize=8, family='monospace',
         va='top', ha='left',
     )
     ax_stats.text(
-        0.52, 0.98, '\n'.join(right_col),
+        0.55, 0.98, '\n'.join(right_col),
         transform=ax_stats.transAxes,
-        fontsize=9, family='monospace',
+        fontsize=8, family='monospace',
         va='top', ha='left',
     )
 
@@ -292,10 +286,15 @@ def main():
     t_count_max = int(np.ceil(t_count_max * 1.05))
     p_count_max = int(np.ceil(p_count_max * 1.05))
 
-    fig = plt.figure(figsize=(14, 16), constrained_layout=False)
+    # Each panel packs scatter + 2 marginal histograms + a stats block,
+    # so the cell needs vertical room. Larger figsize and explicit
+    # row-spacing prevent the row-2 panel headers from clipping into
+    # the row-1 stats blocks.
+    fig = plt.figure(figsize=jgr_figsize((11, 11.5)), constrained_layout=False)
     outer = fig.add_gridspec(
-        2, 2, hspace=0.02, wspace=0.22,
-        top=0.955, bottom=0.07, left=0.06, right=0.97,
+        2, 2, hspace=0.20, wspace=0.28,
+        top=jgr_top(0.94), bottom=jgr_bottom(0.10),
+        left=0.07, right=0.97,
     )
 
     scatter_with_marginals(
@@ -323,73 +322,61 @@ def main():
         t_count_max=t_count_max, p_count_max=p_count_max,
         stats_kind='arcpl', overlay_hull=expetdb_opx_only)
 
+    regime_legend_label = {
+        'shallow_crustal':     'shallow_crustal (<5 kbar)',
+        'deep_crustal_MASH':   'deep_crustal_MASH (5–15 kbar)',
+        'lithospheric_mantle': 'lithospheric_mantle (15–30 kbar)',
+        'deeper_mantle':       'deeper_mantle (≥30 kbar)',
+    }
     handles = []
     for r in REGIME_NAMES:
         handles.append(plt.Line2D([0], [0], marker='o', color='w',
                                    markerfacecolor=REGIME_COLORS[r],
-                                   markersize=8, label=r))
+                                   markersize=7,
+                                   label=regime_legend_label[r]))
     handles.append(plt.Line2D([0], [0], marker='o', color='w',
-                               markerfacecolor='0.6', markeredgecolor='black',
-                               markersize=8, label='test (dark edge)'))
+                               markerfacecolor='#bbbbbb',
+                               markeredgecolor='#222222',
+                               markersize=7, label='test (dark edge)'))
     handles.append(plt.Line2D([0], [0], marker='o', color='w',
-                               markerfacecolor='0.6', alpha=0.35,
-                               markersize=8, label='train (faded)'))
+                               markerfacecolor='#bbbbbb', alpha=0.35,
+                               markersize=7, label='train (faded)'))
     handles.append(plt.Line2D([0], [0], marker='o', color='w',
-                               markerfacecolor='0.50', alpha=0.60,
-                               markersize=8,
+                               markerfacecolor='#888888', alpha=0.60,
+                               markersize=7,
                                label='ExPetDB underlay (panels c, d)'))
-    fig.legend(handles=handles, loc='lower center', ncol=7,
-               frameon=True, framealpha=0.95, edgecolor='0.6',
-               bbox_to_anchor=(0.5, 0.025), fontsize=10,
-               title='Regime colors; train/test markers for ExPetDB '
-                     'panels (a, b); gray ExPetDB underlay under ArcPL '
-                     'points in panels (c, d)',
-               title_fontsize=10)
+    # Wrap to 2 rows × 4 columns so long regime labels don't overflow.
+    fig.legend(handles, [h.get_label() for h in handles],
+               loc='lower center', bbox_to_anchor=(0.5, 0.005),
+               ncol=4)
 
-    fig.suptitle(
-        'ExPetDB (training + internal test) vs ArcPL opx '
-        '(external held-out) data distribution',
-        fontsize=13, fontweight='bold', y=0.985,
-    )
+    fig.suptitle('ExPetDB vs ArcPL opx external holdout: P–T distribution')
 
-    out_stem = OUT_DIR / 'Core_01b_fig_dataset_map_holdout'
+    out_stem = OUT_DIR / 'supp_fig_1'
     fig.savefig(f'{out_stem}.pdf', bbox_inches='tight', dpi=300)
     fig.savefig(f'{out_stem}.png', bbox_inches='tight', dpi=300)
     plt.close(fig)
 
     caption = (
-        'Figure 1b. Distribution comparison between the ExPetDB opx '
-        'corpora (top row) and the ArcPL external opx held-out dataset '
-        '(bottom row). Top row: ExPetDB opx_liq (panel a) and ExPetDB '
-        'opx_only (panel b) P-T scatter, colored by pre-registered '
-        'pressure regime with marginal T and P histograms, using Core_01\'s '
-        'train/test marker alpha pattern (train faded, test dark-edge on '
-        'top). Bottom row: ArcPL opx held-out (panel c, opx_liq evaluation '
-        'track; panel d, opx_only evaluation track) with the matching '
-        'ExPetDB corpus (train + test combined) underlaid in gray so the '
-        'reader can see how the ArcPL distribution sits inside the '
-        f'training space -- the two ArcPL panels share the same underlying '
-        f'n={len(arcpl_opx)} reconstructed corpus because the ArcPL '
-        'opx_only evaluation re-uses the opx rows from the LEPR Opx-Liq '
-        'sheet but predicts from the opx composition alone. The ArcPL opx corpus is reconstructed from the LEPR '
-        'Opx-Liq sheet by filtering Citation_x to the `_notinLEPR` tag '
-        '(the ArcPL-sourced subset inside LEPR) and applying the nb04 '
-        'Part 3 cleaning pipeline: rename to the ExPetDB flat schema, '
-        'H2O non-negativity, oxide-total and cation-sum QC on the '
-        '6-oxygen basis, Wo <= 5 mol%% pigeonite filter, P <= 100 kbar '
-        'ceiling, Fe-Mg Kd equilibrium window (0.23-0.35, Putirka 2008), '
-        'and citation-key overlap removal against ExPetDB. All four '
-        'scatter axes share a single (T, P) axis range computed as the '
-        'union of all four data sources, so regime position is visually '
-        'comparable across panels. Regime boundary dashed lines are '
-        'labeled at the right edge of each plot using axis-fraction '
-        'coordinates so labels always stay inside the axes. Source: '
-        'data/processed/{opx_clean_opx_liq, opx_clean_opx_only}.parquet '
-        'and data/raw/external/'
-        'LEPR_Wet_Stitched_April2023_Norm100Anhydrs.xlsx (sheet Opx-Liq, '
-        'Citation_x contains `_notinLEPR`).'
+        'Supp. Figure 1. P–T distribution of the ExPetDB opx training+test '
+        'corpora (top row, panels a and b) versus the ArcPL external opx '
+        f'holdout (bottom row, panels c and d; n={len(arcpl_opx)}). Points '
+        'are colored by pre-registered pressure regime; train markers are '
+        'faded, test markers carry a dark edge. Marginal histograms show '
+        'univariate T and P coverage. The two ArcPL panels share the '
+        'same underlying corpus — the opx-only evaluation track re-uses '
+        'the opx rows from the LEPR Opx-Liq sheet but predicts from the '
+        'opx composition alone. The ArcPL corpus is reconstructed from '
+        'the LEPR Opx-Liq sheet `_notinLEPR` subset and passes the same '
+        'QC pipeline as ExPetDB (oxide-total and cation-sum checks, '
+        'Wo ≤ 5 mol% pigeonite filter, P ≤ 100 kbar ceiling, Fe–Mg Kd '
+        'equilibrium window 0.23–0.35 per Putirka 2008, and citation-key '
+        'overlap removal against ExPetDB). Axis ranges are shared across '
+        'all four panels for direct visual comparison. Datasets: '
+        'data/processed/opx_clean_{opx_liq,opx_only}.parquet and '
+        'data/raw/external/LEPR_Wet_Stitched_April2023_Norm100Anhydrs.xlsx.'
     )
-    (OUT_DIR / 'Core_01b_fig_dataset_map_holdout.txt').write_text(
+    (OUT_DIR / 'supp_fig_1.txt').write_text(
         caption, encoding='utf-8')
     print(f'wrote {out_stem}.(pdf|png|txt)')
 

@@ -1,1 +1,0 @@
-Supp. Figure 14. Augmentation ablation: Form B breakpoint stability across the 20 seeds and the four opx cells. Breakpoints jump unstably across seeds, consistent with Form B not finding a robust target for the opx residuals.

@@ -1,3 +1,0 @@
-fig_aug04_form_b_breakpoint_stability
-
-Form B breakpoint positions (alpha_L, alpha_R) per seed for opx-only P_kbar under 15x augmentation. Tight clustering indicates stable Form B fits; scatter across the quantile grid indicates the fit drifts with data draws and explains Form B ship failures.

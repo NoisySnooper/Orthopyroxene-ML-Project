@@ -1,1 +1,0 @@
-Supp. Figure 13. Augmentation ablation: residual structure per regime under N_AUG = 15. No regime shows the structured pre-correction bias that Form B is designed to correct.

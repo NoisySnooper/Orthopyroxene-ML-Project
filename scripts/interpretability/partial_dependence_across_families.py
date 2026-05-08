@@ -32,12 +32,18 @@ os.chdir(PROJECT_ROOT)
 sys.path.insert(0, str(PROJECT_ROOT))
 
 from src.prepare_train_test import prepare_train_test  # noqa: E402
+from scripts.figures._style import apply_pub_style, resolve_out_dir, jgr_figsize, jgr_top, jgr_bottom # noqa: E402
+from scripts.figures._model_palette import MODEL_COLORS  # noqa: E402
+from scripts.figures._labels import TARGET_UNIT, panel_header  # noqa: E402
+
+apply_pub_style()
 
 MODELS_DIR = PROJECT_ROOT / 'models' / 'canonical'
 BOOT_CSV = PROJECT_ROOT / 'results' / 'bootstrap_rmse_cis_all_cells.csv'
 SHAP_CSV = PROJECT_ROOT / 'results' / 'shap_importance_winners.csv'
 OUT_PARQUET = PROJECT_ROOT / 'results' / 'partial_dependence_across_families.parquet'
-FIG_STEM = PROJECT_ROOT / 'figures' / 'core' / 'Core_17_fig_partial_dependence'
+OUT_DIR = resolve_out_dir(PROJECT_ROOT)
+FIG_STEM = OUT_DIR / 'supp_fig_7'
 
 CELLS = [
     ('opx', 'opx_liq', 'T_C'),
@@ -124,12 +130,16 @@ def main():
     print(f'\nwrote {OUT_PARQUET}: {len(df)} rows, '
           f'{df.family.nunique()} families, {df.feature.nunique()} features')
 
-    # Figure Core_17: 4x3 grid (4 cells x 3 features), one line per family
-    fig, axes = plt.subplots(4, 3, figsize=(15, 14))
-    cmap = plt.get_cmap('tab10')
-    fam_color = {f: cmap(i) for i, f in enumerate(FAMILIES)}
+    # Width-only JGR shrink: 12-panel grid needs absolute height for the
+    # axes to remain readable. Proportional shrink would crush each
+    # subplot to ~1.5×1.5 in and overlap the row labels.
+    from scripts.figures._style import JGR_2COL_IN, is_jgr_mode  # noqa
+    target_w = JGR_2COL_IN if is_jgr_mode() else 11.0
+    fig, axes = plt.subplots(4, 3, figsize=(target_w, 10))
+    panel_letters = ['a', 'b', 'c', 'd']
     for ri, (pipe, track, tgt) in enumerate(CELLS):
         feats = top_features_for(shap, track, tgt, n=3)
+        unit = TARGET_UNIT[tgt]
         for ci, feat in enumerate(feats):
             ax = axes[ri, ci]
             sub = df[(df.track == track) & (df.target == tgt)
@@ -139,22 +149,54 @@ def main():
                 if len(fs_rows) == 0:
                     continue
                 ax.plot(fs_rows['grid_value'], fs_rows['pd_value'],
-                        color=fam_color[family], label=family, lw=1.3,
-                        alpha=0.85)
-            unit = '°C' if tgt == 'T_C' else 'kbar'
-            ax.set_title(f'{track}/{tgt}: {feat}', fontsize=9, loc='left')
-            ax.set_xlabel(feat, fontsize=8)
-            ax.set_ylabel(f'predicted {tgt} ({unit})', fontsize=8)
-            ax.tick_params(labelsize=7)
-            if ri == 0 and ci == 0:
-                ax.legend(fontsize=7, loc='best', ncol=2)
-    fig.suptitle('Partial dependence across families (top-3 winner SHAP '
-                 'features per cell)', fontsize=12, fontweight='bold')
-    plt.tight_layout(rect=(0, 0, 1, 0.97))
+                        color=MODEL_COLORS.get(family, '#999999'),
+                        label=family, lw=1.3, alpha=0.85)
+            ax.set_title(f'({panel_letters[ri]}{ci+1}) {feat}', fontsize=10)
+            ax.set_xlabel(feat, fontsize=9)
+            if ci == 0:
+                ax.set_ylabel(f'{panel_header(track, tgt)}\npredicted '
+                              f'({unit})', fontsize=9)
+            ax.grid(True)
+    # Build a combined legend across all panels — single panel may not
+    # cover every family if its feature set differs.
+    seen = set()
+    handles, labels = [], []
+    for ax in axes.ravel():
+        h_, l_ = ax.get_legend_handles_labels()
+        for h, lbl in zip(h_, l_):
+            if lbl not in seen:
+                seen.add(lbl); handles.append(h); labels.append(lbl)
+    # Reorder to canonical MODEL_ORDER
+    order = sorted(range(len(labels)),
+                   key=lambda i: FAMILIES.index(labels[i])
+                   if labels[i] in FAMILIES else 999)
+    handles = [handles[i] for i in order]
+    labels = [labels[i] for i in order]
+    fig.legend(handles, labels, loc='lower center',
+               bbox_to_anchor=(0.5, 0.01), ncol=8, fontsize=9)
+    fig.suptitle(
+        'Partial dependence across families (top-3 SHAP features per cell)\n'
+        'ExPetDB held-out (opx-liq n=174, opx-only n=190), seed 42'
+    )
+    plt.subplots_adjust(top=jgr_top(0.90), bottom=jgr_bottom(0.10), left=0.10, right=0.97,
+                        hspace=0.65, wspace=0.30)
     fig.savefig(f'{FIG_STEM}.pdf', bbox_inches='tight', dpi=300)
     fig.savefig(f'{FIG_STEM}.png', bbox_inches='tight', dpi=200)
     plt.close(fig)
-    print(f'wrote {FIG_STEM}.pdf')
+
+    caption = (
+        'Supp. Figure 7. Partial-dependence functions across the eight '
+        'tuned families for the top-three winner-SHAP features in each of '
+        'the four opx (track, target) cells (rows). Family curves are '
+        'colored using the paper-wide locked palette. TabPFN is omitted '
+        '(no fitted estimator exposed to sklearn.partial_dependence). '
+        'Convergence on the same monotone shape across families supports '
+        'the corresponding feature direction; divergence flags a feature '
+        'whose effect is family-specific. Source: '
+        'results/partial_dependence_across_families.parquet.'
+    )
+    (OUT_DIR / 'supp_fig_7.txt').write_text(caption, encoding='utf-8')
+    print(f'wrote {FIG_STEM}.(pdf|png|txt)')
 
 
 if __name__ == '__main__':

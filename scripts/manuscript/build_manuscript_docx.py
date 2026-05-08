@@ -19,7 +19,17 @@ from docx.shared import Inches, Pt, RGBColor
 
 PROJECT_ROOT = Path(__file__).resolve().parents[2]
 SECTIONS_DIR = PROJECT_ROOT / 'manuscripts' / 'opx_2026' / 'text' / 'draft' / 'sections'
-FIGURES_DIR = PROJECT_ROOT / 'figures' / 'opx_only'
+# Default to JGR-mode 600-dpi PNGs (AGU print-resolution) when available;
+# fall back to the preview-mode renders otherwise. Set DOCX_USE_PREVIEW=1
+# to force the larger-canvas preview versions for advisor review.
+import os as _os  # noqa: E402
+
+_jgr_dir = PROJECT_ROOT / 'figures' / 'opx_only' / 'jgr'
+_preview_dir = PROJECT_ROOT / 'figures' / 'opx_only'
+if _os.environ.get('DOCX_USE_PREVIEW') == '1' or not _jgr_dir.exists():
+    FIGURES_DIR = _preview_dir
+else:
+    FIGURES_DIR = _jgr_dir
 TABLES_DIR = PROJECT_ROOT / 'tables'
 RESULTS_DIR = PROJECT_ROOT / 'results'
 PREREG_DIR = PROJECT_ROOT / 'docs' / 'preregistration'
@@ -292,14 +302,8 @@ MAIN_FIGURES = [
     ('Figure 5',  'main_fig_5.png'),
     ('Figure 6',  'main_fig_6.png'),
     ('Figure 7',  'main_fig_7.png'),
-    ('Figure 8a', 'main_fig_8a.png'),
-    ('Figure 8b', 'main_fig_8b.png'),
+    ('Figure 8',  'main_fig_8.png'),
     ('Figure 9',  'main_fig_9.png'),
-    ('Figure 10', 'main_fig_10.png'),
-    ('Figure 11', 'main_fig_11.png'),
-    ('Figure 12', 'main_fig_12.png'),
-    ('Figure 13', 'main_fig_13.png'),
-    ('Figure 14', 'main_fig_14.png'),
 ]
 
 PREREG_FILES = [

@@ -26,31 +26,40 @@ NOTEBOOKS = [
     "nb01_data_cleaning",
     "nb02_eda_pca",
     "nb03_opx_baseline_models",
-    "nb03_cpx_baseline_models",
-    "nb03_twopx_baseline_models",
     # nb03_tabpfn_baseline runs the TabPFN v2 foundation-model baseline
-    # (9th BASE_ORDER family post-Option-B). The notebook kernel is the
-    # main .venv; the notebook itself shells out to .venv-tabpfn via
-    # subprocess, so papermill here does not need tabpfn installed. Must
-    # run before nb04 (nb04 consumes tabpfn_multiseed_summary for the
-    # head-to-head merge) and before nb07 (TabPFN is excluded from bias
-    # correction, so nb07 only processes the 8 tuned families).
+    # (9th family post-Option-B). The notebook kernel is the main .venv;
+    # the notebook itself shells out to .venv-tabpfn via subprocess, so
+    # papermill here does not need tabpfn installed. Must run before
+    # nb04_putirka_benchmark (which consumes tabpfn_multiseed_summary for
+    # the head-to-head merge) and before nb07_bias_correction (TabPFN is
+    # excluded from bias correction so nb07 processes only the 8 tuned
+    # families).
     "nb03_tabpfn_baseline",
     "nb04_putirka_benchmark",
+    "nb04_regime_benchmark",
     # nb04b_aug_test is an optional augmentation ablation on 4 opx
     # combinations (Section 5.3 sensitivity probe; added 2026-04-19).
-    # Not on the critical path to Section 4 results: the pre-registered
-    # verdict stands regardless of nb04b's outcome. Heavy compute
-    # (~3.3h for 1920 fits + ~30 min for OOF/bias) is delegated to
-    # scripts/ablations/run_augmentation_ablation_opx.py and
-    # scripts/ablations/run_augmentation_oof_bias.py, which must run
-    # before papermilling the notebook so the CSVs exist.
+    # Not on the critical path to the pre-registered verdict. Heavy
+    # compute (~3.3h for 1920 fits + ~30 min for OOF/bias) is delegated
+    # to scripts/ablations/run_augmentation_ablation_opx.py and
+    # scripts/ablations/run_augmentation_oof_bias.py, which MUST be run
+    # before papermilling this notebook so the CSVs exist.
     "nb04b_aug_test",
     "nb05_loso_validation",
     "nb06_shap_analysis",
     "nb07_bias_correction",
-    "nb08_natural_twopx",
+    # nb07b_arcpl_bias_probe is a development-time diagnostic that probed
+    # the +50 C / +1.5 kbar ArcPL residual structure. It is not on the
+    # critical path: it produces no manuscript-bound output, no figure
+    # appears in figures/opx_only/, and nothing downstream consumes its
+    # CSVs. Run it manually if you want to inspect the probe; it requires
+    # nb04_putirka_benchmark Part 3 to have produced
+    # results/nb04_arcpl_opx_liq_predictions_forest.csv first.
     "nb09_manuscript_compilation",
+    # nbF_figures is the figure-build orchestrator. It shells out to the
+    # standalone scripts in scripts/figures/, scripts/pairing/,
+    # scripts/shap/, and scripts/manuscript/ to produce the publication
+    # figures and the manuscript .docx.
     "nbF_figures",
 ]
 

@@ -1,42 +1,33 @@
-# figure inventory — Phase 13
-# columns: legacy_name, source_script_or_origin, classification, new_name, action
+# figure inventory — Path A (8 main + 8 supp)
+# columns: new_name, source_script, action
 
-# --- main figures (Core_*) ---
-Core_01_fig_dataset_map,scripts/figures/make_fig_dataset_map.py,has_script,main_fig_1,regen
-Core_02_fig_citation_split,scripts/figures/make_fig_citation_split.py,has_script,DELETED,drop_already_in_text
-Core_03_fig_methods_flowchart,scripts/figures/make_fig_methods_flowchart.py,has_script,main_fig_2,regen
-Core_04_fig_nb04_cross_pipeline_heatmap,scripts/figures/make_fig_opx_heatmap.py,has_script,main_fig_3,regen
-Core_05_fig30_bias_correction_per_regime_rmse,scripts/figures/make_fig_bias_correction_opx.py,has_script,main_fig_4,regen
-Core_06_fig31_bias_correction_residuals,scripts/figures/make_fig_bias_residuals_opx.py,has_script,main_fig_5,regen
-Core_07_fig34_bias_correction_scorecard_delta,scripts/figures/make_fig_scorecard_delta_opx.py,has_script,main_fig_6,regen
-Core_08_fig45_opx_headline,scripts/figures/make_opx_headline_fig.py,has_script,main_fig_7,regen
-Core_09a_fig_opx_regime_families,scripts/figures/make_fig_opx_regime_families.py,has_script,main_fig_8a,regen
-Core_09b_fig_opx_overall_families,scripts/figures/make_fig_opx_overall_families.py,has_script,main_fig_8b,regen
-Core_10_fig_best_vs_putirka,scripts/figures/make_fig_best_vs_putirka.py,has_script,main_fig_9,regen
-Core_11_fig_nb08_twopx_1to1,UNKNOWN,DELETED,DELETED,drop_twopx
-Core_12_fig_shap_winners,scripts/figures/make_fig_shap_winners.py,has_script,main_fig_10,regen
-Core_13a_fig_agreement_matrix_T,UNKNOWN,DELETED,DELETED,drop_method_matrix
-Core_13b_fig_agreement_matrix_P,UNKNOWN,DELETED,DELETED,drop_method_matrix
-Core_14a_fig_pairing_opx,UNKNOWN,DELETED,DELETED,drop_lepr
-Core_15_fig_feature_concordance,scripts/interpretability/make_fig_feature_concordance.py,has_script,main_fig_11,regen
-Core_16_fig_classical_equivalence,scripts/interpretability/classical_equivalence_regression.py,has_script,main_fig_12,regen_verify_diseq
-Core_17_fig_partial_dependence,scripts/interpretability/partial_dependence_across_families.py,has_script,main_fig_13,regen
-Core_18_fig_surrogate_trees,scripts/interpretability/surrogate_decision_trees.py,has_script,main_fig_14,regen
+# --- main figures (9) ---
+main_fig_1,scripts/figures/make_fig_dataset_map.py,regen
+main_fig_2,scripts/figures/make_fig_methods_flowchart.py,regen
+main_fig_3,scripts/figures/make_fig_opx_heatmap.py,regen
+main_fig_4,scripts/figures/make_fig_opx_regime_families.py,regen
+main_fig_5,scripts/figures/make_opx_headline_fig.py,regen_redrawn
+main_fig_6,scripts/figures/make_fig_bias_correction_opx.py,regen
+main_fig_7,scripts/figures/make_fig_scorecard_delta_opx.py,regen
+main_fig_8,scripts/figures/make_fig_shap_winners.py,regen
+main_fig_9,scripts/figures/make_fig_arcpl_bias_corrected_vs_putirka.py,regen
 
-# --- supplementary figures ---
-fig24_per_regime_rmse_opx_liq,notebooks/nbF_figures.ipynb,orphan,supp_fig_1,copy_from_legacy
-fig25_per_regime_residual_violins_opx_liq,notebooks/nbF_figures.ipynb,orphan,supp_fig_2,copy_from_legacy
-fig26_generalization_opx_liq,notebooks/nbF_figures.ipynb,orphan,supp_fig_3,copy_from_legacy
-fig27_shap_summary_opx_liq,notebooks/nbF_figures.ipynb,orphan,supp_fig_4,copy_from_legacy
-fig28_bias_correction_opx_liq,notebooks/nbF_figures.ipynb,orphan,supp_fig_5,copy_from_legacy
-fig29_twopx_benchmark,UNKNOWN,DELETED,DELETED,drop_twopx
-fig30_bias_correction_per_regime_rmse,scripts/figures/make_fig_bias_correction_opx.py,has_script,supp_fig_6,regen_or_alias_main_fig_4
-fig31_bias_correction_residuals,scripts/figures/make_fig_bias_residuals_opx.py,has_script,supp_fig_7,regen_or_alias_main_fig_5
-fig32_bias_correction_form_comparison,UNKNOWN,orphan,supp_fig_8,copy_from_legacy
-fig33_bias_correction_per_seed_stability,UNKNOWN,orphan,supp_fig_9,copy_from_legacy
-fig34_bias_correction_scorecard_delta,scripts/figures/make_fig_scorecard_delta_opx.py,has_script,supp_fig_10,regen_or_alias_main_fig_6
-fig45_opx_only_P_headline,scripts/figures/make_opx_only_P_headline_fig.py,has_script,DELETED,already_main_fig_7
-fig_aug01_ship_verdict_comparison,scripts/ablations/make_augmentation_figures.py,has_script,supp_fig_11,regen
-fig_aug02_aggregate_rmse_delta,scripts/ablations/make_augmentation_figures.py,has_script,supp_fig_12,regen
-fig_aug03_residual_structure_per_regime,scripts/ablations/make_augmentation_figures.py,has_script,supp_fig_13,regen
-fig_aug04_form_b_breakpoint_stability,scripts/ablations/make_augmentation_figures.py,has_script,supp_fig_14,regen
+# --- supplementary figures (8) ---
+supp_fig_1,scripts/figures/make_fig_dataset_map_holdout.py,regen
+supp_fig_2,scripts/figures/make_fig_opx_overall_families.py,regen
+supp_fig_3,scripts/figures/make_fig_bias_residuals_opx.py,regen
+supp_fig_4,scripts/figures/make_fig_pca_coverage.py,regen
+supp_fig_5,scripts/interpretability/make_fig_feature_concordance.py,regen
+supp_fig_6,scripts/interpretability/classical_equivalence_regression.py,regen
+supp_fig_7,scripts/interpretability/partial_dependence_across_families.py,regen
+supp_fig_8,scripts/interpretability/surrogate_decision_trees.py,regen
+
+# --- dropped builders (Path A consolidation, files retained for now) ---
+# scripts/figures/make_opx_only_P_headline_fig.py        DROP (TabPFN-emphasis variant; subsumed into main_fig_5)
+# scripts/figures/make_fig_opx_four_combos.py            DROP (subsumed into main_fig_5)
+# scripts/figures/make_fig_best_vs_putirka.py            DROP (subsumed into main_fig_5)
+# scripts/figures/make_fig_shipped_vs_putirka_expetdb.py DROP (subsumed into main_fig_5)
+# scripts/figures/make_fig_shipped_vs_putirka_arcpl.py   DROP (subsumed into supp_fig_4)
+# scripts/figures/make_tabpfn_bias_scoreboard_fig.py     DROP (TabPFN-as-separate-track retired)
+# scripts/figures/make_fig_citation_split.py             DROP (in-text discussion; no figure needed)
+# scripts/ablations/make_augmentation_figures.py         DROP (one-sentence finding in §4.5 prose)

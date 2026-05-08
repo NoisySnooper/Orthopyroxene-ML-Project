@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Core_03: methods flowchart.
+"""main_fig_2: methods flowchart.
 
 Three phase panels (DATA -> TRAINING -> EVALUATION) rendered as stacked
 rounded panels. Phase I and Phase III flow left-to-right; Phase II flows
@@ -22,12 +22,11 @@ os.chdir(PROJECT_ROOT)
 sys.path.insert(0, str(PROJECT_ROOT))
 
 from scripts.figures._model_palette import OKABE_ITO  # noqa: E402
-from scripts.figures._style import apply_pub_style  # noqa: E402
+from scripts.figures._style import apply_pub_style, resolve_out_dir, jgr_figsize # noqa: E402
 
 apply_pub_style()
 
-OUT_DIR = PROJECT_ROOT / 'figures' / 'core'
-OUT_DIR.mkdir(parents=True, exist_ok=True)
+OUT_DIR = resolve_out_dir(PROJECT_ROOT)
 
 PHASE_BG = {
     'data':  '#E8F1F8',
@@ -92,7 +91,15 @@ def arrow(ax, x0, y0, x1, y1, color='0.2', lw=1.8,
 
 
 def main():
-    fig, ax = plt.subplots(figsize=(14, 14))
+    # Box coordinates were authored on a 14×14 canvas; preserve that
+    # aspect ratio so the per-stage box layout doesn't collapse. Print
+    # at 14 in lets the 10 pt body text sit comfortably; the docx
+    # auto-scales to column width.
+    # Keep the 14x14 authoring canvas even in JGR mode — the per-stage
+    # box layout uses absolute [0, 14] coordinates and shrinking the
+    # figsize without rescaling box geometry collapses the box text.
+    # AGU will scale the printed figure to column width at typesetting.
+    fig, ax = plt.subplots(figsize=jgr_figsize((14, 14), keep_size=True))
     ax.set_xlim(0, 14)
     ax.set_ylim(0, 14)
     ax.axis('off')
@@ -234,18 +241,18 @@ def main():
     arrow(ax, 8.95, y_row + h_row / 2, 9.3, y_row + h_row / 2)
 
     ax.set_title(
-        'Methods pipeline: ExPetDB raw \u2192 train 9 model families '
-        '\u2192 bias-correct and evaluate per regime',
-        fontsize=13, fontweight='bold', pad=14,
+        'Methods pipeline: data \u2192 9-family training \u2192 bias-corrected '
+        'evaluation',
+        fontsize=13, fontweight='bold', pad=14, loc='center',
     )
 
-    out_stem = OUT_DIR / 'Core_03_fig_methods_flowchart'
+    out_stem = OUT_DIR / 'main_fig_2'
     fig.savefig(f'{out_stem}.pdf', bbox_inches='tight', dpi=300)
     fig.savefig(f'{out_stem}.png', bbox_inches='tight', dpi=300)
     plt.close(fig)
 
     caption = (
-        'Figure 3. Methods flowchart. Three phase panels, each with '
+        'Figure 2. Methods flowchart. Three phase panels, each with '
         'numbered stages. Phase I (Data) flows left-to-right: raw ExPetDB '
         '(stage 1), equilibrium + cation filters (stage 2), and the 80/20 '
         'citation-grouped train/test split that produces the held-out test '
@@ -260,12 +267,13 @@ def main():
         'final model configuration is frozen (Optuna winning trial '
         'persisted to JSON for the tuned families; TabPFN default config '
         'carried through unchanged). Stage 7 then runs the multi-seed '
-        'refit: seeds 42-61 for tuned families and 20 seeds for TabPFN, '
-        'producing the 95% CI whiskers (bootstrap) used throughout the '
-        'figure set. Phase III (Evaluation) flows left-to-right: stage 8 '
-        'generates 10-fold StratifiedGroupKFold OOF predictions inside the '
-        'training partition (group=Citation; 20 seeds for tuned families, '
-        '5 seeds for TabPFN) -- the test set remains untouched -- and '
+        'refit: seeds 42-61 for the tuned families and a matched 20-seed '
+        'protocol for TabPFN, producing the 95% CI whiskers (bootstrap) '
+        'used throughout the figure set. Phase III (Evaluation) flows '
+        'left-to-right: stage 8 generates 10-fold StratifiedGroupKFold OOF '
+        'predictions inside the training partition '
+        '(group=Citation; 20 seeds for the tuned families, used to fit '
+        'the bias correction) -- the test set remains untouched -- and '
         'fits Form A (per-regime OLS, y_corr = a.y_pred + b) and Form B '
         '(piecewise Agreda-Lopez sigmoid, 4 breakpoints) on those OOF '
         'predictions; stage 9 applies the pre-registered tolerance '
@@ -275,7 +283,7 @@ def main():
         'registered pressure regimes plus the ArcPL n=197 external-'
         'validation dataset as an out-of-distribution check.'
     )
-    (OUT_DIR / 'Core_03_fig_methods_flowchart.txt').write_text(
+    (OUT_DIR / 'main_fig_2.txt').write_text(
         caption, encoding='utf-8')
     print(f'wrote {out_stem}.(pdf|png|txt)')
 

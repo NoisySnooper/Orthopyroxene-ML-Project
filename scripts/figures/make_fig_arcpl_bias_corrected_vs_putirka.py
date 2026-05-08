@@ -1,18 +1,17 @@
 #!/usr/bin/env python3
-"""Core_10b: ArcPL opx external benchmark with bias correction.
+"""main_fig_9: ArcPL external benchmark — ML pre / ML post / Putirka.
 
-Companion to Core_10. For each of opx_liq T, opx_liq P, opx_only T,
-opx_only P, show three bars per pre-registered pressure regime on the
+For each opx (track, target) cell, three bars per regime on the
 reconstructed ArcPL opx holdout (n=197):
+  (1) ML pre-correction   (winner family, faint+hatched)
+  (2) ML post-correction  (winner family, solid)
+  (3) Putirka 2008        (gray)
 
-  (1) ML pre-correction (raw shipped-family base model prediction),
-  (2) ML post-correction (v3 shipped Form A or Form B applied),
-  (3) Putirka 2008 eq28a / eq29a / eq29c.
+95% CIs via 2000 paired bootstraps. Panel (c) opx-only T has no Putirka
+opx-only thermometer available.
 
-95% CIs via 2000 paired bootstraps. The opx-only T panel carries the
-same "no Putirka opx-only thermometer" annotation as Core_10. Data
-source: `results/arcpl_opx_corrected_per_regime.csv` produced by
-`scripts/external_eval/eval_arcpl_opx_corrected.py`.
+Source: results/arcpl_opx_corrected_per_regime.csv,
+        results/bias_correction_shipped_v3.csv
 """
 from __future__ import annotations
 
@@ -20,7 +19,6 @@ import os
 import sys
 from pathlib import Path
 
-import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
 
@@ -28,40 +26,43 @@ PROJECT_ROOT = Path(__file__).parent.parent.parent.resolve()
 os.chdir(PROJECT_ROOT)
 sys.path.insert(0, str(PROJECT_ROOT))
 
-from scripts.figures._model_palette import OKABE_ITO  # noqa: E402
-from scripts.figures._style import apply_pub_style  # noqa: E402
+from scripts.figures._style import apply_pub_style, make_fig, add_grid, resolve_out_dir # noqa: E402
+from scripts.figures._model_palette import (role_style,                   # noqa: E402
+                                             family_from_method)
+from scripts.figures._labels import (REGIME_TICK, TARGET_UNIT,            # noqa: E402
+                                      panel_header)
+from scripts.figures._legend import role_patch, add_below_legend          # noqa: E402
 
 apply_pub_style()
 
-OUT_DIR = PROJECT_ROOT / 'figures' / 'core'
-OUT_DIR.mkdir(parents=True, exist_ok=True)
-
-PRE_C = '#F4A582'
-POST_C = OKABE_ITO['blue']
-PUTIRKA_C = '#999999'
+OUT_DIR = resolve_out_dir(PROJECT_ROOT)
 
 PANELS = [
-    ('opx_liq',  'T_C',    '(a) Opx + Liquid  T (C)'),
-    ('opx_liq',  'P_kbar', '(b) Opx + Liquid  P (kbar)'),
-    ('opx_only', 'T_C',    '(c) Opx only  T (C)'),
-    ('opx_only', 'P_kbar', '(d) Opx only  P (kbar)'),
+    ('opx_liq',  'T_C',    'a'),
+    ('opx_liq',  'P_kbar', 'b'),
+    ('opx_only', 'T_C',    'c'),
+    ('opx_only', 'P_kbar', 'd'),
 ]
 
 REGIME_ORDER = ['shallow_crustal', 'deep_crustal_MASH',
                 'lithospheric_mantle', 'deeper_mantle', 'ALL']
-REGIME_LABELS = ['shallow\n<5 kbar', 'MASH\n5-15', 'lithos\n15-30',
-                 'deep\n>=30', 'ALL']
+REGIME_TICKS = [REGIME_TICK.get(r, r) for r in REGIME_ORDER]
 
 
-def _err(rmse: np.ndarray, lo: np.ndarray, hi: np.ndarray) -> np.ndarray:
-    return np.vstack([
-        np.nan_to_num(rmse - lo, nan=0.0),
-        np.nan_to_num(hi - rmse, nan=0.0),
-    ])
+def _err(rmse, lo, hi):
+    return np.vstack([np.nan_to_num(rmse - lo, nan=0.0),
+                      np.nan_to_num(hi - rmse, nan=0.0)])
 
 
 def _load_shipped_v3_opx() -> pd.DataFrame:
-    df = pd.read_csv('results/bias_correction_shipped_v3.csv')
+    """Return opx ship rows with a winner_v3 column, regardless of which
+    canonical CSV holds them in the current results layout."""
+    src = Path('results/bias_correction_shipped_v3.csv')
+    if not src.exists():
+        src = Path('results/bias_correction_shipped.csv')
+    df = pd.read_csv(src)
+    if 'winner_v3' not in df.columns and 'winner_final' in df.columns:
+        df = df.rename(columns={'winner_final': 'winner_v3'})
     return df[(df.pipeline == 'opx') & (df.model != 'TabPFN')].copy()
 
 
@@ -69,10 +70,10 @@ def main():
     arc = pd.read_csv('results/arcpl_opx_corrected_per_regime.csv')
     ship_v3 = _load_shipped_v3_opx()
 
-    fig, axes = plt.subplots(2, 2, figsize=(13, 13))
+    fig, axes = make_fig('two_col', nrows=2, ncols=2)
     axes = axes.ravel()
 
-    for ax, (track, target, title) in zip(axes, PANELS):
+    for ax, (track, target, idx) in zip(axes, PANELS):
         sub = arc[(arc['track'] == track) & (arc['target'] == target)].copy()
         piv = sub.pivot_table(
             index='regime', columns='source',
@@ -91,30 +92,32 @@ def main():
         pre_r  = _col('rmse',    'ml_pre')
         pre_lo = _col('rmse_lo', 'ml_pre')
         pre_hi = _col('rmse_hi', 'ml_pre')
-
         post_r  = _col('rmse',    'ml_post')
         post_lo = _col('rmse_lo', 'ml_post')
         post_hi = _col('rmse_hi', 'ml_post')
-
         put_r  = _col('rmse',    'putirka')
         put_lo = _col('rmse_lo', 'putirka')
         put_hi = _col('rmse_hi', 'putirka')
-
         n_pre  = _col('n', 'ml_pre')
-        n_put  = _col('n', 'putirka')
+
+        ship_row = ship_v3[(ship_v3.track == track)
+                           & (ship_v3.target == target)]
+        family = family_from_method(
+            str(ship_row.iloc[0]['model'])) if not ship_row.empty else 'RF'
+
+        pre_color, pre_alpha, pre_hatch = role_style('pre', family)
+        post_color, _, _ = role_style('post', family)
+        put_color, _, _ = role_style('putirka')
 
         ax.bar(x - width, np.nan_to_num(pre_r), width=width,
-               yerr=_err(pre_r, pre_lo, pre_hi), capsize=3,
-               color=PRE_C, edgecolor='black', linewidth=0.5,
-               label='ML pre-correction')
+               yerr=_err(pre_r, pre_lo, pre_hi),
+               color=pre_color, alpha=pre_alpha, hatch=pre_hatch)
         ax.bar(x, np.nan_to_num(post_r), width=width,
-               yerr=_err(post_r, post_lo, post_hi), capsize=3,
-               color=POST_C, edgecolor='black', linewidth=0.5,
-               label='ML post-correction (v3 shipped)')
+               yerr=_err(post_r, post_lo, post_hi),
+               color=post_color)
         ax.bar(x + width, np.nan_to_num(put_r), width=width,
-               yerr=_err(put_r, put_lo, put_hi), capsize=3,
-               color=PUTIRKA_C, edgecolor='black', linewidth=0.5,
-               label='Putirka 2008')
+               yerr=_err(put_r, put_lo, put_hi),
+               color=put_color)
 
         top_of_data = np.nanmax(np.concatenate([
             np.where(np.isnan(pre_hi),  0, pre_hi),
@@ -122,88 +125,66 @@ def main():
             np.where(np.isnan(put_hi),  0, put_hi),
         ])) if len(x) else 1.0
         if top_of_data > 0:
-            ax.set_ylim(0, top_of_data * 1.08)
+            ax.set_ylim(0, top_of_data * 1.10)
 
         if np.all(np.isnan(put_r)):
-            ax.text(0.02, 0.98,
-                    'No Putirka opx-only thermometer\navailable in Thermobar;\n'
-                    'gray bars intentionally empty.',
-                    transform=ax.transAxes, va='top', ha='left',
-                    fontsize=9, color='0.25',
-                    bbox=dict(facecolor='white', edgecolor='0.5',
-                              alpha=0.92, pad=4))
+            ax.text(0.98, 1.02, 'no Putirka equivalent',
+                    transform=ax.transAxes, ha='right', va='bottom',
+                    fontsize=8, fontstyle='italic', color='#666666')
 
         tick_labels = []
-        for r, base in zip(REGIME_ORDER, REGIME_LABELS):
-            idx = REGIME_ORDER.index(r)
+        for r_, base in zip(REGIME_ORDER, REGIME_TICKS):
+            i = REGIME_ORDER.index(r_)
             n_txt = ''
-            if pd.notna(n_pre[idx]):
-                n_txt = f'\n(n={int(n_pre[idx])})'
+            if pd.notna(n_pre[i]):
+                n_txt = f'\n(n={int(n_pre[i])})'
             tick_labels.append(base + n_txt)
         ax.set_xticks(x)
-        ax.set_xticklabels(tick_labels, fontsize=9)
+        ax.set_xticklabels(tick_labels)
+        ax.set_ylabel(f'RMSE ({TARGET_UNIT[target]})')
 
-        unit = 'C' if target == 'T_C' else 'kbar'
-        ax.set_ylabel(f'RMSE ({unit})', fontsize=11)
-        ax.set_title(title, fontsize=12, loc='left', fontweight='bold',
-                     pad=8)
-
-        ship_row = ship_v3[(ship_v3.track == track)
-                           & (ship_v3.target == target)]
+        ax.set_title(panel_header(track, target, idx))
         if not ship_row.empty:
             sr = ship_row.iloc[0]
-            fam_txt = (f'shipped: {sr["model"]} / {sr["feature_set"]}  '
-                       f'(Form {sr["winner_v3"]})')
-            ax.set_title(fam_txt, fontsize=9, loc='right',
-                         fontweight='bold', color=POST_C, pad=8)
-        ax.grid(axis='y', ls=':', alpha=0.4)
+            ax.text(0.02, 0.97, f'{sr["model"]}/{sr["feature_set"]}',
+                    transform=ax.transAxes, va='top', ha='left',
+                    fontsize=8, color='#444444')
+            form = sr.get('winner_v3', 'none')
+            if form and form != 'none':
+                ax.text(0.98, 0.97, f'[Form {form}]',
+                        transform=ax.transAxes, va='top', ha='right',
+                        fontsize=9, fontweight='bold', color='#333333')
+        add_grid(ax)
 
-    handles, labels = axes[0].get_legend_handles_labels()
-    fig.legend(
-        handles, labels, loc='lower center', ncol=3,
-        frameon=True, framealpha=0.95, edgecolor='0.6',
-        bbox_to_anchor=(0.5, 0.01), fontsize=11,
-        title='ArcPL opx external corpus (n=197); 95% CI from 2000 paired '
-              'bootstraps',
-        title_fontsize=10,
-    )
-    fig.suptitle(
-        'ArcPL external benchmark: ML pre vs. ML post (v3 shipped) vs. '
-        'Putirka 2008\n(per-regime RMSE on reconstructed opx-ArcPL, '
-        'n=197)',
-        fontsize=13, fontweight='bold', y=0.99,
-    )
-    plt.tight_layout(rect=(0, 0.07, 1, 0.96))
-    plt.subplots_adjust(bottom=0.13, hspace=0.32)
+    handles = [
+        role_patch('pre', family='RF',
+                   label='ML pre-correction (winner family color)'),
+        role_patch('post', family='RF',
+                   label='ML post-correction (winner family color)'),
+        role_patch('putirka', label='Putirka 2008'),
+    ]
+    add_below_legend(fig, handles, [h.get_label() for h in handles], ncol=3)
 
-    out_stem = OUT_DIR / 'Core_10b_fig_arcpl_bias_corrected_vs_putirka'
-    fig.savefig(f'{out_stem}.pdf', bbox_inches='tight', dpi=300)
-    fig.savefig(f'{out_stem}.png', bbox_inches='tight', dpi=300)
-    plt.close(fig)
+    fig.suptitle('ArcPL external benchmark: per-regime RMSE (opx, n=197)')
+
+    stem = OUT_DIR / 'main_fig_9'
+    fig.savefig(f'{stem}.pdf')
+    fig.savefig(f'{stem}.png')
 
     caption = (
-        'Figure 10b. External benchmark on the reconstructed ArcPL opx '
-        'holdout (n=197, Agreda-Lopez 2024 experiments tagged "_notinLEPR" '
-        'in LEPR Opx-Liq, filtered through the nb04 Part 3 pipeline: '
-        'oxide-total 95-102 wt%, cation sum 3.95-4.05 on 6-O basis, Wo '
-        '<= 5 mol%, P <= 100 kbar, Fe-Mg Kd window 0.23-0.35, citation-key '
-        'deduplication against ExPetDB opx-liq). For each (track, target, '
-        'regime) three bars are shown: ML pre-correction (peach = shipped '
-        'family base prediction), ML post-correction under the v3 tolerance '
-        'ship rule (blue = Form A per-regime piecewise OLS for opx_liq P, '
-        'opx_only T, opx_only P; Form B Agreda-Lopez piecewise sigmoid for '
-        'opx_liq T), and Putirka 2008 (gray = eq28a for opx-liq T, eq29a '
-        'for opx-liq P, eq29c for opx-only P). Panel (c) has no Putirka '
-        'opx-only thermometer available in Thermobar and is annotated '
-        'accordingly. Whiskers are 95% percentile intervals from 2000 '
-        'paired bootstraps. The shipped family + feature set + Form is '
-        'printed in the lower-left of each panel. Sample counts beneath '
-        'regime labels are ML-side (n varies for Putirka when eq29a / '
-        'eq29c return NaN on rows with log(Cr2O3_Opx) singularities).'
+        'Figure 9. External benchmark on the reconstructed ArcPL '
+        'opx holdout (n=197). For each (track, target, regime) three bars: '
+        'ML pre-correction (winner family color, faint and hatched), ML '
+        'post-correction under the v3 ship rule (winner family color, '
+        'solid), Putirka 2008 (gray). Bar color identifies the per-cell '
+        'winning family on the paper-wide locked palette. Whiskers are '
+        '95% percentile intervals from 2000 paired bootstraps. The '
+        'shipped family/feature_set/Form is named in each panel title. '
+        'Panel (c) opx-only T has no Putirka opx-only thermometer in '
+        'Thermobar.'
     )
-    (OUT_DIR / 'Core_10b_fig_arcpl_bias_corrected_vs_putirka.txt').write_text(
-        caption, encoding='utf-8')
-    print(f'wrote {out_stem}.(pdf|png|txt)')
+    (OUT_DIR / 'main_fig_9.txt').write_text(caption, encoding='utf-8')
+    print(f'wrote {stem}.(pdf|png|txt)')
 
 
 if __name__ == '__main__':

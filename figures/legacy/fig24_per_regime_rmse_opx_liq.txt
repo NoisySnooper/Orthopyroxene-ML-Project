@@ -1,1 +1,0 @@
-Figure 24. Per-regime RMSE (bootstrap 95% CI) for the opx-liq test split: best tuned model cell vs Putirka 2008 best equation, in the pre-registered four-bin P partition. Shaded bins are sample-size-limited (n<20).

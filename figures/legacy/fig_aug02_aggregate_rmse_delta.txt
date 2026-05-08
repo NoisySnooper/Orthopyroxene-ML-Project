@@ -1,3 +1,0 @@
-fig_aug02_aggregate_rmse_delta
-
-Aggregate test RMSE under the non-augmented baseline versus the 15x augmented condition per opx combination. Error bars are 20-seed standard deviation. Putirka classical reference is overlaid where available.

@@ -1,3 +1,0 @@
-fig_aug03_residual_structure_per_regime
-
-OOF residual distributions by pressure regime for opx-only P_kbar, non-augmented (top row) versus 15x augmented (bottom row). Violin plots show Form A and Form B fit substrate under each protocol.

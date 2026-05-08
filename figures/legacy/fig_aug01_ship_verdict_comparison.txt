@@ -1,3 +1,0 @@
-fig_aug01_ship_verdict_comparison
-
-Ship-if-better verdict under the Agreda-Lopez (2024) 15x augmentation protocol versus the non-augmented baseline, across the four opx combinations (track x target). Bars show Form A / Form B / none ship counts across 20 seeds per condition.

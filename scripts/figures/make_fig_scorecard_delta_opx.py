@@ -1,21 +1,12 @@
 #!/usr/bin/env python3
-"""Core_07: scorecard delta heatmap -- opx pipeline only.
+"""main_fig_7: scorecard delta heatmap, opx post-correction vs Putirka.
 
-Rows = pre-registered P regimes, cols = (track x target). Color encodes
-the fractional improvement of v10 post-correction RMSE over the best
-external Putirka benchmark: positive (green) = v10 wins, negative (red)
-= Putirka wins. Cell annotation shows the absolute RMSE delta in native
-units (C for T, kbar for P). Cells with no external benchmark available
-(opx-only T has no Putirka opx-only thermometer in Thermobar) show the
-absolute v10 post-correction RMSE instead.
+Rows = pre-registered P regimes (+ ALL). Cols = (track, target). Cell
+color is fractional improvement of post-correction RMSE over the best
+external Putirka equation. Cells with no Putirka equivalent show the
+post-correction absolute RMSE.
 
-External benchmarks shown here are all Putirka (2008) thermobarometers:
-opx-liq T uses eq 28a, opx-liq P uses eq 29a (29b in deeper_mantle),
-opx-only P uses eq 29c.
-
-Post-correction RMSE source: results/preregistered_scorecard_post
-correction_v3.csv (Amendment 2, tolerance-based ship rule). Falls back
-to v2 then v1 if the v3 CSV has not been generated yet.
+Source: results/preregistered_scorecard_postcorrection.csv
 """
 from __future__ import annotations
 
@@ -23,7 +14,6 @@ import os
 import sys
 from pathlib import Path
 
-import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
 from matplotlib.colors import LinearSegmentedColormap
@@ -32,31 +22,23 @@ PROJECT_ROOT = Path(__file__).parent.parent.parent.resolve()
 os.chdir(PROJECT_ROOT)
 sys.path.insert(0, str(PROJECT_ROOT))
 
-from scripts.figures._style import apply_pub_style  # noqa: E402
+from scripts.figures._style import apply_pub_style, make_fig, resolve_out_dir # noqa: E402
+from scripts.figures._labels import REGIME_TICK, TARGET_UNIT  # noqa: E402
 
 apply_pub_style()
 
-OUT_DIR = PROJECT_ROOT / 'figures' / 'core'
-OUT_DIR.mkdir(parents=True, exist_ok=True)
+OUT_DIR = resolve_out_dir(PROJECT_ROOT)
 
 REGIME_ORDER = ['shallow_crustal', 'deep_crustal_MASH',
                 'lithospheric_mantle', 'deeper_mantle', 'ALL']
-REGIME_SHORT = {
-    'shallow_crustal':     'shallow',
-    'deep_crustal_MASH':   'deep-MASH',
-    'lithospheric_mantle': 'litho',
-    'deeper_mantle':       'deeper',
-    'ALL':                 'ALL',
-}
+REGIME_TICKS = [REGIME_TICK.get(r, r) for r in REGIME_ORDER]
 
 COLS = [
-    ('opx_liq',  'T_C',    'opx-liq\nT (C)'),
+    ('opx_liq',  'T_C',    'opx-liq\nT (°C)'),
     ('opx_liq',  'P_kbar', 'opx-liq\nP (kbar)'),
-    ('opx_only', 'T_C',    'opx-only\nT (C)'),
+    ('opx_only', 'T_C',    'opx-only\nT (°C)'),
     ('opx_only', 'P_kbar', 'opx-only\nP (kbar)'),
 ]
-
-TARGET_UNIT = {'T_C': 'C', 'P_kbar': 'kbar'}
 
 
 def main():
@@ -95,13 +77,13 @@ def main():
         'v10div',
         [(0.0, '#B22222'), (0.5, '#FFFFFF'), (1.0, '#228B22')])
 
-    fig, ax = plt.subplots(figsize=(7, 7))
-    im = ax.imshow(arr, cmap=cmap_div, vmin=-vmax, vmax=vmax, aspect='equal')
+    fig, ax = make_fig('single')
+    im = ax.imshow(arr, cmap=cmap_div, vmin=-vmax, vmax=vmax, aspect='auto')
 
     ax.set_xticks(range(n_cols))
     ax.set_xticklabels([c[2] for c in COLS])
     ax.set_yticks(range(n_rows))
-    ax.set_yticklabels([REGIME_SHORT[r] for r in REGIME_ORDER])
+    ax.set_yticklabels(REGIME_TICKS)
 
     for i in range(n_rows):
         for j in range(n_cols):
@@ -111,62 +93,45 @@ def main():
             if np.isfinite(arr[i, j]) and abs(arr[i, j]) > 0.5 * vmax:
                 color = 'white'
             else:
-                color = 'black'
+                color = '#222222'
             ax.text(j, i, lbl, ha='center', va='center',
-                    fontsize=9, color=color, fontweight='bold')
+                    fontsize=8, color=color, fontweight='bold')
 
-    # grid lines between cells
     ax.set_xticks(np.arange(-0.5, n_cols, 1), minor=True)
     ax.set_yticks(np.arange(-0.5, n_rows, 1), minor=True)
     ax.grid(which='minor', color='white', linewidth=1.2)
     ax.tick_params(which='minor', bottom=False, left=False)
 
     cbar = fig.colorbar(im, ax=ax, shrink=0.8, pad=0.03)
-    cbar.set_label('(Putirka RMSE - v10 post-correction RMSE) / Putirka RMSE',
-                   fontsize=9)
-    cbar.ax.tick_params(labelsize=9)
+    cbar.set_label('(Putirka RMSE − post-correction RMSE) / Putirka RMSE')
 
     ax.set_title(
-        'Scorecard delta vs Putirka (2008), opx post-correction '
-        '(v3 tolerance rule, Amendment 2)\n'
-        'green = ML wins, red = Putirka wins; * = v3 post-RMSE differs '
-        'from prior rule',
-        loc='left', pad=8, fontsize=11,
+        'Scorecard delta vs Putirka (opx, post-correction)\n'
+        'ExPetDB held-out · opx-liq n=174 · opx-only n=190 · '
+        'green = ML wins, red = Putirka',
+        loc='center',
     )
 
-    plt.tight_layout()
-
-    stem = OUT_DIR / 'Core_07_fig34_bias_correction_scorecard_delta'
-    fig.savefig(f'{stem}.pdf', bbox_inches='tight', dpi=300)
-    fig.savefig(f'{stem}.png', bbox_inches='tight', dpi=300)
-    plt.close(fig)
+    stem = OUT_DIR / 'main_fig_7'
+    fig.savefig(f'{stem}.pdf')
+    fig.savefig(f'{stem}.png')
 
     caption = (
-        'Figure 7. Per-regime scorecard delta between our v10 post-bias-'
-        'correction RMSE and the best external Putirka (2008) '
-        'thermobarometer, for the four opx track/target cells. Color '
-        'encodes fractional improvement (Putirka_RMSE - v10_post_RMSE) / '
-        'Putirka_RMSE on a diverging red-white-green scale: green cells '
-        'are wins for v10, red cells are wins for Putirka. Cell text '
-        'shows the absolute RMSE delta in native units (C for T, kbar '
-        'for P). External references are Putirka (2008) thermobarometers '
-        'run through Thermobar: opx-liq T = eq 28a, opx-liq P = eq 29a '
-        '(29b in deeper_mantle), opx-only P = eq 29c. Opx-only T has no '
-        'Putirka opx-only thermometer in Thermobar, so its row reports '
-        'the v10 absolute RMSE instead of a delta. Post-correction RMSE '
-        'uses the v3 tolerance-based ship rule (Amendment 2, 2026-04-20) '
-        'with T_ABS_T=10 C, T_ABS_P=1 kbar, T_REL=0.10, N_MIN=20; cells '
-        'marked with "*" have post-correction RMSE that differs from the '
-        'earlier v1/v2 rule, reflecting a correction form promoted under '
-        'v3 whose worst-regime degradation is within the pre-registered '
-        'measurement-uncertainty tolerance envelope. Cpx pipelines are '
-        'intentionally excluded. Source: results/preregistered_scorecard_'
-        'postcorrection_v3.csv (with v1/v2 references from preregistered_'
-        'scorecard_postcorrection.csv and preregistered_scorecard_'
-        'postcorrection_v2.csv).'
+        'Figure 7. Per-regime scorecard delta between our post-bias-'
+        'correction RMSE and the best-available Putirka 2008 equation '
+        'for the four opx (track, target) cells. Color encodes fractional '
+        'improvement (Putirka RMSE − post-correction RMSE) / Putirka RMSE '
+        'on a diverging red–white–green scale: green = ML wins, red = '
+        'Putirka wins. Cell text shows the absolute RMSE delta in native '
+        'units (°C for T, kbar for P) and the per-cell winning family. '
+        'External references are Putirka 2008 thermobarometers run through '
+        'Thermobar: opx-liq T = eq 28a, opx-liq P = eq 29a (29b in '
+        'deeper_mantle), opx-only P = eq 29c. Opx-only T has no Putirka '
+        'opx-only thermometer in Thermobar, so its column reports the '
+        'absolute post-correction RMSE instead of a delta. Source: '
+        'results/preregistered_scorecard_postcorrection.csv.'
     )
-    (OUT_DIR / 'Core_07_fig34_bias_correction_scorecard_delta.txt').write_text(
-        caption, encoding='utf-8')
+    (OUT_DIR / 'main_fig_7.txt').write_text(caption, encoding='utf-8')
     print(f'wrote {stem}.(pdf|png|txt)')
 
 

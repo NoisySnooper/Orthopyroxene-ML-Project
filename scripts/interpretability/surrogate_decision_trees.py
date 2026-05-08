@@ -28,11 +28,16 @@ os.chdir(PROJECT_ROOT)
 sys.path.insert(0, str(PROJECT_ROOT))
 
 from src.prepare_train_test import prepare_train_test  # noqa: E402
+from scripts.figures._style import apply_pub_style, resolve_out_dir, jgr_figsize # noqa: E402
+from scripts.figures._labels import TARGET_UNIT, panel_header  # noqa: E402
+
+apply_pub_style()
 
 MODELS_DIR = PROJECT_ROOT / 'models' / 'canonical'
 BOOT_CSV = PROJECT_ROOT / 'results' / 'bootstrap_rmse_cis_all_cells.csv'
 OUT_CSV = PROJECT_ROOT / 'results' / 'surrogate_tree_r_squared.csv'
-FIG_STEM = PROJECT_ROOT / 'figures' / 'core' / 'Core_18_fig_surrogate_trees'
+OUT_DIR = resolve_out_dir(PROJECT_ROOT)
+FIG_STEM = OUT_DIR / 'supp_fig_8'
 
 
 CELLS = [
@@ -76,6 +81,7 @@ def main():
     boot = pd.read_csv(BOOT_CSV)
     rows = []
     pdf = PdfPages(f'{FIG_STEM}.pdf')
+    png_first_fig = None
 
     for pipe, track, tgt in CELLS:
         winner = (boot[(boot.pipeline == pipe) & (boot.track == track)
@@ -122,24 +128,48 @@ def main():
             'interpretation':        interpret(r2),
         })
 
-        fig, ax = plt.subplots(figsize=(20, 10))
+        fig, ax = plt.subplots(figsize=jgr_figsize((11, 6)))
         plot_tree(tree, feature_names=feat_names, filled=True,
-                  rounded=True, ax=ax, fontsize=7)
-        unit = '°C' if tgt == 'T_C' else 'kbar'
-        ax.set_title(f'Surrogate tree: {track}/{tgt} winner {family}/{fs}  '
-                     f'R²={r2:.2f} [{lo:.2f}, {hi:.2f}]  ({unit})',
-                     fontsize=11, fontweight='bold')
+                  rounded=True, ax=ax, fontsize=6)
+        unit = TARGET_UNIT[tgt]
+        ax.set_title(f'{panel_header(track, tgt)}  '
+                     f'winner {family}/{fs}  '
+                     f'R²={r2:.2f} [{lo:.2f}, {hi:.2f}]  ({unit})\n'
+                     f'ExPetDB held-out (n=174 / n=190), seed 42',
+                     fontsize=10, loc='center')
         pdf.savefig(fig, bbox_inches='tight')
-        plt.close(fig)
+        # First page is the .png representative for docx + web preview.
+        if png_first_fig is None:
+            png_first_fig = fig
+        else:
+            plt.close(fig)
 
     pdf.close()
+    if png_first_fig is not None:
+        png_first_fig.savefig(f'{FIG_STEM}.png', bbox_inches='tight', dpi=300)
+        plt.close(png_first_fig)
+
     out = pd.DataFrame(rows)
     out.to_csv(OUT_CSV, index=False)
+
     print(f'\nwrote {OUT_CSV}')
     print(out[['track', 'target', 'surrogate_r_squared',
                'surrogate_r_squared_ci_lo',
                'surrogate_r_squared_ci_hi', 'n_leaves']].to_string(index=False))
-    print(f'wrote {FIG_STEM}.pdf')
+
+    caption = (
+        'Supp. Figure 8. Surrogate decision trees for the four opx '
+        '(track, target) cells. A DecisionTreeRegressor(max_depth=4, '
+        'min_samples_leaf=10, seed 42) is fit to each per-cell winner\'s '
+        'ML predictions on raw features. Each page shows one cell; '
+        'reported R² is the surrogate fidelity with 500-bootstrap 95% CI. '
+        'A high R² (≥0.85) means the ML is well-approximated by a '
+        'depth-4 flowchart; a low R² means the ML uses smooth/'
+        'interaction structure the tree cannot recover. Source: '
+        'results/surrogate_tree_r_squared.csv.'
+    )
+    (OUT_DIR / 'supp_fig_8.txt').write_text(caption, encoding='utf-8')
+    print(f'wrote {FIG_STEM}.pdf and supp_fig_8.txt')
 
 
 if __name__ == '__main__':

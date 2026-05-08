@@ -1,1 +1,0 @@
-Supp. Figure 11. Augmentation ablation: ship-rule verdict comparison between N_AUG = 1 (canonical) and N_AUG = 15 (Gaussian composition-noise augmentation) across the four opx cells.

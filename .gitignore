@@ -45,3 +45,23 @@ logs/_*.ipynb
 /data/natural/2024-*-SGFTFN_*.csv
 /data/natural/georoc_cache/
 ~$*.docx
+
+# Manuscript and presentation deliverables (Canvas submission, not GitHub).
+# Code that builds them stays in scripts/manuscript/.
+/manuscripts/opx_2026/arxiv_submission/*.docx
+/manuscripts/opx_2026/text/draft/sections/
+/manuscripts/opx_2026/class_presentation.pptx
+/manuscripts/opx_2026/class_presentation_script.md
+
+# Internal planning prompts and pre-Path-A legacy figure dumps.
+/prompts/
+/figures/legacy/
+
+# JGR-mode print renders (regenerable via JGR_PRINT=1).
+/figures/opx_only/jgr/
+
+# Secrets — defensive even if none currently exist.
+.env
+.env.*
+*.pem
+*.key

@@ -1,13 +1,11 @@
 #!/usr/bin/env python3
-"""Core_01: Dataset P-T map across all 4 (pyroxene, pipeline) tracks.
+"""main_fig_1: ExPetDB P-T coverage for opx-liq and opx-only tracks.
 
-2x2 grid: opx_liq, opx_only, cpx_liq, cpx_only. Points colored by
-pre-registered P regime. Train vs test shown via marker alpha.
-Marginal histograms on T and P axes. Horizontal dashed lines at
-regime boundaries (5, 15, 30 kbar).
+Two side-by-side panels (opx_liq, opx_only). Points colored by
+pre-registered P regime; train/test split shown via marker alpha and
+edge. Marginal T and P histograms + per-panel summary stats.
 
-Source: data/processed/*_clean_*.parquet; data/splits/*_indices_*.npy.
-Caption: regime edges verbatim from p_regime_preregistration.md.
+Source: data/processed/opx_clean_*.parquet, data/splits/*_indices_*.npy
 """
 from __future__ import annotations
 
@@ -23,216 +21,205 @@ PROJECT_ROOT = Path(__file__).parent.parent.parent.resolve()
 os.chdir(PROJECT_ROOT)
 sys.path.insert(0, str(PROJECT_ROOT))
 
-from scripts.figures._model_palette import OKABE_ITO  # noqa: E402
-from scripts.figures._style import apply_pub_style  # noqa: E402
+from scripts.figures._model_palette import REGIME_COLORS  # noqa: E402
+from scripts.figures._style import apply_pub_style, resolve_out_dir, jgr_figsize, jgr_top, jgr_bottom # noqa: E402
+from scripts.figures._labels import REGIME_ORDER, TRACK_LABEL  # noqa: E402
+from scripts.figures._legend import add_below_legend  # noqa: E402
 
 apply_pub_style()
 
-OUT_DIR = PROJECT_ROOT / 'figures' / 'core'
-OUT_DIR.mkdir(parents=True, exist_ok=True)
+OUT_DIR = resolve_out_dir(PROJECT_ROOT)
 
-# Pre-registered P regime edges (kbar). Verbatim from
-# docs/preregistration/p_regime_preregistration.md.
 REGIME_EDGES = [0, 5, 15, 30, 100]
-REGIME_NAMES = ['shallow_crustal', 'deep_crustal_MASH',
-                'lithospheric_mantle', 'deeper_mantle']
-REGIME_COLORS = {
-    'shallow_crustal':     OKABE_ITO['sky_blue'],
-    'deep_crustal_MASH':   OKABE_ITO['green'],
-    'lithospheric_mantle': OKABE_ITO['orange'],
-    'deeper_mantle':       OKABE_ITO['vermillion'],
-}
 
 PANELS = [
-    ('opx_liq',  'opx_clean_opx_liq',  'opx_liq',  'Opx + Liquid'),
-    ('opx_only', 'opx_clean_opx_only', 'opx',      'Opx only'),
-    ('cpx_liq',  'cpx_clean_cpx_liq',  'cpx_liq',  'Cpx + Liquid'),
-    ('cpx_only', 'cpx_clean_cpx_only', 'cpx_only', 'Cpx only'),
+    ('opx_liq',  'opx_clean_opx_liq',  'opx_liq',  'a'),
+    ('opx_only', 'opx_clean_opx_only', 'opx',      'b'),
 ]
 
 
 def regime_for(p_kbar: float) -> str:
-    for lo, hi, name in zip(REGIME_EDGES[:-1], REGIME_EDGES[1:], REGIME_NAMES):
+    for lo, hi, name in zip(REGIME_EDGES[:-1], REGIME_EDGES[1:],
+                            REGIME_ORDER):
         if lo <= p_kbar < hi:
             return name
-    return REGIME_NAMES[-1]
+    return REGIME_ORDER[-1]
 
 
 def load_track(parquet_name: str, split_tag: str):
     df = pd.read_parquet(f'data/processed/{parquet_name}.parquet').copy()
-    # Map each row to train/test via splits index arrays when available.
     train_idx = Path(f'data/splits/train_indices_{split_tag}.npy')
     test_idx = Path(f'data/splits/test_indices_{split_tag}.npy')
     if train_idx.exists() and test_idx.exists():
         tr = set(np.load(train_idx).tolist())
         te = set(np.load(test_idx).tolist())
         df['split'] = df.index.map(
-            lambda i: 'train' if i in tr else ('test' if i in te else 'unassigned'))
+            lambda i: 'train' if i in tr
+            else ('test' if i in te else 'unassigned'))
     else:
         df['split'] = 'train'
     df['regime'] = df['P_kbar'].map(regime_for)
     return df
 
 
-def main():
-    fig = plt.figure(figsize=(14, 14), constrained_layout=False)
-    # Tight vertical gap between rows -> near square overall
-    # Reduced hspace so the top-row/bottom-row seam is not obtrusive;
-    # bottom shrunk so the legend sits closer to the bottom panels.
-    outer = fig.add_gridspec(
-        2, 2, hspace=0.02, wspace=0.22,
-        top=0.95, bottom=0.055, left=0.06, right=0.97,
-    )
+def draw_panel(fig, outer_cell, df, track, idx, *, t_lim, p_lim,
+               t_bins, p_bins):
+    inner = outer_cell.subgridspec(2, 1, height_ratios=(5, 1.6), hspace=0.18)
+    plot_area = inner[0].subgridspec(2, 2, width_ratios=(4, 1),
+                                     height_ratios=(1, 4),
+                                     hspace=0.05, wspace=0.05)
+    ax_scatter = fig.add_subplot(plot_area[1, 0])
+    ax_histx = fig.add_subplot(plot_area[0, 0], sharex=ax_scatter)
+    ax_histy = fig.add_subplot(plot_area[1, 1], sharey=ax_scatter)
+    ax_stats = fig.add_subplot(inner[1])
+    ax_stats.axis('off')
+    ax_scatter.set_xlim(t_lim)
+    ax_scatter.set_ylim(p_lim)
 
-    for (track, pq_name, split_tag, title), cell in zip(PANELS, outer):
-        df = load_track(pq_name, split_tag)
-        # Outer inner grid: plot area on top, stats block below.
-        # Plot area then splits into histx / (scatter+histy) with tight
-        # hspace so marginal histograms sit flush against the scatter.
-        outer_inner = cell.subgridspec(
-            2, 1, height_ratios=(5, 1.5), hspace=0.18,
-        )
-        plot_area = outer_inner[0].subgridspec(
-            2, 2,
-            width_ratios=(4, 1),
-            height_ratios=(1, 4),
-            hspace=0.05, wspace=0.05,
-        )
-        ax_scatter = fig.add_subplot(plot_area[1, 0])
-        ax_histx   = fig.add_subplot(plot_area[0, 0], sharex=ax_scatter)
-        ax_histy   = fig.add_subplot(plot_area[1, 1], sharey=ax_scatter)
-        ax_stats   = fig.add_subplot(outer_inner[1])
-        ax_stats.axis('off')
-
-        for regime in REGIME_NAMES:
-            sub = df[df['regime'] == regime]
-            for split, alpha, edge in [('train', 0.35, 'none'),
-                                       ('test',  0.95, 'black')]:
-                sel = sub[sub['split'] == split]
-                if len(sel) == 0:
-                    continue
-                ax_scatter.scatter(
-                    sel['T_C'], sel['P_kbar'],
-                    s=14, c=REGIME_COLORS[regime],
-                    edgecolor=edge, linewidths=0.3,
-                    alpha=alpha, zorder=2 if split == 'test' else 1,
-                )
-
-        # Regime boundary lines. The label sits just above each dashed
-        # line at the right edge of the plot box, using the y-axis
-        # transform so x is in axis fraction (always inside the axes no
-        # matter the T range).
-        for edge in REGIME_EDGES[1:-1]:
-            ax_scatter.axhline(edge, color='0.4', ls='--', lw=0.6, zorder=3)
-            ax_scatter.text(
-                0.985, edge, f'{edge} kbar',
-                transform=ax_scatter.get_yaxis_transform(),
-                fontsize=7, color='0.3', va='bottom', ha='right',
-                bbox=dict(facecolor='white', edgecolor='none',
-                          alpha=0.7, pad=1),
-                zorder=4,
+    for regime in REGIME_ORDER:
+        sub = df[df['regime'] == regime]
+        for split, alpha, edge in [('train', 0.35, 'none'),
+                                   ('test', 0.95, '#222222')]:
+            sel = sub[sub['split'] == split]
+            if len(sel) == 0:
+                continue
+            ax_scatter.scatter(
+                sel['T_C'], sel['P_kbar'],
+                s=14, c=REGIME_COLORS[regime],
+                edgecolor=edge, linewidths=0.3,
+                alpha=alpha, zorder=2 if split == 'test' else 1,
             )
 
-        ax_scatter.set_xlabel('T (\u00b0C)')
-        ax_scatter.set_ylabel('P (kbar)')
-
-        ax_histx.set_title(
-            f'{title}  |  track = {track}',
-            fontsize=13, fontweight='bold', loc='left', pad=6,
+    for edge in REGIME_EDGES[1:-1]:
+        ax_scatter.axhline(edge, color='#666666', ls='--', lw=0.6, zorder=3)
+        ax_scatter.text(
+            0.985, edge, f'{edge} kbar',
+            transform=ax_scatter.get_yaxis_transform(),
+            fontsize=7, color='#444444', va='bottom', ha='right',
+            bbox=dict(facecolor='white', edgecolor='none',
+                      alpha=0.7, pad=1),
+            zorder=4,
         )
 
-        ax_histx.hist(df['T_C'].dropna(), bins=40, color='0.6',
-                      edgecolor='none')
-        ax_histx.set_ylabel('count', fontsize=8)
-        ax_histx.tick_params(labelbottom=False)
-        ax_histy.hist(df['P_kbar'].dropna(), bins=40, color='0.6',
-                      edgecolor='none', orientation='horizontal')
-        ax_histy.set_xlabel('count', fontsize=8)
-        ax_histy.tick_params(labelleft=False)
+    ax_scatter.set_xlabel('T (°C)')
+    ax_scatter.set_ylabel('P (kbar)')
 
-        # Per-panel 2-column stats block directly below the scatter.
-        n_total = len(df)
-        n_train = int((df['split'] == 'train').sum())
-        n_test  = int((df['split'] == 'test').sum())
-        n_cit   = int(df['Citation'].nunique()) if 'Citation' in df.columns else 0
-        t_lo, t_hi = df['T_C'].quantile([0.01, 0.99])
-        p_lo, p_hi = df['P_kbar'].quantile([0.01, 0.99])
+    ax_histx.set_title(f'({idx}) {TRACK_LABEL[track]}')
+    ax_histx.hist(df['T_C'].dropna(), bins=t_bins, color='#bbbbbb',
+                  edgecolor='none')
+    ax_histx.set_ylabel('count')
+    ax_histx.tick_params(labelbottom=False)
+    ax_histy.hist(df['P_kbar'].dropna(), bins=p_bins, color='#bbbbbb',
+                  edgecolor='none', orientation='horizontal')
+    ax_histy.set_xlabel('count')
+    ax_histy.tick_params(labelleft=False)
 
-        left_col = [
-            f"n total       = {n_total}",
-            f"n train       = {n_train}",
-            f"n test        = {n_test}",
-            f"n citations   = {n_cit}",
-            f"T (1-99%)     = {t_lo:.0f}-{t_hi:.0f} \u00b0C",
-            f"P (1-99%)     = {p_lo:.1f}-{p_hi:.1f} kbar",
-        ]
-        right_col = ['regime counts:']
-        for r in REGIME_NAMES:
-            cnt = int((df['regime'] == r).sum())
-            right_col.append(f"  {r:<20s} {cnt:>4d}")
+    n_total = len(df)
+    n_train = int((df['split'] == 'train').sum())
+    n_test = int((df['split'] == 'test').sum())
+    n_cit = (int(df['Citation'].nunique())
+             if 'Citation' in df.columns else 0)
+    t_lo, t_hi = df['T_C'].quantile([0.01, 0.99])
+    p_lo, p_hi = df['P_kbar'].quantile([0.01, 0.99])
 
-        ax_stats.text(
-            0.02, 0.98, '\n'.join(left_col),
-            transform=ax_stats.transAxes,
-            fontsize=9, family='monospace',
-            va='top', ha='left',
-        )
-        ax_stats.text(
-            0.52, 0.98, '\n'.join(right_col),
-            transform=ax_stats.transAxes,
-            fontsize=9, family='monospace',
-            va='top', ha='left',
-        )
+    left_col = [
+        f"n total     = {n_total}",
+        f"n train     = {n_train}",
+        f"n test      = {n_test}",
+        f"n citations = {n_cit}",
+        f"T (1–99%)   = {t_lo:.0f}–{t_hi:.0f} °C",
+        f"P (1–99%)   = {p_lo:.1f}–{p_hi:.1f} kbar",
+    ]
+    right_col = ['regime counts:']
+    for r in REGIME_ORDER:
+        cnt = int((df['regime'] == r).sum())
+        right_col.append(f"  {r:<20s} {cnt:>4d}")
 
-    # Shared regime + split color legend at the very bottom
+    ax_stats.text(0.02, 0.98, '\n'.join(left_col),
+                  transform=ax_stats.transAxes, fontsize=8,
+                  family='monospace', va='top', ha='left')
+    ax_stats.text(0.52, 0.98, '\n'.join(right_col),
+                  transform=ax_stats.transAxes, fontsize=8,
+                  family='monospace', va='top', ha='left')
+
+
+def main():
+    # Each cell holds scatter + two marginal histograms + a stats block;
+    # at print width we need a wider canvas so the stats block doesn't
+    # collide with the marginal counts and the suptitle clears the
+    # panel headers. Bottom margin is tight so the legend sits flush
+    # under the stats blocks.
+    # Pre-load both panels so we can compute the union of T/P ranges and
+    # use a single axis scale across panels (a) and (b). Histogram bins
+    # are also shared so bar widths read identically across panels.
+    panel_dfs = []
+    for track, pq_name, split_tag, idx in PANELS:
+        panel_dfs.append((track, idx, load_track(pq_name, split_tag)))
+
+    all_T = pd.concat([d['T_C'] for _, _, d in panel_dfs]).dropna()
+    all_P = pd.concat([d['P_kbar'] for _, _, d in panel_dfs]).dropna()
+    t_pad = 0.04 * (float(all_T.max()) - float(all_T.min()))
+    p_pad = 0.04 * (float(all_P.max()) - 0.0)
+    t_lim = (float(all_T.min()) - t_pad, float(all_T.max()) + t_pad)
+    p_lim = (0.0 - p_pad, float(all_P.max()) + p_pad)
+    t_bins = np.linspace(t_lim[0], t_lim[1], 41)
+    p_bins = np.linspace(p_lim[0], p_lim[1], 41)
+
+    fig = plt.figure(figsize=jgr_figsize((11, 6.5)), constrained_layout=False)
+    outer = fig.add_gridspec(1, 2, wspace=0.30,
+                             top=jgr_top(0.91), bottom=jgr_bottom(0.10),
+                             left=0.07, right=0.97)
+
+    for (track, idx, df), cell in zip(panel_dfs, outer):
+        draw_panel(fig, cell, df, track, idx,
+                   t_lim=t_lim, p_lim=p_lim, t_bins=t_bins, p_bins=p_bins)
+
+    # Regime legend (with pressure ranges) + train/test marker key.
+    regime_legend_label = {
+        'shallow_crustal':     'shallow_crustal (<5 kbar)',
+        'deep_crustal_MASH':   'deep_crustal_MASH (5–15 kbar)',
+        'lithospheric_mantle': 'lithospheric_mantle (15–30 kbar)',
+        'deeper_mantle':       'deeper_mantle (≥30 kbar)',
+    }
     handles = []
-    for r in REGIME_NAMES:
+    for r in REGIME_ORDER:
         handles.append(plt.Line2D([0], [0], marker='o', color='w',
-                                   markerfacecolor=REGIME_COLORS[r],
-                                   markersize=8, label=r))
+                                  markerfacecolor=REGIME_COLORS[r],
+                                  markersize=7,
+                                  label=regime_legend_label[r]))
     handles.append(plt.Line2D([0], [0], marker='o', color='w',
-                               markerfacecolor='0.6', markeredgecolor='black',
-                               markersize=8, label='test (dark edge)'))
+                              markerfacecolor='#bbbbbb',
+                              markeredgecolor='#222222',
+                              markersize=7, label='test (dark edge)'))
     handles.append(plt.Line2D([0], [0], marker='o', color='w',
-                               markerfacecolor='0.6', alpha=0.35,
-                               markersize=8, label='train (faded)'))
-    fig.legend(handles=handles, loc='lower center', ncol=6,
-               frameon=True, framealpha=0.95, edgecolor='0.6',
-               bbox_to_anchor=(0.5, 0.005), fontsize=10,
-               title='Regime colors and train/test marker key',
-               title_fontsize=10)
-    fig.suptitle(
-        'ExPetDB 2025-07-21 training + test corpus: P-T distribution per '
-        'pyroxene track, colored by pre-registered regime',
-        fontsize=13, fontweight='bold', y=0.985,
-    )
+                              markerfacecolor='#bbbbbb', alpha=0.35,
+                              markersize=7, label='train (faded)'))
+    fig.legend(handles, [h.get_label() for h in handles],
+               loc='lower center', bbox_to_anchor=(0.5, 0.005),
+               ncol=3)
 
-    out_stem = OUT_DIR / 'Core_01_fig_dataset_map'
-    fig.savefig(f'{out_stem}.pdf', bbox_inches='tight', dpi=300)
-    fig.savefig(f'{out_stem}.png', bbox_inches='tight', dpi=300)
-    plt.close(fig)
+    fig.suptitle('ExPetDB 2025-07-21: opx P–T distribution')
+
+    stem = OUT_DIR / 'main_fig_1'
+    fig.savefig(f'{stem}.pdf', bbox_inches='tight')
+    fig.savefig(f'{stem}.png', bbox_inches='tight')
 
     caption = (
-        'Figure 1. Dataset map. P-T distribution of all experiments in the '
-        'ExPetDB 2025-07-21 export, partitioned into four pyroxene tracks '
-        '(opx-liq, opx-only, cpx-liq, cpx-only). Points are colored by '
-        'pre-registered pressure regime (shallow_crustal <5 kbar, '
-        'deep_crustal_MASH 5-15 kbar, lithospheric_mantle 15-30 kbar, '
-        'deeper_mantle >=30 kbar); regime edges were locked on 2026-04-17 '
-        'before any correction fitting. Dashed horizontal lines mark regime '
-        'boundaries (labeled at right axis). Marker opacity distinguishes '
-        'the 80/20 citation-grouped train/test split: train points faded, '
-        'test points with dark edges. Marginal histograms show the '
-        'univariate T and P coverage. Each panel is titled with its track '
-        'name. Directly below each scatter, a per-panel two-column '
-        'summary reports n_total, n_train, n_test, citation count, and '
-        '1st-99th percentile T and P ranges on the left, with per-regime '
-        'counts on the right. The regime/split color key is shown as a '
-        'single shared legend at the bottom.'
+        'Figure 1. ExPetDB experimental coverage for the two opx pipelines, '
+        'colored by pre-registered pressure regime. Panel (a) opx + liquid '
+        '(n = 600, 93 citations); panel (b) opx only (n = 1035, 123 '
+        'citations). Pre-registered regime edges are shallow_crustal <5 '
+        'kbar, deep_crustal_MASH 5–15 kbar, lithospheric_mantle 15–30 kbar, '
+        'deeper_mantle ≥30 kbar (locked 2026-04-17 before any correction '
+        'fitting). Dashed horizontal lines mark the regime boundaries. '
+        'Marker opacity distinguishes the 80/20 citation-grouped train/'
+        'test split: train points faded, test points with dark edges. '
+        'Marginal histograms show univariate T and P coverage. The summary '
+        'block below each scatter reports n_total, n_train, n_test, '
+        'citation count, 1st–99th percentile ranges, and per-regime counts.'
     )
-    (OUT_DIR / 'Core_01_fig_dataset_map.txt').write_text(
-        caption, encoding='utf-8')
-    print(f'wrote {out_stem}.(pdf|png|txt)')
+    (OUT_DIR / 'main_fig_1.txt').write_text(caption, encoding='utf-8')
+    print(f'wrote {stem}.(pdf|png|txt)')
 
 
 if __name__ == '__main__':
